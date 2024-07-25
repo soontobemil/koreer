@@ -6,3 +6,12 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore package-lock.json
+package-lock.json
+
+# Ignore yarn.lock if using Yarn
+yarn.lock

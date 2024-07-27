@@ -1,4 +1,4 @@
-// models/user.js
+// variable name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
     

@@ -15,3 +15,15 @@ package-lock.json
 
 # Ignore yarn.lock if using Yarn
 yarn.lock
+
+bin/
+
+# Log files
+*.log
+
+# Environment files
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db

@@ -39,3 +39,10 @@ Follow the instructions for your operating system to install PostgreSQL:
 1. Start the application:
 
     node app.js
+
+### 4. Setting Up .env file
+DB_HOST=localhost
+DB_USER=koreer
+DB_PASSWORD=koreer
+DB_DATABASE=postgres
+DB_PORT=5432

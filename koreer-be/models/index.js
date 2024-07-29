@@ -1,4 +1,4 @@
-// models/index.js
+// Initialize database for pg
 const { Sequelize } = require('sequelize');
 const config = require('../config/config');
 const fs = require('fs');

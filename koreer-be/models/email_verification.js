@@ -1,4 +1,3 @@
-// models/user.js
 module.exports = (sequelize, DataTypes) => {
     const email_verification = sequelize.define('email_verification', {
     
@@ -11,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     }, {
-        tableName: 'email_verification', // 테이블 이름을 명시적으로 지정
-        timestamps: true, // `createdAt` 및 `updatedAt` 필드를 자동으로 관리
-        updatedAt: 'updated_at', // 필드 이름을 'updated_at'으로 설정
-        createdAt: 'created_at' // 필드 이름을 'created_at'으로 설정
+        tableName: 'email_verification', 
+        timestamps: true, 
+        updatedAt: 'updated_at', 
+        createdAt: 'created_at' 
     });
   
     return email_verification;

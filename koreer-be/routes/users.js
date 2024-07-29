@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
 
 /* GET users listing. */
+/*
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+    res.send('GET Succcess respond with a resource');
+  });  
+*/
+router.get('/:email', userController.getUserByEmail); // get url such as 'localhost:3000/users/mail@example.com'
+router.post('/', userController.createUser);
+
 
 module.exports = router;

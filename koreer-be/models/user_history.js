@@ -1,4 +1,4 @@
-// when you modify the scheme, you need to check out the origin table scheme and delete it in pgadmin.
+// When you modify the scheme, you need to check out the origin table scheme and delete it in pgadmin.
 module.exports = (sequelize, DataTypes) => {
     const userHistory = sequelize.define('userHistory', {
         
@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         }
     }, {
-        tableName: 'user_history', // 테이블 이름을 명시적으로 지정
-        timestamps: false // `createdAt` 및 `updatedAt` 필드를 자동으로 관리
+        tableName: 'user_history', 
+        timestamps: false 
     });
   
     return userHistory;

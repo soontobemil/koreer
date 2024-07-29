@@ -1,4 +1,4 @@
-// variable name should be equal with sequelize define name.
+// Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
     
@@ -30,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 'user'
         }
     }, {
-        tableName: 'users', // 테이블 이름을 명시적으로 지정
-        timestamps: true, // `createdAt` 및 `updatedAt` 필드를 자동으로 관리
-        updatedAt: 'updated_at', // 필드 이름을 'updated_at'으로 설정
-        createdAt: 'created_at' // 필드 이름을 'created_at'으로 설정
+        tableName: 'users', // naming the table name
+        timestamps: true, // automatically set up `createdAt` and `updatedAt` fields as timestamp
+        updatedAt: 'updated_at', // set up the `updatedAt` field as 'updated_at'
+        createdAt: 'created_at' // set up the `createdAt` field as 'updated_at'
     });
   
     return User;

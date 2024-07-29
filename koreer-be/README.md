@@ -60,7 +60,8 @@ Follow the instructions for your operating system to install PostgreSQL:
 ## Running the Application
 1. Start the development server:
     Using npm:
-    ```npm start
+    ```
+    npm start
     ```
 2. The application will be running at http://localhost:3000.
 

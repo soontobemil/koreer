@@ -1,4 +1,4 @@
-// config/config.js
+// Configurations
 require('dotenv').config();
 
 module.exports = {
@@ -9,6 +9,6 @@ module.exports = {
       host: process.env.DB_HOST,
       dialect: 'postgres'
     },
-    // 다른 환경에 대한 설정도 추가 가능
+    // add other configurations
   };
   

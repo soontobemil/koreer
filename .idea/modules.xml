@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/koreer.iml" filepath="$PROJECT_DIR$/.idea/koreer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/koreer-be/koreer-be.iml" filepath="$PROJECT_DIR$/koreer-be/koreer-be.iml" />
+      <module fileurl="file://$PROJECT_DIR$/koreer-fe/koreer-fe.iml" filepath="$PROJECT_DIR$/koreer-fe/koreer-fe.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,70 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  background-color: #f8f9fa;
+}
+
+.questionContainer {
+  min-width: 1100px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.questionText {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 20px;
+  position: relative;
+  top: 50px; /* Adjust the position as needed */
+}
+
+.questionButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.questionButton:hover {
+  background-color: #d5d5d5;
+}
+
+.arrowImage {
+  width: 50px;
+  height: 50px;
+  background-image: url('../../../assets/img/arrow.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.arrowImageLeft {
+  position: relative;
+  //top: 150px;
+  left: calc(50% - 200px);
+  transform: rotate(125deg);
+}
+
+.arrowImageRight {
+  position: relative;
+  //top: 150px;
+  right: calc(50% - 200px);
+  transform: rotate(45deg);
+}

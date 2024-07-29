@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*공통 요소 분리 필요*/
+  background-color: #202020;
 }
 
 code {

@@ -1,18 +1,26 @@
 .header {
   //width: 100%;
-  height: 60px;
+  height: 75px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #f8f9fa;
+  background-color: #202020;
+  border-bottom: 1px solid #424242;
+}
+
+.logoImg{
+  width: 124px;
+  color: white;
+  margin-left: 40px;
 }
 
 .header .headerButtonWrapper {
+  margin: auto;
   display: flex;
-  //justify-content: space-between;
-  justify-content: center;
+  justify-content: space-between;
+  //justify-content: center;
   justify-items: center;
   align-items: center;
   gap: 70px;
@@ -23,19 +31,24 @@
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #e0e0e0;
-  color: black;
-  font-size: 16px;
+  background-color: #202020;
+  color: white;
+  font-size: 21px;
   cursor: pointer;
   transition: background-color 0.3s;
+
+  &.selected{
+    color: #9A87FF;
+  }
 }
 
 // 호버 스타일
 .header .headerButtonWrapper button:hover {
-  background-color: #0056b3;
+  background-color: #0072b3;
+  color: white;
 }
 
 // 로그인 버튼만 최우측 정렬 - 임시 주석
 .header .headerButtonWrapper button:last-child {
-  //margin-left: auto;
+  margin-left: auto;
 }

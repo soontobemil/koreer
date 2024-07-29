@@ -5,9 +5,10 @@ export function Header() {
     return (
         <>
             <header className={style.header}>
+                <a className={style.logoImg}>로고 자리</a>
                 <div className={style.headerButtonWrapper}>
                     <button>About us</button>
-                    <button>Community</button>
+                    <button className={style.selected}>Community</button>
                     <button>Job Information</button>
                     <button>Contact</button>
                     <button>Login</button>

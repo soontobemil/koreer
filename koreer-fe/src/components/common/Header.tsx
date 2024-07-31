@@ -5,7 +5,7 @@ export function Header() {
     return (
         <>
             <header className={style.header}>
-                <a className={style.logoImg}>로고 자리</a>
+                <div className={style.logoImg}>로고 자리</div>
                 <div className={style.headerButtonWrapper}>
                     <button>About us</button>
                     <button className={style.selected}>Community</button>

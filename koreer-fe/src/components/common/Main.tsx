@@ -1,6 +1,7 @@
 import {Header} from "./Header";
 import style from "../../assets/scss/common/main.module.scss"
 import {useState} from "react";
+import {ListItems} from "../ListItems";
 
 export default function Main(){
 
@@ -38,9 +39,43 @@ export default function Main(){
                 </div>
             </div>
 
+        {/*  커뮤니티 컴포넌트 분리예정  */}
+            <div className={style.mainCommunityWrapper}>
+                <div className={style.communityTitleWrapper}>
+                    <div className={style.titleTop}>TODAY HOT ARTICLE</div>
+                    <div className={style.titleMain}>커뮤니티 인기 게시글 TOP 5</div>
+                </div>
+
+                <ListItems />
+                {/*<div className={style.listBoxWrapper}>*/}
+                {/*    <div className={style.listItems}>*/}
+                {/*        <div className={style.listTitleWrapper}>*/}
+                {/*            <span className={style.listCategory}>꿀팁</span>*/}
+                {/*            <span className={style.listTitle}>캐나다 항공 공짜로 구하는 법</span>*/}
+                {/*        </div>*/}
+                {/*        <div className={style.listContentWrapper}>*/}
+
+                {/*            <span className={style.listDescription}>1. 스카이스캐너에 접속한다. 2. 환경설정에서 하단의...</span>*/}
+                {/*        </div>*/}
+
+                {/*        <div className={style.listIconWrapper}>*/}
+                {/*            <FavoriteIcon className="add"/>*/}
+                {/*            <div className="read">*/}
+                {/*                <VisibilityIcon className="read_icon" />*/}
+                {/*                <div className="read_count">21</div>*/}
+                {/*            </div>*/}
+                {/*            <div className="comment">*/}
+                {/*                <CommentIcon className="comment_icon" />*/}
+                {/*                <div className="comment_count">3</div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+
+                {/*    </div>*/}
+                {/*</div>*/}
+            </div>
 
 
         </div>
-</>
-)
+        </>
+    )
 }

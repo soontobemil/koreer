@@ -15,6 +15,13 @@ In the project directory, you can run:
     cd ../../koreer/koreer-fe
     
     yarn install(recommended) / npm install
+    
+   
+   Mandatory Libraries
+   
+   yarn add @mui/material @emotion/react @emotion/styled  
+   or  npm install @mui/material @emotion/react @emotion/styled
+
 ````
 
 ### `yarn start dev / npm run`

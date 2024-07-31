@@ -4,12 +4,21 @@ const config = require('../config/config');
 const fs = require('fs');
 const path = require('path');
 
-const env = process.env.NODE_ENV || 'development';
+//const env = 'railway';
+const env = process.env.NODE_ENV || 'development';;
 const dbConfig = config[env];
-const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
-  host: dbConfig.host,
-  dialect: dbConfig.dialect
-});
+
+let sequelize;
+
+if (dbConfig.use_db_url) {
+  sequelize = new Sequelize(process.env[dbConfig.use_db_url], dbConfig);
+} else {
+  sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
+    host: dbConfig.host,
+    dialect: dbConfig.dialect
+  });
+}
+
 
 const db = {};
 

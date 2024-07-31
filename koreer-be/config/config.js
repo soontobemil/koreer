@@ -10,5 +10,12 @@ module.exports = {
       dialect: 'postgres'
     },
     // add other configurations
+    railway : {
+      use_db_url: 'DATABASE_URL',
+      dialect: 'postgres',
+      dialectOptions: {
+        ssl: false // SSL 비활성화
+      }
+    }
   };
   

@@ -2,6 +2,7 @@ import {Header} from "./Header";
 import style from "../../assets/scss/common/main.module.scss"
 import {useState} from "react";
 import {ListItems} from "../ListItems";
+import {HiringProcessField} from "./hiringprocess/HiringProcessField";
 
 export default function Main(){
 
@@ -43,11 +44,15 @@ export default function Main(){
             <div className={style.mainCommunityWrapper}>
                 <div className={style.communityTitleWrapper}>
                     <div className={style.titleTop}>TODAY HOT ARTICLE</div>
-                    <div className={style.titleMain}>커뮤니티 인기 게시글 TOP 5</div>
+                    <div className={style.titleMain}>커뮤니티 인기 게시글 TOP 3</div>
                 </div>
 
                 <ListItems />
             </div>
+
+
+        {/*  북미 취업 과정 컴포넌트  */}
+            <HiringProcessField />
 
 
         </div>

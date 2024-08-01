@@ -137,12 +137,14 @@
 .mainCommunityWrapper{
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   padding: 100px 40px;
 
   .communityTitleWrapper{
     width: 450px;
     height: 83px;
-    margin-left: 180px;
+    margin-left: -450px;
+    align-self: center;
 
     .titleTop{
       width: 100%;
@@ -179,6 +181,12 @@
       cursor: pointer;
       font-weight: 700;
       align-self: center;
+      transition: background-color 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        background-color: #333333;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
 
       .listTitleWrapper{
         display: flex;

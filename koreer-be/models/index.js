@@ -4,8 +4,8 @@ const config = require('../config/config');
 const fs = require('fs');
 const path = require('path');
 
-//const env = 'railway';
-const env = process.env.NODE_ENV || 'development';;
+const env = 'railway';
+//const env = process.env.NODE_ENV || 'development';;
 const dbConfig = config[env];
 
 let sequelize;
@@ -31,5 +31,14 @@ fs.readdirSync(__dirname)
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+// Sync all models with the database
+db.sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Database & tables created!');
+  })
+  .catch(err => {
+    console.error('Unable to sync database:', err);
+  });
 
 module.exports = db;

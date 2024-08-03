@@ -21,6 +21,10 @@ In the project directory, you can run:
    
    yarn add @mui/material @emotion/react @emotion/styled  
    or  npm install @mui/material @emotion/react @emotion/styled
+   
+   yarn add @types/lodash --dev  (throttle을 사용하기 위함 - 고빈도의 이벤트(예: 스크롤, 리사이즈, 마우스 무브 등)가 발생할 때 이를 제한하여 성능을 최적화하는 기법)
+   or npm install @types/lodash --save-dev
+
 
 ````
 

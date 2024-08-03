@@ -1,5 +1,5 @@
 // Initialize the server
-// Link to applications
+// Link to application
 const app = require('./app');
 const http = require('http');
 

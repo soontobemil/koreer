@@ -17,7 +17,7 @@
   margin-bottom: 20px;
 
   .introVideo {
-    width: 700px;
+    width: 940px;
     height: 350px;
     position: relative; /* 상대 위치를 설정하여 ::before 가상 요소가 제대로 작동하도록 함 */
     background-image: url("../../../../src/assets/img/canada_information_thumbnail.jpg");
@@ -59,9 +59,9 @@
 }
 
 // 실제 회사 목록들 css
-.companyContents{
+.companyContents {
   display: flex;
-  width: 700px;
+  width: 940px;
   flex-direction: column;
 
   // 검색 css
@@ -73,7 +73,8 @@
     gap: 10px;
 
     .filterButton {
-      width: 180px;
+      width: 230px;
+      height: 55px;
       background-color: #3498DB;
       border: none;
       border-radius: 5px;
@@ -91,15 +92,16 @@
   }
 
   // 회사 리스팅 css
-  .jobListings {
+
+  .jobListingWrapper{
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
+    gap: 5px;
 
     .jobListing {
       width: 100%;
-      max-width: 600px;
+      max-width: 940px;
       border: 1px solid #333333;
       border-radius: 10px;
       padding: 20px;
@@ -107,31 +109,81 @@
       background-color: #2a2a2a;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
 
       .jobHeader {
+        width: 100%;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
         margin-bottom: 10px;
         border-bottom: 1px solid #444444;
         padding-bottom: 10px;
 
-        .companyName,
-        .jobTitle {
-          font-size: 18px;
-          font-weight: bold;
+        .companyThumbnail {
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+          border-radius: 5px;
+          object-fit: cover;
         }
+
+        .jobInfo {
+          display: flex;
+          width: 90%;
+          justify-content: space-between;
+
+          .companyName {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: auto;
+          }
+
+          .jobTitle {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: auto;
+          }
+        }
+
       }
 
-      .jobDetails {
+      .jobDetail {
         display: flex;
-        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
 
-        .jobLocation,
-        .jobDescription {
-          font-size: 16px;
+        .jobContent {
+          min-width: 300px;
+          display: flex;
+          flex-direction: column;
+
+
+          .contentsName {
+            font-size: 19px;
+            font-style: normal;
+            font-weight: 850;
+            line-height: 150%;
+            letter-spacing: -0.24px;
+            color: #ffffff;
+          }
+
+          .contentText {
+            font-weight: 300;
+          }
         }
+
+
+        //.jobLocation {
+        //}
+        //
+        //.jobDescription {
+        //  font-size: 16px;
+        //}
       }
     }
+
     .jobListing:hover {
       transform: scale(1.05);
     }

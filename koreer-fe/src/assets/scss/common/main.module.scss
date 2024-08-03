@@ -28,7 +28,7 @@
   margin-top: 40px;
   padding: 0 30px;
 
-  gap: 40px;
+  gap: 60px;
 }
 
 // 코리어 로고 & 햄버거버튼
@@ -276,7 +276,6 @@
   padding: 40px 20px;
   gap: 40px;
 
-  margin-bottom: 200px; // 삭제 예정
 
   .hiringTitleWrapper {
     display: flex;
@@ -353,8 +352,117 @@
       @include detailButtonBase;
       @include defaultButtonTextBase;
       color: var(--GrayScale-G-700_bodytext, #ffff);
-      background: var(--K-PASS-KPblue-700, #352388);
+      background: var(--K-PASS-KPblue-700, #b0aaff);
     }
   }
 
+}
+
+// 이용 평가,후기 sns, youtube등 css
+.testimonialsMainWrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 40px;
+  gap: 20px;
+
+  .testimonialsTitleWrapper{
+    width: 500px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    padding: 30px 23px;
+    border: 1px solid #424242;
+    border-radius: 22px;
+
+    > .text{
+      font-size: 38px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%;
+      letter-spacing: -0.24px;
+      color: #ffffff;
+    }
+  }
+
+  .testimonialsContentWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 1200px;
+    align-items: center;
+    padding: 20px 30px;
+    flex-wrap: wrap; /* 줄 바꿈을 허용 */
+
+    .testimonialsContent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 15px;
+      //width: 420px;
+      border: 0.5px solid #424242;
+      border-radius: 14px;
+      margin: 15px;
+      width: 280px; /* 고정된 너비 */
+      height: 350px; /* 고정된 높이 */
+
+      .descriptionWrapper{
+        gap: 12px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+
+        //white-space: nowrap; /* 한 줄로 제한 */
+        overflow: hidden;
+        text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */
+        > .titleText{
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          text-align: center;
+          color: #ffffff;
+
+        }
+
+        > .subTitleText{
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 300;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+      }
+
+      > .text{
+        align-self: end;
+        font-size: 11px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 150%;
+        letter-spacing: -0.24px;
+        color: #ffffff;
+      }
+
+    }
+
+    .thumbnailWrapper {
+      margin-top: 10px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+
+      .thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+  }
 }

@@ -1,4 +1,3 @@
-import {Header} from "./Header";
 import style from "../../assets/scss/common/main.module.scss"
 import {useState} from "react";
 import {ListItems} from "./main/ListItems";
@@ -17,7 +16,6 @@ export default function Main() {
 
     return (
         <>
-            <Header/>
             <div className={style.mainContainer}>
 
                 {/* 메인 타이틀 부분 */}

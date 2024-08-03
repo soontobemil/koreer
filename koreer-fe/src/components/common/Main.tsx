@@ -1,10 +1,11 @@
 import {Header} from "./Header";
 import style from "../../assets/scss/common/main.module.scss"
 import {useState} from "react";
-import {ListItems} from "../ListItems";
+import {ListItems} from "./main/ListItems";
 import {HiringProcessField} from "./main/HiringProcessField";
 import {CompanyInformationField} from "./main/CompanyInformationField";
 import {TestimonialField} from "./main/TestimonialField";
+import {TopButton} from "./TopButton";
 
 export default function Main() {
 
@@ -51,6 +52,7 @@ export default function Main() {
                 {/*  평가 및 후기  */}
                 <TestimonialField />
             </div>
+            <TopButton />
         </>
     )
 }

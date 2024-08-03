@@ -55,8 +55,8 @@ export function HiringProcessField() {
                     <span className={style.text}>Hiring Process in North America</span>
                 </div>
                 <div className={style.hiringProcessBodyWrapper}>
-                    {hiringProcessInformation.map((wrapper, index) => (
-                        <div className={style.hiringProcessBody}>
+                    {hiringProcessInformation.map((wrapper, idx) => (
+                        <div className={style.hiringProcessBody} key={idx}>
                             <div className={style.hiringProcessContents}>
                                 <span className={style.text}>{wrapper.title}</span>
                                 <span className={style.subText}>{wrapper.description}</span>

@@ -43,8 +43,8 @@ export function TestimonialField() {
             </div>
 
             <div className={style.testimonialsContentWrapper}>
-                {testimonialsDummyData.map((data,) => (
-                    <div className={style.testimonialsContent}>
+                {testimonialsDummyData.map((data,idx) => (
+                    <div className={style.testimonialsContent} key={idx}>
                         <div className={style.thumbnailWrapper}>
                             {/*<img className={style.thumbnail} src="thumbnail.jpg" alt="Thumbnail"/>*/}
                         </div>

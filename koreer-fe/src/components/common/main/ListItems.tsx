@@ -1,4 +1,4 @@
-import style from "../assets/scss/common/main.module.scss";
+import style from "../../../assets/scss/common/main.module.scss";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CommentIcon from "@mui/icons-material/Comment";

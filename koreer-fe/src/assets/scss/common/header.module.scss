@@ -1,5 +1,4 @@
 .header {
-  //width: 100%;
   height: 75px;
   display: flex;
   justify-content: space-between;
@@ -11,6 +10,7 @@
 }
 
 .logoImg{
+  cursor: pointer;
   width: 124px;
   color: white;
   margin-left: 40px;
@@ -20,7 +20,6 @@
   margin: auto;
   display: flex;
   justify-content: space-between;
-  //justify-content: center;
   justify-items: center;
   align-items: center;
   gap: 70px;

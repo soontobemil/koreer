@@ -1,4 +1,6 @@
 // Variables name should be equal with sequelize define name.
+const { formatDate } = require('@common/utils');
+
 module.exports = (sequelize, DataTypes) => {
     const JobInfo = sequelize.define('JobInfo', {
     
@@ -29,7 +31,22 @@ module.exports = (sequelize, DataTypes) => {
         api_category: {
             type: DataTypes.STRING(50),
             allowNull: true
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            get() {
+                const rawValue = this.getDataValue('created_at');
+                return rawValue ? formatDate(new Date(rawValue), 'yyyy-MM-dd HH:mm:ss') : null;
+            }
+        },
+        updated_at: {
+            type: DataTypes.DATE,
+            get() {
+                const rawValue = this.getDataValue('updated_at');
+                return rawValue ? formatDate(new Date(rawValue), 'yyyy-MM-dd HH:mm:ss') : null;
+            }
         }
+
     }, {
         tableName: 'job_information', // naming the table name
         timestamps: true, // automatically set up `createdAt` and `updatedAt` fields as timestamp

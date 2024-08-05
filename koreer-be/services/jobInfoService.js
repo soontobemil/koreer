@@ -13,12 +13,12 @@ async function fetchAndInsertJobInfos(apiType) {
     const where = 'vancouver';
 
     const url = `https://api.adzuna.com/v1/api/jobs/${country}/search/1?app_id=${APP_ID}&app_key=${APP_KEY}&what=${what}&where=${where}`;
-    // API 호출
+    // API Request
     const response = await axios.get(url);
-    // 응답 데이터
+    // Response
     const jobInfos = response.data.results;
     
-    // 각 잡 포스팅 데이터베이스에 삽입
+    // Insert Into job_information 
     for (const job of jobInfos) {
       await db.JobInfo.create({
         company_name: job.company.display_name,
@@ -37,6 +37,25 @@ async function fetchAndInsertJobInfos(apiType) {
   }
 }
 
+async function getJobInfos(condition) {
+  try {
+
+    // Query Reconstruction
+    if(condition.location){
+      condition.location = { [db.Op.iLike]: `%${condition.location}%` };
+    }
+    const jobInfos = await db.JobInfo.findAll({
+      where: condition
+    });
+
+    return jobInfos;
+  } catch (error) {
+    console.error('Error fetching job jobInfos with condition:', error);
+    throw error;
+  }
+}
+
 module.exports = {
-  fetchAndInsertJobInfos
+  fetchAndInsertJobInfos,
+  getJobInfos
 };

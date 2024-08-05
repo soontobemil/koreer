@@ -31,6 +31,7 @@ fs.readdirSync(__dirname)
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.Op = Sequelize.Op; // This is for query reconstruction using condition
 
 // Sync all models with the database
 db.sequelize.sync({ alter: true })

@@ -1,0 +1,32 @@
+.communityUpperWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .communityTitleWrapper{
+    display: flex;
+    flex-direction: column;
+    //align-items: center;
+    width: 80%;
+
+    > .title{
+      text-align: start;
+      color: #ffffff;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+      letter-spacing: -0.36px;
+    }
+
+    > .subTitle{
+      text-align: start;
+      color: #ffffff;;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+      letter-spacing: -0.36px;
+    }
+  }
+}

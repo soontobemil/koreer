@@ -11,8 +11,12 @@ async function fetchAndInsertJobInfos(apiType) {
     const what = 'node';
     const country = 'ca';
     const where = 'vancouver';
-
-    const url = `https://api.adzuna.com/v1/api/jobs/${country}/search/1?app_id=${APP_ID}&app_key=${APP_KEY}&what=${what}&where=${where}`;
+    const results_per_page = 20;
+    const max_days_old = 10;
+    const sort_by = "date";
+    
+    let url = `https://api.adzuna.com/v1/api/jobs/${country}/search/1?app_id=${APP_ID}&app_key=${APP_KEY}&what=${what}&where=${where}`;
+    url = url + `&results_per_page=${results_per_page}&max_days_old=${max_days_old}&sort_by=${sort_by}`;
     // API Request
     const response = await axios.get(url);
     // Response

@@ -1,0 +1,297 @@
+.communityUpperWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  padding: 100px 30px;
+
+  // 커뮤니티 헤더 영역
+  .communityTitleWrapper {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    //align-items: center;
+    width: 50%;
+
+    > .title {
+      color: #ffffff;
+      font-size: 34px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+      letter-spacing: -0.36px;
+    }
+
+    > .subTitle {
+      color: #ffffff;;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+      letter-spacing: -0.36px;
+    }
+  }
+
+  .contents {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+
+    // 커뮤니티 검색 영역
+    .filterWrapper {
+      width: 100%;
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid darkgray;
+
+      // 버튼 스타일
+      .buttonsWrapper {
+        //width: 200px;
+        padding: 14px 11px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border: 2px solid #313333;
+        border-radius: 10px;
+        cursor: pointer;
+
+        .sortButton {
+          width: 18px;
+          height: 18px;
+          background-image: url("../../img/community/sort.png");
+          background-color: #202020;
+          position: relative;
+          background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
+          background-position: center;
+
+        }
+
+        .postingButton {
+          width: 18px;
+          height: 18px;
+          background-image: url("../../img/community/posting.png");
+          background-color: #202020;
+          position: relative;
+          background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
+          background-position: center;
+
+        }
+
+        > .text {
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 200;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+      }
+
+      // 카테고리 및 정렬 영역
+      .categoryWrapper {
+        display: flex;
+        justify-content: center;
+        padding: 0 22px;
+
+        .categories {
+          display: flex;
+          gap: 28px;
+          align-items: center;
+          align-self: center;
+          color: #ffffff;
+
+          > .categoryContent {
+            cursor: pointer;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 200;
+            line-height: 150%;
+            letter-spacing: -0.24px;
+            color: #ffffff;
+          }
+        }
+      }
+
+      // 검색 및 페이징 영역
+    }
+
+    .searchAreaWrapper {
+      display: flex;
+      align-items: center;
+      padding: 10px; /* 내부 여백 */
+      column-gap: 12rem;
+      justify-content: space-between;
+
+      .refreshImg {
+        align-self: center;
+        width: 32px;
+        height: 32px;
+        background-image: url("../../img/community/refresh.png");
+        background-color: #202020;
+        position: relative;
+        background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
+        background-position: center;
+        justify-content: space-between;
+
+      }
+
+      .searchArea {
+        width: 300px;
+        border: 2px solid #424242;
+        border-radius: 10px;
+        padding: 9px 19px;
+        justify-content: space-between;
+
+        .searchInput {
+          width: 100%;
+          background-color: #202020;
+          border: none;
+          color: #ffffff;
+        }
+      }
+
+      .pageArea {
+        color: #ffffff;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+        justify-content: space-between;
+        letter-spacing: -0.36px;
+      }
+    }
+
+    // 커뮤니티 게시글 영역
+    .communityContentWrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+
+      //#424242
+      .communityContent {
+        width: 100%;
+        padding: 1.5rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        border-bottom: 2px solid #282c34;
+        cursor: pointer;
+        transition: transform 0.3s;;
+
+        color: #d5d5d5;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 140%;
+        letter-spacing: -0.36px;
+
+        .contentHeaderWrapper {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          align-self: center;
+          flex-direction: row;
+          column-gap: 1rem;
+
+          > .countryImg {
+            position: relative;
+            background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
+            background-position: center;
+            justify-content: space-between;
+            width: 36px;
+            height: 36px;
+
+            &.kor {
+              background-image: url("../../img/community/korea.png");
+            }
+
+            &.usa {
+              background-image: url("../../img/community/usa.png");
+            }
+
+            &.canada {
+              background-image: url("../../img/community/canada.png");
+            }
+
+            &.japan {
+              background-image: url("../../img/community/japan.png");
+            }
+          }
+
+          > .modifyImg {
+            background-image: url("../../img/community/modify.png");
+            position: relative;
+            background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
+            background-position: center;
+            justify-content: space-between;
+            cursor: pointer;
+            width: 31px;
+            height: 31px;
+            margin-left: auto;
+          }
+
+        }
+
+        .descriptionWrapper {
+          padding: 5px 10px;
+
+          > .description {
+            color: #d5d5d5;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 140%;
+            letter-spacing: -0.36px;
+          }
+        }
+
+        .contentFooterWrapper {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          column-gap: 1rem;
+          //#0072b3
+
+          .contentCategoryWrapper {
+            //border: 1px solid lightsteelblue;
+            margin-right: 10px;
+            background-color: rgb(209 233 250);
+            border-radius: 9px;
+            padding: 0 6px;
+
+            > .categoryText {
+              color: rgb(0 144 249);
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 140%;
+              letter-spacing: -0.36px;
+            }
+
+            > .text {
+              color: #ffffff;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 140%;
+              letter-spacing: -0.36px;
+            }
+          }
+        }
+      }
+
+      .communityContent:hover{
+        transform: scale(1.05);
+      }
+    }
+
+  }
+}

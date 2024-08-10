@@ -4,7 +4,13 @@ const jobInfoService = require('../services/jobInfoService');
 async function fetchAndInsertJobInfos(req, res) {
     try {
         const apiType = req.params.apiType;
-        const jobinfo = await jobInfoService.fetchAndInsertJobInfos(apiType);
+        let result = '';
+        if(apiType == 'adzuna'){
+            result = await jobInfoService.fetchAdzunaJobInfos(apiType);
+        }
+        if(apiType == 'rapidapi'){
+            result = await jobInfoService.fetchRapidJobInfos(apiType);
+        }
         res.status(200).send('Job infos have been fetched and inserted successfully!');
     } catch (error) {
         console.error('Error in controller:', error);
@@ -12,22 +18,25 @@ async function fetchAndInsertJobInfos(req, res) {
     }
 }
 
-// API Endpoint: /jobinfos/search?country=ca&location=vancouver
+// API Endpoint: /jobinfos/search?country=Canada&location=Vancouver&adzuna
 async function getJobInfos(req, res) {
     try {
-        const condition = {};
+        const conditions = {
+            iLike:{},
+            equals:{}
+        };
     
         if (req.query.country) {
-            condition.country = req.query.country;
+            conditions.iLike['country'] = req.query.country;
         }
         if (req.query.location) {
-            condition.location = req.query.location;
+            conditions.iLike['location'] = req.query.location;
         }
 
         // This can be replaced with query string.
-        condition.api_category = 'adzuna';
+        conditions.equals.api_category = req.query.apiType;
 
-        const jobInfos = await jobInfoService.getJobInfos(condition);
+        const jobInfos = await jobInfoService.getJobInfos(conditions);
         //console.log(jobInfos);
         res.status(200).json(jobInfos);
     } catch (error) {

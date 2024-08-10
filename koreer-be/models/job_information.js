@@ -45,7 +45,14 @@ module.exports = (sequelize, DataTypes) => {
                 const rawValue = this.getDataValue('updated_at');
                 return rawValue ? formatDate(new Date(rawValue), 'yyyy-MM-dd HH:mm:ss') : null;
             }
-        }
+        },
+        posted_at: {
+            type: DataTypes.DATE,
+            get() {
+                const rawValue = this.getDataValue('posted_at');
+                return rawValue ? formatDate(new Date(rawValue), 'yyyy-MM-dd HH:mm:ss') : null;
+            }
+        },
 
     }, {
         tableName: 'job_information', // naming the table name

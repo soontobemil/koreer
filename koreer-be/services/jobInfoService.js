@@ -23,14 +23,15 @@ async function fetchAndInsertJobInfos(apiType) {
     const jobInfos = response.data.results;
     
     // Insert Into job_information 
+    // location: { area: [ 'Canada', 'British Columbia', 'Greater Vancouver', 'Vancouver' ]}}
     for (const job of jobInfos) {
       await db.JobInfo.create({
         company_name: job.company.display_name,
         salary: job.salary_is_predicted,
         job_description: job.description,
         job_title: job.title,
-        country: country,
-        location: job.location.display_name,
+        country: job.location.area[0],
+        location: job.location.area[3],
         api_category: apiType
       });
     }

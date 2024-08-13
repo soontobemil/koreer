@@ -1,0 +1,468 @@
+@mixin detailButtonBase{
+  min-width: 320px;
+  display: flex;
+  padding: 30px 0;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.25);
+}
+
+@mixin defaultButtonTextBase{
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.36px;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  justify-content: center;
+  height: auto;
+  background-color: #202020;
+  margin-top: 40px;
+  padding: 0 30px;
+
+  gap: 60px;
+}
+
+// 코리어 로고 & 햄버거버튼
+.mainHeaderWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width: 100%;
+  position: relative;
+
+
+  .mainTitleWrapper {
+    width: 500px;
+    height: 70px;
+    border-radius: 10px;
+    background-color: #202020;
+    //border: 2px solid #9A87FF; // 보더 임시 제거
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, border 0.3s;
+  }
+
+  .mainTitleWrapper:hover {
+    background-color: #444444;
+    border: 0.5px solid #b0aaff;
+  }
+
+  .mainTitleText {
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    letter-spacing: -0.24px;
+    color: #ffffff;
+  }
+
+  .hamburgerMenu {
+    position: relative;
+    left: 400px;
+    width: 30px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .bar {
+    width: 100%;
+    height: 4px;
+    background-color: #ffffff;
+  }
+}
+
+// 북미 취업 회사 연계 css
+.questionContainer {
+  width: 900px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  .questionText {
+    font-size: 44px;
+    margin-bottom: 20px;
+  }
+
+  .arrowImage {
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../assets/img/long-arrow.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .arrowImageLeft {
+    position: absolute;
+    top: 90px;
+    left: calc(50% - 200px);
+    transform: rotate(215deg);
+  }
+
+  .arrowImageRight {
+    position: absolute;
+    top: 100px;
+    right: calc(50% - 180px);
+    transform: rotate(145deg);
+  }
+
+  .buttonsContainer {
+    display: flex;
+    gap: 150px;
+    position: relative;
+    top: 100px;
+
+    .questionButton {
+      width: 320px;
+      height: 120px;
+      padding: 10px 20px;
+      //border: none;
+      border-radius: 15px;
+      background-color: white;
+      border: 1px solid #424242;
+      color: black;
+      font-size: 36px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .questionButton:hover {
+      background-color: #d5d5d5;
+    }
+  }
+}
+
+// 북미 커뮤니티 css
+.mainCommunityWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 100px 40px;
+
+  .communityTitleWrapper {
+    width: 450px;
+    height: 83px;
+    margin-left: -450px;
+    align-self: center;
+
+    .titleTop {
+      width: 100%;
+      height: 20px;
+      color: #424242;
+      font-size: 14px;
+    }
+
+    .titleMain {
+      width: 100%;
+      height: 63px;
+      color: #ffffff;
+      font-size: 36px;
+    }
+  }
+
+  .listBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    //height: 350px;
+    padding: 39px 19px;
+    border: 1px solid #424242;
+    border-radius: 20px;
+    align-self: center;
+    gap: 20px;
+
+    .listItems {
+      width: 95%;
+      height: 80%;
+      padding: 10px 19px;
+      border: 1px solid #424242;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 700;
+      align-self: center;
+      transition: background-color 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        background-color: #333333;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .listTitleWrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 10px 0;
+        width: 100%;
+
+
+        > .listCategory {
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 200;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+
+        > .listTitle {
+          font-size: 21px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+
+      }
+
+      .listContentWrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px 0;
+        width: 100%;
+
+        > .listDescription {
+          font-size: 15px;
+          font-style: normal;
+          font-weight: 200;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+      }
+
+      .listIconWrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100px;
+        align-self: flex-end;
+        color: white;
+        margin-left: auto;
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+// 북미 취업 단계 정보 css
+.hiringProcessWrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 900px;
+  border-radius: 20px;
+  border: 1px solid #424242;
+  padding: 40px 20px;
+  gap: 40px;
+
+
+  .hiringTitleWrapper {
+    display: flex;
+    align-self: center;
+    //height: 40px;
+
+    > .text {
+      font-size: 38px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%;
+      letter-spacing: -0.24px;
+      color: #ffffff;
+    }
+  }
+
+  .hiringProcessBodyWrapper {
+    width: 80%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 20px;
+
+    .hiringProcessBody {
+    border: 1px solid #424242;
+    border-radius: 10px;
+
+      .hiringProcessContents {
+        display: flex;
+        flex-direction: column;
+        //width: 450px;
+        border-radius: 20px;
+        padding: 10px 30px 10px 15px;
+
+        > .text {
+          font-size: 21px;
+          font-style: normal;
+          font-weight: 200;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+
+        > .subText {
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 150;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .hiringSupportButtonWrapper{
+    display: flex;
+    height: 64px;
+    //width: 280px;
+    align-self: center;
+    justify-content: center;
+    gap: 35px;
+
+    > .detailButtonWrapper {
+      @include detailButtonBase;
+      @include defaultButtonTextBase;
+      color: var(--GrayScale-G-700_bodytext, #404040);
+      background-color: white;
+
+    }
+
+    > .detailButtonHoverWrapper {
+      @include detailButtonBase;
+      @include defaultButtonTextBase;
+      color: var(--GrayScale-G-700_bodytext, #ffff);
+      background: var(--K-PASS-KPblue-700, #b0aaff);
+    }
+  }
+
+}
+
+// 이용 평가,후기 sns, youtube등 css
+.testimonialsMainWrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 40px;
+  gap: 20px;
+
+  .testimonialsTitleWrapper{
+    width: 500px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    padding: 30px 23px;
+    border: 1px solid #424242;
+    border-radius: 22px;
+
+    > .text{
+      font-size: 38px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%;
+      letter-spacing: -0.24px;
+      color: #ffffff;
+    }
+  }
+
+  .testimonialsContentWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 1200px;
+    align-items: center;
+    padding: 20px 30px;
+    flex-wrap: wrap; /* 줄 바꿈을 허용 */
+
+    .testimonialsContent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 15px;
+      //width: 420px;
+      border: 0.5px solid #424242;
+      border-radius: 14px;
+      margin: 15px;
+      width: 280px; /* 고정된 너비 */
+      height: 350px; /* 고정된 높이 */
+
+      .descriptionWrapper{
+        gap: 12px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+
+        //white-space: nowrap; /* 한 줄로 제한 */
+        overflow: hidden;
+        text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */
+        > .titleText{
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          text-align: center;
+          color: #ffffff;
+
+        }
+
+        > .subTitleText{
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 300;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+          color: #ffffff;
+        }
+      }
+
+      > .text{
+        align-self: end;
+        font-size: 11px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 150%;
+        letter-spacing: -0.24px;
+        color: #ffffff;
+      }
+
+    }
+
+    .thumbnailWrapper {
+      margin-top: 10px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+
+      .thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+  }
+}

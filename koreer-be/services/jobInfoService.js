@@ -158,8 +158,43 @@ async function getJobInfos(conditions) {
   }
 }
 
+// 
+async function deleteJobInfos() {
+  try {
+
+    let where = {};
+    const now = new Date();
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(now.getMonth() - 3);
+    where.posted_at = {[db.Op.lt]:threeMonthsAgo};
+
+    // const dataToDelete = await db.JobInfo.findAll({
+    //     where: where
+    // });
+    // console.log('삭제전:',dataToDelete);
+    
+    const result = await db.JobInfo.destroy({
+      where: where,
+      logging: console.log // 실행된 SQL 쿼리 출력
+    });
+
+    // const dataAfterDelete = await db.JobInfo.findAll({
+    //     where: where
+    // });
+    // console.log('삭제후:',dataAfterDelete);
+
+    console.log(`count : ${result} deleted.`);
+    
+    return result;
+  } catch (error) {
+    console.error('Error Deleting JobInfos with Condition:', error);
+    throw error;
+  }
+}
+
 module.exports = {
   fetchAdzunaJobInfos,
   fetchRapidJobInfos,
-  getJobInfos
+  getJobInfos,
+  deleteJobInfos
 };

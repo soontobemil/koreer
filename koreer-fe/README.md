@@ -25,6 +25,11 @@ In the project directory, you can run:
    yarn add @types/lodash --dev  (throttle을 사용하기 위함 - 고빈도의 이벤트(예: 스크롤, 리사이즈, 마우스 무브 등)가 발생할 때 이를 제한하여 성능을 최적화하는 기법)
    or npm install @types/lodash --save-dev
 
+    yarn add axios (api 연동 위함)
+    yarn add redux react-redux
+    npm install axios
+
+    yarn add @reduxjs/toolkit
 
 ````
 

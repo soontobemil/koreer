@@ -11,6 +11,7 @@ import {AboutUs} from "./components/aboutus/AboutUs";
 import {CompanyInformation} from "./components/companyinformation/CompanyInformation";
 import { Provider } from 'react-redux';
 import {store} from "./slice";
+import {SignUp} from "./components/signup/SignUp";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -26,6 +27,7 @@ root.render(
                         <Route path="company-information" element={<CompanyInformation/>}/>
                         <Route path="community" element={<Community/>}/>
                         <Route path="contact" element={<Contact/>}/>
+                        <Route path="signup" element={<SignUp/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

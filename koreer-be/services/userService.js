@@ -3,6 +3,10 @@ const db = require('../models');
 
 async function createUser(userData) {
   try {
+    const duplUser = getUserByEmail(userData.user_email);
+    if (duplUser) {
+      throw new Error('Duplicate User Error');
+    }
     // insert user
     const user = await db.User.create(userData);
     return user;
@@ -12,12 +16,12 @@ async function createUser(userData) {
   }
 }
 
-async function getUserByEmail(userEmail) {
+async function getUserByEmail(email) {
   try {
     // select user
     const user = await db.User.findOne({ 
             where: { 
-                user_email: userEmail,
+                user_email: email,
                 is_active: 'Y'
             } });
     return user;

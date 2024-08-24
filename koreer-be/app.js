@@ -5,11 +5,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 // Module Aliasing
 require('module-alias/register');
+var authMiddleware = require('./src/middlewares/authMiddleware');
+
+// Generate JWT Secret key
+require('./src/auth/generateSecret');
 
 var indexRouter = require('./routes/index');
+var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var jobInfoRouter = require('./routes/jobinfos');
 
@@ -22,7 +26,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
 
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+
+// 그 외 모든 요청에 대해 authMiddleware 적용
+app.use(authMiddleware);
 app.use('/jobinfos', jobInfoRouter);
 
 // catch 404 and forward to error handler

@@ -38,7 +38,7 @@ export function Header() {
                             {data.label}
                         </button>
                     ))}
-                    <button onClick={() => onClickChangePage('signup', HeaderStatus.NONE)}>Login</button>
+                    <button onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}>Login</button>
                 </div>
             </header>
         </>

@@ -1,6 +1,10 @@
 import style from "../../assets/scss/sub/signup.module.scss";
-
-export function SignUpIdField() {
+import {handleSaveInput} from "../../util/etcUtil";
+interface Args{
+    id: string;
+    setId: (_: string) => void
+}
+export function SignUpIdField({id, setId}: Args) {
     return(
         <>
             <div className={style.content}>
@@ -11,6 +15,7 @@ export function SignUpIdField() {
                     <input
                         placeholder={"koreer@gmail.com"}
                         className={style.contentInput}
+                        onChange={(e) =>handleSaveInput(e, setId)}
                     />
                     <button className={style.checkDuplicatedButton}>
                         Duplication Check

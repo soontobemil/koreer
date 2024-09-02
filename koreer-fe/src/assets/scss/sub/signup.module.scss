@@ -1,3 +1,19 @@
+
+@mixin signupButtonBase{
+  width: 40%;
+  min-height: 52px;
+
+  padding: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+
+  font-size: 33px;
+  text-align: center;
+  font-weight: 500;
+
+  transition: background-color 0.3s ease;
+}
 .signupMainWrapper {
   align-items: center;
   display: flex;
@@ -77,6 +93,7 @@
 
 .checkDuplicatedButton:hover {
   background-color: #44a18b;
+  //color: #ffffff;
   color: #ffffff;
 }
 
@@ -91,20 +108,27 @@
   display: flex;
 }
 
-.nationWrapper{
+.nationWrapper {
   background-color: #202020;
   border-bottom: 1px solid rgb(118, 118, 118);
   //border: 1px;
   align-items: center;
   display: flex;
+  justify-content: space-between;
   margin-top: 4px;
   width: 70%;
   height: 50px;
   padding: 1px 7px;
   cursor: pointer;
+
+  > .nationText {
+    color: lightskyblue;
+  }
 }
 
 .selectButton{
+  //align-self: flex-end;
+
   background-image: url("../../img/select_arrow.svg");
   background-size: cover;
   background-position: center;
@@ -113,5 +137,68 @@
 
   position: relative;
   top: 10px;
-  right: 35px;
+}
+
+.selectOptionsWrapper{
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  top: 42px;
+  position: relative;
+  left: -60px;
+
+  background-color: #343232;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: content-box;
+
+  > .options{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    height: 33px;
+    background-color: #343232;
+
+    &.selected{
+      background-color: #575757;
+      color: lightskyblue;
+    }
+  }
+}
+
+.buttonsWrapper {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+
+  .cancelButton {
+    @include signupButtonBase;
+    background-color: #c8889a;
+  }
+
+  .cancelButton:hover {
+    background-color: #cd2454;
+    color: #ffffff;
+  }
+
+  .signupButton {
+    @include signupButtonBase;
+    background-color: #88c8ab;
+  }
+
+  .signupButton:hover {
+    background-color: #4b95dd;
+    color: #ffffff;
+  }
+
+  .buttonText{
+    color: white;
+    font-size: 33px;
+    font-weight: bold;
+  }
 }

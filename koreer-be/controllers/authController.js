@@ -9,11 +9,11 @@ const authService = require('../services/authService');
 async function register(req,res) {
     try {
         const data = req.body;
-        const user = await authService.register({user_email:data.user_email,username:data.username,password:data.password});
-        if(user) {
-            res.status(201).json({data:user,msg:'User registered successfully!'});
+        const rsltData = await authService.register({user_email:data.user_email,username:data.username,password:data.password});
+        if(rsltData.result) {
+            res.status(201).json({data:rsltData.data,msg:'User registered successfully!'});
         } else {
-            res.status(201).json({msg:'Error! Something happend!'});
+            res.status(201).json({msg:'Error! Duplicate User!'});
         }
         
     } catch (error) {

@@ -6,8 +6,15 @@ async function register(data){
     try {
         const hashedPassword = await bcrypt.hash(data.password, 10);
         const req = {user_email:data.user_email,username:data.username,password:hashedPassword};
-        const user = await userService.createUser(req);
-        return user;
+        const result = await userService.userDuplCheck(req.user_email);
+        let rsltData = {};
+        if (result) {
+            const user = await userService.createUser(req);
+            rsltData.data = user;
+        } 
+        rsltData.result = result;
+        return rsltData;
+        
     } catch (error) {
         console.log(error);
         throw new Error('Error Occured while registering User');

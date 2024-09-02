@@ -3,11 +3,6 @@ const db = require('../models');
 
 async function createUser(userData) {
   try {
-    const duplUser = getUserByEmail(userData.user_email);
-    if (duplUser) {
-      throw new Error('Duplicate User Error');
-    }
-    // insert user
     const user = await db.User.create(userData);
     return user;
   } catch (error) {
@@ -30,7 +25,20 @@ async function getUserByEmail(email) {
   }
 }
 
+async function userDuplCheck(email) {
+  try {
+    const duplUser = await getUserByEmail(email);
+    if (duplUser) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    throw new Error('Error Duplicate User');
+  }
+}
+
 module.exports = {
   createUser,
   getUserByEmail,
+  userDuplCheck
 };

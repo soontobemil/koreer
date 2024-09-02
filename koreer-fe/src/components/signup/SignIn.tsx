@@ -44,7 +44,7 @@ export function SignIn() {
 
                     </div>
                     <div className={style.buttonsWrapper}>
-                        <button className={style.loginButton} onClick={handleSignup}>
+                        <button className={style.loginButton}>
                             Sign in
                         </button>
                         <div className={style.imgWrapper}>
@@ -54,7 +54,7 @@ export function SignIn() {
                         </div>
                     </div>
 
-                    <div className={style.signupWrapper}>
+                    <div className={style.signupWrapper}  onClick={handleSignup}>
                         <span className={style.text}>
                             First time here? Sign up now
                         </span>

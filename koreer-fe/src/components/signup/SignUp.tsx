@@ -4,8 +4,11 @@ import {SignUpPasswordField} from "./SignUpPasswordField";
 import {SignUpPasswordConfirmField} from "./SignUpPasswordConfirmField";
 import {SignUpNicknameField} from "./SignUpNicknameField";
 import {SignUpNationField} from "./SignUpNationField";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {createUser} from "../../slice/signupSlice";
+import {UserPostDTO} from "../../types/signup";
 
 export function SignUp() {
     const [nation, setNation] = useState('Select your country!');
@@ -14,6 +17,7 @@ export function SignUp() {
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('')
     const navigate = useNavigate()
+    const dispatch = useDispatch<any>();
 
     const handleCancelButton = () =>{
         // eslint-disable-next-line no-restricted-globals
@@ -23,9 +27,20 @@ export function SignUp() {
         }
     }
 
-    const handleSignup = () =>{
+    const handleSignup = useCallback(async () => {
+            const result:any = await dispatch(
+                createUser({
+                    id: id,
+                    nation: nation,
+                    nickName: nickName,
+                    password:password
+                }as UserPostDTO)
+            ).unwrap();
+            console.log(result)
+        },
+        [id, nation,  nickName, password]);
 
-    }
+
     return(
         <>
             <div className={style.signupMainWrapper}>
@@ -48,7 +63,7 @@ export function SignUp() {
                             <div className={style.cancelButton} onClick={handleCancelButton}>
                                 Cancel
                             </div>
-                            <div className={style.signupButton}>
+                            <div className={style.signupButton} onClick={handleSignup}>
                                 Sign Up
                             </div>
                         </div>

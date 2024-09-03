@@ -3,7 +3,7 @@ import {executePromise} from "../util/sliceUtil";
 import {CompanyInformationApi} from "../api/CompanyInformationApi";
 import {CompanyInformationDTO} from "../types/companyInformation";
 
-export const getCompanyInformation = createAsyncThunk("order/getCompanyInformation",
+export const getCompanyInformation = createAsyncThunk("company/getCompanyInformation",
     ({ country, location }: { country: string; location: string }) =>
         executePromise<CompanyInformationDTO[]>(CompanyInformationApi.getCompanyLists(country, location))
 );

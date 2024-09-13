@@ -13,14 +13,14 @@ async function register(req,res) {
         if(rsltData.result) {
             // send email for verifying
             const sendEmail = await authService.sendEmail(rsltData.data.user_email);
-            res.status(201).json({data:rsltData.data,msg:'User registered successfully! Please check your email!'});
+            res.status(201).json({data:rsltData.data,message:'성공적으로 등록되었습니다! 이메일을 확인해주세요.'});
         } else {
-            res.status(201).json({msg:'Error! This email is duplicated!'});
+            res.status(201).json({message:'중복된 이메일입니다! 다른 이메일을 사용해주세요.'});
         }
         
     } catch (error) {
         console.error('Error in controller:', error);
-        res.status(500).send('An error occurred while registering User.');
+        res.status(500).json({message:'사용자 등록 중 오류가 발생하였습니다.'});
     }
 }
 
@@ -33,10 +33,10 @@ async function login(req, res) {
         res.cookie('refreshToken', result.refreshToken, { httpOnly: true, secure: true });
 
         // Access Token은 return
-        res.json({ accessToken:result.accessToken,loginInfo:result.loginInfo});
+        res.json({ accessToken:result.accessToken,message:'로그인 되었습니다.'});
     } catch (error) {
         console.error('Error in controller:', error);
-        res.status(500).send(error.message);
+        res.status(500).json({message:'로그인에 실패하였습니다.'+error.message});
     }
     
 }
@@ -61,13 +61,13 @@ async function refreshAccessToken(req,res) {
 
 async function logout(req,res) {
     res.clearCookie('refreshToken');
-    res.json({ message: 'Logged out' });
+    res.json({ message: '로그아웃 되었습니다.' });
 }
 
 async function emailVefify(req,res) {
     const { token } = req.params;
     if (!token) {
-        return res.status(400).json({ message: 'Not exists token' });
+        return res.status(400).json({ message: '토큰이 존재하지 않습니다.' });
     }
     const result = await authService.emailVefify(token);
     return res.status(result.code).json({ message: result.message });

@@ -1,0 +1,51 @@
+name: Deploy to Remote Server
+
+on:
+  push:
+    branches:
+      - KOR-9 # 테스트
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # ssh 접근
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+          ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+
+      # 압축 파일 생성
+      - name: Make zip file
+        run: zip -r ./koreer.zip .
+
+      # 파일 복사
+      - name: Copy project to remote server
+        run: scp -i ~/.ssh/id_rsa ./koreer.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/
+
+      # 압축 해제
+      - name: Extract project on remote server
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo apt-get update && sudo apt-get install -y unzip"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "unzip -o /koreer.zip -d /koreer"
+
+      - name: Remove conflicting packages and install Node.js
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y remove --purge nodejs libnode-dev"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y autoremove && sudo apt-get clean"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
+
+
+      # 실행
+      - name: Install and Build
+        run: |
+          node -v
+          pwd
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build && yarn start dev"

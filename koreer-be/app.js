@@ -13,7 +13,13 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var jobInfoRouter = require('./routes/jobinfos');
 
+const cors = require('cors');
 var app = express();
+app.use(cors({
+  origin: '*', // 모든 도메인 허용
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // 허용할 HTTP 메소드
+  allowedHeaders: ['Content-Type', 'Authorization'], // 허용할 헤더
+}));
 
 app.use(logger('dev'));
 app.use(express.json());

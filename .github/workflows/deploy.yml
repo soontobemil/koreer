@@ -28,7 +28,7 @@ jobs:
 
       # 파일 복사
       - name: Copy project to remote server
-        run: scp -i ~/.ssh/id_rsa ./koreer.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/
+        run: scp -i ~/.ssh/id_rsa ./koreer.zip ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }}:/
 
       # 압축 해제
       - name: Extract project on remote server

@@ -54,5 +54,6 @@ jobs:
       # Docker Compose 실행
       - name: Restart Docker Services
         run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "export COMPOSE_PROJECT_NAME=koreer"
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer && docker-compose down"
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer && docker-compose up -d"

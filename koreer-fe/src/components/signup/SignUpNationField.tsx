@@ -91,7 +91,7 @@ export function SignUpNationField({nation, setNation}:Args) {
         if (location.latitude && location.longitude) {
             checkNation();
         }
-    }, [location, nation]);
+    }, [location, nation, optionReveal]);
 
     return (
         <>

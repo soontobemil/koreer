@@ -22,34 +22,34 @@ jobs:
           echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
           ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
 
-#      # 압축 파일 생성
-#      - name: Make zip file
-#        run: zip -r ./koreer.zip .
-#
-#      # 파일 복사
-#      - name: Copy project to remote server
-#        run: scp -i ~/.ssh/id_rsa ./koreer.zip ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }}:/
-#
-#      # 압축 해제
-#      - name: Extract project on remote server
-#        run: |
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get update && sudo apt-get install -y unzip"
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "unzip -o /koreer.zip -d /koreer"
-#
-#      - name: Remove conflicting packages and install Node.js
-#        run: |
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y remove --purge nodejs libnode-dev"
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y autoremove && sudo apt-get clean"
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
-#
-#
-#      # 실행
-#      - name: Install and Build
-#        run: |
-#          node -v
-#          pwd
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build"
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-be && npm install"
+      # 압축 파일 생성
+      - name: Make zip file
+        run: zip -r ./koreer.zip .
+
+      # 파일 복사
+      - name: Copy project to remote server
+        run: scp -i ~/.ssh/id_rsa ./koreer.zip ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }}:/
+
+      # 압축 해제
+      - name: Extract project on remote server
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get update && sudo apt-get install -y unzip"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "unzip -o /koreer.zip -d /koreer"
+
+      - name: Remove conflicting packages and install Node.js
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y remove --purge nodejs libnode-dev"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y autoremove && sudo apt-get clean"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
+
+
+      # 실행
+      - name: Install and Build
+        run: |
+          node -v
+          pwd
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-be && npm install"
 
       # Docker Compose 실행
       - name: Restart Docker Services

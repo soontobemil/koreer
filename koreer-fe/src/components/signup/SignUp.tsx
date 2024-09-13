@@ -11,6 +11,7 @@ import {createUser} from "../../slice/signupSlice";
 import {UserPostDTO} from "../../types/signup";
 
 export function SignUp() {
+    console.log(11)
     const [nation, setNation] = useState('Select your country!');
     const [id, setId] = useState('');
     const [nickName, setNickName] = useState('');

@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # ssh 접근
+      # SSH 접근 및 기본 설정
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -26,27 +26,35 @@ jobs:
       - name: Make zip file
         run: zip -r ./koreer.zip .
 
+      # 파일 전송 및 원격 명령 실행 함수 정의
+      - name: Define SSH command function
+        run: |
+          function rsa_command {
+            ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "$1"
+          }
+
       # 파일 복사
       - name: Copy project to remote server
-        run: scp -i ~/.ssh/id_rsa ./koreer.zip ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }}:/
-
-      # 압축 해제
-      - name: Extract project on remote server
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get update && sudo apt-get install -y unzip"
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "unzip -o /koreer.zip -d /koreer"
+          scp -i ~/.ssh/id_rsa ./koreer.zip ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }}:/
 
-      - name: Remove conflicting packages and install Node.js
+      # 압축 해제 및 기본 패키지 설치
+      - name: Extract project and install dependencies on remote server
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y remove --purge nodejs libnode-dev"
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y autoremove && sudo apt-get clean"
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
+          rsa_command "sudo apt-get update && sudo apt-get install -y unzip"
+          rsa_command "unzip -o /koreer.zip -d /koreer"
+          rsa_command "sudo apt-get -y remove --purge nodejs libnode-dev"
+          rsa_command "sudo apt-get -y autoremove && sudo apt-get clean"
+          rsa_command "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
 
-
-      # 실행
-      - name: Install and Build
+      # 프로젝트 설치 및 빌드
+      - name: Install and Build project
         run: |
-          node -v
-          pwd
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build"
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-be && npm install && nohup npm start &"
+          rsa_command "cd /koreer/koreer-fe && yarn install && yarn build"
+          rsa_command "cd /koreer/koreer-be && npm install"
+
+      # Docker Compose 실행
+      - name: Restart Docker Services
+        run: |
+          rsa_command "cd /koreer && docker-compose down"
+          rsa_command "cd /koreer && docker-compose up -d"

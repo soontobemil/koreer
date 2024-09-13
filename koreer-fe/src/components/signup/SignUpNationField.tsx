@@ -52,19 +52,29 @@ export function SignUpNationField({nation, setNation}:Args) {
             const locations = [
                 {
                     name: 'KOREA',
-                    latRange: [37, 38],
-                    lonRange: [126, 127],
+                    latRange: [33, 43],
+                    lonRange: [124, 132],
                 },
                 {
                     name: 'USA',
-                    latRange: [24, 50],
-                    lonRange: [-126, -66],
+                    latRange: [24, 49],  // 본토 기준
+                    lonRange: [66, 172],
                 },
                 {
                     name: 'CANADA',
-                    latRange: [41, 84],
-                    lonRange: [-142, -52],
+                    latRange: [42, 83],
+                    lonRange: [53, 141],
                 },
+                {
+                    name: 'JAPAN',
+                    latRange: [20, 45],
+                    lonRange: [122, 153],
+                },
+                {
+                    name: 'CHINA',
+                    latRange: [18, 53],
+                    lonRange: [73, 123],
+                }
             ];
 
             for (const loc of locations) {
@@ -81,7 +91,7 @@ export function SignUpNationField({nation, setNation}:Args) {
         if (location.latitude && location.longitude) {
             checkNation();
         }
-    }, [location]);
+    }, [location, nation]);
 
     return (
         <>

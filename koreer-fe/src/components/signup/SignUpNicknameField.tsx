@@ -1,10 +1,21 @@
 import style from "../../assets/scss/sub/signup.module.scss";
 import {handleSaveInput} from "../../util/etcUtil";
+import {ValidateStatus} from "../../types/signup";
+import {useEffect} from "react";
+
 interface Args{
     nickName: string;
     setNickName: (_: string) => void
+    nickNameValidate: ValidateStatus;
+    setNickNameValidate: (_: ValidateStatus) => void;
 }
-export function SignUpNicknameField({nickName, setNickName}:Args) {
+export function SignUpNicknameField({nickName, setNickName,
+                                        nickNameValidate, setNickNameValidate}:Args) {
+
+    useEffect(() => {
+        setNickNameValidate(ValidateStatus.NONE)
+        // eslint-disable-next-line
+    }, [nickName]);
     return (
         <>
             <div className={style.content}>
@@ -16,6 +27,11 @@ export function SignUpNicknameField({nickName, setNickName}:Args) {
                     className={style.contentInput}
                     onChange={(e) => handleSaveInput(e, setNickName)}
                 />
+            {nickNameValidate === ValidateStatus.BELOW_REQUIRED_LENGTH && (
+                <span className={style.duplicateMessage}>
+                    Please make sure the password and password confirmation match.
+                </span>
+            )}
             </div>
         </>
     )

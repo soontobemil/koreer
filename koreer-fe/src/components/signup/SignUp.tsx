@@ -8,7 +8,8 @@ import {useCallback, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useSignUpValidator} from "./hooks/useSignUpValidator";
-import {ValidateStatus} from "../../types/signup";
+import {UserPostDTO} from "../../types/signup";
+import {createUser} from "../../slice/signupSlice";
 
 export function SignUp() {
     const [nation, setNation] = useState('Select your country!');
@@ -38,27 +39,24 @@ export function SignUp() {
         }
     }
 
-    console.log(isDuplecateChecked)
     const handleSignup = useCallback(async () => {
-        isDuplecateChecked ? setIdValidate(ValidateStatus.NONE) : setIdValidate(ValidateStatus.UNFILLED);
 
         const isSignupAble = validate();
 
         if (isSignupAble) {
-            console.log('signup end')
             const result: any = await dispatch(
-                // createUser({
-                //     user_email: id,
-                //     username: nickName,
-                //     nation: nation,
-                //     password:password
-                // }as UserPostDTO)
+                createUser({
+                    user_email: id,
+                    username: nickName,
+                    nation: nation,
+                    password:password
+                }as UserPostDTO)
             ).unwrap();
-            console.log(result)
+            console.log('result : ', result)
 
         }
         // eslint-disable-next-line
-    }, [id, nation, nickName, password, passwordCheck, isDuplecateChecked]);
+    }, [id, nation, nickName, password, passwordCheck, isDuplecateChecked, idValidate, setIdValidate]);
 
 
     return (

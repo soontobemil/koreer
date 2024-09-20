@@ -1,6 +1,6 @@
 import style from "../../assets/scss/sub/signup.module.scss";
 import {handleSaveInput} from "../../util/etcUtil";
-import {useCallback, useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {duplicateCheck} from "../../slice/signupSlice";
 import {ValidateStatus} from "../../types/signup";
@@ -9,7 +9,7 @@ interface duplResult {
     message: string;
 }
 
-interface Args{
+interface Args {
     id: string;
     setId: (_: string) => void
     idValidate: ValidateStatus;
@@ -17,24 +17,32 @@ interface Args{
     isDuplecateChecked: boolean;
     setIsDuplecateChecked: (_: boolean) => void
 }
+
 export function SignUpIdField({id, setId, idValidate, setIdValidate, isDuplecateChecked, setIsDuplecateChecked}: Args) {
     const dispatch = useDispatch<any>();
-    // const [dupleMessage, setDupleMessage] = useState('');
+    const [dupleMessage, setDupleMessage] = useState('');
 
     const duplicateIdCheck = useCallback(async () => {
-            const result: duplResult = await dispatch(duplicateCheck(id)).unwrap();
+            try {
+                const result: duplResult = await dispatch(duplicateCheck(id)).unwrap();
 
-            setIsDuplecateChecked(true);
-            setIdValidate(ValidateStatus.NONE)
-            // setDupleMessage(result.message)
+                setIsDuplecateChecked(true);
+                setIdValidate(ValidateStatus.NONE)
+                setDupleMessage(result.message)
+
+            } catch (e :any) {
+                const errorObj = JSON.parse(e.message);
+                setDupleMessage(errorObj.message)
+            }
         },
         // eslint-disable-next-line
         [dispatch, id, idValidate]
     );
 
-    // useEffect(() => {
-    //     setDupleMessage('')
-    // }, [id]);
+    useEffect(() => {
+        setDupleMessage('')
+
+    }, [id]);
 
     useEffect(() => {
         if (id.length > 1) {
@@ -43,8 +51,8 @@ export function SignUpIdField({id, setId, idValidate, setIdValidate, isDuplecate
         // eslint-disable-next-line
     }, [idValidate]);
 
-    console.log(idValidate)
-    return(
+
+    return (
         <>
             <div className={style.content}>
                             <span className={style.contentText}>
@@ -54,7 +62,10 @@ export function SignUpIdField({id, setId, idValidate, setIdValidate, isDuplecate
                     <input
                         placeholder={"koreer@gmail.com"}
                         className={style.contentInput}
-                        onChange={(e) =>handleSaveInput(e, setId)}
+                        onChange={(e) => {
+                            setIdValidate(ValidateStatus.UNFILLED)
+                            handleSaveInput(e, setId)
+                        }}
                     />
                     <button className={style.checkDuplicatedButton} onClick={duplicateIdCheck}>
                         Duplication Check
@@ -62,17 +73,28 @@ export function SignUpIdField({id, setId, idValidate, setIdValidate, isDuplecate
 
                 </div>
                 {/*<span className={style.confirmMessage}>{dupleMessage}</span>*/}
-                {idValidate === ValidateStatus.BELOW_REQUIRED_LENGTH && (
-                    <span className={style.duplicateMessage}>
-                    이메일을 작성해주세요.
-                </span>
-                )}
+                {dupleMessage === '' ?(
+                    <>
+                        {idValidate === ValidateStatus.UNFILLED && (
+                            <span className={style.duplicateMessage}>
+                                Please check the Duplication Check button.
+                            </span>
+                        )}
 
-                {idValidate === ValidateStatus.UNFILLED && (
-                    <span className={style.duplicateMessage}>
-                    Please check the Duplication Check button.
-                </span>
-                )}
+                        {idValidate === ValidateStatus.BELOW_REQUIRED_LENGTH && (
+                            <span className={style.duplicateMessage}>
+                                Please write your email.
+                            </span>
+                        )}
+                    </>
+                    )
+                    : (
+                        <>
+                            <span className={style.confirmMessage}>
+                                {dupleMessage}
+                            </span>
+                        </>
+                    )}
             </div>
         </>
     )

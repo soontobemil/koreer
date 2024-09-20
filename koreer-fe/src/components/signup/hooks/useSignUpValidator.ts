@@ -35,7 +35,6 @@ export function useSignUpValidator({
         }
 
         if (idValidate === ValidateStatus.UNFILLED) {
-            setIdValidate(ValidateStatus.UNFILLED);
             isValidate = false;
         }
 
@@ -65,7 +64,8 @@ export function useSignUpValidator({
         }
 
         return isValidate
-    }, [nation, id, nickName, password, passwordCheck]);
+    }, [nation, id, nickName, password, passwordCheck,
+    idValidate, nationValidate, nickNameValidate, passwordValidate, passwordCheckValidate]);
     return{
         validate,
         nationValidate, setNationValidate,

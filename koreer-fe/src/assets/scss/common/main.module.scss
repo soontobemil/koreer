@@ -19,13 +19,14 @@
 }
 
 .mainContainer {
+
   display: flex;
   flex-direction: column;
   //align-items: center;
   justify-content: center;
   height: auto;
   background-color: #202020;
-  margin-top: 40px;
+  margin-top: 150px;
   padding: 0 30px;
 
   gap: 60px;
@@ -88,6 +89,74 @@
 }
 
 // 북미 취업 회사 연계 css
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  background-color: #202020; /* 어두운 배경 */
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  padding: 20px;
+  .headingText {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #f5ba13; /* 강조 색상 */
+  }
+
+  .subText {
+    font-size: 20px;
+    margin-bottom: 40px;
+    color: #f1f1f1;
+    max-width: 600px;
+  }
+
+  .imageBanner {
+    margin-bottom: 40px;
+  }
+
+  .bannerImage {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+
+  .callToAction {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .buttonsContainer {
+    display: flex;
+    gap: 20px;
+  }
+
+  .choiceButton {
+    width: 200px;
+    height: 60px;
+    background-color: #333;
+    color: #ffffff;
+    border: 2px solid #f5ba13;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .choiceButton:hover {
+    background-color: #f5ba13;
+    color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+}
+
+
+
+
 .questionContainer {
   width: 900px;
   min-height: 400px;

@@ -1,53 +1,67 @@
 .header {
-  height: 75px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #202020;
-  border-bottom: 1px solid #424242;
-}
-
-.logoImg{
-  cursor: pointer;
-  width: 124px;
-  color: white;
-  margin-left: 40px;
-}
-
-.header .headerButtonWrapper {
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  justify-items: center;
-  align-items: center;
-  gap: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-}
-
-.header .headerButtonWrapper button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
   background-color: #202020;
-  color: white;
-  font-size: 21px;
+  border-bottom: 2px solid #424242;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  box-sizing: border-box;
+}
+
+.logoImg {
   cursor: pointer;
-  transition: background-color 0.3s;
-
-  &.selected{
-    color: #9A87FF;
-  }
+  font-size: 30px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-// 호버 스타일
-.header .headerButtonWrapper button:hover {
+.headerButtonWrapper {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+.headerButtonWrapper button {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  background-color: #202020;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.headerButtonWrapper button:hover {
   background-color: #0072b3;
-  color: white;
+  color: #dcdcc7;
+  transform: translateY(-3px);
 }
 
-// 로그인 버튼만 최우측 정렬 - 임시 주석
-.header .headerButtonWrapper button:last-child {
-  margin-left: auto;
+.selected {
+  color: #f5ba13;
+  font-weight: 700;
+}
+
+.loginButton {
+  background-color: #f5ba13;
+  color: #202020;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 20px;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.loginButton:hover {
+  background-color: #e8a900;
+  transform: translateY(-3px);
 }

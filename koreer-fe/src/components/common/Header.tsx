@@ -26,21 +26,20 @@ export function Header() {
     }
 
     return (
-        <>
-            <header className={style.header}>
-                <div className={style.logoImg} onClick={() =>onClickChangePage('',HeaderStatus.NONE)}>로고 자리</div>
-                <div className={style.headerButtonWrapper}>
-                    {selectedButtons.map((data, idx) => (
-                        <button key={idx}
-                                onClick={() => onClickChangePage(data.page, data.status)}
-                                className={headerStatus === data.status ? style.selected : ''}
-                        >
-                            {data.label}
-                        </button>
-                    ))}
-                    <button onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}>Login</button>
-                </div>
-            </header>
-        </>
+        <header className={style.header}>
+            <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>Koreer</div>
+            <div className={style.headerButtonWrapper}>
+                {selectedButtons.map((data, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => onClickChangePage(data.page, data.status)}
+                        className={headerStatus === data.status ? style.selected : ''}
+                    >
+                        {data.label}
+                    </button>
+                ))}
+                <button className={style.loginButton} onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}>Login</button>
+            </div>
+        </header>
     );
 }

@@ -1,0 +1,172 @@
+.contactContainer {
+  background-color: #1e1e1e; /* 어두운 배경 */
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+
+  .contactTitle {
+    font-size: 56px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .contactDescription {
+    font-size: 24px;
+    color: #cccccc;
+    margin-bottom: 60px;
+  }
+
+  .contactOptions {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .optionBox {
+    background-color: #2a2a2a;
+    border-radius: 15px;
+    padding: 50px;
+    text-align: center;
+    width: 400px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .optionBox:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .iconPlaceholder {
+    width: 120px;
+    height: 120px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    margin: 0 auto 30px;
+
+  }
+
+  .iconImg {
+    width: 110px;
+    height: 110px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+
+    /* 이미지 관련 속성 추가 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.sales {
+      background-image: url("../../img/sales.svg");
+    }
+
+    &.support {
+      background-image: url("../../img/support.svg");
+    }
+
+    &.media {
+      background-image: url("../../img/youtube.svg");
+    }
+  }
+
+  .optionTitle {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .optionDescription {
+    font-size: 20px;
+    color: #bbbbbb;
+    margin-bottom: 30px;
+  }
+
+  .optionLink {
+    font-size: 20px;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .optionLink:hover {
+    text-decoration: underline;
+  }
+}
+
+.contactFormWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 80px 0;
+}
+
+/* 문의 폼 스타일 */
+.contactForm {
+  min-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-self: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #202020; /* 문의 폼 배경 */
+  padding: 60px 40px;
+  border-radius: 10px;
+  text-align: center;
+
+  .formTitle {
+    font-size: 36px;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+
+  .formWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .formLabel {
+    font-size: 18px;
+    color: #cccccc;
+    text-align: left;
+  }
+
+  .formInput, .formTextarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #555555;
+    background-color: #333333;
+    color: #ffffff;
+    font-size: 16px;
+  }
+
+  .formTextarea {
+    height: 150px;
+    resize: none;
+  }
+
+  .formButton {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+  }
+
+  .formButton:hover {
+    background-color: #0056b3;
+  }
+
+}
+

@@ -1,5 +1,4 @@
 import style from "../../assets/scss/common/main.module.scss"
-import {useState} from "react";
 import {ListItems} from "./main/ListItems";
 import {HiringProcessField} from "./main/HiringProcessField";
 import {CompanyInformationField} from "./main/CompanyInformationField";
@@ -8,29 +7,12 @@ import {TopButton} from "./TopButton";
 
 export default function Main() {
 
-    const [menuOpen, setMenuOpen] = useState(false);
-
-    const handleHamburgerClick = () => {
-        setMenuOpen(!menuOpen);
-    };
 
     return (
         <>
             <div className={style.mainContainer}>
 
-                {/* 메인 타이틀 부분 */}
-                <div className={style.mainHeaderWrapper}>
-                    <button className={style.mainTitleWrapper}>
-                        <span className={style.mainTitleText}>Koreer</span>
-                    </button>
-                    <div className={style.hamburgerMenu} onClick={handleHamburgerClick}>
-                        <div className={style.bar}></div>
-                        <div className={style.bar}></div>
-                        <div className={style.bar}></div>
-                    </div>
-                </div>
-
-                {/* 북미 회사 조회 컴포넌트 분리 예정 */}
+                {/* 북미 회사 조회 */}
                 <CompanyInformationField/>
 
                 {/*  커뮤니티 컴포넌트 분리예정  */}

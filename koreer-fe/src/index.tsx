@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import {store} from "./slice";
 import {SignIn} from "./components/signup/SignIn";
 import {SignUp} from "./components/signup/SignUp";
+import {NotFoundPage} from "./components/common/NotFoundPage";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -31,6 +32,8 @@ root.render(
                         <Route path="signin" element={<SignIn/>}/>
                         <Route path="signup" element={<SignUp/>}/>
                     </Route>
+                    <Route path="*" element={<NotFoundPage />} />
+
                 </Routes>
             </BrowserRouter>
         </Provider>

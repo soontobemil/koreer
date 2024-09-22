@@ -1,3 +1,62 @@
+/* Contact Info */
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 60px 0;
+  background-color: #202020;
+  color: #fff;
+  text-align: center;
+  gap: 50px;
+
+  .contactInfoTitle {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .contactInfoContent {
+    //display: flex;
+    //justify-content: space-around;
+    //flex-wrap: wrap;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .infoBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+
+  .infoImg {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.kakao {
+      background-image: url("../../img/kakao.png");
+    }
+
+    &.email {
+      background-image: url("../../img/email.svg");
+    }
+  }
+
+  .infoBlock p {
+    font-size: 27px;
+    color: #ccc;
+  }
+}
+
+
 .contactContainer {
   background-color: #1e1e1e; /* 어두운 배경 */
   color: #ffffff;
@@ -98,75 +157,87 @@
   }
 }
 
+/* Contact form */
 .contactFormWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
 
   margin: 80px 0;
-}
 
-/* 문의 폼 스타일 */
-.contactForm {
-  min-width: 1100px;
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-  align-self: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  background-color: #202020; /* 문의 폼 배경 */
-  padding: 60px 40px;
-  border-radius: 10px;
-  text-align: center;
-
-  .formTitle {
-    font-size: 36px;
-    color: #ffffff;
-    margin-bottom: 20px;
-  }
-
-  .formWrapper {
+  .contactForm {
+    min-width: 1100px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  }
+    gap: 60px;
+    align-self: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #202020; /* 문의 폼 배경 */
+    padding: 60px 40px;
+    border-radius: 10px;
+    text-align: center;
 
-  .formLabel {
-    font-size: 18px;
-    color: #cccccc;
-    text-align: left;
-  }
+    .formTitle {
+      font-size: 36px;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
 
-  .formInput, .formTextarea {
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #555555;
-    background-color: #333333;
-    color: #ffffff;
-    font-size: 16px;
-  }
+    .formWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-  .formTextarea {
-    height: 150px;
-    resize: none;
-  }
+    .formLabel {
+      font-size: 18px;
+      color: #cccccc;
+      text-align: left;
+    }
 
-  .formButton {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 15px 30px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-  }
+    .formInput, .formTextarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #555555;
+      background-color: #333333;
+      color: #ffffff;
+      font-size: 16px;
+    }
 
-  .formButton:hover {
-    background-color: #0056b3;
+    .formTextarea {
+      height: 150px;
+      resize: none;
+    }
+
+    .formButton {
+      background-color: #007bff;
+      color: #ffffff;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .formButton:hover {
+      background-color: #0056b3;
+    }
+
   }
 
 }
+
+
+.underline {
+  width: 85%;
+  margin: 40px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1.1px solid #757575;
+}
+
 

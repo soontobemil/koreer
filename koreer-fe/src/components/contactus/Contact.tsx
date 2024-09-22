@@ -24,6 +24,7 @@ export function Contact() {
     );
     return (
         <>
+            {/*  Contact Container  */}
             <div className={style.contactContainer}>
                 <h1 className={style.contactTitle}>Contact us</h1>
                 <p className={style.contactDescription}>
@@ -54,8 +55,26 @@ export function Contact() {
                     />
                 </div>
             </div>
+            <div className={style.underline}/>
 
-            {/* 문의 폼 추가 */}
+            {/* Contact Info Section */}
+            <div className={style.contactInfo}>
+                <h2 className={style.contactInfoTitle}>Contact Info</h2>
+                <div className={style.contactInfoContent}>
+                    <div className={style.infoBlock}>
+                        <div className={`${style.infoImg} ${style.email}`}/>
+                        <p>koreerkorea@gmail.com</p>
+                    </div>
+                    <div className={style.infoBlock}>
+                        <div className={`${style.infoImg} ${style.kakao}`}/>
+                        <p>https://open.kakao.com/o/gMhi2YJg</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className={style.underline}/>
+
+            {/* Contact form */}
             <div className={style.contactFormWrapper}>
                 <div className={style.contactForm}>
                     <h2 className={style.formTitle}>Having any problems?</h2>

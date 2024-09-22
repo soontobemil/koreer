@@ -28,7 +28,7 @@
   align-items: center;
 }
 
-.headerButtonWrapper button {
+.buttonStyle {
   padding: 15px 25px;
   border: none;
   border-radius: 8px;
@@ -40,7 +40,7 @@
   transition: background-color 0.3s ease, transform 0.2s;
 }
 
-.headerButtonWrapper button:hover {
+.buttonStyle:hover {
   background-color: #0072b3;
   color: #dcdcc7;
   transform: translateY(-3px);

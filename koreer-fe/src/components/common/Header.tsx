@@ -33,7 +33,7 @@ export function Header() {
                     <button
                         key={idx}
                         onClick={() => onClickChangePage(data.page, data.status)}
-                        className={headerStatus === data.status ? style.selected : ''}
+                        className={`${style.buttonStyle} ${headerStatus === data.status ? style.selected : ''}`}
                     >
                         {data.label}
                     </button>

@@ -9,7 +9,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useSignUpValidator} from "./hooks/useSignUpValidator";
 import {UserPostDTO} from "../../types/signup";
-import {createUser} from "../../slice/signupSlice";
+import {register} from "../../slice/signupSlice";
+import {ConfirmModal} from "../modal/ConfirmModal";
 
 export function SignUp() {
     const [nation, setNation] = useState('Select your country!');
@@ -18,6 +19,7 @@ export function SignUp() {
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('')
     const navigate = useNavigate()
+    const [signUpSuccess, setSignUpSuccess] = useState(false);
     const dispatch = useDispatch<any>();
     const {
         validate,
@@ -44,15 +46,22 @@ export function SignUp() {
         const isSignupAble = validate();
 
         if (isSignupAble) {
-            const result: any = await dispatch(
-                createUser({
-                    user_email: id,
-                    username: nickName,
-                    nation: nation,
-                    password:password
-                }as UserPostDTO)
-            ).unwrap();
-            console.log('result : ', result)
+            try {
+                const result: any = await dispatch(
+                    register({
+                        user_email: id,
+                        username: nickName,
+                        nation: nation,
+                        password: password
+                    } as UserPostDTO)
+                ).unwrap().then(() =>{
+                    console.log(result)
+                    setSignUpSuccess((re) => !re)
+                });
+
+            } catch (e){
+                console.log('error message : ',e)
+            }
 
         }
         // eslint-disable-next-line
@@ -97,6 +106,9 @@ export function SignUp() {
                     </div>
 
                 </div>
+                {signUpSuccess && (
+                    <ConfirmModal modalClose={setSignUpSuccess}/>
+                )}
 
             </div>
         </>

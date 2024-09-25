@@ -1,5 +1,5 @@
 import style from "../../../assets/scss/common/main.module.scss";
-import blackBackgroundLogo from "../../../assets/img/logo_with_black_background.png"
+import logo from "../../../assets/img/logo_with_black_background.png"
 
 export function CompanyInformationField() {
     return(
@@ -10,7 +10,7 @@ export function CompanyInformationField() {
                     new heights.
                 </div>
                 <div className={style.imageBanner}>
-                    <img src={blackBackgroundLogo} alt="Global Opportunities" className={style.bannerImage}/>
+                    <img src={logo} alt="Global Opportunities" className={style.bannerImage}/>
                 </div>
                 <div className={style.callToAction}>Where would you like to explore your future career?</div>
                 <div className={style.buttonsContainer}>

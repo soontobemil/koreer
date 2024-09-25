@@ -10,6 +10,7 @@ export function CompanyInformation() {
     const {getCompanyInfo, companyInformation} = useCompanyInformationGetter();
     useEffect(() => {
         getCompanyInfo().then();
+        // eslint-disable-next-line
     }, []);
 
     const handleOpenDetailModal = (job: CompanyInformationDTO) =>{

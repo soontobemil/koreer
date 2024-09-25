@@ -7,6 +7,10 @@ export function SignIn() {
     const handleSignup = () =>{
         navigate('/signup')
     }
+
+    const googleAccountAccess = () =>{
+        console.log('step1')
+    }
     return (
         <>
             <div className={style.loginMainWrapper}>
@@ -48,7 +52,7 @@ export function SignIn() {
                             Sign in
                         </button>
                         <div className={style.imgWrapper}>
-                            <div className={style.googleImg}></div>
+                            <div className={style.googleImg} onClick={googleAccountAccess}></div>
                             <div className={style.kakaoImg}></div>
 
                         </div>

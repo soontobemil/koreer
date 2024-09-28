@@ -1,5 +1,5 @@
 import style from "../../../assets/scss/common/main.module.scss";
-import logo from "../../../assets/img/logo_with_black_background.png"
+import logo from "../../../assets/img/koreer_logo.png"
 
 export function CompanyInformationField() {
     return(

@@ -25,20 +25,49 @@ export function Header() {
         setHeaderStatus(status)
     }
 
+
+    const [activeButton, setActiveButton] = useState(null); // 활성화된 버튼을 추적
+
+    const onMouseEnter = (index:any) => {
+        setActiveButton(index); // 마우스가 버튼 위에 있을 때 상태를 업데이트
+    };
+
+    const onMouseLeave = () => {
+        setActiveButton(null); // 마우스가 버튼을 떠났을 때 상태를 초기화
+    };
+
     return (
         <header className={style.header}>
             <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>Koreer</div>
             <div className={style.headerButtonWrapper}>
-                {selectedButtons.map((data, idx) => (
-                    <button
-                        key={idx}
-                        onClick={() => onClickChangePage(data.page, data.status)}
-                        className={`${style.buttonStyle} ${headerStatus === data.status ? style.selected : ''}`}
-                    >
-                        {data.label}
-                    </button>
-                ))}
-                <button className={style.loginButton} onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}>Login</button>
+                    {selectedButtons.map((data, idx) => (
+                        <div
+                            key={idx}
+                            onMouseEnter={() => onMouseEnter(idx)} // 마우스 진입 이벤트
+                            onMouseLeave={onMouseLeave} // 마우스 이탈 이벤트
+                            className={style.buttonContainer}
+                        >
+                            <button
+                                onClick={() => onClickChangePage(data.page, data.status)}
+                                className={`${style.buttonStyle} ${headerStatus === data.status ? style.selected : ''}`}
+                            >
+                                {data.label}
+                            </button>
+
+                            {activeButton === idx && (
+                                <div className={style.subMenu}>
+                                    <ul>
+                                        <li>Sub Menu 1</li>
+                                        <li>Sub Menu 2</li>
+                                        <li>Sub Menu 3</li>
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                <button className={style.loginButton}
+                        onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}>Login
+                </button>
             </div>
         </header>
     );

@@ -3,57 +3,56 @@
   display: flex;
   flex-direction: column;
   padding: 60px 0;
-  background-color: #FFFFFF;
-  color: #fff;
+  background-color: #ffffff; /* 배경 흰색 */
+  color: #0072b3; /* 파란색 텍스트 */
   text-align: center;
   gap: 50px;
-
-  .contactInfoTitle {
-    font-size: 48px;
-    margin-bottom: 20px;
-  }
-
-  .contactInfoContent {
-
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .infoBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-  }
-
-  .infoImg {
-    width: 100px;
-    height: 100px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    &.kakao {
-      background-image: url("../../img/kakao.png");
-    }
-
-    &.email {
-      background-image: url("../../img/email.svg");
-    }
-  }
-
-  .infoBlock p {
-    font-size: 27px;
-    color: #ccc;
-  }
 }
 
+.contactInfoTitle {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
 
+.contactInfoContent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.infoImg {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.infoImg.kakao {
+  background-image: url("../../img/kakao.png");
+}
+
+.infoImg.email {
+  background-image: url("../../img/email.svg");
+}
+
+.infoBlock p {
+  font-size: 27px;
+  color: #424242; /* 어두운 회색 */
+}
+
+/* Contact Container */
 .contactContainer {
   background-color: #1e1e1e; /* 어두운 배경 */
   color: #ffffff;
@@ -62,96 +61,94 @@
   align-items: center;
   justify-content: center;
   padding: 100px 20px;
+}
 
-  .contactTitle {
-    font-size: 56px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
+.contactTitle {
+  font-size: 56px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
-  .contactDescription {
-    font-size: 24px;
-    color: #cccccc;
-    margin-bottom: 60px;
-  }
+.contactDescription {
+  font-size: 24px;
+  color: #cccccc;
+  margin-bottom: 60px;
+}
 
-  .contactOptions {
-    display: flex;
-    gap: 60px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+.contactOptions {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-  .optionBox {
-    background-color: #2a2a2a;
-    border-radius: 15px;
-    padding: 50px;
-    text-align: center;
-    width: 400px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
+.optionBox {
+  background-color: #f1f4f8; /* 밝은 배경으로 변경 */
+  border-radius: 15px;
+  padding: 50px;
+  text-align: center;
+  width: 400px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-  .optionBox:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
-  }
+.optionBox:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
 
-  .iconPlaceholder {
-    width: 120px;
-    height: 120px;
-    background-color: #FFFFFF;
-    border-radius: 50%;
-    margin: 0 auto 30px;
+.iconPlaceholder {
+  width: 120px;
+  height: 120px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  margin: 0 auto 30px;
+}
 
-  }
+.iconImg {
+  width: 110px;
+  height: 110px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
-  .iconImg {
-    width: 110px;
-    height: 110px;
-    background-color: #FFFFFF;
-    border-radius: 50%;
-    margin: 0 auto 10px;
+.iconImg.sales {
+  background-image: url("../../img/sales.svg");
+}
 
-    /* 이미지 관련 속성 추가 */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+.iconImg.support {
+  background-image: url("../../img/support.svg");
+}
 
-    &.sales {
-      background-image: url("../../img/sales.svg");
-    }
+.iconImg.media {
+  background-image: url("../../img/youtube.svg");
+}
 
-    &.support {
-      background-image: url("../../img/support.svg");
-    }
+.optionTitle {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #0072b3;
+}
 
-    &.media {
-      background-image: url("../../img/youtube.svg");
-    }
-  }
+.optionDescription {
+  font-size: 20px;
+  color: #666666; /* 어두운 회색으로 수정 */
+  margin-bottom: 30px;
+}
 
-  .optionTitle {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
+.optionLink {
+  font-size: 20px;
+  color: #007bff; /* 파란색 링크 */
+  text-decoration: none;
+}
 
-  .optionDescription {
-    font-size: 20px;
-    color: #bbbbbb;
-    margin-bottom: 30px;
-  }
-
-  .optionLink {
-    font-size: 20px;
-    color: #007bff;
-    text-decoration: none;
-  }
-
-  .optionLink:hover {
-    text-decoration: underline;
-  }
+.optionLink:hover {
+  text-decoration: underline;
 }
 
 /* Contact form */
@@ -159,74 +156,73 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin: 80px 0;
-
-  .contactForm {
-    min-width: 1100px;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    align-self: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    background-color: #FFFFFF; /* 문의 폼 배경 */
-    padding: 60px 40px;
-    border-radius: 10px;
-    text-align: center;
-
-    .formTitle {
-      font-size: 36px;
-      color: #ffffff;
-      margin-bottom: 20px;
-    }
-
-    .formWrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .formLabel {
-      font-size: 18px;
-      color: #cccccc;
-      text-align: left;
-    }
-
-    .formInput, .formTextarea {
-      width: 100%;
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #555555;
-      background-color: #333333;
-      color: #ffffff;
-      font-size: 16px;
-    }
-
-    .formTextarea {
-      height: 150px;
-      resize: none;
-    }
-
-    .formButton {
-      background-color: #007bff;
-      color: #ffffff;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      border: none;
-      transition: background-color 0.3s;
-    }
-
-    .formButton:hover {
-      background-color: #0056b3;
-    }
-
-  }
-
 }
 
+.contactForm {
+  min-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-self: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #ffffff; /* 문의 폼 배경 */
+  padding: 60px 40px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.formTitle {
+  font-size: 36px;
+  color: #0072b3; /* 파란색 폼 타이틀 */
+  margin-bottom: 20px;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formLabel {
+  font-size: 18px;
+  color: #424242; /* 어두운 회색 텍스트 */
+  text-align: left;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #0072b3; /* 파란색 테두리 */
+  background-color: #f1f4f8; /* 밝은 배경 */
+  color: #424242;
+  font-size: 16px;
+}
+
+.formTextarea {
+  height: 150px;
+  resize: none;
+}
+
+.formButton {
+  width: 300px;
+  align-self: center;
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.formButton:hover {
+  background-color: #0056b3;
+}
 
 .underline {
   width: 85%;
@@ -236,5 +232,3 @@
   justify-content: center;
   border-bottom: 1.1px solid #757575;
 }
-
-

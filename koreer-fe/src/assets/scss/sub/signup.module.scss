@@ -21,6 +21,7 @@
   justify-content: center;
 
   .signupWrapper {
+    width: 700px;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -29,7 +30,7 @@
 
     .header {
       color: #2e75cc;
-      font-size: 32px;
+      font-size: 72px;
       font-weight: 700;
       letter-spacing: -.05em;
       line-height: 1.6;
@@ -37,14 +38,15 @@
     }
 
     .body {
+      width: 100%;
       display: flex;
       flex-direction: column;
 
-      border: 0.4px solid #9f9f9f;
       border-radius: 7px;
-      gap: 50px;
-      padding: 40px 45px;
-      width: 490px;
+      gap: 70px;
+      //border: 0.4px solid #9f9f9f;
+      //padding: 40px 45px;
+      //width: 490px;
 
     }
   }
@@ -60,29 +62,28 @@
 .contentWithButton{
   display: flex;
   justify-content: space-between;
+  gap: 20px;
 }
 
 .contentInput {
-  background-color: #FFFFFF;
-  border-width: 1px;
-  //border: none;
-  border-right: 1px rgb(118, 118, 118);
-  align-items: center;
   display: flex;
   margin-top: 4px;
-  width: 70%;
+  width: 100%;
   height: 50px;
   padding: 1px 7px;
 
-  color: #a5b4eb;
-  font-size: 16px;
+  color: #000000;
+  font-size: 23px;
+  align-items: center;
+  border: none;
+  border-bottom: 1px solid rgb(118, 118, 118);
 }
 
 .checkDuplicatedButton {
-  width: 110px;
-  height: 50px;
+  width: 190px;
+  height: 80px;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 23px;
   color: #d5d5d5;
 
   border: 1.5px none #dedede;
@@ -98,8 +99,8 @@
 }
 
 .contentText {
-  color: #a5b4eb;
-  font-size: 22px;
+  color: #2d459d;
+  font-size: 26px;
   font-weight: 400;
   letter-spacing: -.05e
 }
@@ -116,13 +117,13 @@
   display: flex;
   justify-content: space-between;
   margin-top: 4px;
-  width: 70%;
+  width: 100%;
   height: 50px;
   padding: 1px 7px;
   cursor: pointer;
 
   > .nationText {
-    color: lightskyblue;
+    color: #000000;
   }
 }
 
@@ -139,31 +140,33 @@
   top: 10px;
 }
 
-.selectOptionsWrapper{
-  width: 100px;
+.selectOptionsWrapper {
+  width: 400px;
   display: flex;
   flex-direction: column;
-  top: 42px;
+  top: 32px;
   position: relative;
-  left: -60px;
+  left: -360px;
+  border: 0.2px solid #e6dede;
 
-  background-color: #343232;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: content-box;
+  background-color: #FFFFFF;
 
-  > .options{
+  > .options {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    color: #000000;
+    height: 43px;
+    background-color: #FFFFFF;
+    border: 0.2px solid #e6dede;
     align-items: center;
-    color: white;
-    height: 33px;
-    background-color: #343232;
+    justify-content: center;
 
-    &.selected{
-      background-color: #575757;
-      color: lightskyblue;
+    &.selected {
+      background-color: #cdddf5;
+    }
+
+    &:hover {
+      background-color: #cdddf5;
     }
   }
 }
@@ -175,6 +178,7 @@
   flex-direction: row;
   align-items: center;
   align-content: center;
+  align-self: center;
 
   .cancelButton {
     @include signupButtonBase;
@@ -204,7 +208,7 @@
 }
 .confirmMessage{
   margin-top: 10px;
-  color:#FFFFFF;
+  color:#000000;
   font-size: 16px;
   font-weight: bold;
 }

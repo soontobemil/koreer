@@ -25,7 +25,6 @@ export function TopButton() {
             window.removeEventListener("scroll", defaultScrollListener);
         };
     }, [scrollY]);
-    console.log(scrollY)
     // console.log(window.scrollY)
 
     return(

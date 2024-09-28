@@ -3,295 +3,235 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 40px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 180px;
+}
 
-  padding: 100px 30px;
+.communityTitleWrapper {
+  padding: 30px 50px;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
 
-  // 커뮤니티 헤더 영역
-  .communityTitleWrapper {
-    padding: 20px 30px;
-    display: flex;
-    flex-direction: column;
-    //align-items: center;
-    width: 50%;
+.title {
+  color: #0072b3;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 150%;
+}
 
-    > .title {
-      color: #ffffff;
-      font-size: 34px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 140%;
-      letter-spacing: -0.36px;
-    }
+.subTitle {
+  color: #424242;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 150%;
+}
 
-    > .subTitle {
-      color: #ffffff;;
-      font-size: 22px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 140%;
-      letter-spacing: -0.36px;
-    }
-  }
+.contents {
+  width: 1100px;
+  display: flex;
+  flex-direction: column;
+}
 
-  .contents {
-    width: 900px;
-    display: flex;
-    flex-direction: column;
+.filterWrapper {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #b0bec5;
+}
 
-    // 커뮤니티 검색 영역
-    .filterWrapper {
-      width: 100%;
-      justify-content: space-between;
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid darkgray;
+.buttonsWrapper {
+  padding: 18px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #0072b3;
+  border-radius: 15px;
+  cursor: pointer;
+}
 
-      // 버튼 스타일
-      .buttonsWrapper {
-        //width: 200px;
-        padding: 14px 11px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        border: 2px solid #313333;
-        border-radius: 10px;
-        cursor: pointer;
+.sortButton {
+  width: 22px;
+  height: 22px;
+  background-image: url("../../img/community/sort.png");
+  background-size: cover;
+  background-position: center;
+}
 
-        .sortButton {
-          width: 18px;
-          height: 18px;
-          background-image: url("../../img/community/sort.png");
-          background-color: #FFFFFF;
-          position: relative;
-          background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
-          background-position: center;
+.postingButton {
+  width: 22px;
+  height: 22px;
+  background-image: url("../../img/community/write.svg");
+  background-size: cover;
+  background-position: center;
+}
 
-        }
+.text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0072b3;
+}
 
-        .postingButton {
-          width: 18px;
-          height: 18px;
-          background-image: url("../../img/community/posting.png");
-          background-color: #FFFFFF;
-          position: relative;
-          background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
-          background-position: center;
+.categoryWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 30px;
+}
 
-        }
+.categories {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+  color: #0072b3;
+}
 
-        > .text {
-          font-size: 13px;
-          font-style: normal;
-          font-weight: 200;
-          line-height: 150%;
-          letter-spacing: -0.24px;
-          color: #ffffff;
-        }
-      }
+.categoryContent {
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 600;
+  color: #0072b3;
+}
 
-      // 카테고리 및 정렬 영역
-      .categoryWrapper {
-        display: flex;
-        justify-content: center;
-        padding: 0 22px;
+.searchAreaWrapper {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  column-gap: 14rem;
+  justify-content: space-between;
+}
 
-        .categories {
-          display: flex;
-          gap: 28px;
-          align-items: center;
-          align-self: center;
-          color: #ffffff;
+.refreshImg {
+  width: 38px;
+  height: 38px;
+  background-image: url("../../img/community/refresh.svg");
+  background-size: cover;
+  background-position: center;
+}
 
-          > .categoryContent {
-            cursor: pointer;
-            font-size: 22px;
-            font-style: normal;
-            font-weight: 200;
-            line-height: 150%;
-            letter-spacing: -0.24px;
-            color: #ffffff;
-          }
-        }
-      }
+.searchArea {
+  width: 350px;
+  border: 2px solid #0072b3;
+  border-radius: 15px;
+  padding: 12px 25px;
+}
 
-      // 검색 및 페이징 영역
-    }
+.searchInput {
+  width: 100%;
+  background-color: #ffffff;
+  border: none;
+  color: #0072b3;
+}
 
-    .searchAreaWrapper {
-      display: flex;
-      align-items: center;
-      padding: 10px; /* 내부 여백 */
-      column-gap: 12rem;
-      justify-content: space-between;
+.pageArea {
+  color: #0072b3;
+  font-size: 24px;
+  font-weight: 600;
+}
 
-      .refreshImg {
-        align-self: center;
-        width: 32px;
-        height: 32px;
-        background-image: url("../../img/community/refresh.png");
-        background-color: #FFFFFF;
-        position: relative;
-        background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
-        background-position: center;
-        justify-content: space-between;
+.communityContentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 0;
+}
 
-      }
+.communityContent {
+  width: 100%;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-bottom: 2px solid #b0bec5;
+  cursor: pointer;
+  transition: transform 0.3s;
+  color: #424242;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 150%;
+}
 
-      .searchArea {
-        width: 300px;
-        border: 2px solid #424242;
-        border-radius: 10px;
-        padding: 9px 19px;
-        justify-content: space-between;
+.communityContent:hover {
+  transform: scale(1.05);
+}
 
-        .searchInput {
-          width: 100%;
-          background-color: #FFFFFF;
-          border: none;
-          color: #ffffff;
-        }
-      }
+.contentHeaderWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 
-      .pageArea {
-        color: #ffffff;
-        font-size: 22px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 140%;
-        justify-content: space-between;
-        letter-spacing: -0.36px;
-      }
-    }
+.countryImg {
+  width: 42px;
+  height: 42px;
+  background-size: cover;
+  background-position: center;
+}
 
-    // 커뮤니티 게시글 영역
-    .communityContentWrapper {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
+.countryImg.kor {
+  background-image: url("../../img/community/korea.png");
+}
 
-      //#424242
-      .communityContent {
-        width: 100%;
-        padding: 1.5rem 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        border-bottom: 2px solid #282c34;
-        cursor: pointer;
-        transition: transform 0.3s;;
+.countryImg.usa {
+  background-image: url("../../img/community/usa.png");
+}
 
-        color: #d5d5d5;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 300;
-        line-height: 140%;
-        letter-spacing: -0.36px;
+.countryImg.canada {
+  background-image: url("../../img/community/canada.png");
+}
 
-        .contentHeaderWrapper {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          align-self: center;
-          flex-direction: row;
-          column-gap: 1rem;
+.countryImg.japan {
+  background-image: url("../../img/community/japan.png");
+}
 
-          > .countryImg {
-            position: relative;
-            background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
-            background-position: center;
-            justify-content: space-between;
-            width: 36px;
-            height: 36px;
+.modifyImg {
+  background-image: url("../../img/community/modify.png");
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+}
 
-            &.kor {
-              background-image: url("../../img/community/korea.png");
-            }
+.descriptionWrapper {
+  padding: 10px 15px;
+}
 
-            &.usa {
-              background-image: url("../../img/community/usa.png");
-            }
+.description {
+  color: #424242;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 150%;
+}
 
-            &.canada {
-              background-image: url("../../img/community/canada.png");
-            }
+.contentFooterWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 
-            &.japan {
-              background-image: url("../../img/community/japan.png");
-            }
-          }
+.contentCategoryWrapper {
+  background-color: #e3f2fd;
+  border-radius: 12px;
+  padding: 0 8px;
+}
 
-          > .modifyImg {
-            background-image: url("../../img/community/modify.png");
-            position: relative;
-            background-size: cover; /* 이미지가 컨테이너를 가득 채우도록 설정 */
-            background-position: center;
-            justify-content: space-between;
-            cursor: pointer;
-            width: 31px;
-            height: 31px;
-            margin-left: auto;
-          }
+.categoryText {
+  color: #0072b3;
+  font-size: 14px;
+  font-weight: bold;
+}
 
-        }
-
-        .descriptionWrapper {
-          padding: 5px 10px;
-
-          > .description {
-            color: #d5d5d5;
-            font-size: 22px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 140%;
-            letter-spacing: -0.36px;
-          }
-        }
-
-        .contentFooterWrapper {
-          display: flex;
-          align-items: center;
-          flex-direction: row;
-          column-gap: 1rem;
-          //#0072b3
-
-          .contentCategoryWrapper {
-            //border: 1px solid lightsteelblue;
-            margin-right: 10px;
-            background-color: rgb(209 233 250);
-            border-radius: 9px;
-            padding: 0 6px;
-
-            > .categoryText {
-              color: rgb(0 144 249);
-              font-size: 12px;
-              font-style: normal;
-              font-weight: 600;
-              line-height: 140%;
-              letter-spacing: -0.36px;
-            }
-
-            > .text {
-              color: #ffffff;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: 140%;
-              letter-spacing: -0.36px;
-            }
-          }
-        }
-      }
-
-      .communityContent:hover{
-        transform: scale(1.05);
-      }
-    }
-
-  }
+.text {
+  color: #0072b3;
+  font-size: 16px;
+  font-weight: 400;
 }

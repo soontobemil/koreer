@@ -28,6 +28,11 @@ export function Header() {
 
     const onClickChangePage = (page: string, status: HeaderStatus) => {
         navigate(`/${page}`)
+        window.scrollBy({
+            left: 0,
+            top: -window.scrollY,
+            behavior: "smooth",
+        });
         setHeaderStatus(status)
     }
 

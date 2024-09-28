@@ -21,6 +21,7 @@ async function fetchAndInsertJobInfos(req, res) {
 // API Endpoint: /jobinfos/search?country=Canada&location=Vancouver&adzuna
 async function getJobInfos(req, res) {
     try {
+        console.log('success')
         const conditions = {
             iLike:{},
             equals:{}

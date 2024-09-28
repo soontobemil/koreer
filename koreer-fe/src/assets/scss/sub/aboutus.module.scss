@@ -1,152 +1,315 @@
-.aboutUsContainer {
-  color: #ffffff;
-  padding: 120px 40px;
-  text-align: center;
+@import "../common/variables";
+
+@include mobile {
+  .aboutUsContainer {
+    color: #ffffff;
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .pageTitle {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #0072b3;
+  }
+
+  .teamGrid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .teamMemberCard {
+    background-color: #f1f4f8;
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .teamMemberCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .memberImage {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+
+  .memberName {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #0072b3;
+  }
+
+  .memberDescription {
+    font-size: 18px;
+    color: #666666;
+    margin-bottom: 15px;
+  }
+
+  .memberRole {
+    font-size: 20px;
+    font-weight: bold;
+    color: #f5ba13;
+    margin-bottom: 20px;
+  }
+
+  .socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .socialLinks a {
+    color: #0072b3;
+    font-size: 20px;
+  }
+
+  .socialLinks a:hover {
+    color: #f5ba13;
+  }
+
+  .underline {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #ada1a1;
+  }
+
+  .visionMissionSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f0efef;
+    color: #0072b3;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 30px 0;
+    width: 90%;
+    gap: 20px;
+  }
+
+  .rightItem {
+    margin-right: 40px;
+    align-self: end;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .iconContainer {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #ada1a1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
+    filter: invert(100%);
+  }
+
+  .textContainer {
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0072b3;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    font-size: 18px;
+    color: #333333;
+  }
+
+  .lineBetween {
+    //display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 1px;
+    background-color: #0072b3;
+    color: #0072b3;
+  }
 }
 
-.pageTitle {
-  font-size: 64px;
-  font-weight: bold;
-  margin-bottom: 50px;
-  color: #0072b3; /* 파란색으로 변경 */
-}
+@include desktop {
+  .aboutUsContainer {
+    color: #ffffff;
+    padding: 120px 40px;
+    text-align: center;
+  }
 
-.teamGrid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 50px;
-}
+  .pageTitle {
+    font-size: 64px;
+    font-weight: bold;
+    margin-bottom: 50px;
+    color: #0072b3; /* 파란색으로 변경 */
+  }
 
-.teamMemberCard {
-  background-color: #f1f4f8; /* 밝은 배경색으로 변경 */
-  border-radius: 20px;
-  padding: 60px;
-  width: 380px;
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
+  .teamGrid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+  }
 
-.teamMemberCard:hover {
-  transform: translateY(-12px);
-  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.15); /* 그림자 가벼움 */
-}
+  .teamMemberCard {
+    background-color: #f1f4f8; /* 밝은 배경색으로 변경 */
+    border-radius: 20px;
+    padding: 60px;
+    width: 380px;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
 
-.memberImage {
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  margin-bottom: 25px;
-}
+  .teamMemberCard:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.15); /* 그림자 가벼움 */
+  }
 
-.memberName {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #0072b3; /* 파란색 이름 */
-}
+  .memberImage {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 25px;
+  }
 
-.memberDescription {
-  font-size: 20px;
-  color: #666666; /* 어두운 회색 */
-  margin-bottom: 20px;
-}
+  .memberName {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #0072b3; /* 파란색 이름 */
+  }
 
-.memberRole {
-  font-size: 24px;
-  font-weight: bold;
-  color: #f5ba13;
-  margin-bottom: 30px;
-}
+  .memberDescription {
+    font-size: 20px;
+    color: #666666; /* 어두운 회색 */
+    margin-bottom: 20px;
+  }
 
-.socialLinks {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
+  .memberRole {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f5ba13;
+    margin-bottom: 30px;
+  }
 
-.socialLinks a {
-  color: #0072b3;
-  font-size: 24px;
-}
+  .socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
 
-.socialLinks a:hover {
-  color: #f5ba13; /* 호버 시 금색으로 */
-}
+  .socialLinks a {
+    color: #0072b3;
+    font-size: 24px;
+  }
 
-.underline {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1.1px solid #ada1a1;
-}
+  .socialLinks a:hover {
+    color: #f5ba13; /* 호버 시 금색으로 */
+  }
 
-.visionMissionSection {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 60px;
-  background-color: #f0efef; /* 배경 흰색으로 변경 */
-  color: #0072b3; /* 텍스트 파란색으로 */
-}
+  .underline {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1.1px solid #ada1a1;
+  }
 
-.item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 40px 0;
-  width: 70vh;
-}
+  .visionMissionSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px;
+    background-color: #f0efef; /* 배경 흰색으로 변경 */
+    color: #0072b3; /* 텍스트 파란색으로 */
+  }
 
-.rightItem {
-  margin-right: 40px;
-  align-self: end;
-  justify-content: flex-end;
-  text-align: right;
-}
+  .item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 40px 0;
+    width: 70vh;
+  }
 
-.iconContainer {
-  width: 120px;
-  height: 120px;
-  border: 1.1px solid #ada1a1;;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 40px;
-}
+  .rightItem {
+    margin-right: 40px;
+    align-self: end;
+    justify-content: flex-end;
+    text-align: right;
+  }
 
-.icon {
-  width: 60px;
-  height: 60px;
-  filter: invert(100%);
-}
+  .iconContainer {
+    width: 120px;
+    height: 120px;
+    border: 1.1px solid #ada1a1;;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
+  }
 
-.textContainer {
-  width: 500px;
-  flex-grow: 1;
-  text-align: left;
-}
+  .icon {
+    width: 60px;
+    height: 60px;
+    filter: invert(100%);
+  }
 
-.title {
-  font-size: 32px;
-  font-weight: bold;
-  color: #0072b3;
-  margin-bottom: 12px;
-}
+  .textContainer {
+    width: 500px;
+    flex-grow: 1;
+    text-align: left;
+  }
 
-.description {
-  font-size: 22px;
-  color: #333333;
-}
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0072b3;
+    margin-bottom: 12px;
+  }
 
-.lineBetween {
-  display: flex;
-  align-self: center;
-  width: 3px;
-  height: 80px;
-  background-color: #0072b3; /* 파란색 선 */
-  margin: 40px 0;
+  .description {
+    font-size: 22px;
+    color: #333333;
+  }
+
+  .lineBetween {
+    display: flex;
+    align-self: center;
+    width: 3px;
+    height: 80px;
+    background-color: #0072b3; /* 파란색 선 */
+    margin: 40px 0;
+  }
+
 }

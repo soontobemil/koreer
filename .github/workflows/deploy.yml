@@ -3,7 +3,7 @@ name: Deploy to Remote Server
 on:
   push:
     branches:
-      - main # 테스트
+      - KOR-9 # 테스트
 
 jobs:
   deploy:

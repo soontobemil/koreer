@@ -1,6 +1,13 @@
-module.exports = (sequelize, DataTypes) => {
-    const CareerTips = sequelize.define('CareerTips', {
+const { formatDate } = require('@common/utils');
 
+module.exports = (sequelize, DataTypes) => {
+    return sequelize.define('CareerTips', {
+        id: {
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+            type: DataTypes.NUMERIC
+        },
         title: {
             type: DataTypes.STRING(100),
             allowNull: false,
@@ -38,6 +45,4 @@ module.exports = (sequelize, DataTypes) => {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
     });
-
-    return CareerTips;
 };

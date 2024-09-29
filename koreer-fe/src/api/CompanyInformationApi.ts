@@ -1,7 +1,6 @@
 import {MainApi} from "./MainApi";
 
 export class CompanyInformationApi {
-    // static baseUrl = `${MainApi.urlPrefix}`;
     static baseUrl = `${process.env.REACT_APP_BASE_URL}`;
 
     static getCompanyLists = (country: string, location:string) => () =>

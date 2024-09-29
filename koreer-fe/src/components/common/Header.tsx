@@ -49,7 +49,6 @@ export function Header() {
                 return window.location.href = '/tips';
         }
     }
-    console.log(process.env.REACT_APP_BASE_URL)
 
 
     const [activeButton, setActiveButton] = useState(null);

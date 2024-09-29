@@ -6,12 +6,19 @@ import {useDispatch} from "react-redux";
 export function useCompanyInformationGetter() {
     const dispatch = useDispatch<any>();
     const [companyInformation, setCompanyInformation] = useState<CompanyInformationDTO[]>();
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const getCompanyInfo = useCallback(async () => {
-            const result: CompanyInformationDTO[] = await dispatch(
-                getCompanyInformation({country: "", location: ""})
-            ).unwrap();
-            setCompanyInformation(result);
+            try {
+                const result: CompanyInformationDTO[] = await dispatch(
+                    getCompanyInformation({country: "", location: ""})
+                ).unwrap();
+                setCompanyInformation(result);
+            } catch (e){
+                console.log(e)
+            }finally {
+                setIsLoaded(true);
+            }
         },
         [dispatch
             // , selectedCategory, selectedLabel
@@ -19,6 +26,6 @@ export function useCompanyInformationGetter() {
     );
     return ({
         getCompanyInfo,
-        companyInformation
+        companyInformation, isLoaded
     });
 }

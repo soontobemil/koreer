@@ -2,8 +2,6 @@ import {MainApi} from "./MainApi";
 import {UserPostDTO} from "../types/signup";
 
 export class SignupApi{
-    // static userUrl = `${MainApi.urlPrefix}/users`;
-    // static authUrl = `${MainApi.urlPrefix}/auth`;
     static userUrl = `${process.env.REACT_APP_BASE_URL}/users`;
     static authUrl = `${process.env.REACT_APP_BASE_URL}/auth`;
 

@@ -24,10 +24,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.NUMERIC,
             allowNull: false,
         },
+        category: {
+            type: DataTypes.ENUM('info', 'daily', 'news'),
+            allowNull: false,
+        },
         created_at: {
             type: DataTypes.DATE,
             get() {
-                const rawValue = this.getDataValue('posted_at');
+                const rawValue = this.getDataValue('created_at');
                 return rawValue ? formatDate(new Date(rawValue), 'yyyy-MM-dd HH:mm:ss') : null;
             }
         },

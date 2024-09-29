@@ -11,6 +11,11 @@ export interface CompanyInformationDTO{
     api_category: string;
 }
 
+export enum CommunityType {
+    COMMUNITY = "COMMUNITY",
+    TIPS = "TIPS",
+}
+
 enum ApiCategory{
     ADZUNA = "ADZUNA",
 }

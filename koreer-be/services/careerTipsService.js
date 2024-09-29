@@ -20,6 +20,7 @@ async function getCareerTips() {
         item.content,
         item.view_count,
         item.user_id,
+        item.category,
         item.created_at,
         item.updated_at
     ));
@@ -33,7 +34,7 @@ async function getCareerTips() {
         itemsPerPage
     );
 
-    return response('200', '팁 조회 성공', paginatedResponse)
+    return response(200, '팁 조회 성공', paginatedResponse)
 }
 
 module.exports = {

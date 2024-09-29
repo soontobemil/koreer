@@ -20,6 +20,7 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var jobInfoRouter = require('./routes/jobinfos');
+var careerTips = require('./routes/careertips');
 
 var userService = require('./services/userService');
 
@@ -82,6 +83,7 @@ app.use(cors({
 app.options('', cors());
 
 app.use('/jobinfos', jobInfoRouter);
+app.use('/careertips', careerTips);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

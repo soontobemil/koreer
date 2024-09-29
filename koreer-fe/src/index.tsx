@@ -9,11 +9,12 @@ import {Community} from "./components/community/Community";
 import {Contact} from "./components/contactus/Contact";
 import {AboutUs} from "./components/aboutus/AboutUs";
 import {CompanyInformation} from "./components/companyinformation/CompanyInformation";
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import {store} from "./slice";
 import {SignIn} from "./components/signup/SignIn";
 import {SignUp} from "./components/signup/SignUp";
 import {NotFoundPage} from "./components/common/NotFoundPage";
+import {Tips} from "./components/community/Tips";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -28,11 +29,12 @@ root.render(
                         <Route path="about-us" element={<AboutUs/>}/>
                         <Route path="company-information" element={<CompanyInformation/>}/>
                         <Route path="community" element={<Community/>}/>
+                        <Route path="tips" element={<Tips/>}/>
                         <Route path="contact" element={<Contact/>}/>
                         <Route path="signin" element={<SignIn/>}/>
                         <Route path="signup" element={<SignUp/>}/>
                     </Route>
-                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="*" element={<NotFoundPage/>}/>
 
                 </Routes>
             </BrowserRouter>

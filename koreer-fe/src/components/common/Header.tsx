@@ -10,6 +10,11 @@ enum HeaderStatus {
     NONE = "NONE",
 }
 
+enum SubMenu {
+    COMMUNITY = "COMMUNITY",
+    SHARE_YOUR_TIPS = "Share Your Tips",
+}
+
 export function Header() {
     const [headerStatus, setHeaderStatus] = useState(HeaderStatus.NONE);
     const navigate = useNavigate();
@@ -20,7 +25,7 @@ export function Header() {
             label: 'Community',
             page: 'community',
             status: HeaderStatus.COMMUNITY,
-            subMenu: ["Community", "Share your tips"]
+            subMenu: [SubMenu.COMMUNITY, SubMenu.SHARE_YOUR_TIPS]
         },
         {label: 'Job Information', page: 'company-information', status: HeaderStatus.COMPANY_INFORMATION, subMenu: []},
         {label: 'Contact', page: 'contact', status: HeaderStatus.CONTACT, subMenu: []},
@@ -34,6 +39,15 @@ export function Header() {
             behavior: "smooth",
         });
         setHeaderStatus(status)
+    }
+
+    const onClickChangSubPage = (menu: SubMenu) => {
+        switch (menu) {
+            case SubMenu.COMMUNITY:
+                return window.location.href = '/community';
+            case SubMenu.SHARE_YOUR_TIPS:
+                return window.location.href = '/tips';
+        }
     }
 
 
@@ -69,7 +83,9 @@ export function Header() {
                             <div className={style.subMenu}>
                                 <ul>
                                     {data.subMenu.map((menu, index) => (
-                                        <li>{menu}</li>
+                                        <li onClick={() => onClickChangSubPage(menu)} key={index}>
+                                            {menu}
+                                        </li>
                                     ))}
                                 </ul>
                             </div>

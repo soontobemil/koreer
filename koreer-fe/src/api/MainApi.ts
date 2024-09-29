@@ -4,7 +4,8 @@ export class MainApi extends HttpClient {
   private static classInstance?: MainApi;
 
   public static api = MainApi.getInstance().instance;
-  public static urlPrefix = "/api";
+  // public static urlPrefix = "/api";
+  // public static urlPrefix = "/";
 
   private constructor() {
     super(process.env.REACT_APP_BASE_URL as string);

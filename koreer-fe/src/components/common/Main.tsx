@@ -2,7 +2,6 @@ import style from "../../assets/scss/common/main.module.scss"
 import {ListItems} from "./main/ListItems";
 import {HiringProcessField} from "./main/HiringProcessField";
 import {CompanyInformationField} from "./main/CompanyInformationField";
-import {TestimonialField} from "./main/TestimonialField";
 import {TopButton} from "./TopButton";
 
 export default function Main() {

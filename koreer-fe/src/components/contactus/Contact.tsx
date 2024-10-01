@@ -9,6 +9,9 @@ export function Contact() {
     const handleContact = (type: OptionType) => {
         alert(type+'는 준비중입니다.')
     }
+    const onClickOpenChatting = () =>{
+        window.location.href ='https://open.kakao.com/o/gMhi2YJg'
+    }
 
     // @ts-ignore
     const OptionBox = ({ iconClass, title, description, linkText, optionType }) => (
@@ -67,7 +70,7 @@ export function Contact() {
                     </div>
                     <div className={style.infoBlock}>
                         <div className={`${style.infoImg} ${style.kakao}`}/>
-                        <p>https://open.kakao.com/o/gMhi2YJg</p>
+                        <p onClick={onClickOpenChatting}>바로가기</p>
                     </div>
                 </div>
             </div>

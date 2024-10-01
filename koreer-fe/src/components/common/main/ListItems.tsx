@@ -4,7 +4,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import CommentIcon from "@mui/icons-material/Comment";
 
 export function ListItems() {
-    return(
+    return (
         <>
             <div className={style.listBoxWrapper}>
                 {/* API 연동 예정 아래는 더미데이터 */}
@@ -21,14 +21,17 @@ export function ListItems() {
                     </div>
 
                     <div className={style.listIconWrapper}>
-                        <FavoriteIcon className="add"/>
-                        <div className="read">
-                            <VisibilityIcon className="read_icon"/>
-                            <div className="read_count">21</div>
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
+                            <FavoriteIcon className="add"/>
+                            <div style={{alignSelf:'center'}}>9</div>
                         </div>
-                        <div className="comment">
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
+                            <VisibilityIcon className="read_icon"/>
+                            <div style={{alignSelf:'center'}} >21</div>
+                        </div>
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
                             <CommentIcon className="comment_icon"/>
-                            <div className="comment_count">3</div>
+                            <div style={{alignSelf:'center'}}>3</div>
                         </div>
                     </div>
                 </div>
@@ -44,14 +47,17 @@ export function ListItems() {
                     </div>
 
                     <div className={style.listIconWrapper}>
-                        <FavoriteIcon className="add"/>
-                        <div className="read">
-                            <VisibilityIcon className="read_icon"/>
-                            <div className="read_count">21</div>
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
+                            <FavoriteIcon className="add"/>
+                            <div style={{alignSelf:'center'}}>22</div>
                         </div>
-                        <div className="comment">
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
+                            <VisibilityIcon className="read_icon"/>
+                            <div style={{alignSelf:'center'}}>7</div>
+                        </div>
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
                             <CommentIcon className="comment_icon"/>
-                            <div className="comment_count">3</div>
+                            <div style={{alignSelf:'center'}}>5</div>
                         </div>
                     </div>
                 </div>
@@ -69,14 +75,17 @@ export function ListItems() {
                     </div>
 
                     <div className={style.listIconWrapper}>
-                        <FavoriteIcon className="add"/>
-                        <div className="read">
-                            <VisibilityIcon className="read_icon"/>
-                            <div className="read_count">21</div>
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
+                            <FavoriteIcon className="add"/>
+                            <div style={{alignSelf:'center'}}>22</div>
                         </div>
-                        <div className="comment">
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
+                            <VisibilityIcon className="read_icon"/>
+                            <div style={{alignSelf:'center'}}>10</div>
+                        </div>
+                        <div style={{display:"flex", flexDirection:"column", gap: '4px'}}>
                             <CommentIcon className="comment_icon"/>
-                            <div className="comment_count">3</div>
+                            <div style={{alignSelf:'center'}}>12</div>
                         </div>
                     </div>
                 </div>

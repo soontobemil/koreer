@@ -85,10 +85,11 @@
   .categoryWrapper {
     display: flex;
     justify-content: center;
-    padding: 0 20px;
+    padding: 0 10px;
   }
 
   .categories {
+    flex-wrap: wrap;
     display: flex;
     gap: 7px;
     align-items: center;
@@ -104,9 +105,9 @@
 
   .searchAreaWrapper {
     display: flex;
+    gap: 6px;
     align-items: center;
     padding: 10px;
-    column-gap: 8rem;
     justify-content: space-between;
   }
 
@@ -175,6 +176,22 @@
     height: 36px;
     background-size: cover;
     background-position: center;
+  }
+
+  .countryImg.kor {
+    background-image: url("../../img/community/korea.png");
+  }
+
+  .countryImg.usa {
+    background-image: url("../../img/community/usa.png");
+  }
+
+  .countryImg.canada {
+    background-image: url("../../img/community/canada.png");
+  }
+
+  .countryImg.japan {
+    background-image: url("../../img/community/japan.png");
   }
 
   .modifyImg {

@@ -1,6 +1,7 @@
 import style from "../../assets/scss/common/header.module.scss";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import hamburger from "../../assets/img/menu.svg"
 
 enum HeaderStatus {
     ABOUT_US = "ABOUT_US",
@@ -61,15 +62,27 @@ export function Header() {
         setActiveButton(null); // 마우스가 버튼을 떠났을 때 상태를 초기화
     };
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <header className={style.header}>
-            <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>Koreer</div>
-            <div className={style.headerButtonWrapper}>
+            <div className={style.hamburgerMenu} onClick={toggleMenu}>
+                {/* Hamburger Icon */}
+                <img style={{cursor:'pointer'}} src={hamburger} alt={'hamburger'} />
+            </div>
+            <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>
+                Koreer
+            </div>
+            <div className={`${style.headerButtonWrapper} ${isMenuOpen ? style.menuOpen : ''}`}>
                 {selectedButtons.map((data, idx) => (
                     <div
                         key={idx}
-                        onMouseEnter={() => onMouseEnter(idx)} // 마우스 진입 이벤트
-                        onMouseLeave={onMouseLeave} // 마우스 이탈 이벤트
+                        onMouseEnter={() => onMouseEnter(idx)} // Mouse enter event
+                        onMouseLeave={onMouseLeave} // Mouse leave event
                         className={style.buttonContainer}
                     >
                         <button

@@ -27,8 +27,8 @@
     justify-content: center;
     height: auto;
     background-color: #FFFFFF;
-    margin-top: 100px;
-    padding: 0 15px;
+    margin-top: 20px;
+    //padding: 0 15px;
     gap: 30px;
 
     .mainHeaderWrapper {
@@ -85,6 +85,11 @@
     }
 
     .container {
+      //background-image: url("../../../assets/img/main.webp");
+      background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../../../assets/img/main.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -94,17 +99,18 @@
       font-family: 'Roboto', sans-serif;
       text-align: center;
       padding: 30px 15px;
+      min-height: 100vh;
     }
 
     .headingText {
-      font-size: 32px;
+      font-size: 43px;
       font-weight: bold;
       margin-bottom: 15px;
-      color: #f5ba13;
+      color: #4a559b;
     }
 
     .subText {
-      font-size: 16px;
+      font-size: 22px;
       margin-bottom: 50px;
       color: #6c757d;
       max-width: 600px;
@@ -123,7 +129,7 @@
     }
 
     .callToAction {
-      font-size: 28px;
+      font-size: 23px;
       margin-bottom: 30px;
       font-weight: 500;
       color: #0072b3;
@@ -282,12 +288,17 @@
     }
 
     .listCategory {
+      width: 10%;
       font-size: 16px;
       color: #f5ba13;
       font-weight: bold;
     }
 
     .listTitle {
+      max-width: 220px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
       font-size: 20px;
       font-weight: bold;
       color: #424242;
@@ -314,18 +325,22 @@
     .listIconWrapper {
       display: flex;
       justify-content: flex-end;
+      align-self: center;
       align-items: center;
       gap: 20px;
       margin-top: 20px;
     }
 
+    .listIconWrapper .add,
     .listIconWrapper .read,
     .listIconWrapper .comment {
       display: flex;
+      flex-direction: column;
       align-items: center;
       color: #0072b3;
     }
 
+    .listIconWrapper .add_count,
     .listIconWrapper .read_count,
     .listIconWrapper .comment_count {
       margin-left: 10px;
@@ -337,26 +352,27 @@
     }
   }
 
+  .hiringTitleWrapper {
+    display: flex;
+    justify-content: center;
+    padding: 0 30px;
+    margin-bottom: 20px;
+  }
+
+  .text {
+    font-size: 34px;
+    font-weight: bold;
+    line-height: 150%;
+    color: #0072b3;
+  }
   .hiringProcessWrapper {
     border-radius: 25px;
-    border: 2px solid #0072b3;
+    //border: 2px solid #0072b3;
     padding: 30px 20px;
     gap: 30px;
     background-color: #f9fafc;
     align-self: center;
 
-    .hiringTitleWrapper {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .text {
-      font-size: 28px;
-      font-weight: bold;
-      line-height: 150%;
-      color: #0072b3;
-    }
 
     .hiringProcessBodyWrapper {
       width: 100%;
@@ -549,8 +565,7 @@
     height: auto;
     background-color: #FFFFFF;
     margin-top: 150px;
-    padding: 0 30px;
-
+    //padding: 0 30px;
     gap: 60px;
   }
 
@@ -612,6 +627,11 @@
 
   // 북미 취업 회사 연계 css
   .container {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../../../assets/img/main.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -623,14 +643,14 @@
     padding: 50px 20px;
 
     .headingText {
-      font-size: 48px;
+      font-size: 72px;
       font-weight: bold;
       margin-bottom: 15px;
-      color: #f5ba13;
+      color: #4a559b;
     }
 
     .subText {
-      font-size: 20px;
+      font-size: 32px;
       margin-bottom: 50px;
       color: #6c757d;
       max-width: 600px;
@@ -866,6 +886,20 @@
     }
   }
 
+  .hiringTitleWrapper {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .text {
+    font-size: 63px;
+    font-weight: bold;
+    line-height: 150%;
+    color: #0072b3;
+  }
 
   // 북미 취업 단계 정보 css
   .hiringProcessWrapper {
@@ -880,18 +914,6 @@
     background-color: #f9fafc;
     align-self: center;
 
-    .hiringTitleWrapper {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .text {
-      font-size: 42px;
-      font-weight: bold;
-      line-height: 150%;
-      color: #0072b3;
-    }
 
     .hiringProcessBodyWrapper {
       width: 90%;

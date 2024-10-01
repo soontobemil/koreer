@@ -6,24 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="add model &amp; api for career tips">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dto/CareerTipsDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/dto/CareerTipsDTO.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/career_tips.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/career_tips.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/careerTipsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/careerTipsService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/api/CompanyInformationApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/api/CompanyInformationApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/api/SignupApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/api/SignupApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/footer.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/footer.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/public/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/header.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/main.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/main.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/contactus.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/contactus.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Tips.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/Tips.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useTipsGetter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useTipsGetter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/companyinformation/CompanyInformation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/companyinformation/CompanyInformation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/companyinformation/hooks/useCompanyInformationGetter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/companyinformation/hooks/useCompanyInformationGetter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/companyInformation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/companyInformation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/util/etcUtil.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/util/etcUtil.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/CompanyInformationField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/CompanyInformationField.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/HiringProcessField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/HiringProcessField.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/ListItems.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/ListItems.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/contactus/Contact.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/contactus/Contact.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,29 +25,29 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2mjTHb8t89TqA656V9lGbdM19aw" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hongchanghyeong/Desktop/study/koreer/koreer-be",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/koreer/koreer-be&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -72,7 +64,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1727588898251</updated>
-      <workItem from="1727588899364" duration="7599000" />
+      <workItem from="1727588899364" duration="7892000" />
+      <workItem from="1727753033731" duration="1204000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />

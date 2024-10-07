@@ -13,7 +13,11 @@
     justify-content: center;
   }
 
-  .logoImg {
+  .logoImg{
+    display: none;
+  }
+
+  .headerTitle {
     align-self: center;
     font-size: 24px;
     font-weight: bold;
@@ -130,7 +134,17 @@
     transition: background-color 0.3s ease-in-out;
   }
 
-  .logoImg {
+  .logoImg{
+    cursor: pointer;
+    width: 95px;
+    height: 95px;
+    background-image: url("../../../assets/img/koreer_logo_cropped.png");
+    background-color: transparent; /* 배경색을 투명하게 설정 */
+    background-size: cover;
+    background-position: center;
+  }
+
+  .headerTitle {
     cursor: pointer;
     font-size: 32px;
     font-weight: bold;
@@ -140,7 +154,7 @@
     transition: color 0.3s ease-in-out;
   }
 
-  .logoImg:hover {
+  .headerTitle:hover {
     color: #005680; /* 로고 호버 시 색상 변경 */
   }
 

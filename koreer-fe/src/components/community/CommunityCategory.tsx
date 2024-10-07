@@ -23,6 +23,9 @@ export function CommunityCategory({type}: Args) {
     const category = type === CommunityType.COMMUNITY
         ? categories[0] : categories[1]
 
+    const onClickPosting = (category: CommunityType) => {
+        console.log(category)
+    };
 
     return (
         <>
@@ -48,7 +51,7 @@ export function CommunityCategory({type}: Args) {
                 {/*  게시글 포스팅  */}
                 <div className={style.buttonsWrapper}>
                     <div className={style.postingButton}/>
-                    <span className={style.text}>글 작성하기</span>
+                    <span className={style.text} onClick={() =>onClickPosting(type)}>글 작성하기</span>
                 </div>
             </div>
 

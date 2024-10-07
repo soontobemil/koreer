@@ -15,6 +15,7 @@ import {SignIn} from "./components/signup/SignIn";
 import {SignUp} from "./components/signup/SignUp";
 import {NotFoundPage} from "./components/common/NotFoundPage";
 import {Tips} from "./components/community/Tips";
+import {TipsPosting} from "./components/community/TipsPosting";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -30,6 +31,7 @@ root.render(
                         <Route path="company-information" element={<CompanyInformation/>}/>
                         <Route path="community" element={<Community/>}/>
                         <Route path="tips" element={<Tips/>}/>
+                        <Route path="tips/posting" element={<TipsPosting/>}/>
                         <Route path="contact" element={<Contact/>}/>
                         <Route path="signin" element={<SignIn/>}/>
                         <Route path="signup" element={<SignUp/>}/>

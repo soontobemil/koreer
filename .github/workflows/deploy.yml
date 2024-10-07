@@ -52,7 +52,12 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-be && npm install"
 
       # Docker Compose 실행
-      - name: Restart Docker Services
+#      - name: Restart Docker Services
+#        run: |
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose down"
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose up -d"
+
+        # 블루-그린 전환 스크립트 실행
+      - name: Switch Blue-Green Environment
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose down"
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose up -d"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sh /blue-green-switch.sh"

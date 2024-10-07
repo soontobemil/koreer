@@ -12,8 +12,8 @@ enum HeaderStatus {
 }
 
 enum SubMenu {
-    COMMUNITY = "COMMUNITY",
-    SHARE_YOUR_TIPS = "Share Your Tips",
+    COMMUNITY = "커뮤니티",
+    SHARE_YOUR_TIPS = "여러분의 팁을 공유해주세요!",
 }
 
 export function Header() {
@@ -21,14 +21,14 @@ export function Header() {
     const navigate = useNavigate();
 
     const selectedButtons = [
-        {label: 'About us', page: 'about-us', status: HeaderStatus.ABOUT_US, subMenu: []},
         {
-            label: 'Community',
+            label: '커뮤니티',
             page: 'community',
             status: HeaderStatus.COMMUNITY,
             subMenu: [SubMenu.COMMUNITY, SubMenu.SHARE_YOUR_TIPS]
         },
-        {label: 'Job Information', page: 'company-information', status: HeaderStatus.COMPANY_INFORMATION, subMenu: []},
+        {label: '취업 정보', page: 'company-information', status: HeaderStatus.COMPANY_INFORMATION, subMenu: []},
+        {label: 'About us', page: 'about-us', status: HeaderStatus.ABOUT_US, subMenu: []},
         {label: 'Contact', page: 'contact', status: HeaderStatus.CONTACT, subMenu: []},
     ];
 
@@ -72,9 +72,15 @@ export function Header() {
         <header className={style.header}>
             <div className={style.hamburgerMenu} onClick={toggleMenu}>
                 {/* Hamburger Icon */}
-                <img style={{cursor:'pointer'}} src={hamburger} alt={'hamburger'} />
+                <img style={{cursor: 'pointer'}} src={hamburger} alt={'hamburger'}/>
             </div>
-            <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>
+            <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}/>
+
+            {/*  메인 로고 가운데정렬하기 위해 추가  */}
+            <div />
+            <div />
+
+            <div className={style.headerTitle} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>
                 Koreer
             </div>
             <div className={`${style.headerButtonWrapper} ${isMenuOpen ? style.menuOpen : ''}`}>

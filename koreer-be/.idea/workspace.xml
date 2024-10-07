@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="add model &amp; api for career tips">
+      <change beforePath="$PROJECT_DIR$/../.github/workflows/deploy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../.github/workflows/deploy.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/public/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/header.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/main.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/main.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/contactus.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/contactus.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/CompanyInformationField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/CompanyInformationField.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/HiringProcessField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/HiringProcessField.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/ListItems.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/ListItems.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/contactus/Contact.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/contactus/Contact.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +61,9 @@
       <option name="presentableId" value="Default" />
       <updated>1727588898251</updated>
       <workItem from="1727588899364" duration="7892000" />
-      <workItem from="1727753033731" duration="1204000" />
+      <workItem from="1727753033731" duration="3004000" />
+      <workItem from="1727926348318" duration="5000" />
+      <workItem from="1728303382140" duration="643000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />

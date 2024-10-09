@@ -17,4 +17,8 @@ export class MainApi extends HttpClient {
 
     return this.classInstance;
   }
+
+  public setToken(token: string) {
+    this.instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
 }

@@ -30,6 +30,9 @@ In the project directory, you can run:
     npm install axios
 
     yarn add @reduxjs/toolkit
+    
+    yarn add react-cookie // jwt
+    yarn add jwt-decode // jwt
 
 ````
 

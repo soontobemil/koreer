@@ -1,55 +1,102 @@
 import style from "../../assets/scss/sub/login.module.scss"
 import {useNavigate} from "react-router-dom";
+import {useCallback, useEffect, useState} from "react";
+import {ResponseDTO} from "../../slice/common";
+import {useDispatch} from "react-redux";
+import {login} from "../../slice/signInSlice";
+import {LoginDTO} from "../../types/signIn";
+import {SignInIdField} from "./SignInIdField";
+import {SignInPasswordField} from "./SignInPasswordField";
+import {SignInSearchField} from "./SignInSearchField";
+import {AuthProvider} from "../common/AuthProvider";
+import {useSignInValidator} from "./hooks/useSignInValidator";
+import spinner from "../../assets/img/community/loading_spinner.gif";
+
+interface ErrorResponse{
+    message: string;
+}
 
 export function SignIn() {
-    const navigate= useNavigate()
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const {validate, emailValidate, setEmailValidate, passwordValidate, setPasswordValidate} =
+        useSignInValidator({email,password} );
+    const {setAccessToken} = AuthProvider();
+    const [isLoaded, setIsLoaded] = useState(false)
 
-    const handleSignup = () =>{
+    const dispatch = useDispatch<any>();
+
+
+    const handleSignup = () => {
         navigate('/signup')
     }
 
-    const googleAccountAccess = () =>{
+    const googleAccountAccess = () => {
         console.log('step1')
     }
+
+    useEffect(() => {
+        setErrorMessage('')
+    }, [email, password]);
+
+    const signIn = useCallback(async () => {
+        setIsLoaded(true);
+        const result = validate();
+        if(!result) return ;
+
+        const loginDTO:LoginDTO = {user_email: email, password: password}
+        try {
+            const result: ResponseDTO = await dispatch(login(loginDTO)).unwrap();
+            console.log(result)
+            setAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsInVzZXJfZW1haWwiOiIxMzEzIiwiaWF0IjoxNzI4NDU4MTA1LCJleHAiOjE3Mjg0NjE3MDV9.EP30Lr_4bPWB2oy60uccx7bTJgogwsz1i4sOF6g5je8')
+            navigate('/')
+
+            return result;
+        } catch (error: any) {
+            const convert = error as ErrorResponse;
+            const parsedMessage = JSON.parse(convert.message);
+
+            setErrorMessage(parsedMessage.message);
+        } finally {
+            setIsLoaded(false)
+        }
+        // eslint-disable-next-line
+    }, [email, password]);
+
     return (
         <>
+            {isLoaded && (
+                <img className={style.spinner} src={spinner} alt={'spinner'}/>
+            )}
             <div className={style.loginMainWrapper}>
                 <div className={style.loginContainer}>
                     <div className={style.titleWrapper}>
                         <span className={style.mainText}>Koreer</span>
-                        <span className={style.subText}>Please log in to access the service.</span>
-                        <span className={style.infoText}>If you're not a member, please sign up to enjoy a variety of services</span>
+                        <span className={style.subText}>서비스 이용을 위해 로그인을 해주세요.</span>
+                        <span className={style.infoText}>회원이 아닌 경우, 회원 가입을 통해 서비스를 이용하실 수 있습니다.</span>
                     </div>
 
+                    {/*  로그인 영역  */}
                     <div className={style.loginInputWrapper}>
-                        <div className={style.loginForm}>
-                            <input type="email" placeholder="koreer@gmail.com" className={style.loginInput}/>
-                            <span className={style.loginAssistText}>
-                                ID
-                            </span>
-                        </div>
-                        <div className={style.loginForm}>
-                            <input type="password" placeholder="1234" className={style.loginInput}/>
-                            <span className={style.loginAssistText}>
-                                Password
-                            </span>
-                        </div>
+                        <SignInIdField
+                            email={email} setEmail={ setEmail}
+                            emailValidate={emailValidate} setEmailValidate={setEmailValidate}
+                        />
 
-                        <div className={style.loginOptions}>
-                            <label className={style.memorizeWrapper}>
-                                <input type="checkbox"/> Remember ID and Password
-                            </label>
-                            <div className={style.findInfoWrapper}>
-                                Find<span className={style.findText}>ID</span>|
-                                <span className={style.findText}>Password</span>
-
-                            </div>
-                        </div>
-
+                        <SignInPasswordField
+                            password={password} setPassword={setPassword}
+                            passwordValidate={passwordValidate} setPasswordValidate={setPasswordValidate}
+                        />
+                        <span className={style.loginErrorText}>{errorMessage}</span>
+                        <SignInSearchField />
                     </div>
+
                     <div className={style.buttonsWrapper}>
-                        <button className={style.loginButton}>
-                            Sign in
+                        <button className={style.loginButton}
+                                onClick={signIn}>
+                            로그인
                         </button>
                         <div className={style.imgWrapper}>
                             <div className={style.googleImg} onClick={googleAccountAccess}></div>
@@ -58,18 +105,18 @@ export function SignIn() {
                         </div>
                     </div>
 
-                    <div className={style.signupWrapper}  onClick={handleSignup}>
+                    <div className={style.signupWrapper} onClick={handleSignup}>
                         <span className={style.text}>
-                            First time here? Sign up now
+                            처음이신가요? 회원가입 후 이용해주세요!
                         </span>
                         <div className={style.buttonsWrapper}>
                             <button className={style.signupButton}>
-                                Sign up
+                                회원 가입
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 }

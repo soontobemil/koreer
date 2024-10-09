@@ -91,6 +91,7 @@ export function SignUpNationField({nation, setNation}:Args) {
         if (location.latitude && location.longitude) {
             checkNation();
         }
+    // eslint-disable-next-line
     }, [location, nation, optionReveal]);
 
     return (

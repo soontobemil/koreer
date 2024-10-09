@@ -16,6 +16,7 @@ export enum CommunityType {
     TIPS = "TIPS",
 }
 
+// eslint-disable-next-line
 enum ApiCategory{
     ADZUNA = "ADZUNA",
 }

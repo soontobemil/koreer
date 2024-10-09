@@ -26,6 +26,7 @@ export function useSignUpValidator({
     const validate = useCallback(() => {
         if (nation === 'Select your country!') {
             setNationValidate(ValidateStatus.UNFILLED)
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             isValidate = false;
         }
 
@@ -66,7 +67,7 @@ export function useSignUpValidator({
         return isValidate
     }, [nation, id, nickName, password, passwordCheck,
     idValidate, nationValidate, nickNameValidate, passwordValidate, passwordCheckValidate]);
-    return{
+    return {
         validate,
         nationValidate, setNationValidate,
         idValidate, setIdValidate,

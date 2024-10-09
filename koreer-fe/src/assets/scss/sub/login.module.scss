@@ -1,3 +1,5 @@
+@import "../common/variables";
+
 .loginMainWrapper {
   font-family: 'Arial', sans-serif;
   display: flex;
@@ -48,21 +50,27 @@
   margin-bottom: 80px;
 }
 
+.loginErrorText{
+  margin-top: -25px;
+  font-size: 16px;
+  color: red;
+}
+
 .loginForm {
   display: flex;
   position: relative;
   flex-direction: column;
-  gap: 25px; /* 간격 증가 */
+  gap: 25px;
   margin-top: 30px;
 }
 
 .loginInput {
-  height: 60px; /* 입력 필드 높이 증가 */
+  height: 60px;
   padding: 16px;
   margin-bottom: 18px;
   border-radius: 10px;
   border: 1px solid #292727;
-  font-size: 20px; /* 폰트 크기 증가 */
+  font-size: 20px;
   color: #333333;
 }
 

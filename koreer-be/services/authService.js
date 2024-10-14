@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
+const passport = require('passport');
 const userService = require('../services/userService');
 
 
@@ -172,6 +173,41 @@ async function sendEmail(email) {
     
 }
 
+async function googleLogin(data) {
+    try {
+        /*
+        // Google에서 받은 사용자 프로필 정보 처리
+        const user = {
+            id: profile.id,
+            displayName: profile.displayName,
+            email: profile.emails[0].value,
+        };
+        console.log(profile);
+        
+        // 기존 사용자인지 체크
+        const result = await userService.userDuplCheck(data.email);
+        let rsltData = {loginInfo:data.email,accessToken:data.accessToken,refreshToken:data.refreshToken};
+        if (!result) {
+            return rsltData;
+        }
+        // 기존 사용자이면 바로 리턴 ,new 이면 db에 사용자정보 insert 하고 끝
+        const user2 = await userService.createUser(data.email);
+        return rsltData;
+        */
+       // 사용자가 구글 로그인 버튼을 눌렀을 때
+       passport.authenticate('google', { scope: ['profile', 'email'] });
+  
+
+    } catch (error) {
+        console.error('구글로그인화면이동:', error);
+    }
+   
+}
+
+async function googleCallBack() {
+    passport.authenticate('google', { failureRedirect: '/' });
+}
+
 module.exports = {
     register,
     createAccessToken,
@@ -180,5 +216,7 @@ module.exports = {
     refreshAccessToken,
     sendEmail,
     createEmailVerifyToken,
-    emailVefify
+    emailVefify,
+    googleCallBack,
+    googleLogin
 };

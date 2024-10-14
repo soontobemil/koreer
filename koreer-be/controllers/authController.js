@@ -73,10 +73,21 @@ async function emailVefify(req,res) {
     return res.status(result.code).json({ message: result.message });
 }
 
+async function googleLogin(req,res) {
+    const result = await authService.googleLogin();
+}
+
+async function googleCallBack(req,res) {
+    const result = await authService.googleCallBack();
+    return res.json({ user:req.user, message: 'Login Successful' });
+}
+
 module.exports = {
     register,
     login,
     refreshAccessToken,
     logout,
-    emailVefify
+    emailVefify,
+    googleLogin,
+    googleCallBack
 }

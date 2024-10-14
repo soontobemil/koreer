@@ -13,10 +13,15 @@ var authMiddleware = require('./src/middlewares/authMiddleware');
 // Generate JWT Secret key
 require('./src/auth/generateSecret');
 
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var jobInfoRouter = require('./routes/jobinfos');
+
+var userService = require('./services/userService');
 
 var app = express();
 
@@ -35,6 +40,37 @@ app.options('', cors());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.OAUTH2_CID_SOCIAL_LOGIN,  // Google에서 받은 Client ID
+  clientSecret: process.env.OAUTH2_CSECRET_SOCIAL_LOGIN,  // Google에서 받은 Client Secret
+  callbackURL: 'http://localhost:3000/auth/google/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+      
+      // Google에서 받은 사용자 프로필 정보 처리
+      const user = {
+          id: profile.id,
+          displayName: profile.displayName,
+          email: profile.emails[0].value,
+      };
+      // 기존 사용자인지 체크
+      const result = await userService.userDuplCheck(user.email);
+      let rsltData = {loginInfo:user.email,accessToken:accessToken,refreshToken:refreshToken};
+      if (!result) {
+          return done(null,rsltData);
+      }
+      // 기존 사용자이면 바로 리턴 ,new 이면 db에 사용자정보 insert 하고 끝
+      const user2 = await userService.createUser({username:user.displayName,user_email:user.email,password:user.id});
+      return done(null,rsltData);
+      
+     //const result = await authService.googleLogin();
+      
+  } catch (error) {
+      console.log(error);
+      return done(error);
+  }
+}));
 
 // 그 외 모든 요청에 대해 authMiddleware 적용
 app.use(authMiddleware);

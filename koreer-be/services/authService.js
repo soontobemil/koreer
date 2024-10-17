@@ -205,7 +205,7 @@ async function googleLogin(data) {
 }
 
 async function googleCallBack() {
-    passport.authenticate('google', { failureRedirect: '/' });
+    passport.authenticate('google', { failureRedirect: '/' , successRedirect:'http://localhost:3001/some-page'});
 }
 
 module.exports = {

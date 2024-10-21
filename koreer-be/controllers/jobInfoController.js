@@ -3,12 +3,15 @@ const jobInfoService = require('../services/jobInfoService');
 // API Endpoint: /jobinfos/fetch-job-infos/adzuna
 async function fetchAndInsertJobInfos(req, res) {
     try {
-        const apiType = req.params.apiType;
-        let result = '';
-        if(apiType == 'adzuna'){
-            result = await jobInfoService.fetchAdzunaJobInfos(apiType);
+        let apiType = 'adzuna';
+        if (req.params.apiType) {
+            apiType = req.params.apiType;
         }
-        if(apiType == 'rapidapi'){
+        let result = '';
+        if (apiType == 'adzuna') {
+            result = await jobInfoService.fetchAdzunaJobInfos(apiType);
+        } 
+        if (apiType == 'rapidapi') {
             result = await jobInfoService.fetchRapidJobInfos(apiType);
         }
         res.status(200).send('Job infos have been fetched and inserted successfully!');

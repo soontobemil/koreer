@@ -33,9 +33,23 @@ export function SignIn() {
         navigate('/signup')
     }
 
-    const googleAccountAccess = () => {
-        console.log('step1')
-    }
+    // const googleAccountAccess = () => {
+    //     console.log('step1')
+    // }
+
+    // todo 테스트
+    const googleLoginssss = useCallback(async () => {
+        window.location.href = 'http://localhost:3000/auth/google';
+        // try {
+        //     await dispatch(googleLogin()).unwrap();
+        //
+        // } catch (error: any) {
+        //     // const convert = error as ErrorResponse;
+        //     // const parsedMessage = JSON.parse(convert.message);
+        //     //
+        //     // setErrorMessage(parsedMessage.message);
+        // }
+    }, []);
 
     useEffect(() => {
         setErrorMessage('')
@@ -99,7 +113,7 @@ export function SignIn() {
                             로그인
                         </button>
                         <div className={style.imgWrapper}>
-                            <div className={style.googleImg} onClick={googleAccountAccess}></div>
+                            <div className={style.googleImg} onClick={googleLoginssss}></div>
                             <div className={style.kakaoImg}></div>
 
                         </div>

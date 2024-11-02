@@ -13,4 +13,7 @@ export class SignupApi{
 
     static duplicateCheck = (email:string) => () =>
         MainApi.api.get(`${SignupApi.userUrl}/dupl-check/${email}`);
+
+    static googleLogin = () =>() =>
+        MainApi.api.get(`${SignupApi.authUrl}/google`);
 }

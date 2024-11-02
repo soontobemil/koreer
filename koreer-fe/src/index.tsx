@@ -27,11 +27,11 @@ root.render(
                 <Routes>
                     <Route path="/" element={<App/>}>
                         <Route path="" element={<Main/>}/>
-                        <Route path="about-us" element={<AboutUs/>}/>
                         <Route path="company-information" element={<CompanyInformation/>}/>
                         <Route path="community" element={<Community/>}/>
                         <Route path="tips" element={<Tips/>}/>
                         <Route path="tips/posting" element={<TipsPosting/>}/>
+                        <Route path="about-us" element={<AboutUs/>}/>
                         <Route path="contact" element={<Contact/>}/>
                         <Route path="signin" element={<SignIn/>}/>
                         <Route path="signup" element={<SignUp/>}/>

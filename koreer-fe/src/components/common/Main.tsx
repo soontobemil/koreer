@@ -16,6 +16,11 @@ export default function Main() {
 
                 <div className={style.underLine}/>
 
+                {/*  북미 취업 과정 컴포넌트  */}
+                <HiringProcessField/>
+
+                <div className={style.underLine}/>
+
                 {/*  커뮤니티 컴포넌트 분리예정  */}
                 <div className={style.mainCommunityWrapper}>
                     <div className={style.communityTitleWrapper}>
@@ -25,11 +30,6 @@ export default function Main() {
 
                     <ListItems/>
                 </div>
-
-                <div className={style.underLine}/>
-
-                {/*  북미 취업 과정 컴포넌트  */}
-                <HiringProcessField/>
 
                 {/*  평가 및 후기  */}
                 {/*<TestimonialField />*/}

@@ -17,24 +17,23 @@ export function HiringProcessField() {
     const hiringProcessInformation = [
         {
             title: '1. 비자 신청 방법',
-            description: 'Submitting an Application: Submit your resume and cover letter through the company\'s ' +
-                'job portal, LinkedIn, or job boards. Sometimes, a portfolio or project links may also be required.',
+            description: '비자를 신청하는 방법은 다음과 같습니다. 1. ....',
         },
         {
             title: '2. 인터뷰 과정',
-            description: 'HR and Recruiter Review: The HR team or recruiter reviews the submitted documents to check' +
-                ' if the candidate meets the qualifications and has relevant experience.',
+            description: '북미 시장에서는 인터뷰 절차를 여러 단계 준비하는것이 중요합니다. 이를테면 기술인텨뷰 같은\n' +
+                '경우에는 단순한 프로젝트에 대한 내용 보다는...',
         },
         {
             title: '3. 효과적인 영어 학습',
-            description: 'Phone or Video Interview: This is usually conducted by HR or a recruiter to verify basic qualifications,' +
-                ' work experience, and fit with the company. It typically lasts 30 minutes to an hour.',
+            description: '의사소통을 하는 과정에서 순조로운 영어 회화 실력은 필수입니다. \n' +
+                '회화나 영어 실력 향상을 위한 학습 방법은 다양하게 있는데요. 예를 들어 ...',
         },
         {
             title: '4. 한인 네트워킹 형성',
-            description: 'Online Coding Test: This tests your algorithm, data structures, and problem-solving skills.' +
-                ' Platforms like HackerRank, LeetCode, or Codility might be used. Take-home Assignment: You may be given ' +
-                'a project to complete within a specified time frame to demonstrate your practical skills.',
+            description: '해외에서 한인들의 커뮤니티를 통해 다양한 정보들과 지역에 대한 최신 정보들을 \n' +
+                '여러 방면으로 얻을 수 있기 때문에, 네트워킹을 형성하는것은 매우 중요합니다. 그래서 아래와 같은 \n' +
+                '경로로 네트워킹을 알아볼 수 있습니다. \n1. ...',
         },
     ];
     return (

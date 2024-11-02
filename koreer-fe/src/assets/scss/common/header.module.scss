@@ -5,6 +5,7 @@
     position: relative;
     flex-direction: column;
     height: auto;
+    min-height: 50px;
     padding: 10px 20px;
     background-color: #f1f4f8;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -49,7 +50,7 @@
   }
 
   .menuOpen {
-    max-height: 300px;
+    max-height: 450px;
     opacity: 1;
     gap: 7px;
   }
@@ -100,8 +101,6 @@
   .subMenu {
     width: 100%;
     margin-left: 11px;
-    //background-color: #ffffff;
-    //box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 
   .subMenu li {
@@ -109,10 +108,47 @@
     padding: 5px 12px;
     font-size: 12px;
     color: #000000;
+    transition: background-color 0.2s ease, font-size 0.2s ease;
+  }
+
+  .subMenuTitle{
+    width: auto;
+    transition: background-color 0.2s ease, color 0.2s ease, font-size 0.2s ease;
   }
 
   .subMenu li:hover {
-    background-color: #f0f0f0;
+    //background-color: #f0f0f0;
+  }
+
+  .subMenu li:hover .subMenuTitle {
+    background-color: #add8f0;
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .subItems {
+    padding-left: 20px;
+    margin-top: 5px;
+    background-color: #f1f4f8;
+    display: none;
+  }
+
+  .subMenu li:hover .subItems {
+    display: block; /* li에 마우스를 올리면 subItems를 표시 */
+  }
+
+  .subItems li {
+    padding: 5px 12px;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .subItems li:hover {
+    background-color: #e0e0e0;
+    border-radius: 20px;
   }
 }
 
@@ -145,6 +181,7 @@
   }
 
   .headerTitle {
+    display: none;
     cursor: pointer;
     font-size: 32px;
     font-weight: bold;
@@ -179,7 +216,7 @@
   .buttonStyle:hover {
     background-color: #0072b3;
     color: #ffffff;
-    border: 2px solid #add8f0; /* 버튼 테두리와 배경색 변경 */
+    border: 2px solid #add8f0;
   }
 
   .selected {
@@ -202,7 +239,7 @@
   .loginButton:hover {
     background-color: #e8a900;
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
 
   .buttonContainer {
@@ -216,10 +253,11 @@
     background-color: #ffffff;
     border: 1px solid #ccc;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px 20px; /* 서브 메뉴 패딩 증가 */
+    padding: 15px 20px;
     z-index: 1000;
-    border-radius: 12px; /* 서브 메뉴에 둥근 모서리 추가 */
-    width: 220px; /* 서브 메뉴 크기 */
+    border-radius: 12px;
+    width: 220px;
+    overflow: visible;
   }
 
   .subMenu ul {
@@ -229,15 +267,48 @@
   }
 
   .subMenu li {
+    position: relative;
     padding: 10px 12px;
     cursor: pointer;
     transition: background-color 0.2s ease;
     font-size: 16px;
   }
 
-  .subMenu li:hover {
-    background-color: #f0f0f0;
+  .subMenuTitle{
+    width: auto;
+    transition: background-color 0.2s ease, color 0.2s ease, font-size 0.2s ease;
   }
+
+  .subItems {
+    position: relative;
+    padding-left: 20px;
+    margin-top: 5px;
+    background-color: #ffffff;
+    display: none;
+  }
+
+  .subMenu li:hover .subItems {
+    display: block;
+  }
+
+  .subMenu li:hover .subMenuTitle {
+    background-color: #add8f0;
+    color: black;
+    font-size: 19px;
+  }
+
+  .subItems li {
+    padding: 8px 12px;
+    transition: background-color 0.2s ease;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  .subItems li:hover {
+    background-color: #e0e0e0;
+    border-radius: 20px
+  }
+
 
   .hamburgerMenu {
     display: none;

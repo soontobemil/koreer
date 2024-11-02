@@ -3,13 +3,15 @@ import {useCompanyInformationGetter} from "./hooks/useCompanyInformationGetter";
 import {useEffect, useState} from "react";
 import {CompanyInformationDTO} from "../../types/companyInformation";
 import {Modal} from "../common/Modal";
+import spinner from "../../assets/img/community/loading_spinner.gif";
 
 export function CompanyInformation() {
 
     const [revealModal, setRevealModal] = useState<CompanyInformationDTO>();
-    const {getCompanyInfo, companyInformation} = useCompanyInformationGetter();
+    const {getCompanyInfo, companyInformation, isLoaded} = useCompanyInformationGetter();
     useEffect(() => {
         getCompanyInfo().then();
+        // eslint-disable-next-line
     }, []);
 
     const handleOpenDetailModal = (job: CompanyInformationDTO) =>{
@@ -19,6 +21,9 @@ export function CompanyInformation() {
 
     return (
         <>
+            {!isLoaded && (
+                <img className={style.spinner} src={spinner} alt={'spinner'}/>
+            )}
             <div className={style.companyInfoContainer}>
                 {/* 소개 영상 영역 */}
                 <div className={style.introSection}>

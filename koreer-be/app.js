@@ -20,6 +20,7 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var jobInfoRouter = require('./routes/jobinfos');
+var communityRouter = require('./routes/community');
 
 var userService = require('./services/userService');
 
@@ -40,6 +41,7 @@ app.options('', cors());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/community', communityRouter);
 
 passport.use(new GoogleStrategy({
   clientID: process.env.OAUTH2_CID_SOCIAL_LOGIN,  // Google에서 받은 Client ID
@@ -82,6 +84,7 @@ app.use(cors({
 app.options('', cors());
 
 app.use('/jobinfos', jobInfoRouter);
+//app.use('/community', communityRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

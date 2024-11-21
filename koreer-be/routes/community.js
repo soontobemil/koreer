@@ -8,5 +8,7 @@ router.post('/post', postController.createPost);
 router.get('/post/:id', postController.getPostById);
 router.post('/post/:id/modify', postController.updatePost);
 router.post('/post/:id/delete', postController.deletePost);
+// GET /posts?page=1&limit=10
+router.get('/posts', postController.getPosts);
 
 module.exports = router;

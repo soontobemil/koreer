@@ -26,6 +26,21 @@ async function getPostById(req, res) {
   }
 }
 
+async function getPosts(req, res) {
+  try {
+    const { page = 1, limit = 10 } = req.query; // 쿼리 파라미터에서 page와 limit 가져오기
+    
+    const currentUserEmail = req.user.user_email; // 현재 로그인한 유저의 이메일 (예: 미들웨어에서 추가된 사용자 정보)
+
+    const posts = await PostService.getPosts(Number(page), Number(limit), currentUserEmail);
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error('Error in getPostsHandler:', error);
+    res.status(500).json({ message: 'Error fetching posts' });
+  }
+}
+
 async function updatePost(req, res) {
   try {
     // start data processing logic
@@ -57,6 +72,7 @@ async function deletePost(req, res) {
 module.exports = {
   createPost,
   getPostById,
+  getPosts,
   updatePost,
   deletePost
 };

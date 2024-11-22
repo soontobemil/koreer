@@ -6,6 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="add model &amp; api for career tips">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/authController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/authService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/header.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/signup/SignIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/signup/SignIn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/signup/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/signup/SignUp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +22,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="dev" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
@@ -25,19 +39,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.authController.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -59,6 +74,12 @@
       <workItem from="1727926348318" duration="5000" />
       <workItem from="1728303382140" duration="643000" />
       <workItem from="1730521957892" duration="1171000" />
+      <workItem from="1730975323258" duration="1152000" />
+      <workItem from="1731220789578" duration="29000" />
+      <workItem from="1731673383798" duration="5400000" />
+      <workItem from="1732096726041" duration="3625000" />
+      <workItem from="1732101443204" duration="2202000" />
+      <workItem from="1732193935364" duration="1677000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -73,6 +94,29 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/KOR-16" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add model &amp; api for career tips" />

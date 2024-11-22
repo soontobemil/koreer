@@ -10,15 +10,32 @@ const userService = require('../services/userService');
 async function register(data){
     try {
         const hashedPassword = await bcrypt.hash(data.password, 10);
-        const req = {user_email:data.user_email,username:data.username,password:hashedPassword};
+        const req = {
+            user_email:data.user_email,
+            username:data.username,
+            password:hashedPassword,
+            is_email_verified:data.is_email_verified
+        };
         const result = await userService.userDuplCheck(req.user_email);
         let rsltData = {};
+
+        // 최초 가입 케이스
         if (result) {
             const user = await userService.createUser(req);
             rsltData.data = user;
-        } 
-        rsltData.result = result;
-        return rsltData;
+
+        // 소셜로그인 가입된 경우
+        } else {
+            rsltData.data = await userService.getUserByEmail(data.user_email)
+        }
+
+        const userPayload = { id: rsltData.data.id, user_email: rsltData.data.user_email };
+
+        // Create Access Token / Refresh Token
+        const accessToken = createAccessToken(userPayload);
+        const refreshToken = createRefreshToken(userPayload);
+
+        return {loginInfo:userPayload,accessToken:accessToken,refreshToken:refreshToken};
         
     } catch (error) {
         console.log(error);

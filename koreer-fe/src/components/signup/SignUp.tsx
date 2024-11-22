@@ -47,7 +47,7 @@ export function SignUp() {
 
         if (isSignupAble) {
             try {
-                 await dispatch(
+                 const result = await dispatch(
                     register({
                         user_email: id,
                         username: nickName,
@@ -55,8 +55,10 @@ export function SignUp() {
                         password: password
                     } as UserPostDTO)
                 ).unwrap().then(() =>{
+                    console.log('result : ',result)
                     setSignUpSuccess((re) => !re)
                 });
+                    console.log('result : ',result)
 
             } catch (e){
                 console.log('error message : ',e)

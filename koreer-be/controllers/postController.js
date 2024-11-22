@@ -29,6 +29,10 @@ async function getPostById(req, res) {
 async function getPosts(req, res) {
   try {
     const { page = 1, limit = 10 } = req.query; // 쿼리 파라미터에서 page와 limit 가져오기
+
+    if(!req.user) {
+      req.user = {user_email:"iyeahs71@gmail.com"};
+    }
     
     const currentUserEmail = req.user.user_email; // 현재 로그인한 유저의 이메일 (예: 미들웨어에서 추가된 사용자 정보)
 

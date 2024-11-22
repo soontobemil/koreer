@@ -4,11 +4,19 @@ const postController = require('../controllers/postController');
 const commentController = require('../controllers/commentController');
 
 /* GET community listing. */
+// Posts
 router.post('/post', postController.createPost);
 router.get('/post/:id', postController.getPostById);
 router.post('/post/:id/modify', postController.updatePost);
 router.post('/post/:id/delete', postController.deletePost);
 // GET /posts?page=1&limit=10
 router.get('/posts', postController.getPosts);
+
+// Comments
+router.post('/comment', commentController.createComment);
+router.get('/comment/:id', commentController.getCommentById);
+router.post('/comment/:id/modify', commentController.updateComment);
+router.post('/comment/:id/delete', commentController.deleteComment);
+router.get('/comments/:postId', commentController.getComments);
 
 module.exports = router;

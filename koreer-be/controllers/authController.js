@@ -90,7 +90,8 @@ async function googleCallBack(req,res) {
     // 파라미터 추출
     const code = req.query.code;
     const requestUri = 'https://oauth2.googleapis.com/token'
-    const redirectUri = 'http://localhost:3000/auth/google/callback'
+    // const redirectUri = 'http://localhost:3000/auth/google/callback'
+    const redirectUri = 'https://koreer.com/api/auth/google/callback'
 
     const userInfoRequestUri = 'https://www.googleapis.com/userinfo/v2/me';
     const userInfoRedirectUri = 'http://localhost:3001/auth/google/callback'
@@ -132,7 +133,8 @@ async function googleCallBack(req,res) {
             is_email_verified:'Y'
         })
 
-        return res.redirect(`http://localhost:3001/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
+        // return res.redirect(`http://localhost:3001/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
+        return res.redirect(`https://koreer.com/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
 
     } catch (error) {
         console.error('Error:', error);

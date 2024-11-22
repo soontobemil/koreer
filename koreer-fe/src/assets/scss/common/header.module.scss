@@ -77,20 +77,34 @@
     border: 2px solid #add8f0;
   }
 
-  .loginButton {
+  .buttons{
     padding: 10px 20px;
-    background-color: #f5ba13;
     color: #ffffff;
     border-radius: 50px;
     font-weight: bold;
     font-size: 16px;
+
+    &.login{
+      background-color: #f5ba13;
+    }
+
+    &.logout{
+      background-color: red;
+    }
+
+    &:hover {
+      background-color: #e8a900;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &.logout:hover {
+      background-color: #d40000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
   }
 
-  .loginButton:hover {
-    background-color: #e8a900;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
   .buttonContainer {
     position: relative;
     display: flex;
@@ -225,23 +239,41 @@
     border: 2px solid #add8f0;
   }
 
-  .loginButton {
+  .buttons{
     border: none;
-    background-color: #f5ba13;
     color: #ffffff;
     padding: 12px 25px;
     border-radius: 50px;
     font-weight: bold;
     font-size: 18px;
     transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s ease;
+
+    &.login{
+      background-color: #f5ba13;
+    }
+
+    &.logout{
+      background-color: red;
+    }
+
+    &:hover {
+      background-color: #e8a900;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &.logout:hover {
+      background-color: #d40000; /* 로그아웃 버튼의 다른 호버 배경색 */
+      transform: translateY(-2px); /* 변형 효과 다르게 설정 */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 로그아웃 버튼에 다르게 그림자 적용 */
+    }
   }
 
-  .loginButton:hover {
+  .buttons:hover {
     background-color: #e8a900;
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-
   .buttonContainer {
     position: relative;
   }

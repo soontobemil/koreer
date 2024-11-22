@@ -84,6 +84,7 @@ app.options('', cors());
 
 app.use('/jobinfos', jobInfoRouter);
 app.use('/careertips', careerTips);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

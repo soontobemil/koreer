@@ -33,22 +33,11 @@ export function SignIn() {
         navigate('/signup')
     }
 
-    // const googleAccountAccess = () => {
-    //     console.log('step1')
-    // }
-
-    // todo 테스트
+    const redirectUri = `${process.env.REACT_APP_BASE_URL}/auth/google/callback`;
+    // const redirectUri = 'http://localhost:3001/test';
+    const googleClientId = '969073700844-r0dbph7gk0e9aqm5868ums9jgddqgvg2.apps.googleusercontent.com'
     const googleLoginssss = useCallback(async () => {
-        window.location.href = 'http://localhost:3000/auth/google';
-        // try {
-        //     await dispatch(googleLogin()).unwrap();
-        //
-        // } catch (error: any) {
-        //     // const convert = error as ErrorResponse;
-        //     // const parsedMessage = JSON.parse(convert.message);
-        //     //
-        //     // setErrorMessage(parsedMessage.message);
-        // }
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
     }, []);
 
     useEffect(() => {

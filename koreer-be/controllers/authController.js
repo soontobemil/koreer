@@ -1,4 +1,6 @@
 const authService = require('../services/authService');
+const {post, get} = require("axios");
+const {UserInfoResponseDTO} = require("../dto/UserInfoResponseDTO");
 
 /**
  * These are login and sign up for user infos
@@ -9,7 +11,12 @@ const authService = require('../services/authService');
 async function register(req,res) {
     try {
         const data = req.body;
-        const rsltData = await authService.register({user_email:data.user_email,username:data.username,password:data.password});
+        const rsltData = await authService.register({
+            user_email:data.user_email,
+            username:data.username,
+            password:data.password,
+            is_email_verified:'N'
+        });
         if(rsltData.result) {
             // send email for verifying
             const sendEmail = await authService.sendEmail(rsltData.data.user_email);
@@ -78,8 +85,60 @@ async function googleLogin(req,res) {
 }
 
 async function googleCallBack(req,res) {
-    const result = await authService.googleCallBack();
-    return res.json({ user:req.user, message: 'Login Successful' });
+    console.log('success')
+
+    // 파라미터 추출
+    const code = req.query.code;
+    const requestUri = 'https://oauth2.googleapis.com/token'
+    const redirectUri = 'http://localhost:3000/auth/google/callback'
+
+    const userInfoRequestUri = 'https://www.googleapis.com/userinfo/v2/me';
+    const userInfoRedirectUri = 'http://localhost:3001/auth/google/callback'
+
+    try {
+
+        const params = new URLSearchParams();
+        params.append('code', code);
+        params.append('client_id', process.env.OAUTH2_CID_SOCIAL_LOGIN);
+        params.append('client_secret', process.env.OAUTH2_CSECRET_SOCIAL_LOGIN);
+        params.append('redirect_uri', redirectUri);
+        params.append('grant_type', 'authorization_code');
+
+
+        const response = await post(requestUri, params.toString(), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+            }
+        });
+        const accessToken = response.data.access_token
+        const bearerToken = response.data.id_token
+
+        // 응답 처리
+
+        const userInfoResponse = await get(userInfoRequestUri, {
+            params: { access_token: accessToken},
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        const userInfoDTO = new UserInfoResponseDTO(userInfoResponse.data);
+
+
+        const result = await authService.register({
+            user_email:userInfoDTO.email,
+            username:userInfoDTO.name,
+            password:'1234qwer!@',
+            is_email_verified:'Y'
+        })
+
+        return res.redirect(`http://localhost:3001/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
+
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Failed to retrieve token');
+    }
+
 }
 
 module.exports = {

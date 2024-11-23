@@ -11,4 +11,4 @@ const addApiUrlToRequest = (req, res, next) => {
   next();
 };
 
-module.exports = addApiUrlToRequest;
+module.exports = apiUrlToRequest;

@@ -20,7 +20,7 @@ console.log(`API URL: ${process.env.API_URL}`);
 // Module Aliasing
 require('module-alias/register');
 var authMiddleware = require('./src/middlewares/authMiddleware');
-var apiUrlMiddleware = require('./src/middlewares/apiUrlMiddleware');
+var apiUrlToRequest = require('./src/middlewares/apiUrlMiddleware');
 
 // Generate JWT Secret key
 require('./src/auth/generateSecret');
@@ -51,7 +51,7 @@ app.use(cors({
 app.options('', cors());
 
 // production/development api url 분리
-app.use(apiUrlMiddleware);
+app.use(apiUrlToRequest);
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);

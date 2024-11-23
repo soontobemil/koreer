@@ -19,6 +19,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
+
+// 그 외 모든 요청에 대해 authMiddleware 적용
+app.use(authMiddleware);
 var jobInfoRouter = require('./routes/jobinfos');
 var careerTips = require('./routes/careertips');
 
@@ -72,9 +75,6 @@ passport.use(new GoogleStrategy({
       return done(error);
   }
 }));
-
-// 그 외 모든 요청에 대해 authMiddleware 적용
-app.use(authMiddleware);
 
 // CORS 설정을 라우터들 전에 배치
 app.use(cors({

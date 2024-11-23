@@ -6,6 +6,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const dotenv = require('dotenv');
+
+// 현재 환경을 가져옴 (기본값: development)
+const ENV = process.env.NODE_ENV || 'development';
+
+// 환경에 맞는 .env 파일 로드
+dotenv.config({ path: `.env.${ENV}` });
+
+console.log(`Loaded environment: ${ENV}`);
+console.log(`DB Host: ${process.env.DB_HOST}`);
+console.log(`API URL: ${process.env.API_URL}`);
 // Module Aliasing
 require('module-alias/register');
 var authMiddleware = require('./src/middlewares/authMiddleware');
@@ -19,9 +30,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
-
-// 그 외 모든 요청에 대해 authMiddleware 적용
-app.use(authMiddleware);
 var jobInfoRouter = require('./routes/jobinfos');
 var communityRouter = require('./routes/community');
 
@@ -44,6 +52,9 @@ app.options('', cors());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/jobinfos', jobInfoRouter);
+// 그 외 모든 요청에 대해 authMiddleware 적용
+//app.use(authMiddleware);
 app.use('/community', communityRouter);
 
 passport.use(new GoogleStrategy({
@@ -82,9 +93,6 @@ app.use(cors({
   origin: '', // 모든 출처 허용
 }));
 app.options('', cors());
-
-app.use('/jobinfos', jobInfoRouter);
-//app.use('/community', communityRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

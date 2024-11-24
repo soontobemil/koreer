@@ -1,0 +1,107 @@
+@import "variables";
+
+@include mobile {
+  .footerLine {
+    margin-top: 30px;
+    border-top: 1.1px solid #757575;
+    width: 100%;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    //width: 100%;
+    font-size: 18px;
+
+    .footerInfoArea {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+
+      .footerMenu {
+        display: flex;
+        align-self: center;
+        flex-direction: row;
+        gap: 15px;
+        font-weight: 600;
+      }
+
+      .title {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 140%;
+      }
+
+      .description {
+        font-size: 16px;
+        font-weight: 350;
+        line-height: 140%;
+      }
+    }
+
+    .footerLogo {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 20px;
+    }
+  }
+}
+
+@include desktop {
+  .footerLine {
+    margin-top: 70px;
+    border-top: 1.1px solid #757575;
+    width: 100%;
+
+  }
+
+  .footer {
+    align-items: center;
+    background-color: #ffffff;
+    display: flex;
+    height: 323px;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding-bottom: 70px;
+    width: 1200px;
+
+    font-size: 24px;
+
+    .footerInfoArea {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      .footerMenu {
+        display: flex;
+        font-weight: 600;
+        gap: 30px;
+      }
+
+      .title {
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 140%;
+        letter-spacing: -0.36px;
+      }
+
+      .description {
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: 140%;
+        //letter-spacing: -0.36px;
+      }
+    }
+
+    .footerLogo {
+      width: 440px;
+    }
+  }
+}

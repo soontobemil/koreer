@@ -37,6 +37,11 @@ var communityRouter = require('./routes/community');
 var userService = require('./services/userService');
 
 var app = express();
+app.use(cors({
+  origin: '*', // 모든 도메인 허용
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // 허용할 HTTP 메소드
+  allowedHeaders: ['Content-Type', 'Authorization'], // 허용할 헤더
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -66,7 +71,7 @@ passport.use(new GoogleStrategy({
   callbackURL: 'http://localhost:3000/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-      
+
       // Google에서 받은 사용자 프로필 정보 처리
       const user = {
           id: profile.id,
@@ -82,9 +87,9 @@ passport.use(new GoogleStrategy({
       // 기존 사용자이면 바로 리턴 ,new 이면 db에 사용자정보 insert 하고 끝
       const user2 = await userService.createUser({username:user.displayName,user_email:user.email,password:user.id});
       return done(null,rsltData);
-      
+
      //const result = await authService.googleLogin();
-      
+
   } catch (error) {
       console.log(error);
       return done(error);
@@ -96,6 +101,9 @@ app.use(cors({
   origin: '', // 모든 출처 허용
 }));
 app.options('', cors());
+
+app.use('/jobinfos', jobInfoRouter);
+app.use('/careertips', careerTips);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,13 @@
 import style from "../../assets/scss/sub/community.module.scss"
+import {PageResponseDTO} from "../../slice/common";
+import {TipsResponseDTO} from "../../slice/tips";
+import {convertTipCategory, timeAgo} from "../../util/etcUtil";
 
-export function CommunityContents() {
+interface Args {
+    result?: PageResponseDTO
+}
+
+export function CommunityContents({result}: Args) {
 
     const communityContents = [
         {
@@ -69,46 +76,104 @@ export function CommunityContents() {
         },
 
     ];
+    const convertResult: TipsResponseDTO[] = result?.data.map((data: TipsResponseDTO) => {
+        return {
+            ...data, // 기존 데이터 복사
+            created_at: timeAgo(data.created_at), // created_at 값 업데이트
+            category: convertTipCategory(data.category)
+        };
+    });
+
 
     return (
         <>
             <div className={style.communityContentWrapper}>
-                {/*  커뮤니티 게시글  */}
-                {communityContents.map((data, index) => (
-                    <div className={style.communityContent} key={index}>
+                {convertResult ? (
+                    <>
+                        {convertResult && convertResult.map((data: TipsResponseDTO) => (
+                            <div className={style.communityContent} key={data.id}>
 
-                        {/*  커뮤니티 헤더 영역  */}
-                        <div className={style.contentHeaderWrapper}>
-                            <div className={`${style.countryImg} ${style[data.nation]}`}></div>
-                            <span>{data.name}</span>|
-                            <span>{data.time}</span>
-                            <div className={style.modifyImg}></div>
-                        </div>
+                                {/*  커뮤니티 헤더 영역  */}
+                                <div className={style.contentHeaderWrapper}>
+                                    <div className={`${style.countryImg} 
+                                    ${style['kor']}`}
+                                        // ${style[data.nation]}`}
+                                    ></div>
+                                    <span>
+                                        YS
+                                        {/*{data.name}*/}
+                                    </span>|
+                                    <span>{data.created_at}</span>
+                                    <div className={style.modifyImg}></div>
+                                </div>
 
-                        {/*  커뮤니티 내용 영역  */}
-                        <div className={style.descriptionWrapper}>
+                                {/*  커뮤니티 내용 영역  */}
+                                <div className={style.descriptionWrapper}>
                                 <span className={style.description}>
-                                    {data.description}
+                                    {data.content}
                                 </span>
-                        </div>
+                                </div>
 
-                        {/*  커뮤니티 푸터 영역  */}
-                        <div className={style.contentFooterWrapper}>
-                            <div className={style.contentCategoryWrapper}>
+                                {/*  커뮤니티 푸터 영역  */}
+                                <div className={style.contentFooterWrapper}>
+                                    <div className={style.contentCategoryWrapper}>
                                     <span className={style.categoryText}>
                                         {data.category}
                                     </span>
-                            </div>
-                            <span className={style.text}>
-                                    {data.hashTag}
+                                    </div>
+                                    <span className={style.text}>
+                                    {/*{data.hashTag}*/}
                                 </span>
-                            <span className={style.text}>
+                                    <span className={style.text}>
                                     #DOCKER
                                 </span>
-                        </div>
+                                </div>
 
-                    </div>
-                ))}
+                            </div>
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {/*  커뮤니티 게시글  */}
+                        {communityContents.map((data, index) => (
+                            <div className={style.communityContent} key={index}>
+
+                                {/*  커뮤니티 헤더 영역  */}
+                                <div className={style.contentHeaderWrapper}>
+                                    <div className={`${style.countryImg} ${style[data.nation]}`}></div>
+                                    <span>{data.name}</span>|
+                                    <span>{data.time}</span>
+                                    <div className={style.modifyImg}></div>
+                                </div>
+
+                                {/*  커뮤니티 내용 영역  */}
+                                <div className={style.descriptionWrapper}>
+                                <span className={style.description}>
+                                    {data.description}
+                                </span>
+                                </div>
+
+                                {/*  커뮤니티 푸터 영역  */}
+                                <div className={style.contentFooterWrapper}>
+                                    <div className={style.contentCategoryWrapper}>
+                                    <span className={style.categoryText}>
+                                        {data.category}
+                                    </span>
+                                    </div>
+                                    <span className={style.text}>
+                                    {data.hashTag}
+                                </span>
+                                    <span className={style.text}>
+                                    #DOCKER
+                                </span>
+                                </div>
+
+                            </div>
+                        ))}
+                    </>
+                )
+                }
+
 
             </div>
 

@@ -1,41 +1,29 @@
 import style from "../../assets/scss/sub/companyInformation.module.scss"
-import google from "../../assets/img/google.jpeg"
-import wynn_resorts from "../../assets/img/wynn_resorts.jpeg"
-import unlv from "../../assets/img/unlv.png"
+import {useCompanyInformationGetter} from "./hooks/useCompanyInformationGetter";
+import {useEffect, useState} from "react";
+import {CompanyInformationDTO} from "../../types/companyInformation";
+import {Modal} from "../common/Modal";
+import spinner from "../../assets/img/community/loading_spinner.gif";
 
 export function CompanyInformation() {
-    const jobListingsData = [
-        {
-            companyName: 'Wynn Resorts',
-            jobTitle: 'Developer',
-            location: 'North Las Vegas, NV',
-            salaries: '122K',
-            reviews: '701',
-            description: 'What happens in Vegas may also happen in China. Wynn Resorts, the brainchild of gaming mogul and former Mirage Resorts chairman Steve Wynn, operates luxury casino resorts in Las Vegas and Macau, the only place in China where gambling is legal. The company\'s Wynn Las Vegas is a .',
-            companyThumbnail: wynn_resorts,
-        },
-        {
-            companyName: 'University of Nevada Las Vegas overview',
-            jobTitle: 'Web Developer',
-            location: 'Las Vegas, NV',
-            salaries: '140K',
-            reviews: '291',
-            description: "The rebel yell of these UNLV students could justly be \"Viva Las Vegas!\" Nearly 28,000 students attend the University of Nevada, Las Vegas (UNLV), the largest academic institution in the state and home to the Rebel mascot. The university offers more than 220 undergra",
-            companyThumbnail: unlv,
-        },
-        {
-            companyName: 'Google',
-            jobTitle: 'Cleaner',
-            location: 'New York',
-            salaries: '80K',
-            reviews: '15',
-            description: "we're looking for cleaner who is ...",
-            companyThumbnail: google,
-        },
-    ];
+
+    const [revealModal, setRevealModal] = useState<CompanyInformationDTO>();
+    const {getCompanyInfo, companyInformation, isLoaded} = useCompanyInformationGetter();
+    useEffect(() => {
+        getCompanyInfo().then();
+        // eslint-disable-next-line
+    }, []);
+
+    const handleOpenDetailModal = (job: CompanyInformationDTO) =>{
+        setRevealModal(job)
+    }
+
 
     return (
         <>
+            {!isLoaded && (
+                <img className={style.spinner} src={spinner} alt={'spinner'}/>
+            )}
             <div className={style.companyInfoContainer}>
                 {/* 소개 영상 영역 */}
                 <div className={style.introSection}>
@@ -60,19 +48,21 @@ export function CompanyInformation() {
 
                     {/* 노출 회사 영역 */}
                     <div className={style.jobListingWrapper}>
-                        {jobListingsData.map((job, index) => (
-                            <div key={index} className={style.jobListing}>
+                        {companyInformation && companyInformation.map((job, index) => (
+                            <div key={index} className={style.jobListing}
+                            onClick={() =>handleOpenDetailModal(job)}>
                                 <div className={style.jobHeader}>
-                                    {job.companyThumbnail && (
-                                        <img
-                                            src={job.companyThumbnail}
-                                            alt={job.companyName}
-                                            className={style.companyThumbnail}
-                                        />
-                                    )}
+                                    {/*  썸네일 임시 주석  */}
+                                    {/*{job.companyThumbnail && (*/}
+                                    {/*    <img*/}
+                                    {/*        src={job.companyThumbnail}*/}
+                                    {/*        alt={job.companyName}*/}
+                                    {/*        className={style.companyThumbnail}*/}
+                                    {/*    />*/}
+                                    {/*)}*/}
                                     <div className={style.jobInfo}>
-                                        <span className={style.companyName}>{job.companyName}</span>
-                                        <span className={style.jobTitle}>{job.jobTitle}</span>
+                                        <span className={style.companyName}>{job.company_name}</span>
+                                        <span className={style.jobTitle}>{job.job_title}</span>
                                     </div>
                                 </div>
                                 <div className={style.jobDetail}>
@@ -83,26 +73,32 @@ export function CompanyInformation() {
 
                                     <div className={style.jobContent}>
                                         <span className={style.contentsName}>Salaries</span>
-                                        <span className={style.contentText}>{job.salaries}</span>
+                                        <span className={style.contentText}>{job.salary}</span>
                                     </div>
 
-                                    <div className={style.jobContent}>
-                                        <span className={style.contentsName}>Reviews</span>
-                                        <span className={style.contentText}>{job.reviews}</span>
-                                    </div>
+                                    {/*<div className={style.jobContent}>*/}
+                                    {/*    <span className={style.contentsName}>Reviews</span>*/}
+                                    {/*    <span className={style.contentText}>{job.job_title}</span>*/}
+                                    {/*</div>*/}
 
                                     <div className={style.jobContent}>
                                         <span className={style.contentsName}>
                                             Descriptions
                                         </span>
-                                        <span className={style.jobDescription}>{job.description}</span>
+                                        <span className={style.jobDescription}>{job.job_description}</span>
                                     </div>
                                 </div>
                             </div>
                         ))}
+
                     </div>
                 </div>
             </div>
+            {revealModal?.id && (
+                <Modal companyInformation={revealModal}
+                       setRevealModal={setRevealModal}
+                />
+            )}
         </>
     )
 }

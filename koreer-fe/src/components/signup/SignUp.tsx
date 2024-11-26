@@ -13,7 +13,7 @@ import {register} from "../../slice/signupSlice";
 import {ConfirmModal} from "../modal/ConfirmModal";
 
 export function SignUp() {
-    const [nation, setNation] = useState('Select your country!');
+    const [nation, setNation] = useState('국가를 선택해주세요!');
     const [id, setId] = useState('');
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('');
@@ -35,7 +35,7 @@ export function SignUp() {
 
     const handleCancelButton = () => {
         // eslint-disable-next-line no-restricted-globals
-        const confirms = confirm('Are you sure you want to cancel?\nAny unsaved changes will be lost')
+        const confirms = confirm('가입을 취소하시겠습니까?\n작성중인 정보는 삭제됩니다.')
         if (confirms) {
             navigate('/signin');
         }
@@ -44,27 +44,24 @@ export function SignUp() {
     const handleSignup = useCallback(async () => {
 
         const isSignupAble = validate();
+        if (!isSignupAble) return false
 
-        if (isSignupAble) {
-            try {
-                 const result = await dispatch(
-                    register({
-                        user_email: id,
-                        username: nickName,
-                        nation: nation,
-                        password: password
-                    } as UserPostDTO)
-                ).unwrap().then(() =>{
-                    console.log('result : ',result)
-                    setSignUpSuccess((re) => !re)
-                });
-                    console.log('result : ',result)
+        try {
+            await dispatch(
+                register({
+                    user_email: id,
+                    username: nickName,
+                    nation: nation,
+                    password: password
+                } as UserPostDTO)
+            ).then(() => {
+                setSignUpSuccess((re) => !re)
+            });
 
-            } catch (e){
-                console.log('error message : ',e)
-            }
-
+        } catch (e) {
+            console.log('error message : ', e)
         }
+
         // eslint-disable-next-line
     }, [id, nation, nickName, password, passwordCheck, isDuplecateChecked, idValidate, setIdValidate]);
 
@@ -98,10 +95,10 @@ export function SignUp() {
                                                     setPasswordCheckValidate={setPasswordCheckValidate}/>
                         <div className={style.buttonsWrapper}>
                             <div className={style.cancelButton} onClick={handleCancelButton}>
-                                Cancel
+                                취소
                             </div>
                             <div className={style.signupButton} onClick={handleSignup}>
-                                Sign Up
+                                회원 가입
                             </div>
                         </div>
                     </div>

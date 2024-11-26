@@ -77,7 +77,21 @@ async function emailVefify(req,res) {
         return res.status(400).json({ message: '토큰이 존재하지 않습니다.' });
     }
     const result = await authService.emailVefify(token);
-    return res.status(result.code).json({ message: result.message });
+    // return res.status(result.code).json({ message: result.message });
+    // return res.redirect(`http://localhost:3001/success?accessToken=${token}`);
+    res.send(`
+        <html>
+        <head>
+            <script>
+                alert('가입이 완료되었습니다.');
+                // window.location.href = 'http://localhost:3001/success?accessToken=${token}';
+                window.location.href = 'https://koreer.com/success?accessToken=${token}';
+            </script>
+        </head>
+        <body>
+        </body>
+        </html>
+    `);
 }
 
 async function googleLogin(req,res) {
@@ -126,11 +140,10 @@ async function googleCallBack(req,res) {
         const userInfoDTO = new UserInfoResponseDTO(userInfoResponse.data);
 
 
-        const result = await authService.register({
+        const result = await authService.oauthRegister({
             user_email:userInfoDTO.email,
             username:userInfoDTO.name,
             password:'1234qwer!@',
-            is_email_verified:'Y'
         })
 
         // return res.redirect(`http://localhost:3001/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);

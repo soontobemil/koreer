@@ -1,20 +1,39 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const { google } = require('googleapis');
+const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
 const passport = require('passport');
 const userService = require('../services/userService');
 
 
-async function register(data){
+async function register(data) {
+    try {
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        const req = {user_email: data.user_email, username: data.username, password: hashedPassword};
+        const result = await userService.userDuplCheck(req.user_email);
+        let rsltData = {};
+        if (result) {
+            const user = await userService.createUser(req);
+            rsltData.data = user;
+        }
+        rsltData.result = result;
+        return rsltData;
+
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error Occured while registering User');
+    }
+}
+
+async function oauthRegister(data) {
     try {
         const hashedPassword = await bcrypt.hash(data.password, 10);
         const req = {
-            user_email:data.user_email,
-            username:data.username,
-            password:hashedPassword,
-            is_email_verified:data.is_email_verified
+            user_email: data.user_email,
+            username: data.username,
+            password: hashedPassword,
+            is_email_verified: 'Y'
         };
         const result = await userService.userDuplCheck(req.user_email);
         let rsltData = {};
@@ -227,6 +246,7 @@ async function googleCallBack() {
 
 module.exports = {
     register,
+    oauthRegister,
     createAccessToken,
     createRefreshToken,
     login,

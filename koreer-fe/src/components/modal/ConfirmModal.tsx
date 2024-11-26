@@ -15,13 +15,13 @@ export function ConfirmModal({modalClose}:Args) {
                 <div className={style.modalWrapper}>
                     <div className={style.textArea}>
                         <span className={style.title}>Information</span>
-                        <span className={style.description}>Sign up success.<br/>Please verify your email.</span>
+                        <span className={style.description}>회원 가입을 성공했습니다.<br/>이메일을 확인해주세요.</span>
                     </div>
 
                     <div className={style.buttonArea}>
                         <button className={style.confirm}
                                 onClick={handleModalClose}
-                        >Confirm</button>
+                        >확인</button>
                     </div>
                 </div>
             </div>

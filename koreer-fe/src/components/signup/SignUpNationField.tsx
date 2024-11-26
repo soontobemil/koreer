@@ -9,11 +9,11 @@ export function SignUpNationField({nation, setNation}:Args) {
 
     const [optionReveal, setOptionReveal] = useState(false)
     const nations = [
-        {name: 'KOREA'},
-        {name: 'USA'},
-        {name: 'CANADA'},
-        {name: 'JAPAN'},
-        {name: 'CHINA'},
+        {name: '한국'},
+        {name: '미국'},
+        {name: '캐나다'},
+        {name: '일본'},
+        {name: '중국'},
     ]
 
     const handleSelectNation = () => {
@@ -51,27 +51,27 @@ export function SignUpNationField({nation, setNation}:Args) {
 
             const locations = [
                 {
-                    name: 'KOREA',
+                    name: '한국',
                     latRange: [33, 43],
                     lonRange: [124, 132],
                 },
                 {
-                    name: 'USA',
+                    name: '미국',
                     latRange: [24, 49],  // 본토 기준
                     lonRange: [66, 172],
                 },
                 {
-                    name: 'CANADA',
+                    name: '캐나다',
                     latRange: [42, 83],
                     lonRange: [53, 141],
                 },
                 {
-                    name: 'JAPAN',
+                    name: '일본',
                     latRange: [20, 45],
                     lonRange: [122, 153],
                 },
                 {
-                    name: 'CHINA',
+                    name: '중국',
                     latRange: [18, 53],
                     lonRange: [73, 123],
                 }
@@ -98,7 +98,7 @@ export function SignUpNationField({nation, setNation}:Args) {
         <>
             <div className={style.content}>
                 <span className={style.contentText}>
-                    Select your nation
+                    현재 거주중인 국가를 선택해주세요!
                 </span>
                 <div className={style.contentWithNation}>
                     <div className={style.nationWrapper} onClick={handleSelectNation}>

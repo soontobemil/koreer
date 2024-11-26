@@ -68,7 +68,7 @@ export function SignUpIdField({id, setId, idValidate, setIdValidate, isDuplecate
                         }}
                     />
                     <button className={style.checkDuplicatedButton} onClick={duplicateIdCheck}>
-                        Duplication Check
+                        중복 확인
                     </button>
 
                 </div>
@@ -77,13 +77,13 @@ export function SignUpIdField({id, setId, idValidate, setIdValidate, isDuplecate
                     <>
                         {idValidate === ValidateStatus.UNFILLED && (
                             <span className={style.duplicateMessage}>
-                                Please check the Duplication Check button.
+                                중복 확인 버튼을 클릭해주세요.
                             </span>
                         )}
 
                         {idValidate === ValidateStatus.BELOW_REQUIRED_LENGTH && (
                             <span className={style.duplicateMessage}>
-                                Please write your email.
+                                이메일을 작성해주세요.
                             </span>
                         )}
                     </>

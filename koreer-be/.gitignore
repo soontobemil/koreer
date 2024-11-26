@@ -23,7 +23,7 @@ bin/
 
 # Environment files
 .env
-
+.env*
 # OS-specific files
 .DS_Store
 Thumbs.db

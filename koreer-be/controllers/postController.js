@@ -1,5 +1,5 @@
 // Get request data from routes
-const postService = require('../services/PostService');
+const postService = require('../services/postService');
 
 async function createPost(req, res) {
   try {

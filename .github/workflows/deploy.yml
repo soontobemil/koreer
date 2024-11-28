@@ -48,10 +48,10 @@ jobs:
         run: |
           node -v
           pwd
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn cache clean && yarn config delete proxy && yarn config delete https-proxy"
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build"
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-be && yarn cache clean && yarn install --network-timeout 600000"
 
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn cache clean && yarn config delete proxy && yarn config delete https-proxy"
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build"
       # Docker Compose 실행
 #      - name: Restart Docker Services
 #        run: |

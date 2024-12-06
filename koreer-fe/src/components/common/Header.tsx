@@ -1,13 +1,15 @@
-import style from "../../assets/scss/common/header.module.scss";
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
-import hamburger from "../../assets/img/menu.svg"
-import {MenuButton} from "./MenuButton";
-import {useCookieFunctions} from "./hooks/useCookieFunctions";
+import React, { useState, useEffect, useCallback } from 'react';
+import style from '../../assets/scss/common/header.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { MenuButton } from './MenuButton';
+import { useCookieFunctions } from './hooks/useCookieFunctions';
+import hamburger from '../../assets/img/menu.svg';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export enum HeaderStatus {
     ABOUT_US = "ABOUT_US",
     COMPANY_INFORMATION = "COMPANY_INFORMATION",
+    EMPLOYMENT_INFO = "EMPLOYMENT_INFO",
     COMMUNITY = "COMMUNITY",
     CONTACT = "CONTACT",
     NONE = "NONE",
@@ -21,6 +23,9 @@ export enum SubMenu {
     BIG_TECH = "Big Tech 빅테크",
     POSITION_SALARY = "직군별 연봉",
     INTERVIEW_PROCESS = "인터뷰 과정",
+    JOB_LISTINGS = "채용 공고",
+    VISA_INFO = "비자 정보",
+    CAREER_TIPS = "취업 준비 팁",
 }
 
 export function Header() {
@@ -32,6 +37,29 @@ export function Header() {
 
     const selectedButtons = [
         {
+            label: '취업 정보',
+            page: 'employment-info',
+            status: HeaderStatus.EMPLOYMENT_INFO,
+            subMenu: [
+                {
+                    title: SubMenu.USA,
+                    subItems: ["미국 비자", "미국 연봉", "현지 생활 정보"]
+                },
+                {
+                    title: SubMenu.CANADA,
+                    subItems: ["캐나다 비자", "캐나다 연봉", "워크퍼밋 안내"]
+                },
+                {
+                    title: SubMenu.INTERVIEW_PROCESS,
+                    subItems: ["기술 면접", "인성 면접", "코딩 테스트"]
+                },
+                {
+                    title: SubMenu.CAREER_TIPS,
+                    subItems: ["이력서 작성", "포트폴리오", "면접 준비"]
+                }
+            ]
+        },
+        {
             label: '커뮤니티',
             page: 'community',
             status: HeaderStatus.COMMUNITY,
@@ -39,97 +67,135 @@ export function Header() {
                 {title: SubMenu.COMMUNITY, subItems: []},
                 {title: SubMenu.SHARE_YOUR_TIPS, subItems: []}
             ]
-        },
-        {
-            label: '취업 정보',
-            page: 'company-information',
-            status: HeaderStatus.COMPANY_INFORMATION,
-            subMenu: [
-                {title: SubMenu.USA, subItems: ["미국 비자", "미국 연봉"]},
-                {title: SubMenu.CANADA, subItems: ["캐나다 비자", "캐나다 연봉"]},
-                {title: SubMenu.INTERVIEW_PROCESS, subItems: ["1차", "2차", "3차"]},
-                {title: SubMenu.POSITION_SALARY, subItems: ["BackEnd", "FrontEnd", "DevOps", "IOS", "GAME"]},
-                {title: SubMenu.BIG_TECH, subItems: ["페이스북", "아마존", "넷플릭스", "구글", "마이크로소프트"]},
-            ]
-        },
-        // {label: 'About us', page: 'about-us', status: HeaderStatus.ABOUT_US, subMenu: []},
-        // {label: 'Contact', page: 'contact', status: HeaderStatus.CONTACT, subMenu: []},
+        }
     ];
 
-    const onClickChangePage = (page: string, status: HeaderStatus) => {
-        navigate(`/${page}`)
-        window.scrollBy({
-            left: 0,
-            top: -window.scrollY,
+    const onClickChangePage = useCallback((page: string, status: HeaderStatus) => {
+        navigate(`/${page}`);
+        window.scrollTo({
+            top: 0,
             behavior: "smooth",
         });
-        setHeaderStatus(status)
-    }
+        setHeaderStatus(status);
+        setIsMenuOpen(false);
+    }, [navigate]);
 
-    const onClickLogout = () =>{
-        const confirms = window.confirm('로그아웃 하시겠습니까?')
+    const onClickLogout = useCallback(() => {
+        const confirms = window.confirm('로그아웃 하시겠습니까?');
         if (confirms) {
             removeCookie('accessToken');
             removeCookie('refreshToken');
-            window.location.reload()
+            window.location.reload();
         }
-    }
+    }, [removeCookie]);
 
-    const [activeButton, setActiveButton] = useState(null);
+    const [activeButton, setActiveButton] = useState<number | null>(null);
 
-    const onMouseEnter = (index: any) => {
-        setActiveButton(index); // 마우스가 버튼 위에 있을 때 상태를 업데이트
-    };
+    const onMouseEnter = useCallback((index: number) => {
+        setActiveButton(index);
+    }, []);
 
-    const onMouseLeave = () => {
-        setActiveButton(null); // 마우스가 버튼을 떠났을 때 상태를 초기화
-    };
+    const onMouseLeave = useCallback(() => {
+        setActiveButton(null);
+    }, []);
 
-
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
-
+    const toggleMenu = useCallback(() => {
+        setIsMenuOpen(prev => !prev);
+    }, []);
 
     useEffect(() => {
         const accessToken = getCookie('accessToken');
-        setIsLogin(accessToken !== null)
+        setIsLogin(accessToken !== null);
     }, [getCookie]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (isMenuOpen) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isMenuOpen]);
 
     return (
-        <header className={style.header}>
-            <div className={style.hamburgerMenu} onClick={toggleMenu}>
-                {/* Hamburger Icon */}
-                <img style={{cursor: 'pointer'}} src={hamburger} alt={'hamburger'}/>
-            </div>
-
-            <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}/>
-
-            {/*  메인 로고 가운데정렬하기 위해 추가  */}
-            <div className={style.headerTitle} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>
-                Koreer
-            </div>
-
-            <div className={`${style.headerButtonWrapper} ${isMenuOpen ? style.menuOpen : ''}`}>
-                <MenuButton
-                    selectedButtons={selectedButtons}
-                    headerStatus={headerStatus}
-                    activeButton={activeButton}
-                    onMouseEnter={onMouseEnter}
-                    onMouseLeave={onMouseLeave}
-                    onClickChangePage={onClickChangePage}
+        <motion.header 
+            className={style.header}
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        >
+            <div 
+                className={style.hamburgerMenu} 
+                onClick={toggleMenu}
+                role="button"
+                aria-label="Toggle menu"
+            >
+                <motion.img 
+                    src={hamburger} 
+                    alt="menu"
+                    animate={{ rotate: isMenuOpen ? 90 : 0 }}
+                    transition={{ duration: 0.2 }}
                 />
-                {isLogin ? (
-                    <button className={`${style.buttons} ${style.logout}`}
-                            onClick={() =>onClickLogout()}>Logout
-                    </button>
-                ) : (
-                    <button className={`${style.buttons} ${style.login}`}
-                            onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}>Login
-                    </button>
-                )}
             </div>
-        </header>
+
+            <motion.div 
+                className={style.logoImg} 
+                onClick={() => onClickChangePage('', HeaderStatus.NONE)}
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
+                role="button"
+                aria-label="Home"
+            />
+
+            <motion.div 
+                className={style.headerTitle} 
+                onClick={() => onClickChangePage('', HeaderStatus.NONE)}
+                whileHover={{ y: -2 }}
+                whileTap={{ y: 0 }}
+                role="button"
+                aria-label="Koreer"
+            >
+                Koreer
+            </motion.div>
+
+            <AnimatePresence>
+                <motion.div 
+                    className={`${style.headerButtonWrapper} ${isMenuOpen ? style.menuOpen : ''}`}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                >
+                    <MenuButton
+                        selectedButtons={selectedButtons}
+                        headerStatus={headerStatus}
+                        activeButton={activeButton}
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
+                        onClickChangePage={onClickChangePage}
+                    />
+                    {isLogin ? (
+                        <motion.button 
+                            className={`${style.buttons} ${style.logout}`}
+                            onClick={onClickLogout}
+                            whileHover={{ y: -2 }}
+                            whileTap={{ y: 0 }}
+                        >
+                            Logout
+                        </motion.button>
+                    ) : (
+                        <motion.button 
+                            className={`${style.buttons} ${style.login}`}
+                            onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}
+                            whileHover={{ y: -2 }}
+                            whileTap={{ y: 0 }}
+                        >
+                            Login
+                        </motion.button>
+                    )}
+                </motion.div>
+            </AnimatePresence>
+        </motion.header>
     );
 }

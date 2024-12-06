@@ -1,28 +1,85 @@
 import style from "../../../assets/scss/common/main.module.scss";
-// eslint-disable-next-line
-import logo from "../../../assets/img/koreer_logo.png"
-import cropped_logo from "../../../assets/img/koreer_logo_cropped.png"
+import cropped_logo from "../../../assets/img/koreer_logo_cropped.png";
+import { motion } from "framer-motion";
 
 export function CompanyInformationField() {
-    return(
-        <>
-            <div className={style.container}>
-                <div className={style.headingText}>북미 취업을<br />희망하세요?</div>
-                <div className={style.subText}>
-                    코리어와 함께 <br/>
-                    커리어를 성장,<br/>
-                    글로벌시장으로 나아가보세요.
-                </div>
-                <div className={style.imageBanner}>
-                    <img src={cropped_logo} alt="Global Opportunities" className={style.bannerImage}/>
-                </div>
-                <div className={style.callToAction}>어느곳으로 해외취업을 희망하시나요?</div>
-                <div className={style.buttonsContainer}>
-                    <button className={style.choiceButton}>USA</button>
-                    <button className={style.choiceButton}>CANADA</button>
-                    <button className={style.choiceButton}>ASIA</button>
-                </div>
-            </div>
-        </>
-    )
+    return (
+        <motion.div 
+            className={style.container}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+        >
+            <motion.div 
+                className={style.headingText}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+            >
+                북미 취업을<br />희망하세요?
+            </motion.div>
+            
+            <motion.div 
+                className={style.subText}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+            >
+                코리어와 함께<br/>
+                커리어를 성장,<br/>
+                글로벌시장으로 나아가보세요.
+            </motion.div>
+            
+            <motion.div 
+                className={style.imageBanner}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.6, type: "spring", stiffness: 100 }}
+            >
+                <img 
+                    src={cropped_logo} 
+                    alt="Global Opportunities" 
+                    className={style.bannerImage}
+                />
+            </motion.div>
+            
+            <motion.div 
+                className={style.callToAction}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+            >
+                어느곳으로 해외취업을 희망하시나요?
+            </motion.div>
+            
+            <motion.div 
+                className={style.buttonsContainer}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+            >
+                <motion.button 
+                    className={style.choiceButton}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    USA
+                </motion.button>
+                <motion.button 
+                    className={style.choiceButton}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    CANADA
+                </motion.button>
+                <motion.button 
+                    className={style.choiceButton}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    ASIA
+                </motion.button>
+            </motion.div>
+        </motion.div>
+    );
 }

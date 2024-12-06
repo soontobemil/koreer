@@ -1,0 +1,313 @@
+@import '../shared/variables';
+
+.visaInfoContainer {
+  max-width: $container-xl;
+  margin: 0 auto;
+  padding: $spacing-2xl $spacing-xl;
+  margin-top: 80px;
+
+  .header {
+    text-align: center;
+    margin-bottom: $spacing-3xl;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -$spacing-md;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: $gradient-primary;
+      border-radius: 2px;
+    }
+
+    h1 {
+      font-size: $font-size-4xl;
+      color: $primary-color;
+      margin-bottom: $spacing-md;
+      font-weight: $font-weight-bold;
+      line-height: $line-height-tight;
+    }
+
+    p {
+      font-size: $font-size-lg;
+      color: $text-secondary;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: $line-height-relaxed;
+    }
+  }
+
+  .visaTypesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: $spacing-xl;
+    margin-bottom: $spacing-3xl;
+
+    .visaCard {
+      background: $background-white;
+      border-radius: $border-radius-lg;
+      padding: $spacing-xl;
+      box-shadow: $shadow-sm;
+      transition: $transition-normal;
+      border: 1px solid $border-light;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, transparent 50%, rgba($primary-color, 0.05) 50%);
+        border-radius: 0 0 0 120px;
+        transition: $transition-normal;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-lg;
+        border-color: $primary-color;
+
+        &::before {
+          background: linear-gradient(135deg, transparent 50%, rgba($primary-color, 0.1) 50%);
+        }
+      }
+
+      h2 {
+        font-size: $font-size-2xl;
+        color: $primary-color;
+        margin-bottom: $spacing-md;
+        font-weight: $font-weight-semibold;
+      }
+
+      .description {
+        font-size: $font-size-md;
+        color: $text-secondary;
+        line-height: $line-height-relaxed;
+        margin-bottom: $spacing-lg;
+      }
+
+      .infoSection {
+        background: $background-light;
+        border-radius: $border-radius-md;
+        padding: $spacing-lg;
+        margin-bottom: $spacing-lg;
+
+        h3 {
+          font-size: $font-size-lg;
+          color: $text-primary;
+          margin-bottom: $spacing-md;
+          font-weight: $font-weight-semibold;
+          display: flex;
+          align-items: center;
+          gap: $spacing-sm;
+
+          &::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: $gradient-primary;
+            border-radius: $border-radius-sm;
+          }
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            margin-bottom: $spacing-sm;
+            padding-left: $spacing-lg;
+            position: relative;
+            line-height: $line-height-relaxed;
+
+            &::before {
+              content: '•';
+              position: absolute;
+              left: $spacing-sm;
+              color: $primary-color;
+              font-weight: $font-weight-bold;
+            }
+          }
+        }
+      }
+
+      .detailsGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: $spacing-md;
+        background: $background-light;
+        padding: $spacing-lg;
+        border-radius: $border-radius-md;
+
+        .detail {
+          text-align: center;
+
+          .label {
+            display: block;
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            margin-bottom: $spacing-xs;
+          }
+
+          .value {
+            font-size: $font-size-md;
+            color: $primary-color;
+            font-weight: $font-weight-semibold;
+          }
+        }
+      }
+    }
+  }
+
+  .additionalInfo {
+    background: $gradient-primary;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    color: $text-white;
+    margin-top: $spacing-3xl;
+
+    h2 {
+      font-size: $font-size-xl;
+      margin-bottom: $spacing-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        position: relative;
+        padding-left: $spacing-xl;
+        margin-bottom: $spacing-md;
+        font-size: $font-size-md;
+        line-height: $line-height-relaxed;
+
+        &::before {
+          content: '✓';
+          position: absolute;
+          left: $spacing-sm;
+          color: $secondary-color;
+          font-weight: $font-weight-bold;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .visaInfoContainer {
+    padding: $spacing-xl $spacing-md;
+
+    .header {
+      margin-bottom: $spacing-2xl;
+
+      h1 {
+        font-size: $font-size-3xl;
+      }
+
+      p {
+        font-size: $font-size-md;
+      }
+    }
+
+    .visaTypesContainer {
+      gap: $spacing-md;
+
+      .visaCard {
+        padding: $spacing-lg;
+
+        h2 {
+          font-size: $font-size-xl;
+        }
+
+        .detailsGrid {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .visaInfoContainer {
+    .header {
+      h1 {
+        color: $dark-primary;
+      }
+
+      p {
+        color: $dark-text-secondary;
+      }
+
+      &::after {
+        background: linear-gradient(90deg, $dark-primary, $dark-primary-light);
+      }
+    }
+
+    .visaCard {
+      background: $dark-background;
+      border-color: $border-dark;
+
+      &:hover {
+        border-color: $dark-primary;
+      }
+
+      h2 {
+        color: $dark-primary;
+      }
+
+      .description {
+        color: $dark-text-secondary;
+      }
+
+      .infoSection {
+        background: $dark-surface;
+
+        h3 {
+          color: $dark-text;
+
+          &::before {
+            background: linear-gradient(90deg, $dark-primary, $dark-primary-light);
+          }
+        }
+
+        ul li {
+          color: $dark-text-secondary;
+
+          &::before {
+            color: $dark-primary;
+          }
+        }
+      }
+
+      .detailsGrid {
+        background: $dark-surface;
+
+        .detail {
+          .label {
+            color: $dark-text-secondary;
+          }
+
+          .value {
+            color: $dark-primary;
+          }
+        }
+      }
+    }
+
+    .additionalInfo {
+      background: linear-gradient(45deg, $dark-primary, $dark-primary-light);
+    }
+  }
+}

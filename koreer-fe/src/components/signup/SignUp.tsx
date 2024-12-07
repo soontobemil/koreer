@@ -1,112 +1,208 @@
-import style from "../../assets/scss/sub/signup.module.scss"
-import {SignUpIdField} from "./SignUpIdField";
-import {SignUpPasswordField} from "./SignUpPasswordField";
-import {SignUpPasswordConfirmField} from "./SignUpPasswordConfirmField";
-import {SignUpNicknameField} from "./SignUpNicknameField";
-import {SignUpNationField} from "./SignUpNationField";
-import {useCallback, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {useSignUpValidator} from "./hooks/useSignUpValidator";
-import {UserPostDTO} from "../../types/signup";
-import {register} from "../../slice/signupSlice";
-import {ConfirmModal} from "../modal/ConfirmModal";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSignUpValidator } from "./hooks/useSignUpValidator";
+import { UserPostDTO, ValidateStatus } from "../../types/signup";
+import { register } from "../../slice/signupSlice";
+import {
+  Box,
+  Container,
+  Paper,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Stack,
+} from '@mui/material';
+import { motion } from 'framer-motion';
+import { SignUpIdField } from "./SignUpIdField";
+import { SignUpPasswordField } from "./SignUpPasswordField";
+import { SignUpPasswordConfirmField } from "./SignUpPasswordConfirmField";
+import { SignUpNicknameField } from "./SignUpNicknameField";
+import { SignUpNationField } from "./SignUpNationField";
 
 export function SignUp() {
-    const [nation, setNation] = useState('국가를 선택해주세요!');
-    const [id, setId] = useState('');
-    const [nickName, setNickName] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordCheck, setPasswordCheck] = useState('')
-    const navigate = useNavigate()
-    const [signUpSuccess, setSignUpSuccess] = useState(false);
-    const dispatch = useDispatch<any>();
-    const {
-        validate,
-        // nationValidate, setNationValidate,
-        idValidate, setIdValidate,
-        nickNameValidate, setNickNameValidate,
-        passwordValidate, setPasswordValidate,
-        passwordCheckValidate, setPasswordCheckValidate
-    } =
-        useSignUpValidator({nation, id, nickName, password, passwordCheck});
+  const navigate = useNavigate();
+  const dispatch = useDispatch<any>();
+  const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
-    const [isDuplecateChecked, setIsDuplecateChecked] = useState(false)
+  // Form fields
+  const [nation, setNation] = useState('');
+  const [id, setId] = useState('');
+  const [nickName, setNickName] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
 
-    const handleCancelButton = () => {
-        // eslint-disable-next-line no-restricted-globals
-        const confirms = confirm('가입을 취소하시겠습니까?\n작성중인 정보는 삭제됩니다.')
-        if (confirms) {
-            navigate('/signin');
-        }
+  // Validation states
+  const [idValidate, setIdValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
+  const [nickNameValidate, setNickNameValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
+  const [passwordValidate, setPasswordValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
+  const [passwordCheckValidate, setPasswordCheckValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
+
+  const { validate } = useSignUpValidator({
+    nation,
+    id,
+    nickName,
+    password,
+    passwordCheck,
+  });
+
+  const handleCancelButton = () => {
+    setOpenCancelDialog(true);
+  };
+
+  const handleConfirmCancel = () => {
+    navigate('/signin');
+  };
+
+  const handleSignup = useCallback(async () => {
+    try {
+      const isSignupAble = validate();
+      if (!isSignupAble) return;
+
+      const response = await dispatch(register({
+        user_email: id,
+        username: nickName,
+        nation: nation,
+        password: password
+      } as UserPostDTO)).unwrap();
+
+      if (response.status === 200) {
+        navigate('/signin');
+      }
+    } catch (e) {
+      console.error('Signup error:', e);
     }
+  }, [id, nation, nickName, password, dispatch, navigate, validate]);
 
-    const handleSignup = useCallback(async (): Promise<boolean> => {
-        try {
-            const isSignupAble = validate();
-            if (!isSignupAble) return false;
+  return (
+    <Container component="main" maxWidth="sm">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Box
+          sx={{
+            mt: 8,
+            mb: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Paper
+            elevation={2}
+            sx={{
+              p: 4,
+              width: '100%',
+              borderRadius: 2,
+              bgcolor: 'background.paper',
+            }}
+          >
+            <Typography variant="h5" align="center" gutterBottom fontWeight={600}>
+              회원가입
+            </Typography>
 
-            const response = await dispatch(register({
-                user_email: id,
-                username: nickName,
-                nation: nation,
-                password: password
-            } as UserPostDTO)).unwrap();
+            <Stack spacing={3}>
+              <SignUpNationField
+                nation={nation}
+                setNation={setNation}
+              />
 
-            if (response.status === 200) {
-                navigate('/signin');
-                return true;
-            }
-            return false;
-        } catch (e) {
-            console.error('Signup error:', e);
-            return false;
-        }
-    }, [id, nation, nickName, password, passwordCheck, isDuplecateChecked, idValidate, setIdValidate, dispatch, navigate, validate]);
+              <SignUpIdField
+                id={id}
+                setId={setId}
+                idValidate={idValidate}
+                setIdValidate={setIdValidate}
+              />
 
-    return (
-        <>
-            <div className={style.signupMainWrapper}>
-                <div className={style.signupWrapper}>
-                    <div className={style.header}>
-                        Sign Up
-                    </div>
+              <SignUpNicknameField
+                nickName={nickName}
+                setNickName={setNickName}
+                nickNameValidate={nickNameValidate}
+                setNickNameValidate={setNickNameValidate}
+              />
 
-                    <div className={style.body}>
-                        <SignUpNationField nation={nation} setNation={setNation}/>
+              <SignUpPasswordField
+                password={password}
+                setPassword={setPassword}
+                passwordValidate={passwordValidate}
+                setPasswordValidate={setPasswordValidate}
+              />
 
-                        <SignUpIdField id={id} setId={setId}
-                                       idValidate={idValidate} setIdValidate={setIdValidate}
-                                       isDuplecateChecked={isDuplecateChecked}
-                                       setIsDuplecateChecked={setIsDuplecateChecked}/>
+              <SignUpPasswordConfirmField
+                passwordCheck={passwordCheck}
+                setPasswordCheck={setPasswordCheck}
+                passwordCheckValidate={passwordCheckValidate}
+                setPasswordCheckValidate={setPasswordCheckValidate}
+              />
 
-                        <SignUpNicknameField nickName={nickName} setNickName={setNickName}
-                                             nickNameValidate={nickNameValidate}
-                                             setNickNameValidate={setNickNameValidate}/>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  onClick={handleCancelButton}
+                  sx={{
+                    py: 1.5,
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: 1,
+                    },
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  취소
+                </Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={handleSignup}
+                  sx={{
+                    py: 1.5,
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: 2,
+                    },
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  회원가입
+                </Button>
+              </Stack>
+            </Stack>
+          </Paper>
+        </Box>
+      </motion.div>
 
-                        <SignUpPasswordField password={password} setPassword={setPassword}
-                                             passwordValidate={passwordValidate}
-                                             setPasswordValidate={setPasswordValidate}/>
-
-                        <SignUpPasswordConfirmField passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck}
-                                                    passwordCheckValidate={passwordCheckValidate}
-                                                    setPasswordCheckValidate={setPasswordCheckValidate}/>
-                        <div className={style.buttonsWrapper}>
-                            <div className={style.cancelButton} onClick={handleCancelButton}>
-                                취소
-                            </div>
-                            <div className={style.signupButton} onClick={handleSignup}>
-                                회원 가입
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                {signUpSuccess && (
-                    <ConfirmModal modalClose={setSignUpSuccess}/>
-                )}
-
-            </div>
-        </>
-    );
+      <Dialog
+        open={openCancelDialog}
+        onClose={() => setOpenCancelDialog(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: 2,
+            width: '100%',
+            maxWidth: 400,
+          },
+        }}
+      >
+        <DialogTitle>회원가입 취소</DialogTitle>
+        <DialogContent>
+          <Typography>
+            가입을 취소하시겠습니까? 작성중인 정보는 삭제됩니다.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenCancelDialog(false)}>
+            아니오
+          </Button>
+          <Button onClick={handleConfirmCancel} variant="contained" color="error">
+            예
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Container>
+  );
 }

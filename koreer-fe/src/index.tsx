@@ -20,9 +20,12 @@ import {Success} from "./components/common/Success";
 import {EmploymentInfo} from "./components/employment/EmploymentInfo";
 import {USAVisaInfo} from "./components/visa/USAVisaInfo";
 import {CanadaVisaInfo} from "./components/visa/CanadaVisaInfo";
-import {USASalaryInfo} from "./components/employment/USASalaryInfo";
-import {CanadaSalaryInfo} from "./components/employment/CanadaSalaryInfo";
+import {USASalaryInfo} from "./components/salary/USASalaryInfo";
+import {CanadaSalaryInfo} from "./components/salary/CanadaSalaryInfo";
 import {InterviewGuide} from "./components/employment/InterviewGuide";
+import {USALifeInfo} from "./components/life/USALifeInfo";
+import {CanadaLifeInfo} from "./components/life/CanadaLifeInfo";
+import {WorkPermit} from "./components/employment/WorkPermit";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -44,6 +47,11 @@ root.render(
                             <Route path="usa" element={<USASalaryInfo/>}/>
                             <Route path="canada" element={<CanadaSalaryInfo/>}/>
                         </Route>
+                        <Route path="life-info">
+                            <Route path="usa" element={<USALifeInfo/>}/>
+                            <Route path="canada" element={<CanadaLifeInfo/>}/>
+                        </Route>
+                        <Route path="work-permit" element={<WorkPermit/>}/>
                         <Route path="interview-guide" element={<InterviewGuide/>}/>
                         <Route path="community" element={<Community/>}/>
                         <Route path="tips" element={<Tips/>}/>

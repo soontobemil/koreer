@@ -1,43 +1,40 @@
-// Brand Colors
-$primary-color: #0072b3;
-$primary-light: #00a1ff;
-$primary-dark: #005a8f;
-$secondary-color: #f5ba13;
+// Modern Color Palette
+$primary-color: #2563eb; // Bright blue - main brand color
+$primary-dark: #1d4ed8;
+$primary-light: #60a5fa;
+$primary-lighter: #93c5fd;
 
-// Base Colors
+// Light Mode Colors
 $background-white: #ffffff;
-$background-light: #f8f9fa;
-$background-lighter: #f2f4f6;
-$background-accent: #f7fafd;
+$background-light: #f8fafc;
+$background-lighter: #f1f5f9;
+$background-accent: #e2e8f0;
+$surface-color: #ffffff;
+$border-light: #e2e8f0;
+
+// Dark Mode Colors
+$dark-background: #0f172a; // Deep blue-gray
+$dark-surface: #1e293b;
+$dark-surface-lighter: #334155;
+$dark-border: #334155;
 
 // Text Colors
-$text-primary: #2c3e50;
-$text-secondary: #4a5568;
-$text-light: #718096;
+$text-primary: #1e293b; // Dark blue-gray
+$text-secondary: #64748b;
+$text-tertiary: #94a3b8;
 $text-white: #ffffff;
 
-// Border Colors
-$border-light: #e2e8f0;
-$border-primary: rgba(0, 114, 179, 0.1);
+$dark-text-primary: #f1f5f9;
+$dark-text-secondary: #cbd5e1;
+$dark-text-tertiary: #94a3b8;
 
-// Shadows
-$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
-$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.05);
+// Semantic Colors
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$error-color: #ef4444;
+$info-color: #3b82f6;
 
-$shadow-primary-sm: 0 2px 4px rgba(0, 114, 179, 0.1);
-$shadow-primary-md: 0 4px 8px rgba(0, 114, 179, 0.15);
-$shadow-primary-lg: 0 8px 16px rgba(0, 114, 179, 0.15);
-
-// Border Radius
-$border-radius-sm: 6px;
-$border-radius-md: 8px;
-$border-radius-lg: 12px;
-$border-radius-xl: 16px;
-$border-radius-full: 9999px;
-
-// Spacing
+// Spacing System
 $spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 16px;
@@ -47,19 +44,13 @@ $spacing-2xl: 48px;
 $spacing-3xl: 64px;
 
 // Typography
-$font-size-xs: 0.75rem;    // 12px
-$font-size-sm: 0.875rem;   // 14px
-$font-size-md: 1rem;       // 16px
-$font-size-lg: 1.125rem;   // 18px
-$font-size-xl: 1.25rem;    // 20px
-$font-size-2xl: 1.5rem;    // 24px
-$font-size-3xl: 1.875rem;  // 30px
-$font-size-4xl: 2.25rem;   // 36px
-
-// Line Heights
-$line-height-tight: 1.25;
-$line-height-normal: 1.5;
-$line-height-relaxed: 1.75;
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-2xl: 32px;
+$font-size-3xl: 40px;
 
 // Font Weights
 $font-weight-normal: 400;
@@ -67,19 +58,37 @@ $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
-// Z-index
+// Border Radius
+$border-radius-sm: 6px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 9999px;
+
+// Z-index Scale
 $z-index-dropdown: 1000;
 $z-index-sticky: 1020;
 $z-index-fixed: 1030;
-$z-index-modal-backdrop: 1040;
-$z-index-modal: 1050;
-$z-index-popover: 1060;
-$z-index-tooltip: 1070;
+$z-index-modal: 1040;
+$z-index-popover: 1050;
+$z-index-tooltip: 1060;
 
 // Transitions
-$transition-fast: all 0.2s ease;
-$transition-normal: all 0.3s ease;
-$transition-slow: all 0.4s ease;
+$transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Dark Mode Shadows
+$dark-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+$dark-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+$dark-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+$dark-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
 
 // Breakpoints
 $breakpoint-sm: 640px;
@@ -88,42 +97,71 @@ $breakpoint-lg: 1024px;
 $breakpoint-xl: 1280px;
 $breakpoint-2xl: 1536px;
 
-// Container Widths
-$container-sm: 640px;
-$container-md: 768px;
-$container-lg: 1024px;
-$container-xl: 1280px;
-$container-2xl: 1536px;
+// Common Component Styles
+%employment-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  background: var(--page-background, $background-light);
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  transition: background-color $transition-normal;
 
-// Gradients
-$gradient-primary: linear-gradient(135deg, $primary-color, $primary-light);
-$gradient-primary-hover: linear-gradient(135deg, darken($primary-color, 5%), darken($primary-light, 5%));
-$gradient-secondary: linear-gradient(135deg, $secondary-color, lighten($secondary-color, 10%));
+  @media (prefers-color-scheme: dark) {
+    --page-background: #{$dark-surface};
+    box-shadow: $dark-shadow-md;
+  }
+}
 
-// Dark Mode Colors
-$dark-background: #1a1a1a;
-$dark-surface: #2a2a2a;
-$dark-border: #333333;
-$dark-primary: #4a9eff;
-$dark-primary-light: #73b6ff;
-$dark-primary-dark: #3a8eff;
-$dark-text: #e0e0e0;
-$dark-text-secondary: #b0b0b0;
+%info-card {
+  background: var(--card-background, $surface-color);
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  border: 1px solid var(--card-border, $border-light);
+  box-shadow: $shadow-md;
+  transition: all $transition-normal;
 
-// Dark Mode Border Colors
-$border-dark: #333333;
-$dark-border-color: rgba(255, 255, 255, 0.1);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
 
-// Dark Mode Gradients
-$dark-gradient-primary: linear-gradient(135deg, $dark-primary, $dark-primary-light);
-$dark-gradient-primary-hover: linear-gradient(135deg, $dark-primary-dark, $dark-primary);
+  @media (prefers-color-scheme: dark) {
+    --card-background: #{$dark-surface-lighter};
+    --card-border: #{$dark-border};
+    box-shadow: $dark-shadow-md;
 
-// Dark Mode Shadows
-$dark-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-$dark-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-$dark-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    &:hover {
+      box-shadow: $dark-shadow-lg;
+    }
+  }
+}
 
-// Dark Mode Background Colors
-$dark-background-light: #222222;
-$dark-background-lighter: #2d2d2d;
-$dark-background-accent: #363636;
+// Navigation Styles
+%nav-item {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  color: var(--nav-text, $text-primary);
+  background: var(--nav-background, transparent);
+  transition: all $transition-normal;
+
+  &:hover {
+    color: var(--nav-text-hover, $primary-color);
+    background: var(--nav-background-hover, rgba($primary-color, 0.1));
+  }
+
+  &.active {
+    color: var(--nav-text-active, $text-white);
+    background: var(--nav-background-active, $primary-color);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --nav-text: #{$dark-text-primary};
+    --nav-text-hover: #{$primary-lighter};
+    --nav-background-hover: rgba($primary-lighter, 0.1);
+    --nav-text-active: #{$dark-text-primary};
+    --nav-background-active: #{$primary-dark};
+  }
+}

@@ -60,6 +60,12 @@ export function Header() {
             ]
         },
         {
+            label: '회사 정보',
+            page: 'company-information',
+            status: HeaderStatus.COMPANY_INFORMATION,
+            subMenu: []
+        },
+        {
             label: '커뮤니티',
             page: 'community',
             status: HeaderStatus.COMMUNITY,

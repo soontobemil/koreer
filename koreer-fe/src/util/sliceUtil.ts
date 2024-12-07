@@ -10,7 +10,7 @@ export const addCases = <T extends SliceState>(
     .addCase(asyncThunk.pending, (state) => {
       state.status = Status.LOADING;
     })
-    .addCase(asyncThunk.rejected, (state, action) => {
+    .addCase(asyncThunk.rejected, (state) => {
       state.status = Status.FAILED;
     })
     .addCase(asyncThunk.fulfilled, (state) => {

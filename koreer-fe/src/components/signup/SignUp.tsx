@@ -41,30 +41,28 @@ export function SignUp() {
         }
     }
 
-    const handleSignup = useCallback(async () => {
-
-        const isSignupAble = validate();
-        if (!isSignupAble) return false
-
+    const handleSignup = useCallback(async (): Promise<boolean> => {
         try {
-            await dispatch(
-                register({
-                    user_email: id,
-                    username: nickName,
-                    nation: nation,
-                    password: password
-                } as UserPostDTO)
-            ).then(() => {
-                setSignUpSuccess((re) => !re)
-            });
+            const isSignupAble = validate();
+            if (!isSignupAble) return false;
 
+            const response = await dispatch(register({
+                user_email: id,
+                username: nickName,
+                nation: nation,
+                password: password
+            } as UserPostDTO)).unwrap();
+
+            if (response.status === 200) {
+                navigate('/signin');
+                return true;
+            }
+            return false;
         } catch (e) {
-            console.log('error message : ', e)
+            console.error('Signup error:', e);
+            return false;
         }
-
-        // eslint-disable-next-line
-    }, [id, nation, nickName, password, passwordCheck, isDuplecateChecked, idValidate, setIdValidate]);
-
+    }, [id, nation, nickName, password, passwordCheck, isDuplecateChecked, idValidate, setIdValidate, dispatch, navigate, validate]);
 
     return (
         <>

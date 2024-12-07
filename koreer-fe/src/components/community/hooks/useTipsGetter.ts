@@ -11,17 +11,15 @@ export function useTipsGetter() {
     const getTip = useCallback(async () => {
         try {
             const result: ResponseDTO = await dispatch(getTips()).unwrap();
-
             setTips(result.result)
             return result;
         } catch (e) {
-            console.log('error message : ', e)
+            console.error('Error getting tips:', e);
+            return null;
         }finally {
             setIsLoaded(true)
         }
-
-        // eslint-disable-next-line
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (!tips) {

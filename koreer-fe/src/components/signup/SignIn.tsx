@@ -45,28 +45,31 @@ export function SignIn() {
     }, [email, password]);
 
     const signIn = useCallback(async () => {
-        setIsLoaded(true);
-        const result = validate();
-        if(!result) return ;
-
-        const loginDTO:LoginDTO = {user_email: email, password: password}
         try {
-            const result: ResponseDTO = await dispatch(login(loginDTO)).unwrap();
-            console.log(result)
-            setAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsInVzZXJfZW1haWwiOiIxMzEzIiwiaWF0IjoxNzI4NDU4MTA1LCJleHAiOjE3Mjg0NjE3MDV9.EP30Lr_4bPWB2oy60uccx7bTJgogwsz1i4sOF6g5je8')
-            navigate('/')
+            setIsLoaded(true);
+            const result = validate();
+            if(!result) return false;
 
-            return result;
-        } catch (error: any) {
-            const convert = error as ErrorResponse;
-            const parsedMessage = JSON.parse(convert.message);
-
-            setErrorMessage(parsedMessage.message);
+            const loginDTO: LoginDTO = {
+                user_email: email,
+                password: password
+            };
+            const response = await dispatch(login(loginDTO)).unwrap();
+            
+            if (response.status === 200) {
+                const { accessToken } = response.result;
+                localStorage.setItem('accessToken', accessToken);
+                navigate(redirectUri);
+                return true;
+            }
+            return false;
+        } catch (e) {
+            console.error('Sign in error:', e);
+            return false;
         } finally {
-            setIsLoaded(false)
+            setIsLoaded(false);
         }
-        // eslint-disable-next-line
-    }, [email, password]);
+    }, [email, password, dispatch, navigate, redirectUri]);
 
     return (
         <>

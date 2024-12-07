@@ -1,258 +1,345 @@
-import React from 'react';
-import style from '../../assets/scss/sub/employmentInfo.module.scss';
-import { motion } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { ReactElement } from 'react';
+import {
+  Box,
+  Grid,
+  Stack,
+  Typography,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper
+} from '@mui/material';
+import {
+  Code,
+  Person,
+  Psychology,
+  Assignment,
+  CheckCircle,
+  Warning,
+  QuestionAnswer,
+  MenuBook,
+  DataObject,
+  Storage,
+  Architecture,
+  Speed,
+  Group,
+  Lightbulb,
+  TrendingUp,
+} from '@mui/icons-material';
+import { PageLayout } from '../shared/layouts/PageLayout';
+import { InfoCard } from '../shared/InfoCard';
 
-interface InterviewTopic {
-    title: string;
-    description: string;
-    icon: string;
-    examples: string[];
-    tips: string[];
+interface Question {
+  en: string;
+  kr: string;
+  example: string;
+  tips: string[];
 }
 
-export function InterviewGuide() {
-    const location = useLocation();
+interface Example {
+  title: string;
+  problem: string;
+  solution: string;
+  explanation: string;
+  tips: string[];
+}
 
-    const navigationLinks = [
-        { path: '/visa-info/usa', label: '비자 정보' },
-        { path: '/salary-info/usa', label: '연봉 정보' },
-        { path: '/interview-guide', label: '면접 가이드' },
-        { path: '/employment-info', label: '채용 정보' }
-    ];
+interface Point {
+  title: string;
+  details: string[];
+}
 
-    const technicalTopics: InterviewTopic[] = [
+interface ContentWithExamples {
+  subtitle: string;
+  examples: Example[];
+  type: 'examples';
+}
+
+interface ContentWithPoints {
+  subtitle: string;
+  points: Point[];
+  type: 'points';
+}
+
+type Content = ContentWithExamples | ContentWithPoints;
+
+interface CodingTopic {
+  title: string;
+  icon: ReactElement;
+  content: Content[];
+}
+
+interface BehavioralTopic {
+  title: string;
+  icon: ReactElement;
+  questions: Question[];
+}
+
+function isContentWithExamples(content: Content): content is ContentWithExamples {
+  return content.type === 'examples';
+}
+
+function isContentWithPoints(content: Content): content is ContentWithPoints {
+  return content.type === 'points';
+}
+
+export function InterviewGuide(): JSX.Element {
+  const navigationTabs = [
+    {
+      label: '기술 면접',
+      path: '/interview-guide#technical',
+      icon: <Code />
+    },
+    {
+      label: '인성 면접',
+      path: '/interview-guide#behavioral',
+      icon: <Person />
+    },
+    {
+      label: '코딩 테스트',
+      path: '/interview-guide#coding-test',
+      icon: <DataObject />
+    }
+  ];
+
+  const breadcrumbs = [
+    { label: '홈', path: '/' },
+    { label: '취업 정보', path: '/employment-info' },
+    { label: '면접 준비' }
+  ];
+
+  const behavioralTopics: BehavioralTopic[] = [
+    {
+      title: '리더십 & 팀워크',
+      icon: <Group />,
+      questions: [
         {
-            title: "자료구조와 알고리즘",
-            description: "기술적 지식과 문제 해결 능력을 평가하는 면접",
-            icon: "💻",
-            examples: [
-                "시간복잡도와 공간복잡도 분석",
-                "배열과 링크드 리스트의 차이",
-                "트리와 그래프 순회 방법",
-                "해시테이블 충돌 해결 방법"
-            ],
-            tips: [
-                "Big-O 표기법 이해하기",
-                "주요 알고리즘 패턴 학습",
-                "실제 코드로 구현해보기",
-                "최적화 방법 고려하기"
-            ]
-        },
-        {
-            title: "시스템 디자인",
-            description: "확장 가능한 시스템 설계 능력 평가",
-            icon: "🏗️",
-            examples: [
-                "URL 단축 서비스 설계",
-                "채팅 시스템 구현",
-                "분산 캐시 시스템",
-                "피드 시스템 설계"
-            ],
-            tips: [
-                "요구사항 명확히 하기",
-                "확장성 고려하기",
-                "데이터 모델 설계",
-                "트레이드오프 설명하기"
-            ]
-        },
-        {
-            title: "프로그래밍 언어",
-            description: "언어 특성과 심화 개념 이해도 평가",
-            icon: "🔧",
-            examples: [
-                "메모리 관리 방식",
-                "동시성 처리 방법",
-                "객체지향 프로그래밍",
-                "함수형 프로그래밍"
-            ],
-            tips: [
-                "언어별 특징 비교하기",
-                "실제 사용 경험 준비",
-                "최신 버전 특징 학습",
-                "성능 최적화 방법"
-            ]
+          en: "Tell me about a time when you had to lead a challenging project.",
+          kr: "어려운 프로젝트를 이끌어야 했던 경험에 대해 말씀해주세요.",
+          example: `"In my previous role at [Company], I led a team of 5 developers to migrate our legacy system to a microservices architecture. 
+
+Situation: Our monolithic system was becoming difficult to maintain and scale.
+Task: I was assigned to lead the migration project while ensuring zero downtime.
+Action:
+- Created a detailed migration plan with clear milestones
+- Implemented automated testing to ensure stability
+- Conducted daily stand-ups to address concerns
+- Set up monitoring and rollback procedures
+Result: Successfully completed the migration with zero downtime, improved system performance by 40%, and reduced deployment time from hours to minutes."`,
+          tips: [
+            'STAR 방식으로 구체적 사례 준비',
+            '정량적 결과 포함 (팀 규모, 성과 수치)',
+            '직면한 도전과 해결 방법 강조',
+            '배운 점 명확히 설명'
+          ]
         }
-    ];
+      ]
+    }
+  ];
 
-    const behavioralTopics: InterviewTopic[] = [
+  const codingTestTopics: CodingTopic[] = [
+    {
+      title: '알고리즘 문제 유형',
+      icon: <Code />,
+      content: [
         {
-            title: "팀워크와 협업",
-            description: "팀 내 역할과 기여도 평가",
-            icon: "🤝",
-            examples: [
-                "팀 프로젝트 경험",
-                "갈등 해결 사례",
-                "리더십 경험",
-                "의사소통 방식"
-            ],
-            tips: [
-                "STAR 방법론 활용",
-                "구체적 사례 준비",
-                "긍정적 결과 강조",
-                "배운 점 설명하기"
-            ]
-        },
-        {
-            title: "문제 해결 능력",
-            description: "도전적 상황 대처 능력 평가",
-            icon: "🎯",
-            examples: [
-                "기술적 문제 해결",
-                "프로젝트 위기 관리",
-                "고객 요구사항 충족",
-                "데드라인 준수"
-            ],
-            tips: [
-                "체계적 접근 방법",
-                "결과 중심 답변",
-                "개선점 도출하기",
-                "교훈 공유하기"
-            ]
+          type: 'examples',
+          subtitle: 'String Manipulation',
+          examples: [
+            {
+              title: "Reverse Words in a String",
+              problem: `Given a string s, reverse the order of words.
+Example:
+Input: "the sky is blue"
+Output: "blue is sky the"`,
+              solution: `
+function reverseWords(s: string): string {
+  return s.trim().split(/\\s+/).reverse().join(' ');
+}`,
+              explanation: "1. 문자열을 공백으로 분리\n2. 단어 순서 뒤집기\n3. 다시 공백으로 연결",
+              tips: [
+                '입력 문자열 전처리 (trim)',
+                '정규식으로 연속된 공백 처리',
+                '빈 문자열 처리',
+                '시간 복잡도 O(n)'
+              ]
+            }
+          ]
         }
-    ];
+      ]
+    }
+  ];
 
-    return (
-        <div className={style.interviewGuideContainer}>
-            <nav className={style.pageNavigation}>
-                <ul>
-                    {navigationLinks.map((link) => (
-                        <li key={link.path}>
-                            <Link 
-                                to={link.path}
-                                className={location.pathname === link.path ? style.active : ''}
-                            >
-                                {link.label}
-                            </Link>
-                        </li>
+  const renderExamples = (examples: Example[]): JSX.Element => (
+    <>
+      {examples.map((example: Example, eIndex: number) => (
+        <Box key={eIndex} sx={{ mb: 3 }}>
+          <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600 }}>
+            {example.title}
+          </Typography>
+          <Paper sx={{ p: 2, bgcolor: 'background.default', mb: 2 }}>
+            <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap' }}>
+              {example.problem}
+            </Typography>
+          </Paper>
+          <Typography variant="subtitle2" gutterBottom>
+            Solution:
+          </Typography>
+          <Paper sx={{ p: 2, bgcolor: 'background.default', mb: 2 }}>
+            <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap' }}>
+              {example.solution}
+            </Typography>
+          </Paper>
+          <Typography variant="subtitle2" gutterBottom>
+            설명:
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {example.explanation}
+          </Typography>
+          <List dense>
+            {example.tips.map((tip: string, tIndex: number) => (
+              <ListItem key={tIndex}>
+                <ListItemIcon>
+                  <CheckCircle color="success" fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary={tip} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      ))}
+    </>
+  );
+
+  const renderPoints = (points: Point[]): JSX.Element => (
+    <>
+      {points.map((point: Point, pIndex: number) => (
+        <Box key={pIndex}>
+          <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600 }}>
+            {point.title}
+          </Typography>
+          <List dense>
+            {point.details.map((detail: string, dIndex: number) => (
+              <ListItem key={dIndex}>
+                <ListItemIcon>
+                  <CheckCircle color="success" fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary={detail} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      ))}
+    </>
+  );
+
+  return (
+    <PageLayout
+      title="면접 준비 가이드"
+      subtitle="기술 면접부터 인성 면접까지, 성공적인 면접을 위한 완벽 가이드"
+      tabs={navigationTabs}
+      breadcrumbs={breadcrumbs}
+    >
+      <Stack spacing={6}>
+        {/* 인성 면접 섹션 */}
+        <Box id="behavioral">
+          <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
+            인성 면접 준비
+          </Typography>
+          <Grid container spacing={3}>
+            {behavioralTopics.map((topic: BehavioralTopic, index: number) => (
+              <Grid item xs={12} key={index}>
+                <InfoCard
+                  title={topic.title}
+                  icon={topic.icon}
+                  status="info"
+                >
+                  <Stack spacing={3}>
+                    {topic.questions.map((question: Question, qIndex: number) => (
+                      <Box key={qIndex}>
+                        <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600 }}>
+                          Q: {question.en}
+                        </Typography>
+                        <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                          {question.kr}
+                        </Typography>
+                        <Paper sx={{ p: 2, bgcolor: 'background.default', my: 2 }}>
+                          <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap' }}>
+                            {question.example}
+                          </Typography>
+                        </Paper>
+                        <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>
+                          답변 팁:
+                        </Typography>
+                        <List dense>
+                          {question.tips.map((tip: string, tIndex: number) => (
+                            <ListItem key={tIndex}>
+                              <ListItemIcon>
+                                <CheckCircle color="success" fontSize="small" />
+                              </ListItemIcon>
+                              <ListItemText primary={tip} />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Box>
                     ))}
-                </ul>
-            </nav>
+                  </Stack>
+                </InfoCard>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
 
-            <motion.div 
-                className={style.header}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <h1>면접 준비 가이드</h1>
-                <p>기술 면접부터 인성 면접까지, 성공적인 면접을 위한 완벽 가이드</p>
-            </motion.div>
-
-            <motion.section 
-                className={style.technicalSection}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-            >
-                <h2>기술 면접 가이드</h2>
-                <div className={style.topicGrid}>
-                    {technicalTopics.map((topic, index) => (
-                        <motion.div 
-                            key={index}
-                            className={style.topicCard}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                        >
-                            <div className={style.topicHeader}>
-                                <span className={style.topicIcon}>{topic.icon}</span>
-                                <h3>{topic.title}</h3>
-                            </div>
-                            <p>{topic.description}</p>
-                            
-                            <div className={style.examplesSection}>
-                                <h4>주요 예시</h4>
-                                <ul>
-                                    {topic.examples.map((example, idx) => (
-                                        <li key={idx}>{example}</li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            <div className={style.tipsSection}>
-                                <h4>면접 팁</h4>
-                                <ul>
-                                    {topic.tips.map((tip, idx) => (
-                                        <li key={idx}>{tip}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </motion.div>
+        {/* 코딩 테스트 섹션 */}
+        <Box id="coding-test">
+          <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
+            코딩 테스트 준비
+          </Typography>
+          <Grid container spacing={3}>
+            {codingTestTopics.map((topic: CodingTopic, index: number) => (
+              <Grid item xs={12} key={index}>
+                <InfoCard
+                  title={topic.title}
+                  icon={topic.icon}
+                  status="info"
+                >
+                  <Stack spacing={3}>
+                    {topic.content.map((section: Content, sIndex: number) => (
+                      <Box key={sIndex}>
+                        <Typography variant="h6" gutterBottom>
+                          {section.subtitle}
+                        </Typography>
+                        {isContentWithExamples(section) && renderExamples(section.examples)}
+                        {isContentWithPoints(section) && renderPoints(section.points)}
+                      </Box>
                     ))}
-                </div>
-            </motion.section>
+                  </Stack>
+                </InfoCard>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
 
-            <motion.section 
-                className={style.behavioralSection}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-            >
-                <h2>인성 면접 가이드</h2>
-                <div className={style.topicGrid}>
-                    {behavioralTopics.map((topic, index) => (
-                        <motion.div 
-                            key={index}
-                            className={style.topicCard}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6 + index * 0.1 }}
-                        >
-                            <div className={style.topicHeader}>
-                                <span className={style.topicIcon}>{topic.icon}</span>
-                                <h3>{topic.title}</h3>
-                            </div>
-                            <p>{topic.description}</p>
-                            
-                            <div className={style.examplesSection}>
-                                <h4>주요 예시</h4>
-                                <ul>
-                                    {topic.examples.map((example, idx) => (
-                                        <li key={idx}>{example}</li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            <div className={style.tipsSection}>
-                                <h4>면접 팁</h4>
-                                <ul>
-                                    {topic.tips.map((tip, idx) => (
-                                        <li key={idx}>{tip}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </motion.section>
-
-            <motion.section 
-                className={style.additionalResources}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-            >
-                <h2>추천 학습 자료</h2>
-                <div className={style.resourcesGrid}>
-                    <div className={style.resourceCard}>
-                        <h3>온라인 학습 플랫폼</h3>
-                        <ul>
-                            <li>LeetCode - 알고리즘 문제 풀이</li>
-                            <li>System Design Primer - 시스템 설계</li>
-                            <li>Pramp - 실전 면접 연습</li>
-                        </ul>
-                    </div>
-                    <div className={style.resourceCard}>
-                        <h3>추천 도서</h3>
-                        <ul>
-                            <li>Cracking the Coding Interview</li>
-                            <li>Clean Code</li>
-                            <li>Designing Data-Intensive Applications</li>
-                        </ul>
-                    </div>
-                </div>
-            </motion.section>
-        </div>
-    );
+        {/* 주의사항 */}
+        <Box
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            border: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.default',
+          }}
+        >
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Warning color="info" />
+            <Typography variant="body2" color="text.secondary">
+              면접 준비는 단순 암기가 아닌 깊이 있는 이해와 실제 경험을 바탕으로 해야 합니다.
+              제시된 내용을 참고하되, 자신만의 경험과 생각을 정리하여 준비하세요.
+            </Typography>
+          </Stack>
+        </Box>
+      </Stack>
+    </PageLayout>
+  );
 }

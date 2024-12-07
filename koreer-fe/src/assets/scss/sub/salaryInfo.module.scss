@@ -1,0 +1,235 @@
+@import '../shared/variables';
+
+.salaryOverview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-3xl;
+
+  .trendSection,
+  .comparisonSection {
+    background: $background-white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    box-shadow: $shadow-md;
+    transition: $transition-normal;
+    border: 1px solid $border-light;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-lg;
+    }
+  }
+}
+
+.salaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: $spacing-xl;
+  margin: $spacing-2xl 0;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-xl;
+  margin: $spacing-2xl 0;
+}
+
+.cityComparison {
+  margin: $spacing-3xl 0;
+  background: $background-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-2xl;
+  box-shadow: $shadow-md;
+
+  h3 {
+    font-size: $font-size-2xl;
+    color: $text-primary;
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    position: relative;
+    font-weight: $font-weight-semibold;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -$spacing-md;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: $gradient-primary;
+      border-radius: $border-radius-sm;
+    }
+  }
+
+  .comparisonGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-xl;
+
+    .cityCard {
+      background: $background-light;
+      border-radius: $border-radius-lg;
+      padding: $spacing-xl;
+      transition: $transition-normal;
+
+      h4 {
+        font-size: $font-size-lg;
+        color: $text-primary;
+        margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-md;
+        border-bottom: 1px solid $border-light;
+        font-weight: $font-weight-semibold;
+      }
+
+      .costList {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 $spacing-lg 0;
+
+        li {
+          display: flex;
+          justify-content: space-between;
+          padding: $spacing-sm 0;
+          border-bottom: 1px dashed $border-light;
+          font-size: $font-size-md;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          span:first-child {
+            color: $text-secondary;
+          }
+
+          span:last-child {
+            font-weight: $font-weight-semibold;
+            color: $primary-color;
+          }
+        }
+      }
+
+      .highlights {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-sm;
+
+        .highlight {
+          background: $background-white;
+          color: $primary-color;
+          padding: $spacing-sm $spacing-md;
+          border-radius: $border-radius-full;
+          font-size: $font-size-sm;
+          transition: $transition-normal;
+          border: 1px solid $border-primary;
+
+          &:hover {
+            background: $primary-color;
+            color: $text-white;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: $spacing-md 0;
+
+  li {
+    position: relative;
+    padding-left: $spacing-lg;
+    margin-bottom: $spacing-sm;
+    color: $text-secondary;
+    font-size: $font-size-md;
+    line-height: $line-height-relaxed;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: $spacing-sm;
+      color: $primary-color;
+    }
+  }
+}
+
+.additionalInfo {
+  margin-top: $spacing-3xl;
+  background: $gradient-primary;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  color: $text-white;
+  box-shadow: $shadow-primary-md;
+
+  h3 {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      position: relative;
+      padding-left: $spacing-xl;
+      margin-bottom: $spacing-md;
+      font-size: $font-size-md;
+      line-height: $line-height-relaxed;
+
+      &::before {
+        content: '✓';
+        position: absolute;
+        left: $spacing-sm;
+        color: $secondary-color;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .salaryOverview {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .salaryGrid,
+  .infoGrid,
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+
+  .cityComparison {
+    padding: $spacing-lg;
+
+    h3 {
+      font-size: $font-size-xl;
+    }
+
+    .cityCard {
+      padding: $spacing-lg;
+
+      h4 {
+        font-size: $font-size-md;
+      }
+
+      .costList li {
+        font-size: $font-size-sm;
+      }
+
+      .highlights .highlight {
+        font-size: $font-size-xs;
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+// Brand Colors
+$primary-color: #0072b3;
+$primary-light: #00a1ff;
+$primary-dark: #005a8f;
+$secondary-color: #f5ba13;
+
+// Base Colors
+$background-white: #ffffff;
+$background-light: #f8f9fa;
+$background-lighter: #f2f4f6;
+$background-accent: #f7fafd;
+
+// Text Colors
+$text-primary: #2c3e50;
+$text-secondary: #4a5568;
+$text-light: #718096;
+$text-white: #ffffff;
+
+// Border Colors
+$border-light: #e2e8f0;
+$border-primary: rgba(0, 114, 179, 0.1);
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.05);
+
+$shadow-primary-sm: 0 2px 4px rgba(0, 114, 179, 0.1);
+$shadow-primary-md: 0 4px 8px rgba(0, 114, 179, 0.15);
+$shadow-primary-lg: 0 8px 16px rgba(0, 114, 179, 0.15);
+
+// Border Radius
+$border-radius-sm: 6px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 9999px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+$spacing-3xl: 64px;
+
+// Typography
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-md: 1rem;       // 16px
+$font-size-lg: 1.125rem;   // 18px
+$font-size-xl: 1.25rem;    // 20px
+$font-size-2xl: 1.5rem;    // 24px
+$font-size-3xl: 1.875rem;  // 30px
+$font-size-4xl: 2.25rem;   // 36px
+
+// Line Heights
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// Font Weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Transitions
+$transition-fast: all 0.2s ease;
+$transition-normal: all 0.3s ease;
+$transition-slow: all 0.4s ease;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// Container Widths
+$container-sm: 640px;
+$container-md: 768px;
+$container-lg: 1024px;
+$container-xl: 1280px;
+$container-2xl: 1536px;
+
+// Gradients
+$gradient-primary: linear-gradient(135deg, $primary-color, $primary-light);
+$gradient-primary-hover: linear-gradient(135deg, darken($primary-color, 5%), darken($primary-light, 5%));
+$gradient-secondary: linear-gradient(135deg, $secondary-color, lighten($secondary-color, 10%));
+
+// Dark Mode Colors
+$dark-background: #1a1a1a;
+$dark-surface: #2a2a2a;
+$dark-border: #333333;
+$dark-primary: #4a9eff;
+$dark-primary-light: #73b6ff;
+$dark-primary-dark: #3a8eff;
+$dark-text: #e0e0e0;
+$dark-text-secondary: #b0b0b0;
+
+// Dark Mode Border Colors
+$border-dark: #333333;
+$dark-border-color: rgba(255, 255, 255, 0.1);
+
+// Dark Mode Gradients
+$dark-gradient-primary: linear-gradient(135deg, $dark-primary, $dark-primary-light);
+$dark-gradient-primary-hover: linear-gradient(135deg, $dark-primary-dark, $dark-primary);
+
+// Dark Mode Shadows
+$dark-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+$dark-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+$dark-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+// Dark Mode Background Colors
+$dark-background-light: #222222;
+$dark-background-lighter: #2d2d2d;
+$dark-background-accent: #363636;

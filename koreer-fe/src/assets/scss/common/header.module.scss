@@ -1,354 +1,469 @@
-@import "variables";
+@import '../shared/variables';
 
-@include mobile {
-  .header {
-    position: relative;
-    flex-direction: column;
-    height: auto;
-    min-height: 50px;
-    padding: 10px 20px;
-    background-color: #f1f4f8;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: rgba($background-white, 0.98);
+  backdrop-filter: blur(10px);
+  box-shadow: $shadow-lg;
+  display: flex;
+  align-items: center;
+  padding: 0 $spacing-2xl;
+  z-index: $z-index-fixed;
+  transition: $transition-normal;
 
-  .logoImg{
-    display: none;
-  }
-
-  .headerTitle {
-    align-self: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #0072b3;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .hamburgerMenu {
-    display: block; /* Ensure the hamburger button is visible only in mobile */
-    position: absolute;
-    left: 10px;
-    top: 15px;
-    cursor: pointer;
-    padding: 10px;
-  }
-
-  .headerButtonWrapper {
-    max-height: 0; /* Set initial height to 0 to collapse */
-    opacity: 0;    /* Start invisible */
-    overflow: hidden;
-    flex-direction: column;
-    display: flex;
-    gap: 5px;
-    margin-top: 12px;
-    align-items: center;
-    transition: max-height 0.3s ease, opacity 0.3s ease; /* Transition on height and opacity */
-  }
-
-  .menuOpen {
-    max-height: 450px;
-    opacity: 1;
-    gap: 7px;
-  }
-
-  .buttonStyle {
-    font-size: 16px;
-    padding: 8px 15px;
-    color: #0072b3;
-    background-color: transparent;
-    border: 2px solid transparent;
-    border-radius: 50px;
-    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
-  }
-
-  .buttonStyle:hover {
-    background-color: #0072b3;
-    color: #ffffff;
-    border: 2px solid #add8f0;
-  }
-
-  .selected {
-    background-color: #0072b3;
-    color: #ffffff;
-    border: 2px solid #add8f0;
-  }
-
-  .buttons{
-    padding: 10px 20px;
-    color: #ffffff;
-    border-radius: 50px;
-    font-weight: bold;
-    font-size: 16px;
-
-    &.login{
-      background-color: #f5ba13;
-    }
-
-    &.logout{
-      background-color: red;
-    }
-
-    &:hover {
-      background-color: #e8a900;
-      transform: translateY(-3px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    &.logout:hover {
-      background-color: #d40000;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  .buttonContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .subMenu {
-    width: 100%;
-    margin-left: 11px;
-  }
-
-  .subMenu li {
-    list-style: none;
-    padding: 5px 12px;
-    font-size: 12px;
-    color: #000000;
-    transition: background-color 0.2s ease, font-size 0.2s ease;
-  }
-
-  .subMenuTitle{
-    width: auto;
-    transition: background-color 0.2s ease, color 0.2s ease, font-size 0.2s ease;
-  }
-
-  .subMenu li:hover {
-    //background-color: #f0f0f0;
-  }
-
-  .subMenu li:hover .subMenuTitle {
-    background-color: #add8f0;
-    color: black;
-    font-weight: bold;
-    font-size: 14px;
-  }
-
-  .subItems {
-    padding-left: 20px;
-    margin-top: 5px;
-    background-color: #f1f4f8;
-    display: none;
-  }
-
-  .subMenu li:hover .subItems {
-    display: block; /* li에 마우스를 올리면 subItems를 표시 */
-  }
-
-  .subItems li {
-    padding: 5px 12px;
-    font-size: 12px;
-    color: #000000;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  .subItems li:hover {
-    background-color: #e0e0e0;
-    border-radius: 20px;
+  &:hover {
+    box-shadow: $shadow-xl;
   }
 }
 
-@include desktop{
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 50px;
-    background-color: #f1f4f8; /* 배경을 더 연한 하늘색으로 변경 */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* 더 가벼운 그림자 */
-    z-index: 10;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease-in-out;
-  }
+.logoImg {
+  width: 36px;
+  height: 36px;
+  background-image: url('../../../assets/img/koreer_logo_cropped.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin-right: $spacing-md;
+  transition: $transition-normal;
 
-  .logoImg{
-    cursor: pointer;
-    width: 95px;
-    height: 95px;
-    background-image: url("../../../assets/img/koreer_logo_cropped.png");
-    background-color: transparent; /* 배경색을 투명하게 설정 */
-    background-size: cover;
-    background-position: center;
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
   }
+}
 
-  .headerTitle {
-    display: none;
-    cursor: pointer;
-    font-size: 32px;
-    font-weight: bold;
-    color: #0072b3;
-    letter-spacing: 1.5px;
-    text-transform: uppercase; /* 대문자로 변환하여 더 강조 */
-    transition: color 0.3s ease-in-out;
-  }
+.headerTitle {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  background: $gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+  margin-right: $spacing-3xl;
+  transition: $transition-normal;
+  text-shadow: 0 2px 4px rgba($primary-color, 0.2);
 
-  .headerTitle:hover {
-    color: #005680; /* 로고 호버 시 색상 변경 */
+  &:hover {
+    transform: translateY(-1px);
+    background: $gradient-primary-hover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
+}
 
-  .headerButtonWrapper {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-  }
+.headerButtonWrapper {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-left: auto;
+  height: 100%;
+}
+
+.buttonContainer {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 $spacing-lg;
 
   .buttonStyle {
-    padding: 10px 20px;
-    border: 2px solid transparent;
-    border-radius: 50px;
-    background-color: transparent;
-    color: #0072b3;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
-  }
-
-  .buttonStyle:hover {
-    background-color: #0072b3;
-    color: #ffffff;
-    border: 2px solid #add8f0;
-  }
-
-  .selected {
-    background-color: #0072b3;
-    color: #ffffff;
-    border: 2px solid #add8f0;
-  }
-
-  .buttons{
+    background: none;
     border: none;
-    color: #ffffff;
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-weight: bold;
-    font-size: 18px;
-    transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s ease;
+    font-size: $font-size-md;
+    color: $text-primary;
+    cursor: pointer;
+    padding: $spacing-sm $spacing-xs;
+    position: relative;
+    font-weight: $font-weight-medium;
+    transition: $transition-normal;
+    z-index: 1;
 
-    &.login{
-      background-color: #f5ba13;
-    }
-
-    &.logout{
-      background-color: red;
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: $gradient-primary;
+      transform: scaleX(0);
+      transition: $transition-normal;
+      transform-origin: right;
+      border-radius: $border-radius-full;
+      z-index: -1;
     }
 
     &:hover {
-      background-color: #e8a900;
-      transform: translateY(-3px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      color: $primary-color;
+      transform: translateY(-1px);
+
+      &::before {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
     }
 
-    &.logout:hover {
-      background-color: #d40000; /* 로그아웃 버튼의 다른 호버 배경색 */
-      transform: translateY(-2px); /* 변형 효과 다르게 설정 */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 로그아웃 버튼에 다르게 그림자 적용 */
-    }
-  }
+    &.selected {
+      color: $primary-color;
+      font-weight: $font-weight-semibold;
 
-  .buttons:hover {
-    background-color: #e8a900;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
-  .buttonContainer {
-    position: relative;
+      &::before {
+        transform: scaleX(1);
+      }
+    }
   }
 
   .subMenu {
     position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px 20px;
-    z-index: 1000;
-    border-radius: 12px;
-    width: 220px;
-    overflow: visible;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: $background-white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+    min-width: 240px;
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: top center;
+    transition: $transition-normal;
+    border: 1px solid $border-primary;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px;
+      height: 12px;
+      background: $background-white;
+      border-left: 1px solid $border-primary;
+      border-top: 1px solid $border-primary;
+      z-index: 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: $spacing-md 0;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+
+      li {
+        .subMenuTitle {
+          display: block;
+          padding: $spacing-md $spacing-lg;
+          color: $text-primary;
+          font-weight: $font-weight-medium;
+          font-size: $font-size-sm;
+          cursor: pointer;
+          transition: $transition-fast;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: $gradient-primary;
+            opacity: 0;
+            transition: $transition-fast;
+            z-index: -1;
+          }
+
+          &:hover {
+            color: $text-white;
+            padding-left: $spacing-xl;
+
+            &::after {
+              opacity: 1;
+            }
+          }
+        }
+
+        .subItems {
+          background: $background-light;
+          padding: $spacing-sm 0;
+
+          li {
+            padding: $spacing-sm $spacing-xl $spacing-sm $spacing-2xl;
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            cursor: pointer;
+            transition: $transition-fast;
+            position: relative;
+
+            &::before {
+              content: '';
+              position: absolute;
+              left: $spacing-lg;
+              top: 50%;
+              width: 4px;
+              height: 4px;
+              border-radius: $border-radius-full;
+              background: $primary-color;
+              transform: translateY(-50%) scale(0);
+              transition: $transition-fast;
+            }
+
+            &:hover {
+              color: $primary-color;
+              background: rgba($primary-color, 0.05);
+              padding-left: $spacing-2xl + $spacing-sm;
+
+              &::before {
+                transform: translateY(-50%) scale(1);
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
-  .subMenu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  &:hover {
+    .subMenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}
+
+.buttons {
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-full;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: $transition-normal;
+  margin-left: $spacing-md;
+
+  &.login {
+    background: $gradient-primary;
+    color: $text-white;
+    border: none;
+    box-shadow: $shadow-primary-sm;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-primary-md;
+      background: $gradient-primary-hover;
+    }
+
+    &:active {
+      transform: translateY(-1px);
+      box-shadow: $shadow-primary-sm;
+    }
   }
 
-  .subMenu li {
-    position: relative;
-    padding: 10px 12px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    font-size: 16px;
-  }
+  &.logout {
+    background: $background-white;
+    border: 2px solid $primary-color;
+    color: $primary-color;
+    box-shadow: $shadow-sm;
 
-  .subMenuTitle{
-    width: auto;
-    transition: background-color 0.2s ease, color 0.2s ease, font-size 0.2s ease;
-  }
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-primary-sm;
+      background: $primary-color;
+      color: $text-white;
+    }
 
-  .subItems {
-    position: relative;
-    padding-left: 20px;
-    margin-top: 5px;
-    background-color: #ffffff;
-    display: none;
+    &:active {
+      transform: translateY(-1px);
+      box-shadow: $shadow-sm;
+    }
   }
+}
 
-  .subMenu li:hover .subItems {
-    display: block;
+.hamburgerMenu {
+  display: none;
+}
+
+@media (max-width: $breakpoint-md) {
+  .header {
+    padding: 0 $spacing-lg;
   }
-
-  .subMenu li:hover .subMenuTitle {
-    background-color: #add8f0;
-    color: black;
-    font-size: 19px;
-  }
-
-  .subItems li {
-    padding: 8px 12px;
-    transition: background-color 0.2s ease;
-    font-size: 15px;
-    cursor: pointer;
-  }
-
-  .subItems li:hover {
-    background-color: #e0e0e0;
-    border-radius: 20px
-  }
-
 
   .hamburgerMenu {
-    display: none;
+    display: block;
+    margin-right: $spacing-md;
+    cursor: pointer;
+    padding: $spacing-sm;
+
+    img {
+      width: 24px;
+      height: 24px;
+      transition: $transition-normal;
+    }
+
+    &:hover img {
+      transform: scale(1.1);
+    }
   }
 
   .headerButtonWrapper {
-    display: flex;
-    max-height: none;
-    opacity: 1;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: $background-white;
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: $spacing-sm;
+    height: auto;
+    box-shadow: $shadow-lg;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: $transition-normal;
+
+    &.menuOpen {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .buttonContainer {
+    width: 100%;
+    height: auto;
+    padding: 0;
+
+    .buttonStyle {
+      width: 100%;
+      padding: $spacing-md $spacing-md;
+      text-align: left;
+    }
+
+    .subMenu {
+      position: static;
+      transform: none;
+      box-shadow: none;
+      width: 100%;
+      opacity: 1;
+      visibility: visible;
+      margin: $spacing-xs 0;
+      border-radius: $border-radius-md;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  .buttons {
+    width: 100%;
+    text-align: center;
+    margin: $spacing-sm 0 0 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .header {
+    background: rgba($dark-background, 0.98);
+    box-shadow: $shadow-xl;
+  }
+
+  .headerTitle {
+    background: linear-gradient(45deg, $dark-primary, $dark-primary-light);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &:hover {
+      background: linear-gradient(45deg, $dark-primary-dark, $dark-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .buttonContainer {
+    .buttonStyle {
+      color: $dark-text;
+
+      &::before {
+        background: linear-gradient(90deg, $dark-primary, $dark-primary-light);
+      }
+
+      &:hover,
+      &.selected {
+        color: $dark-primary;
+      }
+    }
+
+    .subMenu {
+      background: $dark-background;
+      border-color: rgba($dark-primary, 0.1);
+      box-shadow: $shadow-xl;
+
+      &::before {
+        background: $dark-background;
+        border-color: rgba($dark-primary, 0.1);
+      }
+
+      ul li {
+        .subMenuTitle {
+          color: $dark-text;
+
+          &::after {
+            background: linear-gradient(90deg, $dark-primary, $dark-primary-light);
+          }
+
+          &:hover {
+            color: $text-white;
+          }
+        }
+
+        .subItems {
+          background: $dark-surface;
+
+          li {
+            color: $dark-text-secondary;
+
+            &::before {
+              background: $dark-primary;
+            }
+
+            &:hover {
+              color: $dark-primary;
+              background: rgba($dark-primary, 0.1);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .buttons {
+    &.login {
+      background: linear-gradient(45deg, $dark-primary, $dark-primary-light);
+
+      &:hover {
+        background: linear-gradient(45deg, $dark-primary-dark, $dark-primary);
+      }
+    }
+
+    &.logout {
+      background: $dark-background;
+      border-color: $dark-primary;
+      color: $dark-primary;
+
+      &:hover {
+        background: $dark-primary;
+        color: $dark-background;
+      }
+    }
+  }
+
+  .headerButtonWrapper.menuOpen {
+    background: $dark-background;
+    box-shadow: $shadow-xl;
   }
 }

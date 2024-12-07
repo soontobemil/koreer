@@ -1,0 +1,369 @@
+@import '../shared/variables';
+
+.employmentDashboard {
+  max-width: $container-xl;
+  margin: 0 auto;
+  padding: $spacing-2xl $spacing-xl;
+  background: $background-white;
+
+  .quickLinksBar {
+    display: flex;
+    gap: $spacing-md;
+    margin-bottom: $spacing-2xl;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .quickLink {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      padding: $spacing-sm $spacing-lg;
+      background: $background-white;
+      border: 1px solid $border-light;
+      border-radius: $border-radius-full;
+      color: $text-primary;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+      cursor: pointer;
+      transition: $transition-normal;
+      box-shadow: $shadow-sm;
+
+      &:hover {
+        background: $background-light;
+        border-color: $primary-color;
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+      }
+
+      .quickLinkIcon {
+        font-size: $font-size-xl;
+      }
+    }
+  }
+
+  .mainContent {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: $spacing-xl;
+
+    .infoCardsSection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: $spacing-lg;
+
+      .infoCard {
+        background: $background-white;
+        border-radius: $border-radius-lg;
+        padding: $spacing-xl;
+        box-shadow: $shadow-md;
+        transition: $transition-normal;
+        border: 1px solid $border-light;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: $shadow-lg;
+          border-color: $primary-color;
+        }
+
+        .cardHeader {
+          display: flex;
+          align-items: center;
+          gap: $spacing-md;
+          margin-bottom: $spacing-md;
+
+          .cardIcon {
+            font-size: $font-size-2xl;
+            background: $background-light;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: $border-radius-md;
+            transition: $transition-normal;
+          }
+
+          h3 {
+            font-size: $font-size-xl;
+            color: $text-primary;
+            font-weight: $font-weight-semibold;
+            margin: 0;
+          }
+        }
+
+        p {
+          color: $text-secondary;
+          font-size: $font-size-md;
+          line-height: $line-height-relaxed;
+          margin-bottom: $spacing-lg;
+        }
+
+        .statsGrid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: $spacing-md;
+          background: $background-light;
+          padding: $spacing-md;
+          border-radius: $border-radius-md;
+          margin: $spacing-lg 0;
+
+          .statItem {
+            text-align: center;
+
+            .statValue {
+              display: block;
+              font-size: $font-size-lg;
+              color: $primary-color;
+              font-weight: $font-weight-semibold;
+              margin-bottom: $spacing-xs;
+            }
+
+            .statLabel {
+              font-size: $font-size-sm;
+              color: $text-secondary;
+            }
+          }
+        }
+      }
+    }
+
+    .sideContent {
+      .newsSection {
+        background: $background-white;
+        border-radius: $border-radius-lg;
+        padding: $spacing-xl;
+        margin-bottom: $spacing-xl;
+        border: 1px solid $border-light;
+        box-shadow: $shadow-md;
+
+        h3 {
+          font-size: $font-size-lg;
+          color: $text-primary;
+          margin-bottom: $spacing-lg;
+          padding-bottom: $spacing-md;
+          border-bottom: 2px solid $background-light;
+          font-weight: $font-weight-semibold;
+        }
+
+        .newsList {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-md;
+
+          .newsItem {
+            padding: $spacing-md;
+            background: $background-light;
+            border-radius: $border-radius-md;
+            transition: $transition-normal;
+
+            &:hover {
+              transform: translateX(5px);
+              background: rgba($primary-color, 0.05);
+            }
+
+            .newsTag {
+              display: inline-block;
+              padding: $spacing-xs $spacing-sm;
+              background: $primary-color;
+              color: $text-white;
+              border-radius: $border-radius-full;
+              font-size: $font-size-xs;
+              margin-bottom: $spacing-sm;
+            }
+
+            h4 {
+              font-size: $font-size-md;
+              color: $text-primary;
+              margin: $spacing-sm 0;
+              font-weight: $font-weight-medium;
+            }
+
+            .newsDate {
+              font-size: $font-size-sm;
+              color: $text-secondary;
+            }
+          }
+        }
+      }
+
+      .helpSection {
+        background: $gradient-primary;
+        border-radius: $border-radius-lg;
+        padding: $spacing-xl;
+        color: $text-white;
+        box-shadow: $shadow-primary-md;
+
+        h3 {
+          font-size: $font-size-lg;
+          margin-bottom: $spacing-md;
+          font-weight: $font-weight-semibold;
+        }
+
+        p {
+          font-size: $font-size-sm;
+          margin-bottom: $spacing-lg;
+          opacity: 0.9;
+          line-height: $line-height-relaxed;
+        }
+
+        .consultButton {
+          width: 100%;
+          padding: $spacing-sm;
+          background: $text-white;
+          color: $primary-color;
+          border: none;
+          border-radius: $border-radius-md;
+          font-weight: $font-weight-semibold;
+          cursor: pointer;
+          transition: $transition-normal;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-primary-sm;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .employmentDashboard {
+    .mainContent {
+      grid-template-columns: 1fr;
+
+      .sideContent {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: $spacing-lg;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .employmentDashboard {
+    padding: $spacing-xl $spacing-md;
+
+    .quickLinksBar {
+      .quickLink {
+        width: calc(50% - #{$spacing-sm});
+        justify-content: center;
+      }
+    }
+
+    .mainContent {
+      .infoCard {
+        .statsGrid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .sideContent {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .employmentDashboard {
+    background: $dark-background;
+
+    .quickLinksBar {
+      .quickLink {
+        background: $dark-surface;
+        border-color: $border-dark;
+        color: $dark-text;
+
+        &:hover {
+          background: $dark-background-light;
+          border-color: $dark-primary;
+        }
+      }
+    }
+
+    .mainContent {
+      .infoCard {
+        background: $dark-surface;
+        border-color: $border-dark;
+        box-shadow: $dark-shadow-md;
+
+        &:hover {
+          border-color: $dark-primary;
+          box-shadow: $dark-shadow-lg;
+        }
+
+        .cardHeader {
+          .cardIcon {
+            background: $dark-background-light;
+          }
+
+          h3 {
+            color: $dark-text;
+          }
+        }
+
+        p {
+          color: $dark-text-secondary;
+        }
+
+        .statsGrid {
+          background: $dark-background-light;
+
+          .statItem {
+            .statValue {
+              color: $dark-primary;
+            }
+
+            .statLabel {
+              color: $dark-text-secondary;
+            }
+          }
+        }
+      }
+
+      .sideContent {
+        .newsSection {
+          background: $dark-surface;
+          border-color: $border-dark;
+          box-shadow: $dark-shadow-md;
+
+          h3 {
+            color: $dark-text;
+            border-bottom-color: $border-dark;
+          }
+
+          .newsItem {
+            background: $dark-background-light;
+
+            &:hover {
+              background: rgba($dark-primary, 0.1);
+            }
+
+            h4 {
+              color: $dark-text;
+            }
+
+            .newsDate {
+              color: $dark-text-secondary;
+            }
+          }
+        }
+
+        .helpSection {
+          background: $dark-gradient-primary;
+
+          .consultButton {
+            background: $dark-surface;
+            color: $dark-primary;
+
+            &:hover {
+              background: $dark-background-light;
+            }
+          }
+        }
+      }
+    }
+  }
+}

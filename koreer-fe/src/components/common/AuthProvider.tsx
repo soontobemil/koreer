@@ -1,33 +1,40 @@
-import {jwtDecode} from "jwt-decode";
-import {useCallback} from "react";
-import {useCookies} from "react-cookie";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useCookieFunctions } from './hooks/useCookieFunctions';
+import { setAuthUser } from '../../slice/signInSlice';
+import { jwtDecode } from 'jwt-decode';
 
-// eslint-disable-next-line
-function getExpiresFromToken(token: string) {
-    const { exp } = jwtDecode(token) as { exp: number };
-    return new Date(exp * 1000).toUTCString();
+interface AuthProviderProps {
+  children: React.ReactNode;
 }
 
-export function AuthProvider() {
+interface DecodedToken {
+  user_email: string;
+  username: string;
+  exp: number;
+}
 
-    const [, setCookie, ] = useCookies(['accessToken', 'refreshToken']);
+export function AuthProvider({ children }: AuthProviderProps) {
+  const dispatch = useDispatch();
+  const { getCookie } = useCookieFunctions();
 
-    const setAccessToken = useCallback(
-        (accessToken: string) => {
-            const futureDate = new Date();
+  useEffect(() => {
+    const accessToken = getCookie('accessToken');
+    if (accessToken) {
+      try {
+        const decoded = jwtDecode(accessToken) as DecodedToken;
+        const currentTime = Date.now() / 1000;
 
-            // 30 * 24 * 60 * 60 * 1000 = 30일짜리
-            futureDate.setTime(futureDate.getTime() + (60 * 60 * 1000)); // 1시간
-            setCookie('accessToken', accessToken, {
-                path: '/',
-                expires: futureDate,
-                // domain: '/'
-            });
-        },
-        [setCookie]
-    );
-
-    return{
-        setAccessToken
+        if (decoded.exp > currentTime) {
+          dispatch(setAuthUser({
+            user_email: decoded.user_email,
+          }));
+        }
+      } catch (error) {
+        console.error('Token decode error:', error);
+      }
     }
+  }, [dispatch, getCookie]);
+
+  return <>{children}</>;
 }

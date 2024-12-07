@@ -290,6 +290,7 @@
   }
 
   .buttonsWrapper {
+    cursor: pointer;
     padding: 18px 15px;
     display: flex;
     justify-content: center;
@@ -297,7 +298,6 @@
     gap: 10px;
     border: 2px solid #0072b3;
     border-radius: 15px;
-    cursor: pointer;
   }
 
   .sortButton {
@@ -315,6 +315,44 @@
     background-size: cover;
     background-position: center;
   }
+
+  .registrationButtonWrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  .buttons {
+    width: 220px;
+    min-height: 65px;
+    border: none;
+    padding: 16px;
+
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+
+    &.registration {
+      background-color: #0072b3;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    &.cancel {
+      background-color: #ee8181;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #bc0000c2;
+      }
+    }
+  }
+
 
   .text {
     font-size: 18px;
@@ -478,6 +516,51 @@
     font-size: 16px;
     font-weight: 400;
   }
+
+  // 작성폼 영역
+  .formWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 1100px;
+  }
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: bold;
+    gap: 8px;
+  }
+
+  .select {
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .input {
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
 
 }
 

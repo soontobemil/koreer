@@ -1,194 +1,196 @@
-import React from 'react';
-import style from '../../assets/scss/sub/visaInfo.module.scss';
-import { motion } from 'framer-motion';
-
-interface VisaType {
-    name: string;
-    description: string;
-    requirements: string[];
-    duration: string;
-    processingTime: string;
-    cost: string;
-}
+import { PageLayout } from '../shared/layouts/PageLayout';
+import { Box, Grid, Stack, Chip, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { InfoCard } from '../shared/InfoCard';
+import { Flight, AttachMoney, Home, CheckCircle, Warning } from '@mui/icons-material';
 
 export function CanadaVisaInfo() {
-    const visaTypes: VisaType[] = [
-        {
-            name: 'LMIA 기반 취업 비자',
-            description: 'Labour Market Impact Assessment를 통해 캐나다 내 적합한 인력이 없음을 증명하고 발급되는 취업 비자입니다.',
-            requirements: [
-                '고용주의 LMIA 승인',
-                '유효한 취업 제안',
-                '필요한 자격요건 충족 (학력, 경력 등)',
-                '충분한 정착 자금 증명',
-                '건강 검진 통과'
-            ],
-            duration: '일반적으로 1-3년, 고용 계약에 따라 다름',
-            processingTime: '약 2-4개월',
-            cost: 'LMIA $1,000 + 취업 비자 신청비 $155'
-        },
-        {
-            name: 'IEC 워킹홀리데이',
-            description: '만 18-35세 사이의 젊은 인재들이 캐나다에서 일하며 여행할 수 있는 프로그램입니다.',
-            requirements: [
-                '만 18-35세 사이',
-                '유효한 여권',
-                '최소 $2,500의 정착 자금',
-                '귀국 항공권 또는 구매 가능한 자금',
-                '보험 가입'
-            ],
-            duration: '최대 1년',
-            processingTime: '8-12주',
-            cost: '신청비 $150 + 취업 허가비 $100'
-        },
-        {
-            name: 'PGWP (Post-Graduation Work Permit)',
-            description: '캐나다 교육기관 졸업 후 받을 수 있는 오픈 워크퍼밋입니다.',
-            requirements: [
-                'DLI 인증 교육기관 졸업',
-                '풀타임 학업 이수',
-                '유효한 학생비자로 학업 완료',
-                '졸업 후 180일 이내 신청'
-            ],
-            duration: '프로그램 길이에 따라 최대 3년',
-            processingTime: '약 3개월',
-            cost: '취업 허가비 $255'
-        },
-        {
-            name: 'Express Entry',
-            description: '기술 이민을 위한 빠른 이민 시스템으로, CRS 점수에 따라 영주권 초청을 받을 수 있습니다.',
-            requirements: [
-                '언어 능력 증명 (IELTS/CELPIP)',
-                '학력 인증 (ECA)',
-                '직무 경력 증명',
-                'NOC 직군 해당',
-                'CRS 점수 경쟁력'
-            ],
-            duration: '영주권 (무기한)',
-            processingTime: '6개월 이내',
-            cost: '신청비 $1,325 + 추가 비용'
-        }
-    ];
+  const navigationTabs = [
+    {
+      label: '비자 정보',
+      path: '/visa-info/canada',
+      icon: <Flight />
+    },
+    {
+      label: '연봉 정보',
+      path: '/salary-info/canada',
+      icon: <AttachMoney />
+    },
+    {
+      label: '생활 정보',
+      path: '/life-info/canada',
+      icon: <Home />
+    }
+  ];
 
-    const additionalPrograms = [
-        {
-            title: 'Global Talent Stream',
-            description: '기술 분야 전문가를 위한 빠른 취업 비자 프로그램으로, 2주 이내 처리가 가능합니다.',
-            benefits: [
-                '빠른 비자 처리',
-                'LMIA 면제 가능',
-                '배우자 오픈 워크퍼밋',
-                '자녀 학업 비자'
-            ]
-        },
-        {
-            title: 'Provincial Nominee Program (PNP)',
-            description: '각 주별로 운영되는 이민 프로그램으로, 해당 주의 노동시장 수요에 따라 선발됩니다.',
-            benefits: [
-                '주별 맞춤형 이민 기회',
-                'Express Entry 가산점',
-                '지역 특화 일자리 연계',
-                '정착 지원 서비스'
-            ]
-        }
-    ];
+  const breadcrumbs = [
+    { label: '홈', path: '/' },
+    { label: '취업 정보', path: '/employment-info' },
+    { label: '캐나다', path: '/visa-info/canada' },
+    { label: '비자 정보' }
+  ];
 
-    return (
-        <div className={style.visaInfoContainer}>
-            <motion.div 
-                className={style.header}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <h1>캐나다 취업 비자 정보</h1>
-                <p>캐나다 취업을 위한 다양한 비자 옵션과 이민 프로그램을 알아보세요</p>
-            </motion.div>
+  const visaTypes = [
+    {
+      title: 'LMIA Work Permit',
+      description: '고용 영향 평가 기반 취업 비자',
+      requirements: [
+        '고용주의 LMIA 승인',
+        '학사 학위 이상',
+        '관련 분야 경력',
+        '영어/프랑스어 능력 증명'
+      ],
+      processingTime: '2-4개월',
+      cost: 'CAD 155',
+      notes: [
+        'LMIA 면제 가능한 경우도 있음',
+        '배우자는 Open Work Permit 신청 가능',
+        '최대 3년까지 체류 가능',
+        'Express Entry 지원 가능'
+      ],
+      status: 'info'
+    },
+    {
+      title: 'Express Entry',
+      description: '영주권 취득을 위한 이민 프로그램',
+      requirements: [
+        'CRS 점수 충족',
+        '학력 평가 (ECA)',
+        '언어 능력 증명',
+        '경력 증명'
+      ],
+      processingTime: '6개월 이내',
+      cost: 'CAD 1,325',
+      notes: [
+        'CRS 점수는 정기적으로 변동됨',
+        '주정부 추천 프로그램(PNP)과 연계 가능',
+        '배우자 점수도 포함 가능',
+        '영주권 직접 취득'
+      ],
+      status: 'success'
+    },
+    {
+      title: 'Global Talent Stream',
+      description: '고급 기술 인력 빠른 입국',
+      requirements: [
+        'Category A 또는 B 해당',
+        '연봉 기준 충족',
+        '고용주의 노동 시장 영향 평가',
+        '인재 육성 계획'
+      ],
+      processingTime: '2주 이내',
+      cost: 'CAD 1,000',
+      notes: [
+        '빠른 비자 처리',
+        '가족 동반 가능',
+        '영주권 전환 용이',
+        '고용주 지원 필수'
+      ],
+      status: 'info'
+    }
+  ];
 
-            <div className={style.visaTypesContainer}>
-                {visaTypes.map((visa, index) => (
-                    <motion.div 
-                        key={visa.name}
-                        className={style.visaCard}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
+  return (
+    <PageLayout
+      title="캐나다 취업 비자 정보"
+      subtitle="비자 종류별 상세 정보와 신청 절차를 확인하세요"
+      tabs={navigationTabs}
+      breadcrumbs={breadcrumbs}
+    >
+      <Stack spacing={4}>
+        <Grid container spacing={3}>
+          {visaTypes.map((visa, index) => (
+            <Grid item xs={12} key={index}>
+              <InfoCard
+                title={visa.title}
+                subtitle={visa.description}
+                status={visa.status as 'info' | 'warning' | 'success'}
+                icon={<Flight />}
+              >
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
+                    <List dense>
+                      {visa.requirements.map((req, idx) => (
+                        <ListItem key={idx}>
+                          <ListItemIcon>
+                            <CheckCircle color="success" fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary={req} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Stack spacing={2}>
+                      <Box>
+                        <Chip
+                          label={`처리 기간: ${visa.processingTime}`}
+                          color="primary"
+                          variant="outlined"
+                        />
+                      </Box>
+                      <Box>
+                        <Chip
+                          label={`비용: ${visa.cost}`}
+                          color="primary"
+                          variant="outlined"
+                        />
+                      </Box>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        bgcolor: 'background.default',
+                        borderRadius: 2,
+                      }}
                     >
-                        <h2>{visa.name}</h2>
-                        <p className={style.description}>{visa.description}</p>
-                        
-                        <div className={style.infoSection}>
-                            <h3>주요 요구사항</h3>
-                            <ul>
-                                {visa.requirements.map((req, idx) => (
-                                    <li key={idx}>{req}</li>
-                                ))}
-                            </ul>
-                        </div>
+                      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+                        <Warning color="warning" />
+                        <ListItemText primary="주의사항" />
+                      </Stack>
+                      <List dense>
+                        {visa.notes.map((note, idx) => (
+                          <ListItem key={idx}>
+                            <ListItemText
+                              primary={note}
+                              primaryTypographyProps={{
+                                variant: 'body2',
+                                color: 'text.secondary',
+                              }}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </InfoCard>
+            </Grid>
+          ))}
+        </Grid>
 
-                        <div className={style.detailsGrid}>
-                            <div className={style.detail}>
-                                <span className={style.label}>체류 기간</span>
-                                <span className={style.value}>{visa.duration}</span>
-                            </div>
-                            <div className={style.detail}>
-                                <span className={style.label}>처리 기간</span>
-                                <span className={style.value}>{visa.processingTime}</span>
-                            </div>
-                            <div className={style.detail}>
-                                <span className={style.label}>비용</span>
-                                <span className={style.value}>{visa.cost}</span>
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
-
-            <motion.div 
-                className={style.additionalPrograms}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-            >
-                <h2>추가 프로그램</h2>
-                <div className={style.programsGrid}>
-                    {additionalPrograms.map((program, index) => (
-                        <motion.div 
-                            key={program.title}
-                            className={style.programCard}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.7 + index * 0.1 }}
-                        >
-                            <h3>{program.title}</h3>
-                            <p>{program.description}</p>
-                            <div className={style.benefits}>
-                                <h4>주요 혜택</h4>
-                                <ul>
-                                    {program.benefits.map((benefit, idx) => (
-                                        <li key={idx}>{benefit}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </motion.div>
-
-            <motion.div 
-                className={style.additionalInfo}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.9 }}
-            >
-                <h2>알아두면 좋은 정보</h2>
-                <ul>
-                    <li>대부분의 취업 비자는 배우자 오픈 워크퍼밋과 자녀 학업비자가 함께 발급됩니다.</li>
-                    <li>취업 비자로 일정 기간 근무 후 영주권 신청이 가능합니다.</li>
-                    <li>언어 능력 증명은 대부분의 비자/이민 프로그램에서 필수입니다.</li>
-                    <li>의료보험(Provincial Health Care) 가입이 가능합니다.</li>
-                </ul>
-            </motion.div>
-        </div>
-    );
+        <Box
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            border: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.default',
+          }}
+        >
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Warning color="info" />
+            <ListItemText
+              primary="비자 정보는 정기적으로 업데이트되며, 실제 정책과 차이가 있을 수 있습니다. 정확한 정보는 캐나다 대사관 또는 이민국 웹사이트를 참고해주세요."
+              primaryTypographyProps={{
+                variant: 'body2',
+                color: 'text.secondary',
+              }}
+            />
+          </Stack>
+        </Box>
+      </Stack>
+    </PageLayout>
+  );
 }

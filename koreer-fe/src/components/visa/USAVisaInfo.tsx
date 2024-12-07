@@ -1,124 +1,177 @@
-import React from 'react';
-import style from '../../assets/scss/sub/visaInfo.module.scss';
-import { motion } from 'framer-motion';
-
-interface VisaType {
-    name: string;
-    description: string;
-    requirements: string[];
-    duration: string;
-    processingTime: string;
-    cost: string;
-}
+import { PageLayout } from '../shared/layouts/PageLayout';
+import { Box, Grid, Stack, Chip, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { InfoCard } from '../shared/InfoCard';
+import { Flight, AttachMoney, Home, CheckCircle, Warning } from '@mui/icons-material';
 
 export function USAVisaInfo() {
-    const visaTypes: VisaType[] = [
-        {
-            name: 'H-1B 비자',
-            description: '전문직 취업 비자로, 학사 학위 이상 또는 동등한 경력이 필요한 직종에 적용됩니다.',
-            requirements: [
-                '관련 분야 학사 학위 이상 또는 동등한 경력',
-                '고용주의 스폰서십',
-                'LCA (Labor Condition Application) 승인',
-                '전문직종에 해당하는 포지션',
-            ],
-            duration: '최초 3년, 최대 6년까지 연장 가능',
-            processingTime: '일반 처리 2-6개월, 프리미엄 처리 15일',
-            cost: '$460 (기본 신청비) + 추가 비용'
-        },
-        {
-            name: 'L-1 비자',
-            description: '기업 내 전근자 비자로, 해외 지사/자회사에서 미국 법인으로 전근하는 경우에 해당됩니다.',
-            requirements: [
-                '해외 법인에서 1년 이상 근무',
-                '관리자급 또는 전문지식 보유자',
-                '미국 법인과의 관계 증명',
-                '실제 사업 운영 증명'
-            ],
-            duration: '최초 3년, L-1A는 최대 7년, L-1B는 최대 5년까지 연장 가능',
-            processingTime: '일반 처리 3-4개월, 프리미엄 처리 15일',
-            cost: '$460 (기본 신청비) + 추가 비용'
-        },
-        {
-            name: 'E-3 비자',
-            description: '호주 국적자를 위한 전문직 취업 비자입니다.',
-            requirements: [
-                '호주 시민권자',
-                '학사 학위 이상 또는 동등한 경력',
-                '전문직종 취업 오퍼',
-                'LCA 승인'
-            ],
-            duration: '2년, 무제한 갱신 가능',
-            processingTime: '2-4주',
-            cost: '$205 (비자 신청비)'
-        }
-    ];
+  const navigationTabs = [
+    {
+      label: '비자 정보',
+      path: '/visa-info/usa',
+      icon: <Flight />
+    },
+    {
+      label: '연봉 정보',
+      path: '/salary-info/usa',
+      icon: <AttachMoney />
+    },
+    {
+      label: '생활 정보',
+      path: '/life-info/usa',
+      icon: <Home />
+    }
+  ];
 
-    return (
-        <div className={style.visaInfoContainer}>
-            <motion.div 
-                className={style.header}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <h1>미국 취업 비자 정보</h1>
-                <p>미국 취업을 위한 주요 비자 종류와 요구사항을 알아보세요</p>
-            </motion.div>
+  const breadcrumbs = [
+    { label: '홈', path: '/' },
+    { label: '취업 정보', path: '/employment-info' },
+    { label: '미국', path: '/visa-info/usa' },
+    { label: '비자 정보' }
+  ];
 
-            <div className={style.visaTypesContainer}>
-                {visaTypes.map((visa, index) => (
-                    <motion.div 
-                        key={visa.name}
-                        className={style.visaCard}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
+  const visaTypes = [
+    {
+      title: 'H-1B 비자',
+      description: '전문직 취업 비자',
+      requirements: [
+        '학사 학위 이상',
+        '전문 분야 경력',
+        '고용주의 스폰서십',
+        'LCA 승인'
+      ],
+      processingTime: '6-8개월',
+      cost: '$460 + USCIS 수수료',
+      notes: [
+        '매년 쿼터 제한 있음',
+        '최대 6년 체류 가능',
+        '배우자 취업 가능 (H-4 EAD)',
+        '영주권 신청 가능'
+      ],
+      status: 'info'
+    },
+    {
+      title: 'L-1 비자',
+      description: '주재원 비자',
+      requirements: [
+        '1년 이상 해외 근무',
+        '관리자급 이상',
+        '본사와의 관계 증명',
+        '미국 법인 존재'
+      ],
+      processingTime: '2-3개월',
+      cost: '$460 + USCIS 수수료',
+      notes: [
+        'L-1A (관리자): 최대 7년',
+        'L-1B (전문가): 최대 5년',
+        '배우자 취업 가능 (L-2)',
+        '영주권 전환 용이'
+      ],
+      status: 'success'
+    }
+  ];
+
+  return (
+    <PageLayout
+      title="미국 취업 비자 정보"
+      subtitle="비자 종류별 상세 정보와 신청 절차를 확인하세요"
+      tabs={navigationTabs}
+      breadcrumbs={breadcrumbs}
+    >
+      <Stack spacing={4}>
+        <Grid container spacing={3}>
+          {visaTypes.map((visa, index) => (
+            <Grid item xs={12} key={index}>
+              <InfoCard
+                title={visa.title}
+                subtitle={visa.description}
+                status={visa.status as 'info' | 'warning' | 'success'}
+                icon={<Flight />}
+              >
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
+                    <List dense>
+                      {visa.requirements.map((req, idx) => (
+                        <ListItem key={idx}>
+                          <ListItemIcon>
+                            <CheckCircle color="success" fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary={req} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Stack spacing={2}>
+                      <Box>
+                        <Chip
+                          label={`처리 기간: ${visa.processingTime}`}
+                          color="primary"
+                          variant="outlined"
+                        />
+                      </Box>
+                      <Box>
+                        <Chip
+                          label={`비용: ${visa.cost}`}
+                          color="primary"
+                          variant="outlined"
+                        />
+                      </Box>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        bgcolor: 'background.default',
+                        borderRadius: 2,
+                      }}
                     >
-                        <h2>{visa.name}</h2>
-                        <p className={style.description}>{visa.description}</p>
-                        
-                        <div className={style.infoSection}>
-                            <h3>주요 요구사항</h3>
-                            <ul>
-                                {visa.requirements.map((req, idx) => (
-                                    <li key={idx}>{req}</li>
-                                ))}
-                            </ul>
-                        </div>
+                      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+                        <Warning color="warning" />
+                        <ListItemText primary="주의사항" />
+                      </Stack>
+                      <List dense>
+                        {visa.notes.map((note, idx) => (
+                          <ListItem key={idx}>
+                            <ListItemText
+                              primary={note}
+                              primaryTypographyProps={{
+                                variant: 'body2',
+                                color: 'text.secondary',
+                              }}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </InfoCard>
+            </Grid>
+          ))}
+        </Grid>
 
-                        <div className={style.detailsGrid}>
-                            <div className={style.detail}>
-                                <span className={style.label}>체류 기간</span>
-                                <span className={style.value}>{visa.duration}</span>
-                            </div>
-                            <div className={style.detail}>
-                                <span className={style.label}>처리 기간</span>
-                                <span className={style.value}>{visa.processingTime}</span>
-                            </div>
-                            <div className={style.detail}>
-                                <span className={style.label}>비용</span>
-                                <span className={style.value}>{visa.cost}</span>
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
-
-            <motion.div 
-                className={style.additionalInfo}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-            >
-                <h2>추가 정보</h2>
-                <ul>
-                    <li>비자 신청 전 반드시 고용 계약이 확정되어야 합니다.</li>
-                    <li>비자 승인 후 Social Security Number (SSN) 신청이 가능합니다.</li>
-                    <li>배우자와 자녀를 위한 부양가족 비자도 신청 가능합니다.</li>
-                    <li>일부 비자는 영주권 신청이 가능합니다.</li>
-                </ul>
-            </motion.div>
-        </div>
-    );
+        <Box
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            border: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.default',
+          }}
+        >
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Warning color="info" />
+            <ListItemText
+              primary="비자 정보는 정기적으로 업데이트되며, 실제 정책과 차이가 있을 수 있습니다. 정확한 정보는 미국 대사관 또는 이민국 웹사이트를 참고해주세요."
+              primaryTypographyProps={{
+                variant: 'body2',
+                color: 'text.secondary',
+              }}
+            />
+          </Stack>
+        </Box>
+      </Stack>
+    </PageLayout>
+  );
 }

@@ -1,4 +1,4 @@
-import { SalaryData, LifeInfo, CityInfo, WorkPermitInfo } from '../types/employment';
+import { SalaryData, LifeInfo, CityInfo } from '../types/employment';
 
 export const usaSalaryData: SalaryData[] = [
     {

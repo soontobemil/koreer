@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
+    <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="refactor: remove duplicated method">
+      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/postController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/postController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtos/PostDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/PostDTO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/postService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/postService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityRegistration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityRegistration.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +39,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Node.js.authController.js.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.postController.js.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be&quot;,
@@ -48,6 +51,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -79,7 +87,9 @@
       <workItem from="1732617834805" duration="3840000" />
       <workItem from="1732770656660" duration="1178000" />
       <workItem from="1733483972995" duration="1128000" />
-      <workItem from="1733533411999" duration="1640000" />
+      <workItem from="1733533411999" duration="8160000" />
+      <workItem from="1733632177871" duration="446000" />
+      <workItem from="1733632724396" duration="2473000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -89,7 +99,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727592174098</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="refactor: fix update functions for create tokens">
+      <option name="closed" value="true" />
+      <created>1733630899601</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1733630899601</updated>
+    </task>
+    <task id="LOCAL-00003" summary="refactor: remove duplicated method">
+      <option name="closed" value="true" />
+      <created>1733634294168</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1733634294168</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,7 +132,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/KOR-9" />
+                        <option value="origin/fix/interview-guide-navigation" />
                       </list>
                     </value>
                   </entry>
@@ -121,6 +147,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add model &amp; api for career tips" />
     <MESSAGE value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
+    <MESSAGE value="refactor: fix update functions for create tokens" />
+    <MESSAGE value="refactor: remove duplicated method" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: remove duplicated method" />
   </component>
 </project>

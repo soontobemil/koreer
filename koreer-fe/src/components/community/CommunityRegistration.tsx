@@ -21,7 +21,7 @@ export function CommunityRegistration() {
                         카테고리
                         <select className={style.select}>
                             <option value="">카테고리를 선택해주세요.</option>
-                            <option value="datily">사는 이야기</option>
+                            <option value="daily">사는 이야기</option>
                             <option value="tech">기술, 취업, 이직</option>
                             <option value="study">모임, 스터디</option>
                         </select>

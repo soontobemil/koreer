@@ -18,6 +18,13 @@ function generateRefreshToken(user) {
     return jwt.sign(user, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
 }
 
+// 유저 정보 호출 함수
+function getUserEmail(req) {
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+}
+
 // 로그인 라우트
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -88,5 +95,6 @@ app.post('/logout', (req, res) => {
 
 module .exports = {
     generateAccessToken,
-    generateRefreshToken
+    generateRefreshToken,
+    getUserEmail
 }

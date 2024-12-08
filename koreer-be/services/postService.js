@@ -1,10 +1,20 @@
 // services/post.service.js
 const PostRepository = require('../repositories/PostRepository');
 const { CreatePostDTO, PostResponseDTO } = require('../dtos/PostDTO');
+const jwt = require("jsonwebtoken");
+const {getUserEmail} = require("../src/Auth");
 
 class PostService {
-    async createPost(postData) {
-        const createPostDTO = new CreatePostDTO(postData); // DTO 적용
+    async createPost(req) {
+        const user = getUserEmail(req)
+        const data = req.body;
+
+        const createPostDTO = new CreatePostDTO({
+            user_email:user.user_email,
+            title:data.title,
+            content:data.content,
+            category:data.category,
+        }); // DTO 적용
         const post = await PostRepository.create(createPostDTO);
         return new PostResponseDTO(post); // DTO로 응답 생성
     }
@@ -70,5 +80,7 @@ class PostService {
         return { message: 'Post deleted successfully' };
     }
 }
+
+
 
 module.exports = new PostService();

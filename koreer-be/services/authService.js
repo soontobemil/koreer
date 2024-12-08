@@ -5,6 +5,7 @@ const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
 const passport = require('passport');
 const userService = require('../services/userService');
+const {generateAccessToken, generateRefreshToken} = require("../src/Auth");
 
 
 async function register(data) {
@@ -13,11 +14,12 @@ async function register(data) {
         const req = {user_email: data.user_email, username: data.username, password: hashedPassword};
         const result = await userService.userDuplCheck(req.user_email);
         let rsltData = {};
+
         if (result) {
-            const user = await userService.createUser(req);
-            rsltData.data = user;
+            rsltData = await userService.createUser(req);
+        } else {
+            rsltData = userService.getUserByEmail(data.user_email)
         }
-        rsltData.result = result;
         return rsltData;
 
     } catch (error) {
@@ -51,8 +53,8 @@ async function oauthRegister(data) {
         const userPayload = { id: rsltData.data.id, user_email: rsltData.data.user_email };
 
         // Create Access Token / Refresh Token
-        const accessToken = createAccessToken(userPayload);
-        const refreshToken = createRefreshToken(userPayload);
+        const accessToken = generateAccessToken(userPayload);
+        const refreshToken = generateRefreshToken(userPayload);
 
         return {loginInfo:userPayload,accessToken:accessToken,refreshToken:refreshToken};
         
@@ -80,11 +82,11 @@ async function login(userinfo){
             throw new Error('Invalid password');
         }
 
-        const userPayload = { id: user.id, user_email: user.user_email };
+        const userPayload = { id: user.id, username: user.name, user_email: user.user_email };
 
         // Create Access Token / Refresh Token
-        const accessToken = createAccessToken(userPayload);
-        const refreshToken = createRefreshToken(userPayload);
+        const accessToken = generateAccessToken(userPayload);
+        const refreshToken = generateRefreshToken(userPayload);
 
         // accessToken은 그냥 리턴, refresh token 은 쿠키에 저장, accessToken 만료시 refreshToken으로 갱신
         return {loginInfo:userPayload,accessToken:accessToken,refreshToken:refreshToken};
@@ -103,8 +105,7 @@ async function refreshAccessToken(user) {
         }
 
         // New Access Token Create
-        const accessToken = createAccessToken({ id: user.id, user_email: user.user_email });
-        return accessToken;
+        return generateRefreshToken({ id: user.id, username:user.username ,user_email: user.user_email });
     });
 }
 
@@ -247,8 +248,6 @@ async function googleCallBack() {
 module.exports = {
     register,
     oauthRegister,
-    createAccessToken,
-    createRefreshToken,
     login,
     refreshAccessToken,
     sendEmail,

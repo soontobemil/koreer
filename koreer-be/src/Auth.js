@@ -28,7 +28,7 @@ app.post('/login', (req, res) => {
         return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    const userPayload = { id: user.id, username: user.username };
+    const userPayload = { id: user.id, username: user.username, user_email: user.user_email };
 
     // Access Token 및 Refresh Token 생성
     const accessToken = generateAccessToken(userPayload);
@@ -56,7 +56,7 @@ app.post('/token', (req, res) => {
         }
 
         // 새로운 Access Token 생성
-        const accessToken = generateAccessToken({ id: user.id, username: user.username });
+        const accessToken = generateAccessToken({ id: user.id, username: user.username, user_email: user.user_email });
         res.json({ accessToken });
     });
 });
@@ -86,7 +86,7 @@ app.post('/logout', (req, res) => {
     res.json({ message: 'Logged out' });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+module .exports = {
+    generateAccessToken,
+    generateRefreshToken
+}

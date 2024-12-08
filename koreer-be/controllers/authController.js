@@ -2,6 +2,7 @@ const authService = require('../services/authService');
 const {post, get} = require("axios");
 const {UserInfoResponseDTO} = require("../dto/UserInfoResponseDTO");
 const jwt = require("jsonwebtoken");
+const {generateRefreshToken, generateAccessToken} = require("../src/Auth");
 
 /**
  * These are login and sign up for user infos
@@ -57,7 +58,7 @@ async function refreshAccessToken(req,res) {
     }
 
     try {
-        const accessToken = authService.createAccessToken({id:req.id,user_email:req.user_email});
+        const accessToken = generateAccessToken({id:req.id,username:req.username, user_email:req.user_email});
         res.json({ accessToken });
 
     } catch (error) {
@@ -145,12 +146,12 @@ async function googleCallBack(req,res) {
             is_email_verified:'Y'
         })
 
-        // todo 회원정보 토큰 생성
-        const userPayload = { id: result.id, username: result.username };
-        const returnAccessToken = jwt.sign(userPayload, process.env.JWT_ACCESS_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN});
-        const returnRefreshAccessToken = jwt.sign(userPayload, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
 
-        return res.redirect(`${process.env.CLIENT_URL}/success?accessToken=${returnAccessToken}&refreshToken=${returnRefreshAccessToken}`);
+        const userPayload = { id: result.id, username: result.username, user_email: result.user_email };
+        generateAccessToken(userPayload);
+        generateRefreshToken(userPayload);
+
+        return res.redirect(`${process.env.CLIENT_URL}/success?accessToken=${generateAccessToken(userPayload)}&refreshToken=${generateRefreshToken(userPayload)}`);
 
     } catch (error) {
         console.error('Error:', error);

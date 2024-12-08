@@ -158,7 +158,7 @@ async function sendEmail(email) {
         //email = 'koreerkorea@gmail.com';
         const token = createEmailVerifyToken(email);
 
-        const link = `http://localhost:3000/auth/verify-email/${token}`;
+        const link = `${process.env.CLIENT_URL}/auth/verify-email/${token}`;
 
         // OAuth2 클라이언트 설정
         const oauth2Client = new OAuth2(

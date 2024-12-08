@@ -11,3 +11,8 @@ export interface PageResponseDTO{
     totalPages: number;
     itemsPerPage: number;
 }
+
+export interface LoginResponseDTO{
+    userEmail: string;
+    accessToken: string;
+}

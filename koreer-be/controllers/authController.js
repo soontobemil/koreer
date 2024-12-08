@@ -1,6 +1,7 @@
 const authService = require('../services/authService');
 const {post, get} = require("axios");
 const {UserInfoResponseDTO} = require("../dto/UserInfoResponseDTO");
+const jwt = require("jsonwebtoken");
 
 /**
  * These are login and sign up for user infos
@@ -84,7 +85,6 @@ async function emailVefify(req,res) {
         <head>
             <script>
                 alert('가입이 완료되었습니다.');
-                // window.location.href = 'http://localhost:3001/success?accessToken=${token}';
                 window.location.href = 'https://koreer.com/success?accessToken=${token}';
             </script>
         </head>
@@ -104,11 +104,9 @@ async function googleCallBack(req,res) {
     // 파라미터 추출
     const code = req.query.code;
     const requestUri = 'https://oauth2.googleapis.com/token'
-    // const redirectUri = 'http://localhost:3000/auth/google/callback'
-    const redirectUri = 'https://koreer.com/api/auth/google/callback'
+    const redirectUri = `${process.env.API_URL}/auth/google/callback`
 
     const userInfoRequestUri = 'https://www.googleapis.com/userinfo/v2/me';
-    const userInfoRedirectUri = 'http://localhost:3001/auth/google/callback'
 
     try {
 
@@ -140,14 +138,19 @@ async function googleCallBack(req,res) {
         const userInfoDTO = new UserInfoResponseDTO(userInfoResponse.data);
 
 
-        const result = await authService.oauthRegister({
+        const result = await authService.register({
             user_email:userInfoDTO.email,
             username:userInfoDTO.name,
             password:'1234qwer!@',
+            is_email_verified:'Y'
         })
 
-        // return res.redirect(`http://localhost:3001/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
-        return res.redirect(`https://koreer.com/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
+        // todo 회원정보 토큰 생성
+        const userPayload = { id: result.id, username: result.username };
+        const returnAccessToken = jwt.sign(userPayload, process.env.JWT_ACCESS_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN});
+        const returnRefreshAccessToken = jwt.sign(userPayload, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
+
+        return res.redirect(`${process.env.CLIENT_URL}/success?accessToken=${returnAccessToken}&refreshToken=${returnRefreshAccessToken}`);
 
     } catch (error) {
         console.error('Error:', error);

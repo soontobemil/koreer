@@ -1,7 +1,7 @@
 import style from "../../assets/scss/sub/login.module.scss"
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
-import {ResponseDTO} from "../../slice/common";
+import {LoginResponseDTO} from "../../slice/common";
 import {useDispatch} from "react-redux";
 import {login} from "../../slice/signInSlice";
 import {LoginDTO} from "../../types/signIn";
@@ -51,9 +51,8 @@ export function SignIn() {
 
         const loginDTO:LoginDTO = {user_email: email, password: password}
         try {
-            const result: ResponseDTO = await dispatch(login(loginDTO)).unwrap();
-            console.log(result)
-            setAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsInVzZXJfZW1haWwiOiIxMzEzIiwiaWF0IjoxNzI4NDU4MTA1LCJleHAiOjE3Mjg0NjE3MDV9.EP30Lr_4bPWB2oy60uccx7bTJgogwsz1i4sOF6g5je8')
+            const result: LoginResponseDTO = await dispatch(login(loginDTO)).unwrap();
+            setAccessToken(result.accessToken)
             navigate('/')
 
             return result;

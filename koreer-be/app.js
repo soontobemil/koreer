@@ -69,7 +69,7 @@ app.use('/community', communityRouter);
 passport.use(new GoogleStrategy({
   clientID: process.env.OAUTH2_CID_SOCIAL_LOGIN,  // Google에서 받은 Client ID
   clientSecret: process.env.OAUTH2_CSECRET_SOCIAL_LOGIN,  // Google에서 받은 Client Secret
-  callbackURL: 'http://localhost:3000/auth/google/callback'
+  callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`
 }, async (accessToken, refreshToken, profile, done) => {
   try {
 

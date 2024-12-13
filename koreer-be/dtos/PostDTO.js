@@ -1,6 +1,7 @@
 // dtos/post.dto.js
 class CreatePostDTO {
-    constructor({ title, content, category }) {
+    constructor({user_email, title, content, category }) {
+        this.user_email = user_email;
         this.title = title;
         this.content = content;
         this.category = category

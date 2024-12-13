@@ -19,7 +19,6 @@ console.log(`DB Host: ${process.env.DB_HOST}`);
 console.log(`API URL: ${process.env.API_URL}`);
 // Module Aliasing
 require('module-alias/register');
-var authMiddleware = require('./src/middlewares/authMiddleware');
 var apiUrlToRequest = require('./src/middlewares/apiUrlMiddleware');
 
 // Generate JWT Secret key
@@ -39,9 +38,17 @@ var userService = require('./services/userService');
 
 var app = express();
 app.use(cors({
-  origin: '*', // 모든 도메인 허용
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // 허용할 HTTP 메소드
-  allowedHeaders: ['Content-Type', 'Authorization'], // 허용할 헤더
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'Cookie',
+        'X-Requested-With',
+        'Access-Control-Allow-Origin',
+        'Access-Control-Allow-Credentials'
+    ]
 }));
 
 app.use(logger('dev'));
@@ -49,12 +56,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
-
-// CORS 설정을 라우터들 전에 배치
-app.use(cors({
-  origin: '', // 모든 출처 허용
-}));
-app.options('', cors());
+app.options('*', cors({}));
 
 // production/development api url 분리
 app.use(apiUrlToRequest);
@@ -62,8 +64,6 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/jobinfos', jobInfoRouter);
-// 그 외 모든 요청에 대해 authMiddleware 적용
-//app.use(authMiddleware);
 app.use('/community', communityRouter);
 
 passport.use(new GoogleStrategy({
@@ -96,12 +96,6 @@ passport.use(new GoogleStrategy({
       return done(error);
   }
 }));
-
-// CORS 설정을 라우터들 전에 배치
-app.use(cors({
-  origin: '', // 모든 출처 허용
-}));
-app.options('', cors());
 
 app.use('/jobinfos', jobInfoRouter);
 app.use('/careertips', careerTips);

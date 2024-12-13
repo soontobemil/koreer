@@ -7,11 +7,19 @@
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="refactor: remove duplicated method">
       <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/postController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/postController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dtos/PostDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/PostDTO.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/postService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/postService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/authMiddleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/authMiddleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/api/PostApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/api/PostApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityRegistration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityRegistration.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/slice/postSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/slice/postSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/common.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/post.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +98,7 @@
       <workItem from="1733533411999" duration="8160000" />
       <workItem from="1733632177871" duration="446000" />
       <workItem from="1733632724396" duration="2473000" />
+      <workItem from="1734086129186" duration="5650000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />

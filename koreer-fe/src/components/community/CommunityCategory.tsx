@@ -1,6 +1,7 @@
 import {CommunityType} from "../../types/companyInformation";
 import style from "../../assets/scss/sub/community.module.scss";
 import {useNavigate} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 interface Args {
     type: CommunityType;
@@ -9,6 +10,8 @@ interface Args {
 export function CommunityCategory({type}: Args) {
 
     const navigate = useNavigate();
+    const [cookie]= useCookies(['accessToken', 'refreshToken']);
+
     const categories = [
         [
             {label: "전체", value: "",},
@@ -25,8 +28,11 @@ export function CommunityCategory({type}: Args) {
     const category = type === CommunityType.COMMUNITY
         ? categories[0] : categories[1]
 
-    const onClickPosting = (category: CommunityType) => {
-        console.log(category)
+    const onClickPosting = () => {
+        if (!cookie.accessToken) {
+            alert('로그인 후 시도해주세요');
+            return false;
+        }
         navigate('/community/post')
     };
 
@@ -52,7 +58,7 @@ export function CommunityCategory({type}: Args) {
                 </div>
 
                 {/*  게시글 포스팅  */}
-                <div className={style.buttonsWrapper} onClick={() =>onClickPosting(type)}>
+                <div className={style.buttonsWrapper} onClick={() =>onClickPosting()}>
                     <div className={style.postingButton}/>
                     <span className={style.text}>글 작성하기</span>
                 </div>

@@ -20,9 +20,10 @@ function generateRefreshToken(user) {
 
 // 유저 정보 호출 함수
 function getUserEmail(req) {
-    const authHeader = req.headers.authorization;
-    const token = authHeader.split(' ')[1];
-    return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    const accessToken = req.cookies.accessToken;
+
+     const decoded = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET);
+    return decoded.user_email
 }
 
 // 로그인 라우트

@@ -6,11 +6,11 @@ const {getUserEmail} = require("../src/Auth");
 
 class PostService {
     async createPost(req) {
-        const user = getUserEmail(req)
+        const email = getUserEmail(req)
         const data = req.body;
 
         const createPostDTO = new CreatePostDTO({
-            user_email:user.user_email,
+            user_email:email,
             title:data.title,
             content:data.content,
             category:data.category,

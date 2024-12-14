@@ -52,26 +52,33 @@ jobs:
             frontend-node-modules-${{ runner.os }}-
             frontend-node-modules-
 
-      - name: Install and Build
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn dev-build
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
-          CI: false
-        run: |
-          node -v
-          pwd
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
-            cd /koreer/koreer-fe &&
-            export NODE_OPTIONS='--max-old-space-size=4096' &&
-            export CI=false &&
-            yarn install --frozen-lockfile &&
-            yarn build
-          " &
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
-            cd /koreer/koreer-be &&
-            export NODE_OPTIONS='--max-old-space-size=4096' &&
-            yarn install --frozen-lockfile
-          " &
-          wait
+          CI: ''
+#      - name: Install and Build
+#        env:
+#          NODE_OPTIONS: --max-old-space-size=4096
+#          CI: false
+#        run: |
+#          node -v
+#          pwd
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+#            cd /koreer/koreer-fe &&
+#            export NODE_OPTIONS='--max-old-space-size=4096' &&
+#            export CI=false &&
+#            yarn install --frozen-lockfile &&
+#            yarn build
+#          " &
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+#            cd /koreer/koreer-be &&
+#            export NODE_OPTIONS='--max-old-space-size=4096' &&
+#            yarn install --frozen-lockfile
+#          " &
+#          wait
 
         # 실행
         #      - name: Install and Build
@@ -80,13 +87,7 @@ jobs:
         #          pwd
         #          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build"
         #          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-be && yarn install"
-
-        # Docker Compose 실행
-        #      - name: Restart Docker Services
-        #        run: |
-        #          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose down"
-        #          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose up -d"
-
+        
         # 블루-그린 전환 스크립트 실행
       - name: Switch Blue-Green Environment
         run: |

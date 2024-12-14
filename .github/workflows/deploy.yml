@@ -52,35 +52,26 @@ jobs:
             frontend-node-modules-${{ runner.os }}-
             frontend-node-modules-
 
-      - name: Install Dependencies
-        working-directory: /koreer/koreer-fe
-        run: yarn
-
-      - name: Build
-        working-directory: /koreer/koreer-fe
-        run: yarn dev-build
+      - name: Install and Build
         env:
-          CI: ''
-#      - name: Install and Build
-#        env:
-#          NODE_OPTIONS: --max-old-space-size=4096
-#          CI: false
-#        run: |
-#          node -v
-#          pwd
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
-#            cd /koreer/koreer-fe &&
-#            export NODE_OPTIONS='--max-old-space-size=4096' &&
-#            export CI=false &&
-#            yarn install --frozen-lockfile &&
-#            yarn build
-#          " &
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
-#            cd /koreer/koreer-be &&
-#            export NODE_OPTIONS='--max-old-space-size=4096' &&
-#            yarn install --frozen-lockfile
-#          " &
-#          wait
+          NODE_OPTIONS: --max-old-space-size=4096
+          CI: false
+        run: |
+          node -v
+          pwd
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+            cd /koreer/koreer-fe &&
+            export NODE_OPTIONS='--max-old-space-size=4096' &&
+            export CI=false &&
+            yarn install  &&
+            yarn build
+          " &
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+            cd /koreer/koreer-be &&
+            export NODE_OPTIONS='--max-old-space-size=4096' &&
+            yarn install 
+          " &
+          wait
 
         # 실행
         #      - name: Install and Build

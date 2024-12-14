@@ -49,7 +49,7 @@ jobs:
           path: /koreer/koreer-fe/node_modules
           key: frontend-node-modules-${{ runner.os }}-${{ hashFiles('/koreer/koreer-fe/yarn.lock') }}
           restore-keys: |
-            frontend-node-modules-${{ runner.os }}-
+            frontend-node-modules-${{ runner.os }}-build-
             frontend-node-modules-
 
 #      - name: Install and Build

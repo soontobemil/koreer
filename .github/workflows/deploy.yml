@@ -56,14 +56,14 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
             cd /koreer/koreer-fe &&
-            yarn install --ignore-engines --network-timeout 1000000
+            yarn install && yarn build --max-old-space-size=4096
           "
           
       - name: Build Frontend
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
             cd /koreer/koreer-fe &&
-            yarn build --max-old-space-size=8192
+            yarn build --max-old-space-size=4096
           "
         # 실행
         #      - name: Install and Build

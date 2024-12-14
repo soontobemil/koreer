@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
-    "build:fast": "react-scripts build --no-progress --max-workers=4",
+    "build": "NODE_OPTIONS=--max_old_space_size=8192 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

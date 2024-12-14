@@ -52,13 +52,13 @@ jobs:
             frontend-node-modules-${{ runner.os }}-
             frontend-node-modules-
 
-      - name: Install and Build
-        run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
-          cd /koreer &&
-          yarn workspaces focus --all &&
-          yarn workspaces run build
-          "
+#      - name: Install and Build
+#        run: |
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+#          cd /koreer &&
+#          yarn workspaces focus --all &&
+#          yarn workspaces run build
+#          "
       - name: Install&Build Frontend
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "

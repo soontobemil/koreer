@@ -43,14 +43,15 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
 
       # 캐싱
-      - name: Cache Frontend Node Modules
+      - name: Cache Frontend Build
         uses: actions/cache@v3
         with:
-          path: /koreer/koreer-fe/node_modules
-          key: frontend-node-modules-${{ runner.os }}-${{ hashFiles('/koreer/koreer-fe/yarn.lock') }}
+          path: |
+            /koreer/koreer-fe/build
+            /koreer/koreer-fe/node_modules/.cache
+          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            frontend-node-modules-${{ runner.os }}-build-
-            frontend-node-modules-
+            ${{ runner.os }}-build-
 
       - name: Install Dependencies
         run: |
@@ -77,7 +78,7 @@ jobs:
             cd /koreer/koreer-be &&
             yarn install 
           "
-        
+
         # 블루-그린 전환 스크립트 실행
       - name: Switch Blue-Green Environment
         run: |

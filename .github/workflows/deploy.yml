@@ -65,8 +65,7 @@ jobs:
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 \
           -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
             cd /koreer/koreer-fe && 
-            export NODE_OPTIONS=--max_old_space_size=4096 && 
-            yarn build --no-cache
+            yarn install 
           "
 #        env:
 #          CI: 'false'

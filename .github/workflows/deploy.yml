@@ -36,11 +36,11 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get update && sudo apt-get install -y unzip"
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "unzip -o /koreer.zip -d /koreer"
 
-      - name: Remove conflicting packages and install Node.js
-        run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y remove --purge nodejs libnode-dev"
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y autoremove && sudo apt-get clean"
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
+#      - name: Remove conflicting packages and install Node.js
+#        run: |
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y remove --purge nodejs libnode-dev"
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y autoremove && sudo apt-get clean"
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
 
       # 캐싱
       - name: Cache Frontend Node Modules
@@ -58,19 +58,27 @@ jobs:
 #          cd /koreer &&
 #          yarn workspaces focus --all &&
 #          yarn workspaces run build
+
+      - name: Install Dependencies
+        run: ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn"
+
+      - name: Build
+        run: ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn build"
+        env:
+          CI: ''
 #          "
-      - name: Install&Build Frontend
-        run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
-            cd /koreer/koreer-fe &&
-            yarn install && yarn build --max-old-space-size=8192
-          "
+#      - name: Install&Build Frontend
+#        run: |
+#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+#            cd /koreer/koreer-fe &&
+#            yarn install && yarn build
+#          "
 
       - name: Install&Build Backend
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
             cd /koreer/koreer-be &&
-            yarn install && yarn build --max-old-space-size=8192
+            yarn install && yarn build 
           "
         # 실행
         #      - name: Install and Build

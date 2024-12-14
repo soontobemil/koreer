@@ -79,6 +79,10 @@ yarn add axios redux react-redux @reduxjs/toolkit
 
 # 인증
 yarn add react-cookie jwt-decode
+
+# 빌드
+yarn add @craco/craco
+
 ```
 
 4. 개발 서버 실행

@@ -1,9 +1,13 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
+
+// 현재 환경을 가져옴 (기본값: development)
+const ENV = process.env.NODE_ENV || 'development';
 
 // Define .env file path
-const envFilePath = path.resolve('./', '.env');
+const envFilePath = path.resolve('./', `.env.${ENV}`);
 
 // Update .env Key / Value
 function updateEnvKey(key, value) {
@@ -34,7 +38,7 @@ function updateEnvKey(key, value) {
     // Write updated file data
     fs.writeFileSync(envFilePath, updatedLines.join('\n'));
 
-    console.log(`${key} updated in .env file`);
+    console.log(`${key} updated in .env.${ENV} file`);
 }
 
 function generateSecret() {
@@ -48,7 +52,7 @@ function generateSecret() {
         updateEnvKey('ACCESS_TOKEN_EXPIRES_IN', '1h');
         updateEnvKey('REFRESH_TOKEN_EXPIRES_IN', '7d');
 
-        console.log('Complete to Add JWT_SECRET in .env !');
+        console.log(`Complete to Add JWT_SECRET in .env.${ENV} !`);
 
     } catch (error) {
         console.error('Error Generating Secret Key:', error);

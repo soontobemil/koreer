@@ -32,15 +32,15 @@ export function Modal({companyInformation, setRevealModal}:Args) {
 
                         <div className={style.titleArea}>
                             <span className={style.titleText}>
-                                {companyInformation.company_name}
+                                {companyInformation.companyName}
                             </span>
                         </div>
 
                         <div className={style.bodyArea}>
-                            <JobDetail label="Position" value={companyInformation.job_title}/>
-                            <JobDetail label="Location" value={companyInformation.location}/>
-                            <JobDetail label="Salaries" value={companyInformation.salary}/>
-                            <JobDetail label="Descriptions" value={companyInformation.job_description}/>
+                            <JobDetail label="Position" value={companyInformation.companyResponsibilities}/>
+                            <JobDetail label="Location" value={companyInformation.companyLocation}/>
+                            <JobDetail label="Salaries" value={companyInformation.companySalaryRange}/>
+                            <JobDetail label="Descriptions" value={companyInformation.companyDescription}/>
                         </div>
 
                         <div className={style.footerArea}>

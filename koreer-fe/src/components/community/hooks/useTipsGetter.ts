@@ -4,32 +4,32 @@ import {getTips} from "../../../slice/tipsSlice";
 import {PageResponseDTO, ResponseDTO} from "../../../slice/common";
 
 export function useTipsGetter() {
-    const [tips, setTips] = useState<PageResponseDTO>();
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    const dispatch = useDispatch<any>();
-    const getTip = useCallback(async () => {
-        try {
-            const result: ResponseDTO = await dispatch(getTips()).unwrap();
-
-            setTips(result.result)
-            return result;
-        } catch (e) {
-            console.log('error message : ', e)
-        }finally {
-            setIsLoaded(true)
-        }
-
-        // eslint-disable-next-line
-    }, []);
-
-    useEffect(() => {
-        if (!tips) {
-            getTip().then();
-        }
-        // eslint-disable-next-line
-    }, []);
-    return{
-        getTip, tips, isLoaded
-    }
+    // const [tips, setTips] = useState<PageResponseDTO>();
+    // const [isLoaded, setIsLoaded] = useState(false);
+    //
+    // const dispatch = useDispatch<any>();
+    // const getTip = useCallback(async () => {
+    //     try {
+    //         const result: ResponseDTO = await dispatch(getTips()).unwrap();
+    //
+    //         setTips(result.result)
+    //         return result;
+    //     } catch (e) {
+    //         console.log('error message : ', e)
+    //     }finally {
+    //         setIsLoaded(true)
+    //     }
+    //
+    //     // eslint-disable-next-line
+    // }, []);
+    //
+    // useEffect(() => {
+    //     if (!tips) {
+    //         getTip().then();
+    //     }
+    //     // eslint-disable-next-line
+    // }, []);
+    // return{
+    //     getTip, tips, isLoaded
+    // }
 }

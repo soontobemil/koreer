@@ -36,12 +36,8 @@ async function fetchAdzunaJobInfos(apiType) {
         job_title: job.title,
         country: job.location.area[0],
         location: job.location.area[3],
-<<<<<<< HEAD
         api_category: apiType,
         posted_at:job.created
-=======
-        api_category: apiType
->>>>>>> 28b2ace (Modify Response data to insert job_information)
       });
     }
 

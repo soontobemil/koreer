@@ -1,135 +1,570 @@
-import style from "../../assets/scss/common/header.module.scss";
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
-import hamburger from "../../assets/img/menu.svg"
-import {MenuButton} from "./MenuButton";
-import {useCookieFunctions} from "./hooks/useCookieFunctions";
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCookieFunctions } from './hooks/useCookieFunctions';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Typography,
+  Box,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  Drawer,
+  List,
+  ListItemButton,
+  Collapse,
+  useTheme,
+  useMediaQuery,
+  Container,
+  Paper,
+  MenuList,
+  Popper,
+  Grow,
+  ClickAwayListener,
+} from '@mui/material';
+import {
+  Menu as MenuIcon,
+  WorkOutline,
+  Business,
+  Forum,
+  ExpandMore,
+  ChevronRight,
+  Flight,
+  AttachMoney,
+  School,
+  Login,
+  Logout,
+  Description,
+  Code,
+  Person,
+  Home,
+} from '@mui/icons-material';
+import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
 
 export enum HeaderStatus {
-    ABOUT_US = "ABOUT_US",
-    COMPANY_INFORMATION = "COMPANY_INFORMATION",
-    COMMUNITY = "COMMUNITY",
-    CONTACT = "CONTACT",
-    NONE = "NONE",
+  ABOUT_US = "ABOUT_US",
+  COMPANY_INFORMATION = "COMPANY_INFORMATION",
+  EMPLOYMENT_INFO = "EMPLOYMENT_INFO",
+  COMMUNITY = "COMMUNITY",
+  CONTACT = "CONTACT",
+  NONE = "NONE",
 }
 
+interface BaseMenuItem {
+  label: string;
+  icon: JSX.Element;
+  path: string;
+}
+
+interface SubMenuItem extends BaseMenuItem {}
+
+interface SubMenuGroup extends BaseMenuItem {
+  subItems: SubMenuItem[];
+}
+
+interface MenuItem extends BaseMenuItem {
+  status: HeaderStatus;
+  subItems?: SubMenuGroup[];
+}
+
+const MENU_CLOSE_DELAY = 300; // milliseconds
+
+const menuItems: MenuItem[] = [
+  {
+    label: '취업 정보',
+    icon: <WorkOutline />,
+    path: '/employment-info',
+    status: HeaderStatus.EMPLOYMENT_INFO,
+    subItems: [
+      {
+        label: '미국',
+        icon: <Flight />,
+        path: '/usa',
+        subItems: [
+          { label: "미국 비자", icon: <Flight />, path: '/visa-info/usa' },
+          { label: "미국 연봉", icon: <AttachMoney />, path: '/salary-info/usa' },
+          { label: "현지 생활 정보", icon: <Home />, path: '/life-info/usa' }
+        ]
+      },
+      {
+        label: '캐나다',
+        icon: <Flight />,
+        path: '/canada',
+        subItems: [
+          { label: "캐나다 비자", icon: <Flight />, path: '/visa-info/canada' },
+          { label: "캐나다 연봉", icon: <AttachMoney />, path: '/salary-info/canada' },
+          { label: "현지 생활 정보", icon: <Home />, path: '/life-info/canada' }
+        ]
+      },
+      {
+        label: '면접 준비',
+        icon: <School />,
+        path: '/interview-guide',
+        subItems: [
+          { label: "기술 면접", icon: <Code />, path: '/interview-guide#technical' },
+          { label: "인성 면접", icon: <Person />, path: '/interview-guide#behavioral' },
+          { label: "코딩 테스트", icon: <Code />, path: '/interview-guide#coding-test' }
+        ]
+      }
+    ]
+  },
+  {
+    label: '회사 정보',
+    icon: <Business />,
+    path: '/company-information',
+    status: HeaderStatus.COMPANY_INFORMATION,
+  },
+  {
+    label: '커뮤니티',
+    icon: <Forum />,
+    path: '/community',
+    status: HeaderStatus.COMMUNITY,
+    subItems: [
+      {
+        label: "커뮤니티",
+        icon: <Forum />,
+        path: '/community',
+        subItems: []
+      },
+      {
+        label: "취업 팁 공유",
+        icon: <Description />,
+        path: '/tips',
+        subItems: []
+      }
+    ]
+  }
+];
+
 export enum SubMenu {
-    COMMUNITY = "커뮤니티",
-    SHARE_YOUR_TIPS = "여러분의 팁을 공유해주세요!",
-    CANADA = "캐나다",
-    USA = "미국",
-    BIG_TECH = "Big Tech 빅테크",
-    POSITION_SALARY = "직군별 연봉",
-    INTERVIEW_PROCESS = "인터뷰 과정",
+  COMMUNITY = "커뮤니티",
+  SHARE_YOUR_TIPS = "여러분의 팁을 공유해주세요!",
+  CANADA = "캐나다",
+  USA = "미국",
+  BIG_TECH = "Big Tech 빅테크",
+  POSITION_SALARY = "직군별 연봉",
+  INTERVIEW_PROCESS = "인터뷰 과정",
+  JOB_LISTINGS = "채용 공고",
+  VISA_INFO = "비자 정보",
+  CAREER_TIPS = "취업 준비 팁",
 }
 
 export function Header() {
-    const [headerStatus, setHeaderStatus] = useState(HeaderStatus.NONE);
-    const [isLogin, setIsLogin] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const {getCookie, removeCookie} = useCookieFunctions();
-    const navigate = useNavigate();
+  const [headerStatus, setHeaderStatus] = useState(HeaderStatus.NONE);
+  const [isLogin, setIsLogin] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
+  const [openSubMenuIndex, setOpenSubMenuIndex] = useState<number | null>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout>();
+  const { getCookie, removeCookie } = useCookieFunctions();
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-    const selectedButtons = [
-        {
-            label: '커뮤니티',
-            page: 'community',
-            status: HeaderStatus.COMMUNITY,
-            subMenu: [
-                {title: SubMenu.COMMUNITY, subItems: []},
-                {title: SubMenu.SHARE_YOUR_TIPS, subItems: []}
-            ]
-        },
-        {
-            label: '취업 정보',
-            page: 'company-information',
-            status: HeaderStatus.COMPANY_INFORMATION,
-            subMenu: [
-                {title: SubMenu.USA, subItems: ["미국 비자", "미국 연봉"]},
-                {title: SubMenu.CANADA, subItems: ["캐나다 비자", "캐나다 연봉"]},
-                {title: SubMenu.INTERVIEW_PROCESS, subItems: ["1차", "2차", "3차"]},
-                {title: SubMenu.POSITION_SALARY, subItems: ["BackEnd", "FrontEnd", "DevOps", "IOS", "GAME"]},
-                {title: SubMenu.BIG_TECH, subItems: ["페이스북", "아마존", "넷플릭스", "구글", "마이크로소프트"]},
-            ]
-        },
-        // {label: 'About us', page: 'about-us', status: HeaderStatus.ABOUT_US, subMenu: []},
-        // {label: 'Contact', page: 'contact', status: HeaderStatus.CONTACT, subMenu: []},
-    ];
-
-    const onClickChangePage = (page: string, status: HeaderStatus) => {
-        navigate(`/${page}`)
-        window.scrollBy({
-            left: 0,
-            top: -window.scrollY,
-            behavior: "smooth",
-        });
-        setHeaderStatus(status)
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = undefined;
     }
+  };
 
-    const onClickLogout = () =>{
-        const confirms = window.confirm('로그아웃 하시겠습니까?')
-        if (confirms) {
-            removeCookie('accessToken');
-            removeCookie('refreshToken');
-            window.location.reload()
-        }
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, index: number) => {
+    if (!isMobile) {
+      clearCloseTimeout();
+      setAnchorEl(event.currentTarget);
+      setOpenMenuIndex(index);
     }
+  };
 
-    const [activeButton, setActiveButton] = useState(null);
+  const handleMenuClose = () => {
+    clearCloseTimeout();
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenMenuIndex(null);
+      setOpenSubMenuIndex(null);
+      setAnchorEl(null);
+    }, MENU_CLOSE_DELAY);
+  };
 
-    const onMouseEnter = (index: any) => {
-        setActiveButton(index); // 마우스가 버튼 위에 있을 때 상태를 업데이트
-    };
+  const handleSubMenuOpen = (index: number) => {
+    clearCloseTimeout();
+    setOpenSubMenuIndex(index);
+  };
 
-    const onMouseLeave = () => {
-        setActiveButton(null); // 마우스가 버튼을 떠났을 때 상태를 초기화
-    };
+  const handleMenuEnter = () => {
+    clearCloseTimeout();
+  };
 
+  const handleMenuLeave = () => {
+    handleMenuClose();
+  };
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
+  const handleNavigation = useCallback((path: string, status: HeaderStatus) => {
+    navigate(path);
+    setHeaderStatus(status);
+    clearCloseTimeout();
+    setOpenMenuIndex(null);
+    setOpenSubMenuIndex(null);
+    setAnchorEl(null);
+    setMobileOpen(false);
+  }, [navigate]);
 
-    useEffect(() => {
-        const accessToken = getCookie('accessToken');
-        setIsLogin(accessToken !== null)
-    }, [getCookie]);
+  const handleLogout = useCallback(() => {
+    const confirms = window.confirm('로그아웃 하시겠습니까?');
+    if (confirms) {
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      window.location.reload();
+    }
+  }, [removeCookie]);
 
+  useEffect(() => {
+    const accessToken = getCookie('accessToken');
+    setIsLogin(accessToken !== null);
+  }, [getCookie]);
 
-    return (
-        <header className={style.header}>
-            <div className={style.hamburgerMenu} onClick={toggleMenu}>
-                {/* Hamburger Icon */}
-                <img style={{cursor: 'pointer'}} src={hamburger} alt={'hamburger'}/>
-            </div>
+  useEffect(() => {
+    return () => clearCloseTimeout();
+  }, []);
 
-            <div className={style.logoImg} onClick={() => onClickChangePage('', HeaderStatus.NONE)}/>
+  const renderSubMenu = (items: SubMenuItem[], parentIndex: number) => (
+    <MenuList>
+      {items.map((item, index) => (
+        <MenuItem
+          key={index}
+          onClick={() => handleNavigation(item.path, menuItems[parentIndex].status)}
+          sx={{
+            minWidth: 200,
+            py: 1.5,
+            px: 2,
+            '&:hover': {
+              bgcolor: 'primary.light',
+              color: 'primary.contrastText',
+              '& .MuiListItemIcon-root': {
+                color: 'primary.contrastText',
+              }
+            }
+          }}
+        >
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText primary={item.label} />
+        </MenuItem>
+      ))}
+    </MenuList>
+  );
 
-            {/*  메인 로고 가운데정렬하기 위해 추가  */}
-            <div className={style.headerTitle} onClick={() => onClickChangePage('', HeaderStatus.NONE)}>
-                Koreer
-            </div>
+  const drawer = (
+    <Box sx={{ width: 280, bgcolor: 'background.paper' }}>
+      <List>
+        {menuItems.map((item, index) => (
+          <Box key={item.label}>
+            <ListItemButton
+              onClick={() => item.subItems ? setOpenMenuIndex(index) : handleNavigation(item.path, item.status)}
+              selected={headerStatus === item.status}
+              sx={{
+                py: 1.5,
+                borderRadius: 1,
+                mx: 1,
+                mb: 0.5,
+                '&:hover': {
+                  bgcolor: 'primary.light',
+                  color: 'primary.contrastText',
+                  '& .MuiListItemIcon-root': {
+                    color: 'primary.contrastText',
+                  }
+                },
+                ...(headerStatus === item.status && {
+                  bgcolor: 'primary.main',
+                  color: 'primary.contrastText',
+                  '& .MuiListItemIcon-root': {
+                    color: 'primary.contrastText',
+                  }
+                })
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.label} />
+              {item.subItems && (
+                openMenuIndex === index ? <ExpandMore /> : <ChevronRight />
+              )}
+            </ListItemButton>
+            {item.subItems && (
+              <Collapse in={openMenuIndex === index} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {item.subItems.map((subItem, subIndex) => (
+                    <Box key={subItem.label}>
+                      <ListItemButton
+                        onClick={() => subItem.subItems.length ? setOpenSubMenuIndex(subIndex) : handleNavigation(subItem.path, item.status)}
+                        sx={{
+                          pl: 4,
+                          py: 1.5,
+                          borderRadius: 1,
+                          mx: 1,
+                          mb: 0.5,
+                        }}
+                      >
+                        <ListItemIcon sx={{ minWidth: 40 }}>{subItem.icon}</ListItemIcon>
+                        <ListItemText primary={subItem.label} />
+                        {subItem.subItems.length > 0 && (
+                          openSubMenuIndex === subIndex ? <ExpandMore /> : <ChevronRight />
+                        )}
+                      </ListItemButton>
+                      {subItem.subItems.length > 0 && (
+                        <Collapse in={openSubMenuIndex === subIndex} timeout="auto" unmountOnExit>
+                          <List component="div" disablePadding>
+                            {subItem.subItems.map((subSubItem) => (
+                              <ListItemButton
+                                key={subSubItem.label}
+                                onClick={() => handleNavigation(subSubItem.path, item.status)}
+                                sx={{
+                                  pl: 6,
+                                  py: 1.5,
+                                  borderRadius: 1,
+                                  mx: 1,
+                                  mb: 0.5,
+                                }}
+                              >
+                                <ListItemIcon sx={{ minWidth: 40 }}>{subSubItem.icon}</ListItemIcon>
+                                <ListItemText primary={subSubItem.label} />
+                              </ListItemButton>
+                            ))}
+                          </List>
+                        </Collapse>
+                      )}
+                    </Box>
+                  ))}
+                </List>
+              </Collapse>
+            )}
+          </Box>
+        ))}
+      </List>
+    </Box>
+  );
 
-            <div className={`${style.headerButtonWrapper} ${isMenuOpen ? style.menuOpen : ''}`}>
-                <MenuButton
-                    selectedButtons={selectedButtons}
-                    headerStatus={headerStatus}
-                    activeButton={activeButton}
-                    onMouseEnter={onMouseEnter}
-                    onMouseLeave={onMouseLeave}
-                    onClickChangePage={onClickChangePage}
-                />
-                {isLogin ? (
-                    <button className={`${style.buttons} ${style.logout}`}
-                            onClick={() =>onClickLogout()}>Logout
-                    </button>
-                ) : (
-                    <button className={`${style.buttons} ${style.login}`}
-                            onClick={() => onClickChangePage('signin', HeaderStatus.NONE)}>Login
-                    </button>
-                )}
-            </div>
-        </header>
-    );
+  return (
+    <>
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          bgcolor: 'background.paper',
+          borderBottom: 1,
+          borderColor: 'divider',
+        }}
+        elevation={0}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <Box
+              component="img"
+              src={koreerLogo}
+              alt="Koreer Logo"
+              sx={{
+                height: 36,
+                width: 36,
+                cursor: 'pointer',
+                mr: 2,
+                '&:hover': { transform: 'scale(1.1)' },
+                transition: 'transform 0.2s',
+                objectFit: 'contain'
+              }}
+              onClick={() => handleNavigation('/', HeaderStatus.NONE)}
+            />
+
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                flexGrow: 1,
+                cursor: 'pointer',
+                fontWeight: 700,
+                color: 'primary.main',
+                '&:hover': { opacity: 0.8 },
+              }}
+              onClick={() => handleNavigation('/', HeaderStatus.NONE)}
+            >
+              Koreer
+            </Typography>
+
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
+              {menuItems.map((item, index) => (
+                <Box
+                  key={item.label}
+                  onMouseEnter={(e) => item.subItems && handleMenuOpen(e, index)}
+                  onMouseLeave={handleMenuLeave}
+                  sx={{ position: 'relative' }}
+                >
+                  <Button
+                    color="inherit"
+                    startIcon={item.icon}
+                    endIcon={item.subItems ? <ExpandMore /> : null}
+                    onClick={() => !item.subItems && handleNavigation(item.path, item.status)}
+                    sx={{
+                      mx: 1,
+                      py: 1,
+                      px: 2,
+                      borderRadius: 1,
+                      ...(headerStatus === item.status && {
+                        bgcolor: 'primary.main',
+                        color: 'primary.contrastText',
+                        '& .MuiSvgIcon-root': {
+                          color: 'primary.contrastText',
+                        }
+                      }),
+                      '&:hover': { 
+                        bgcolor: 'primary.light',
+                        color: 'primary.contrastText',
+                        '& .MuiSvgIcon-root': {
+                          color: 'primary.contrastText',
+                        }
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+
+                  {item.subItems && openMenuIndex === index && (
+                    <Popper
+                      open={true}
+                      anchorEl={anchorEl}
+                      placement="bottom-start"
+                      transition
+                      disablePortal
+                      sx={{ zIndex: theme.zIndex.modal }}
+                      onMouseEnter={handleMenuEnter}
+                      onMouseLeave={handleMenuLeave}
+                    >
+                      {({ TransitionProps }) => (
+                        <Grow {...TransitionProps}>
+                          <Paper
+                            elevation={3}
+                            sx={{
+                              mt: 1,
+                              borderRadius: 2,
+                              border: 1,
+                              borderColor: 'divider',
+                            }}
+                          >
+                            <ClickAwayListener onClickAway={handleMenuClose}>
+                              <MenuList
+                                autoFocusItem={openMenuIndex === index}
+                              >
+                                {item.subItems?.map((subItem, subIndex) => (
+                                  <Box
+                                    key={subItem.label}
+                                    onMouseEnter={() => handleSubMenuOpen(subIndex)}
+                                    sx={{ position: 'relative' }}
+                                  >
+                                    <MenuItem
+                                      onClick={() => !subItem.subItems.length && handleNavigation(subItem.path, item.status)}
+                                      sx={{
+                                        py: 1.5,
+                                        px: 2,
+                                        '&:hover': {
+                                          bgcolor: 'primary.light',
+                                          color: 'primary.contrastText',
+                                          '& .MuiListItemIcon-root': {
+                                            color: 'primary.contrastText',
+                                          }
+                                        }
+                                      }}
+                                    >
+                                      <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                      <ListItemText primary={subItem.label} />
+                                      {subItem.subItems.length > 0 && <ChevronRight />}
+                                    </MenuItem>
+                                    {subItem.subItems.length > 0 && openSubMenuIndex === subIndex && (
+                                      <Paper
+                                        sx={{
+                                          position: 'absolute',
+                                          top: 0,
+                                          left: '100%',
+                                          ml: 0.5,
+                                          zIndex: 2,
+                                          minWidth: 200,
+                                          boxShadow: 3,
+                                          borderRadius: 2,
+                                        }}
+                                      >
+                                        {renderSubMenu(subItem.subItems, index)}
+                                      </Paper>
+                                    )}
+                                  </Box>
+                                ))}
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  )}
+                </Box>
+              ))}
+
+              <Button
+                color={isLogin ? "inherit" : "primary"}
+                variant={isLogin ? "outlined" : "contained"}
+                startIcon={isLogin ? <Logout /> : <Login />}
+                onClick={isLogin ? handleLogout : () => handleNavigation('/signin', HeaderStatus.NONE)}
+                sx={{ 
+                  ml: 2,
+                  px: 3,
+                  py: 1,
+                  borderRadius: 2,
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: 2
+                  },
+                  transition: 'all 0.2s'
+                }}
+              >
+                {isLogin ? 'Logout' : 'Login'}
+              </Button>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      <Box component="nav">
+        <Drawer
+          variant="temporary"
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{ keepMounted: true }}
+          PaperProps={{
+            sx: {
+              width: 280,
+              borderRight: 1,
+              borderColor: 'divider'
+            }
+          }}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </Box>
+      
+      <Toolbar />
+    </>
+  );
 }

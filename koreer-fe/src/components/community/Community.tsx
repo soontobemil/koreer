@@ -20,7 +20,7 @@ export function Community() {
 
                 <div className={style.contents}>
                     {/*  정렬, 카테고리  */}
-                    <CommunityCategory type={CommunityType.COMMUNITY}/>
+                    <CommunityCategory type={CommunityType.COMMUNITY} />
 
                     {/*  검색, 페이징  */}
                     <div className={style.searchAreaWrapper}>
@@ -36,7 +36,7 @@ export function Community() {
                         </div>
                     </div>
 
-                    <CommunityContents/>
+                    <CommunityContents />
                 </div>
             </div>
         </>

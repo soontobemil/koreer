@@ -5,8 +5,8 @@ export function CommunityRegistration() {
 
     const navigate = useNavigate();
 
-    const onClickCancelHandler = () =>{
-        if(!window.confirm('취소하시면 작성중인 내용이 모두 사라집니다.\n정말 취소하시겠습니까?')) return false;
+    const onClickCancelHandler = () => {
+        if(!window.confirm('취소하시면 작성중인 내용이 모두 사라집니다.\n정말 취소하시겠습니까?')) return;
         navigate('/community')
     }
 

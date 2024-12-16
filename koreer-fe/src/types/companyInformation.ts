@@ -1,14 +1,20 @@
-export interface CompanyInformationDTO{
-    id: number;
-    created_at: string;
-    updated_at: string;
-    company_name: string;
-    salary: string;
-    job_description: string;
-    job_title: string;
-    country: string;
-    location: string;
-    api_category: string;
+export interface CompanyInformationDTO {
+    id: string;
+    companyName: string;
+    companyUrl: string;
+    companyLocation: string;
+    companyCategory: string;
+    companyDescription: string;
+    companyLogo: string;
+    companyId: string;
+    companySize: string;
+    companyFoundedAt: string;
+    companySalaryRange: string;
+    companyBenefits: string;
+    companyTechStack: string;
+    companyRequirements: string;
+    companyPreferredQualifications: string;
+    companyResponsibilities: string;
 }
 
 export enum CommunityType {

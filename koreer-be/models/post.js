@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        category:{
-            type:ENUM('DAILY','TECH','STUDY'),
-            allowNull: false
-        },
+        // category:{
+        //     type:ENUM('DAILY','TECH','STUDY'),
+        //     allowNull: false
+        // },
         created_at: {
             type: DataTypes.DATE,
             get() {

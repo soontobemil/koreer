@@ -1,5 +1,6 @@
 import {CommunityType} from "../../types/companyInformation";
 import style from "../../assets/scss/sub/community.module.scss";
+import {useNavigate} from "react-router-dom";
 
 interface Args {
     type: CommunityType;
@@ -7,6 +8,7 @@ interface Args {
 
 export function CommunityCategory({type}: Args) {
 
+    const navigate = useNavigate();
     const categories = [
         [
             {label: "전체", value: "",},
@@ -25,6 +27,7 @@ export function CommunityCategory({type}: Args) {
 
     const onClickPosting = (category: CommunityType) => {
         console.log(category)
+        navigate('/community/post')
     };
 
     return (
@@ -49,9 +52,9 @@ export function CommunityCategory({type}: Args) {
                 </div>
 
                 {/*  게시글 포스팅  */}
-                <div className={style.buttonsWrapper}>
+                <div className={style.buttonsWrapper} onClick={() =>onClickPosting(type)}>
                     <div className={style.postingButton}/>
-                    <span className={style.text} onClick={() =>onClickPosting(type)}>글 작성하기</span>
+                    <span className={style.text}>글 작성하기</span>
                 </div>
             </div>
 

@@ -17,6 +17,7 @@ import {NotFoundPage} from "./components/common/NotFoundPage";
 import {Tips} from "./components/community/Tips";
 import {TipsPosting} from "./components/community/TipsPosting";
 import {Success} from "./components/common/Success";
+import {CommunityRegistration} from "./components/community/CommunityRegistration";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -26,10 +27,11 @@ root.render(
         <Provider store={store}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<App/>}>
-                        <Route path="" element={<Main/>}/>
-                        <Route path="company-information" element={<CompanyInformation/>}/>
-                        <Route path="community" element={<Community/>}/>
+                    <Route path="/" element={<App />}>
+                        <Route path="" element={<Main />} />
+                        <Route path="company-information" element={<CompanyInformation />} />
+                        <Route path="community" element={<Community />} />
+                            <Route path="community/post" element={<CommunityRegistration />} />
                         <Route path="tips" element={<Tips/>}/>
                         <Route path="tips/posting" element={<TipsPosting/>}/>
                         <Route path="about-us" element={<AboutUs/>}/>

@@ -6,6 +6,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const dotenv = require('dotenv');
+
+// 현재 환경을 가져옴 (기본값: development)
+const ENV = process.env.NODE_ENV || 'development';
+
+// 환경에 맞는 .env 파일 로드
+dotenv.config({ path: `.env.${ENV}` });
+
+console.log(`Loaded environment: ${ENV}`);
+console.log(`DB Host: ${process.env.DB_HOST}`);
+console.log(`API URL: ${process.env.API_URL}`);
 // Module Aliasing
 require('module-alias/register');
 var authMiddleware = require('./src/middlewares/authMiddleware');
@@ -25,10 +36,16 @@ var usersRouter = require('./routes/users');
 app.use(authMiddleware);
 var jobInfoRouter = require('./routes/jobinfos');
 var careerTips = require('./routes/careertips');
+var communityRouter = require('./routes/community');
 
 var userService = require('./services/userService');
 
 var app = express();
+app.use(cors({
+  origin: '*', // 모든 도메인 허용
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // 허용할 HTTP 메소드
+  allowedHeaders: ['Content-Type', 'Authorization'], // 허용할 헤더
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -47,6 +64,10 @@ app.use(apiUrlToRequest);
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/jobinfos', jobInfoRouter);
+// 그 외 모든 요청에 대해 authMiddleware 적용
+//app.use(authMiddleware);
+app.use('/community', communityRouter);
 
 passport.use(new GoogleStrategy({
   clientID: process.env.OAUTH2_CID_SOCIAL_LOGIN,  // Google에서 받은 Client ID
@@ -54,7 +75,7 @@ passport.use(new GoogleStrategy({
   callbackURL: 'http://localhost:3000/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-      
+
       // Google에서 받은 사용자 프로필 정보 처리
       const user = {
           id: profile.id,
@@ -70,9 +91,9 @@ passport.use(new GoogleStrategy({
       // 기존 사용자이면 바로 리턴 ,new 이면 db에 사용자정보 insert 하고 끝
       const user2 = await userService.createUser({username:user.displayName,user_email:user.email,password:user.id});
       return done(null,rsltData);
-      
+
      //const result = await authService.googleLogin();
-      
+
   } catch (error) {
       console.log(error);
       return done(error);

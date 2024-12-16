@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="refactor: remove duplicated method">
       <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -94,11 +95,7 @@
       <workItem from="1732531051576" duration="621000" />
       <workItem from="1732617834805" duration="3840000" />
       <workItem from="1732770656660" duration="1178000" />
-      <workItem from="1733483972995" duration="1128000" />
-      <workItem from="1733533411999" duration="8160000" />
-      <workItem from="1733632177871" duration="446000" />
-      <workItem from="1733632724396" duration="2473000" />
-      <workItem from="1734086129186" duration="5650000" />
+      <workItem from="1734167667710" duration="628000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -156,8 +153,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add model &amp; api for career tips" />
     <MESSAGE value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
-    <MESSAGE value="refactor: fix update functions for create tokens" />
-    <MESSAGE value="refactor: remove duplicated method" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: remove duplicated method" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
   </component>
 </project>

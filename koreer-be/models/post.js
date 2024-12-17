@@ -1,9 +1,10 @@
 const { formatDate } = require('@common/utils');
+const {ENUM} = require("sequelize");
 
 // Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
     const Post = sequelize.define('Post', {
-    
+
         user_email: {
             type: DataTypes.STRING(100),
             allowNull: false
@@ -16,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
+        // category:{
+        //     type:ENUM('DAILY','TECH','STUDY'),
+        //     allowNull: false
+        // },
         created_at: {
             type: DataTypes.DATE,
             get() {
@@ -45,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true, // Soft Delete 활성화
         deletedAt: 'deleted_at', // 삭제 시간 필드 이름
     });
-  
+
     return Post;
-  };
+};
   

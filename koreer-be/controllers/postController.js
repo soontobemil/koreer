@@ -1,12 +1,13 @@
 // Get request data from routes
 const postService = require('../services/postService');
+const jwt = require("jsonwebtoken");
 
 async function createPost(req, res) {
   try {
     // start data processing logic
-    const data = req.body;
-    const post = await postService.createPost(data);
-    res.status(201).json(post);
+    const result = await postService.createPost(req);
+    res.json({result});
+
   } catch (error) {
     console.error('Error creating post:', error); // error log
     res.status(400).json({ message: '게시글 등록 중 에러가 발생하였습니다. ' + error.message });
@@ -33,7 +34,7 @@ async function getPosts(req, res) {
     if(!req.user) {
       req.user = {user_email:"iyeahs71@gmail.com"};
     }
-    
+
     const currentUserEmail = req.user.user_email; // 현재 로그인한 유저의 이메일 (예: 미들웨어에서 추가된 사용자 정보)
 
     const posts = await postService.getPosts(Number(page), Number(limit), currentUserEmail);

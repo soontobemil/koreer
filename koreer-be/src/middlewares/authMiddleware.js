@@ -2,7 +2,12 @@ const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
     // Get Authorization from Request Header
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers.authorization || `Bearer ${req.cookies.accessToken}`;
+    console.log('Auth Middleware - Request Details:');
+    console.log('URL:', req.originalUrl);
+    console.log('Method:', req.method);
+    console.log('Cookies:', req.cookies);
+    console.log('Headers:', req.headers);
 
     // Reject if Authorization Header not exists
     if (!authHeader) {
@@ -26,6 +31,8 @@ const authMiddleware = (req, res, next) => {
         // 다음 미들웨어 또는 라우터로 이동
         next();
     } catch (err) {
+
+        console.log(err)
         // 토큰이 유효하지 않은 경우, 오류 응답 반환
         return res.status(403).json({ message: 'Invalid or expired token' });
     }

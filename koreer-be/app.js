@@ -17,11 +17,8 @@ dotenv.config({ path: `.env.${ENV}` });
 console.log(`Loaded environment: ${ENV}`);
 console.log(`DB Host: ${process.env.DB_HOST}`);
 console.log(`API URL: ${process.env.API_URL}`);
-console.log('DB_USER:', process.env.DB_USER);
-
 // Module Aliasing
 require('module-alias/register');
-var authMiddleware = require('./src/middlewares/authMiddleware');
 var apiUrlToRequest = require('./src/middlewares/apiUrlMiddleware');
 
 // Generate JWT Secret key
@@ -33,38 +30,46 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
-
-// 그 외 모든 요청에 대해 authMiddleware 적용
-// app.use(authMiddleware);
 var jobInfoRouter = require('./routes/jobinfos');
 var careerTips = require('./routes/careertips');
+var communityRouter = require('./routes/community');
 
 var userService = require('./services/userService');
 
 var app = express();
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'Cookie',
+        'X-Requested-With',
+        'Access-Control-Allow-Origin',
+        'Access-Control-Allow-Credentials'
+    ]
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
-
-// CORS 설정을 라우터들 전에 배치
-app.use(cors({
-    origin: '', // 모든 출처 허용
-}));
-app.options('', cors());
+app.options('*', cors({}));
 
 // production/development api url 분리
 app.use(apiUrlToRequest);
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/jobinfos', jobInfoRouter);
+app.use('/community', communityRouter);
 
 passport.use(new GoogleStrategy({
     clientID: process.env.OAUTH2_CID_SOCIAL_LOGIN,  // Google에서 받은 Client ID
     clientSecret: process.env.OAUTH2_CSECRET_SOCIAL_LOGIN,  // Google에서 받은 Client Secret
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`
 }, async (accessToken, refreshToken, profile, done) => {
     try {
 
@@ -92,15 +97,8 @@ passport.use(new GoogleStrategy({
     }
 }));
 
-// CORS 설정을 라우터들 전에 배치
-app.use(cors({
-    origin: '', // 모든 출처 허용
-}));
-app.options('', cors());
-
 app.use('/jobinfos', jobInfoRouter);
 app.use('/careertips', careerTips);
-app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

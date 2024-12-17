@@ -1,6 +1,8 @@
 const authService = require('../services/authService');
 const {post, get} = require("axios");
 const {UserInfoResponseDTO} = require("../dto/UserInfoResponseDTO");
+const jwt = require("jsonwebtoken");
+const {generateRefreshToken, generateAccessToken} = require("../src/Auth");
 
 /**
  * These are login and sign up for user infos
@@ -24,7 +26,7 @@ async function register(req,res) {
         } else {
             res.status(201).json({message:'중복된 이메일입니다! 다른 이메일을 사용해주세요.'});
         }
-        
+
     } catch (error) {
         console.error('Error in controller:', error);
         res.status(500).json({message:'사용자 등록 중 오류가 발생하였습니다.'});
@@ -45,7 +47,7 @@ async function login(req, res) {
         console.error('Error in controller:', error);
         res.status(500).json({message:'로그인에 실패하였습니다.'+error.message});
     }
-    
+
 }
 
 async function refreshAccessToken(req,res) {
@@ -56,14 +58,14 @@ async function refreshAccessToken(req,res) {
     }
 
     try {
-        const accessToken = authService.createAccessToken({id:req.id,user_email:req.user_email});
+        const accessToken = generateAccessToken({id:req.id,username:req.username, user_email:req.user_email});
         res.json({ accessToken });
 
     } catch (error) {
-        console.log(error.message); 
+        console.log(error.message);
         res.status(401).send(error.message);
     }
-    
+
 }
 
 async function logout(req,res) {
@@ -84,7 +86,6 @@ async function emailVefify(req,res) {
         <head>
             <script>
                 alert('가입이 완료되었습니다.');
-                // window.location.href = 'http://localhost:3001/success?accessToken=${token}';
                 window.location.href = 'https://koreer.com/success?accessToken=${token}';
             </script>
         </head>
@@ -104,11 +105,9 @@ async function googleCallBack(req,res) {
     // 파라미터 추출
     const code = req.query.code;
     const requestUri = 'https://oauth2.googleapis.com/token'
-    // const redirectUri = 'http://localhost:3000/auth/google/callback'
-    const redirectUri = 'https://koreer.com/api/auth/google/callback'
+    const redirectUri = `${process.env.API_URL}/auth/google/callback`
 
     const userInfoRequestUri = 'https://www.googleapis.com/userinfo/v2/me';
-    const userInfoRedirectUri = 'http://localhost:3001/auth/google/callback'
 
     try {
 
@@ -140,14 +139,19 @@ async function googleCallBack(req,res) {
         const userInfoDTO = new UserInfoResponseDTO(userInfoResponse.data);
 
 
-        const result = await authService.oauthRegister({
+        const result = await authService.register({
             user_email:userInfoDTO.email,
             username:userInfoDTO.name,
             password:'1234qwer!@',
+            is_email_verified:'Y'
         })
 
-        // return res.redirect(`http://localhost:3001/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
-        return res.redirect(`https://koreer.com/success?accessToken=${result.accessToken}&refreshToken=${result.refreshToken}`);
+
+        const userPayload = { id: result.id, username: result.username, user_email: result.user_email };
+        generateAccessToken(userPayload);
+        generateRefreshToken(userPayload);
+
+        return res.redirect(`${process.env.CLIENT_URL}/success?accessToken=${generateAccessToken(userPayload)}&refreshToken=${generateRefreshToken(userPayload)}`);
 
     } catch (error) {
         console.error('Error:', error);

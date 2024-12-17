@@ -14,8 +14,8 @@ const initialState: AuthState = {
 };
 
 export const login = createAsyncThunk(
-  "auth/login",
-  (user: LoginDTO) => executePromise(SignInApi.loginUser(user))
+    "auth/login",
+    (user: LoginDTO) => executePromise(SignInApi.loginUser(user))
 );
 
 const signInSlice = createSlice({

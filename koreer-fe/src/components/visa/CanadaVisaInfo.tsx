@@ -90,107 +90,107 @@ export function CanadaVisaInfo() {
   ];
 
   return (
-    <PageLayout
-      title="캐나다 취업 비자 정보"
-      subtitle="비자 종류별 상세 정보와 신청 절차를 확인하세요"
-      tabs={navigationTabs}
-      breadcrumbs={breadcrumbs}
-    >
-      <Stack spacing={4}>
-        <Grid container spacing={3}>
-          {visaTypes.map((visa, index) => (
-            <Grid item xs={12} key={index}>
-              <InfoCard
-                title={visa.title}
-                subtitle={visa.description}
-                status={visa.status as 'info' | 'warning' | 'success'}
-                icon={<Flight />}
-              >
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
-                    <List dense>
-                      {visa.requirements.map((req, idx) => (
-                        <ListItem key={idx}>
-                          <ListItemIcon>
-                            <CheckCircle color="success" fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary={req} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Stack spacing={2}>
-                      <Box>
-                        <Chip
-                          label={`처리 기간: ${visa.processingTime}`}
-                          color="primary"
-                          variant="outlined"
-                        />
-                      </Box>
-                      <Box>
-                        <Chip
-                          label={`비용: ${visa.cost}`}
-                          color="primary"
-                          variant="outlined"
-                        />
-                      </Box>
-                    </Stack>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        bgcolor: 'background.default',
-                        borderRadius: 2,
-                      }}
-                    >
-                      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
-                        <Warning color="warning" />
-                        <ListItemText primary="주의사항" />
-                      </Stack>
-                      <List dense>
-                        {visa.notes.map((note, idx) => (
-                          <ListItem key={idx}>
-                            <ListItemText
-                              primary={note}
-                              primaryTypographyProps={{
-                                variant: 'body2',
-                                color: 'text.secondary',
-                              }}
+      <PageLayout
+          title="캐나다 취업 비자 정보"
+          subtitle="비자 종류별 상세 정보와 신청 절차를 확인하세요"
+          tabs={navigationTabs}
+          breadcrumbs={breadcrumbs}
+      >
+        <Stack spacing={4}>
+          <Grid container spacing={3}>
+            {visaTypes.map((visa, index) => (
+                <Grid item xs={12} key={index}>
+                  <InfoCard
+                      title={visa.title}
+                      subtitle={visa.description}
+                      status={visa.status as 'info' | 'warning' | 'success'}
+                      icon={<Flight />}
+                  >
+                    <Grid container spacing={3}>
+                      <Grid item xs={12} md={6}>
+                        <List dense>
+                          {visa.requirements.map((req, idx) => (
+                              <ListItem key={idx}>
+                                <ListItemIcon>
+                                  <CheckCircle color="success" fontSize="small" />
+                                </ListItemIcon>
+                                <ListItemText primary={req} />
+                              </ListItem>
+                          ))}
+                        </List>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <Stack spacing={2}>
+                          <Box>
+                            <Chip
+                                label={`처리 기간: ${visa.processingTime}`}
+                                color="primary"
+                                variant="outlined"
                             />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
-                  </Grid>
+                          </Box>
+                          <Box>
+                            <Chip
+                                label={`비용: ${visa.cost}`}
+                                color="primary"
+                                variant="outlined"
+                            />
+                          </Box>
+                        </Stack>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box
+                            sx={{
+                              p: 2,
+                              bgcolor: 'background.default',
+                              borderRadius: 2,
+                            }}
+                        >
+                          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+                            <Warning color="warning" />
+                            <ListItemText primary="주의사항" />
+                          </Stack>
+                          <List dense>
+                            {visa.notes.map((note, idx) => (
+                                <ListItem key={idx}>
+                                  <ListItemText
+                                      primary={note}
+                                      primaryTypographyProps={{
+                                        variant: 'body2',
+                                        color: 'text.secondary',
+                                      }}
+                                  />
+                                </ListItem>
+                            ))}
+                          </List>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </InfoCard>
                 </Grid>
-              </InfoCard>
-            </Grid>
-          ))}
-        </Grid>
+            ))}
+          </Grid>
 
-        <Box
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            border: 1,
-            borderColor: 'divider',
-            bgcolor: 'background.default',
-          }}
-        >
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Warning color="info" />
-            <ListItemText
-              primary="비자 정보는 정기적으로 업데이트되며, 실제 정책과 차이가 있을 수 있습니다. 정확한 정보는 캐나다 대사관 또는 이민국 웹사이트를 참고해주세요."
-              primaryTypographyProps={{
-                variant: 'body2',
-                color: 'text.secondary',
+          <Box
+              sx={{
+                p: 3,
+                borderRadius: 2,
+                border: 1,
+                borderColor: 'divider',
+                bgcolor: 'background.default',
               }}
-            />
-          </Stack>
-        </Box>
-      </Stack>
-    </PageLayout>
+          >
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Warning color="info" />
+              <ListItemText
+                  primary="비자 정보는 정기적으로 업데이트되며, 실제 정책과 차이가 있을 수 있습니다. 정확한 정보는 캐나다 대사관 또는 이민국 웹사이트를 참고해주세요."
+                  primaryTypographyProps={{
+                    variant: 'body2',
+                    color: 'text.secondary',
+                  }}
+              />
+            </Stack>
+          </Box>
+        </Stack>
+      </PageLayout>
   );
 }

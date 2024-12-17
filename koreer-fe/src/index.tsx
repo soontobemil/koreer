@@ -17,15 +17,7 @@ import {NotFoundPage} from "./components/common/NotFoundPage";
 import {Tips} from "./components/community/Tips";
 import {TipsPosting} from "./components/community/TipsPosting";
 import {Success} from "./components/common/Success";
-import {EmploymentInfo} from "./components/employment/EmploymentInfo";
-import {USAVisaInfo} from "./components/visa/USAVisaInfo";
-import {CanadaVisaInfo} from "./components/visa/CanadaVisaInfo";
-import {USASalaryInfo} from "./components/salary/USASalaryInfo";
-import {CanadaSalaryInfo} from "./components/salary/CanadaSalaryInfo";
-import {InterviewGuide} from "./components/employment/InterviewGuide";
-import {USALifeInfo} from "./components/life/USALifeInfo";
-import {CanadaLifeInfo} from "./components/life/CanadaLifeInfo";
-import {WorkPermit} from "./components/employment/WorkPermit";
+import {CommunityRegistration} from "./components/community/CommunityRegistration";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -35,26 +27,11 @@ root.render(
         <Provider store={store}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<App/>}>
-                        <Route path="" element={<Main/>}/>
-                        <Route path="company-information" element={<CompanyInformation/>}/>
-                        <Route path="employment-info" element={<EmploymentInfo/>}/>
-                        <Route path="visa-info">
-                            <Route path="usa" element={<USAVisaInfo/>}/>
-                            <Route path="canada" element={<CanadaVisaInfo/>}/>
-                        </Route>
-                        <Route path="salary-info">
-                            <Route path="usa" element={<USASalaryInfo/>}/>
-                            <Route path="canada" element={<CanadaSalaryInfo/>}/>
-                        </Route>
-                        <Route path="life-info">
-                            <Route path="usa" element={<USALifeInfo/>}/>
-                            <Route path="canada" element={<CanadaLifeInfo/>}/>
-                        </Route>
-                        <Route path="work-permit" element={<WorkPermit/>}/>
-                        <Route path="interview-guide" element={<InterviewGuide/>}/>
-                        <Route path="community" element={<Community/>}/>
-                        {/*<Route path="tips" element={<Tips/>}/>*/}
+                    <Route path="/" element={<App />}>
+                        <Route path="" element={<Main />} />
+                        <Route path="company-information" element={<CompanyInformation />} />
+                        <Route path="community" element={<Community />} />
+                        <Route path="community/post" element={<CommunityRegistration />} />
                         <Route path="tips/posting" element={<TipsPosting/>}/>
                         <Route path="about-us" element={<AboutUs/>}/>
                         <Route path="contact" element={<Contact/>}/>
@@ -63,10 +40,14 @@ root.render(
                         <Route path="success" element={<Success/>}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
+
                 </Routes>
             </BrowserRouter>
         </Provider>
     </React.StrictMode>
 );
 
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

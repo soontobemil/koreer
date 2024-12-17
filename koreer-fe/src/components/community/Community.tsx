@@ -1,8 +1,8 @@
 import style from "../../assets/scss/sub/community.module.scss"
 import {CommunityContents} from "./CommunityContents";
 import {CommunityCategory} from "./CommunityCategory";
-import {CommunityType} from "../../types/companyInformation";
 import {Outlet} from "react-router-dom";
+import {CommunityType} from "../../types/community";
 
 export function Community() {
 

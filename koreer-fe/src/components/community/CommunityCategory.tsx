@@ -1,6 +1,6 @@
-import {CommunityType} from "../../types/companyInformation";
 import style from "../../assets/scss/sub/community.module.scss";
 import {useNavigate} from "react-router-dom";
+import {CommunityType} from "../../types/community";
 
 interface Args {
     type: CommunityType;

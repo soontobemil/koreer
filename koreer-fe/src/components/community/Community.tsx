@@ -3,10 +3,18 @@ import {CommunityContents} from "./CommunityContents";
 import {CommunityCategory} from "./CommunityCategory";
 import {Outlet} from "react-router-dom";
 import {CommunityType} from "../../types/community";
+import {useState} from "react";
 
 export function Community() {
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPage, setTotalPage] = useState(1)
 
+    const handleNextPage = () =>{
+        if (currentPage < totalPage) {
+            setCurrentPage((prev) => prev +1);
+        }
+    }
     return (
         <>
             <Outlet/>
@@ -20,7 +28,7 @@ export function Community() {
 
                 <div className={style.contents}>
                     {/*  정렬, 카테고리  */}
-                    <CommunityCategory type={CommunityType.COMMUNITY} />
+                    <CommunityCategory type={CommunityType.COMMUNITY}/>
 
                     {/*  검색, 페이징  */}
                     <div className={style.searchAreaWrapper}>
@@ -31,12 +39,14 @@ export function Community() {
                                 placeholder={"검색어를 입력하세요."}
                             />
                         </div>
-                        <div className={style.pageArea}>
-                            1 / 3 page
+                        <div className={style.pageArea} onClick={handleNextPage}>
+                            {`${currentPage} / ${totalPage} page`}
                         </div>
                     </div>
 
-                    <CommunityContents />
+                    <CommunityContents
+                        currentPage={currentPage} setCurrentPage={setCurrentPage}
+                        totalPage={totalPage} setTotalPage={setTotalPage}/>
                 </div>
             </div>
         </>

@@ -20,12 +20,38 @@ function generateRefreshToken(user) {
 
 // 유저 정보 호출 함수
 function getUserEmail(req) {
-    const accessToken = req.cookies.accessToken;
-    console.log('req',req)
-    console.log('accessToken',accessToken)
+    try {
 
-    const decoded = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET);
-    return decoded.user_email
+        const accessToken = req.cookies?.accessToken;
+
+        if (accessToken) {
+            console.log("AccessToken from cookies:", accessToken);
+            const decoded = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET);
+            console.log("Decoded token:", decoded);
+            return decoded.user_email; // 쿠키에서 성공적으로 가져왔을 경우
+        }
+
+        // 헤더에서 Authorization 가져오기
+        const authHeader = req.headers.authorization;
+
+        if (authHeader) {
+            console.log("Authorization header:", authHeader);
+            const token = authHeader.split(" ")[1]; // Bearer 토큰 형태
+            if (token) {
+                const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+                console.log("Decoded token:", decoded);
+                return decoded.user_email; // 헤더에서 성공적으로 가져왔을 경우
+            }
+        }
+
+        // 쿠키와 헤더 모두 없으면 로그인되지 않은 상태
+        console.log("No access token found");
+        return ""; // 혹은 null 반환
+
+    } catch (error) {
+        console.error("Error verifying token:", error.message);
+        return ""; // 토큰 검증 실패시 빈 문자열 반환
+    }
 }
 
 // 로그인 라우트

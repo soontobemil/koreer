@@ -1,7 +1,6 @@
 import {useTipsGetter} from "./hooks/useTipsGetter";
 import {useEffect} from "react";
 import style from "../../assets/scss/sub/community.module.scss";
-import {CommunityContents} from "./CommunityContents";
 import {CommunityCategory} from "./CommunityCategory";
 import spinner from "../../assets/img/community/loading_spinner.gif"
 import {CommunityType} from "../../types/community";
@@ -47,7 +46,7 @@ export function Tips() {
                         </div>
                     </div>
 
-                    <CommunityContents result={tips}/>
+                    {/*<CommunityContents result={tips}/>*/}
                 </div>
             </div>
         </>

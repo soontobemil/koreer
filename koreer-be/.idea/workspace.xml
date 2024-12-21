@@ -5,11 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
+      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/postController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/postController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtos/PostDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/PostDTO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/postService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/postService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/api/PostApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/api/PostApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/community.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityRegistration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityRegistration.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Tips.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/Tips.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useTipsGetter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useTipsGetter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/visa/CanadaVisaInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/visa/CanadaVisaInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommunityGetter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommunityGetter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/slice/signInSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/slice/signInSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/slice/postSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/slice/postSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/post.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +112,10 @@
       <workItem from="1734390622633" duration="36000" />
       <workItem from="1734431583087" duration="6000" />
       <workItem from="1734431596278" duration="4675000" />
+      <workItem from="1734518271640" duration="2221000" />
+      <workItem from="1734524440539" duration="6477000" />
+      <workItem from="1734695445607" duration="429000" />
+      <workItem from="1734742750392" duration="377000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -140,5 +158,16 @@
     <MESSAGE value="add model &amp; api for career tips" />
     <MESSAGE value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
     <option name="LAST_COMMIT_MESSAGE" value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/Auth.js</url>
+          <line>29</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -12,6 +12,19 @@ export class PostApi{
             }
         });
 
-    static getPosts = () => () =>
-        MainApi.api.get(`${PostApi.url}/posts`);
+    static getPosts = (page:number) => () =>
+        MainApi.api.get(`${PostApi.url}/posts?page=${page}`,{
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+    static deletePost = (postingIdx:number) => () =>
+        MainApi.api.delete(`${PostApi.url}/post/${postingIdx}/delete`,{
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 }

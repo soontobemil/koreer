@@ -13,5 +13,6 @@ export interface PostsDTO{
     user_email: string,
     created_at: string,
     updated_at: string,
-    is_owner: boolean
+    is_owner: boolean;
+    category: CommunityCategory;
 }

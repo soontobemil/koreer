@@ -41,9 +41,7 @@ export function CommunityRegistration() {
             } catch (e) {
                 console.log('error message : ', e)
             }
-
         }
-
     }, [title, content, category]);
 
     return (

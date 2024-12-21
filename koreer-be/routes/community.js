@@ -9,7 +9,7 @@ var authMiddleware = require('../src/middlewares/authMiddleware');
 router.post('/post', authMiddleware, postController.createPost);
 router.get('/post/:id', postController.getPostById);
 router.post('/post/:id/modify', authMiddleware, postController.updatePost);
-router.post('/post/:id/delete', authMiddleware, postController.deletePost);
+router.delete('/post/:id/delete', authMiddleware, postController.deletePost);
 // GET /posts?page=1&limit=10
 router.get('/posts', postController.getPosts);
 

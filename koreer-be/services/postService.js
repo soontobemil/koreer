@@ -27,10 +27,11 @@ class PostService {
         return new PostResponseDTO(post);
     }
 
-    async getPosts(page = 1, limit = 10, currentUserEmail) {
+    async getPosts(page = 1, limit = 10, req) {
         try {
             // 페이지네이션 계산
             const offset = (page - 1) * limit;
+            const currentUserEmail = getUserEmail(req)
 
             // 레포지토리에서 데이터 가져오기
             const { rows: posts, count: total } = await PostRepository.getPostsWithPagination(offset, limit);

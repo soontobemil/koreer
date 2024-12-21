@@ -61,6 +61,7 @@ jobs:
 #            yarn install --network-timeout 1000000 --prefer-offline
 #          "
       - name: Build
+        working-directory: ./koreer-fe
         run: |
           yarn install
           yarn build

@@ -19,7 +19,7 @@
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
     "debug": "~2.6.9",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "expres": "^0.0.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",

@@ -1,180 +1,123 @@
 import style from "../../assets/scss/sub/community.module.scss"
-import {PageResponseDTO} from "../../slice/common";
-import {TipsResponseDTO} from "../../slice/tips";
-import {convertTipCategory, timeAgo} from "../../util/etcUtil";
+import {PageResponseDTO} from "@/slice/common";
+import {useCommunityGetter} from "./hooks/useCommunityGetter";
+import {useEffect, useRef, useState} from "react";
 
 interface Args {
-    result?: PageResponseDTO
+    result?: PageResponseDTO;
+    currentPage: number;
+    setCurrentPage: (_: number) => void;
+    totalPage: number;
+    setTotalPage: (_: number) => void;
 }
 
-export function CommunityContents({result}: Args) {
+export function CommunityContents(
+    {result, currentPage, setCurrentPage, totalPage, setTotalPage}: Args) {
 
-    const communityContents = [
-        {
-            name: 'YS',
-            description: '노드로 5분만에 개발부터 배포하는 방법.',
-            time: '11분 전',
-            nation: 'kor',
-            category: '기술, 취업, 이직',
-            hashTag: '#JAVA',
-        },
-        {
-            name: 'JAY',
-            description: 'How I Successfully Found a Job Abroad',
-            time: '2시간 전',
-            nation: 'canada',
-            category: '기술, 취업, 이직',
-            hashTag: '#CANADA',
-        },
-        {
-            name: 'chhong',
-            description: '캐나다에서 할 수 있는 부업 추천 top 3',
-            time: '1시간 전',
-            nation: 'kor',
-            category: '사는 이야기',
-            hashTag: '#JOB',
-        },
-        {
-            name: 'reols',
-            description: '이력서 쓰는것부터 쉽지않네요 ㅋㅋㅋ',
-            time: '2시간 전',
-            nation: 'usa',
-            category: '사는 이야기',
-            hashTag: '#MONEY',
-        },
-        {
-            name: '문보스',
-            description: '해외T.M회사에서 직원 모집합니다.월 1000+@보장!!',
-            time: '4시간 전',
-            nation: 'japan',
-            category: '기술, 취업, 이직',
-            hashTag: '',
-        },
-        {
-            name: '자바킬러',
-            description: '엔비디아가 떡락하네요',
-            time: '6시간 전',
-            nation: 'kor',
-            category: '사는 이야기',
-            hashTag: '',
-        },
-        {
-            name: 'leenKim11',
-            description: '유럽 여행기 EP2',
-            time: '약 1일 전',
-            nation: 'canada',
-            category: '사는 이야기',
-            hashTag: '',
-        },
-        {
-            name: 'helloworld',
-            description: '사이드 팀원 1분 안드로이드 개발자분 구해요ㅛ',
-            time: '약 1일 전',
-            nation: 'kor',
-            category: '모임, 스터디',
-            hashTag: '#Kotlin',
-        },
+    /**
+     todo
+     dto 필요한 값 추가 ex) category, nation등등
+     배포 다시 체크
+     유효성 검증 로직 추가
+     */
 
-    ];
-    const convertResult: TipsResponseDTO[] = result?.data.map((data: TipsResponseDTO) => {
-        return {
-            ...data, // 기존 데이터 복사
-            created_at: timeAgo(data.created_at), // created_at 값 업데이트
-            category: convertTipCategory(data.category)
+    const {getCompanyInfo, posts, deletePost} = useCommunityGetter();
+    const [visibleModalIndex, setVisibleModalIndex] = useState(null);
+    const modalRef = useRef<HTMLDivElement>(null);
+
+
+    const handleModifyClick = (index: any) => {
+        setVisibleModalIndex((prev) => (prev === index ? null : index)); // 모달 토글
+    };
+
+    const handleEdit = () => {
+        alert("수정하기 클릭됨");
+        setVisibleModalIndex(null);
+    };
+
+    const handleDelete = (idx: number) => {
+        if (window.confirm("작성하신 게시글을 삭제하시겠습니까?")) {
+            deletePost(idx).then(() =>{
+                alert('삭제가 완료되었습니다.');
+                window.location.reload();
+            });
+        }
+        setVisibleModalIndex(null);
+    };
+
+    useEffect(() => {
+        getCompanyInfo(currentPage).then();
+    }, [currentPage]);
+
+    // 모달 외부 클릭 감지 로직
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                setVisibleModalIndex(null); // 모달 닫기
+            }
         };
-    });
 
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (posts) {
+            setCurrentPage(posts.meta.currentPage);
+            setTotalPage(posts.meta.totalPages)
+        }
+    }, [getCompanyInfo, posts]);
 
     return (
         <>
-            <div className={style.communityContentWrapper}>
-                {convertResult ? (
-                    <>
-                        {convertResult && convertResult.map((data: TipsResponseDTO) => (
-                            <div className={style.communityContent} key={data.id}>
-
-                                {/*  커뮤니티 헤더 영역  */}
-                                <div className={style.contentHeaderWrapper}>
-                                    <div className={`${style.countryImg} 
-                                    ${style['kor']}`}
-                                        // ${style[data.nation]}`}
-                                    ></div>
-                                    <span>
-                                        YS
-                                        {/*{data.name}*/}
-                                    </span>|
-                                    <span>{data.created_at}</span>
-                                    <div className={style.modifyImg}></div>
+            <div ref={modalRef} className={style.communityContentWrapper}>
+                {/*  커뮤니티 게시글  */}
+                {posts?.data.map((data, index) => (
+                    <div className={style.communityContent} key={index}>
+                        <div style={{position: "relative"}}>
+                            {/*  커뮤니티 헤더 영역  */}
+                            <div className={style.contentHeaderWrapper}>
+                                <div className={`${style.countryImg} ${style['kor']}`}></div>
+                                <span>{data.user_email}</span>|
+                                <span>{data.created_at}</span>
+                                {data.is_owner && (
+                                    <div className={style.modifyImg}
+                                         onClick={() => handleModifyClick(index)}/>
+                                )}
+                            </div>
+                            {(visibleModalIndex === index) && (
+                                <div className={style.modalWrapper}>
+                                    <div onClick={handleEdit}>수정하기</div>
+                                    <div onClick={() =>handleDelete(data.id)}>삭제하기</div>
                                 </div>
+                            )}
 
-                                {/*  커뮤니티 내용 영역  */}
-                                <div className={style.descriptionWrapper}>
+                            {/*  커뮤니티 내용 영역  */}
+                            <div className={style.descriptionWrapper}>
                                 <span className={style.description}>
-                                    {data.content}
+                                    {data.title}
                                 </span>
-                                </div>
+                            </div>
 
-                                {/*  커뮤니티 푸터 영역  */}
-                                <div className={style.contentFooterWrapper}>
-                                    <div className={style.contentCategoryWrapper}>
+                            {/*  커뮤니티 푸터 영역  */}
+                            <div className={style.contentFooterWrapper}>
+                                <div className={style.contentCategoryWrapper}>
                                     <span className={style.categoryText}>
                                         {data.category}
                                     </span>
-                                    </div>
-                                    <span className={style.text}>
+                                </div>
+                                <span className={style.text}>
                                     {/*{data.hashTag}*/}
                                 </span>
-                                    <span className={style.text}>
+                                <span className={style.text}>
                                     #DOCKER
                                 </span>
-                                </div>
-
                             </div>
-                        ))}
-                    </>
-                ) : (
-                    <>
-                        {/*  커뮤니티 게시글  */}
-                        {communityContents.map((data, index) => (
-                            <div className={style.communityContent} key={index}>
-
-                                {/*  커뮤니티 헤더 영역  */}
-                                <div className={style.contentHeaderWrapper}>
-                                    <div className={`${style.countryImg} ${style[data.nation]}`}></div>
-                                    <span>{data.name}</span>|
-                                    <span>{data.time}</span>
-                                    <div className={style.modifyImg}></div>
-                                </div>
-
-                                {/*  커뮤니티 내용 영역  */}
-                                <div className={style.descriptionWrapper}>
-                                <span className={style.description}>
-                                    {data.description}
-                                </span>
-                                </div>
-
-                                {/*  커뮤니티 푸터 영역  */}
-                                <div className={style.contentFooterWrapper}>
-                                    <div className={style.contentCategoryWrapper}>
-                                    <span className={style.categoryText}>
-                                        {data.category}
-                                    </span>
-                                    </div>
-                                    <span className={style.text}>
-                                    {data.hashTag}
-                                </span>
-                                    <span className={style.text}>
-                                    #DOCKER
-                                </span>
-                                </div>
-
-                            </div>
-                        ))}
-                    </>
-                )
-                }
-
-
+                        </div>
+                    </div>
+                ))}
             </div>
 
         </>

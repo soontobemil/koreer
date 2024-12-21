@@ -26,6 +26,7 @@ import {InterviewGuide} from "./components/employment/InterviewGuide";
 import {USALifeInfo} from "./components/life/USALifeInfo";
 import {CanadaLifeInfo} from "./components/life/CanadaLifeInfo";
 import {WorkPermit} from "./components/employment/WorkPermit";
+import {CommunityRegistration} from "./components/community/CommunityRegistration";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -53,7 +54,8 @@ root.render(
                         </Route>
                         <Route path="work-permit" element={<WorkPermit/>}/>
                         <Route path="interview-guide" element={<InterviewGuide/>}/>
-                        <Route path="community" element={<Community/>}/>
+                        <Route path="community" element={<Community/>} />
+                        <Route path="community/post" element={<CommunityRegistration />} />
                         <Route path="tips" element={<Tips/>}/>
                         <Route path="tips/posting" element={<TipsPosting/>}/>
                         <Route path="about-us" element={<AboutUs/>}/>

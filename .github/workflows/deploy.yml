@@ -60,7 +60,7 @@ jobs:
             cd /koreer/koreer-fe && yarn cache clean &&
             yarn install --network-timeout 1000000 --prefer-offline
           "
-    
+
       - name: Build
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 \
@@ -68,8 +68,8 @@ jobs:
             cd /koreer/koreer-fe && 
             yarn build --max-workers=4 --progress
           "
-#        env:
-#          CI: 'false'
+      #        env:
+      #          CI: 'false'
 
       - name: Install&Build Backend
         run: |

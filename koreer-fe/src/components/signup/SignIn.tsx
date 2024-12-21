@@ -83,6 +83,13 @@ export function SignIn() {
     }
   };
 
+  const handleGoogleLogin = () => {
+      const redirectUri = `${process.env.REACT_APP_BASE_URL}/auth/google/callback`;
+      const googleClientId = '969073700844-r0dbph7gk0e9aqm5868ums9jgddqgvg2.apps.googleusercontent.com'
+
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
+  }
+
   return (
     <Container component="main" maxWidth="sm">
       <motion.div
@@ -238,7 +245,7 @@ export function SignIn() {
                 <Typography variant="body2" color="text.secondary" sx={{ px: 2 }}>
                   또는
                 </Typography>
-                <Divider sx={{ flex: 1 }} />
+                <Divider sx={{ flex: 1 }} />g
               </Box>
 
               <Stack direction="row" spacing={2}>
@@ -254,6 +261,7 @@ export function SignIn() {
                     },
                     transition: 'all 0.2s',
                   }}
+                  onClick={handleGoogleLogin}
                 >
                   Google로 로그인
                 </Button>

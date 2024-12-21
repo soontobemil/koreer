@@ -1,40 +1,33 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useCookieFunctions } from './hooks/useCookieFunctions';
-import { setAuthUser } from '../../slice/signInSlice';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from "jwt-decode";
+import {useCallback} from "react";
+import {useCookies} from "react-cookie";
 
-interface AuthProviderProps {
-  children: React.ReactNode;
+// eslint-disable-next-line
+function getExpiresFromToken(token: string) {
+    const { exp } = jwtDecode(token) as { exp: number };
+    return new Date(exp * 1000).toUTCString();
 }
 
-interface DecodedToken {
-  user_email: string;
-  username: string;
-  exp: number;
-}
+export function AuthProvider() {
 
-export function AuthProvider({ children }: AuthProviderProps) {
-  const dispatch = useDispatch();
-  const { getCookie } = useCookieFunctions();
+    const [, setCookie, ] = useCookies(['accessToken', 'refreshToken']);
 
-  useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    if (accessToken) {
-      try {
-        const decoded = jwtDecode(accessToken) as DecodedToken;
-        const currentTime = Date.now() / 1000;
+    const setAccessToken = useCallback(
+        (accessToken: string) => {
+            const futureDate = new Date();
 
-        if (decoded.exp > currentTime) {
-          dispatch(setAuthUser({
-            user_email: decoded.user_email,
-          }));
-        }
-      } catch (error) {
-        console.error('Token decode error:', error);
-      }
+            // 30 * 24 * 60 * 60 * 1000 = 30일짜리
+            futureDate.setTime(futureDate.getTime() + (60 * 60 * 1000)); // 1시간
+            setCookie('accessToken', accessToken, {
+                path: '/',
+                expires: futureDate,
+                // domain: '/'
+            });
+        },
+        [setCookie]
+    );
+
+    return{
+        setAccessToken
     }
-  }, [dispatch, getCookie]);
-
-  return <>{children}</>;
 }

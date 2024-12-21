@@ -17,7 +17,12 @@ export interface CompanyInformationDTO {
     companyResponsibilities: string;
 }
 
-export enum CommunityType {
-    COMMUNITY = "COMMUNITY",
-    TIPS = "TIPS",
+// export enum CommunityType {
+//     COMMUNITY = "COMMUNITY",
+//     TIPS = "TIPS",
+// }
+
+// eslint-disable-next-line
+enum ApiCategory{
+    ADZUNA = "ADZUNA",
 }

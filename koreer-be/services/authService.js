@@ -5,6 +5,7 @@ const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
 const passport = require('passport');
 const userService = require('../services/userService');
+const {generateAccessToken, generateRefreshToken} = require("../src/Auth");
 
 
 async function register(data) {
@@ -13,11 +14,12 @@ async function register(data) {
         const req = {user_email: data.user_email, username: data.username, password: hashedPassword};
         const result = await userService.userDuplCheck(req.user_email);
         let rsltData = {};
+
         if (result) {
-            const user = await userService.createUser(req);
-            rsltData.data = user;
+            rsltData = await userService.createUser(req);
+        } else {
+            rsltData = userService.getUserByEmail(data.user_email)
         }
-        rsltData.result = result;
         return rsltData;
 
     } catch (error) {
@@ -43,7 +45,7 @@ async function oauthRegister(data) {
             const user = await userService.createUser(req);
             rsltData.data = user;
 
-        // 소셜로그인 가입된 경우
+            // 소셜로그인 가입된 경우
         } else {
             rsltData.data = await userService.getUserByEmail(data.user_email)
         }
@@ -51,11 +53,11 @@ async function oauthRegister(data) {
         const userPayload = { id: rsltData.data.id, user_email: rsltData.data.user_email };
 
         // Create Access Token / Refresh Token
-        const accessToken = createAccessToken(userPayload);
-        const refreshToken = createRefreshToken(userPayload);
+        const accessToken = generateAccessToken(userPayload);
+        const refreshToken = generateRefreshToken(userPayload);
 
         return {loginInfo:userPayload,accessToken:accessToken,refreshToken:refreshToken};
-        
+
     } catch (error) {
         console.log(error);
         throw new Error('Error Occured while registering User');
@@ -80,11 +82,11 @@ async function login(userinfo){
             throw new Error('Invalid password');
         }
 
-        const userPayload = { id: user.id, user_email: user.user_email };
+        const userPayload = { id: user.id, username: user.name, user_email: user.user_email };
 
         // Create Access Token / Refresh Token
-        const accessToken = createAccessToken(userPayload);
-        const refreshToken = createRefreshToken(userPayload);
+        const accessToken = generateAccessToken(userPayload);
+        const refreshToken = generateRefreshToken(userPayload);
 
         // accessToken은 그냥 리턴, refresh token 은 쿠키에 저장, accessToken 만료시 refreshToken으로 갱신
         return {loginInfo:userPayload,accessToken:accessToken,refreshToken:refreshToken};
@@ -92,7 +94,7 @@ async function login(userinfo){
         console.log(error);
         throw new Error('Login Error');
     }
-    
+
 }
 
 async function refreshAccessToken(user) {
@@ -103,8 +105,7 @@ async function refreshAccessToken(user) {
         }
 
         // New Access Token Create
-        const accessToken = createAccessToken({ id: user.id, user_email: user.user_email });
-        return accessToken;
+        return generateRefreshToken({ id: user.id, username:user.username ,user_email: user.user_email });
     });
 }
 
@@ -126,24 +127,24 @@ async function emailVefify(token) {
     try {
         // JWT 토큰 검증
         const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-    
+
         const email = decoded.email;
-    
+
         // user db select (비동기 작업이므로 await 사용)
         const user = await userService.getUserByEmail(email);
-    
+
         // 사용자가 존재하지 않거나 이미 인증된 경우
         if (!user) {
-          return { code: 400, message: '존재하지 않는 사용자입니다.' };
+            return { code: 400, message: '존재하지 않는 사용자입니다.' };
         }
-    
+
         if (user.is_email_verified === 'Y') {
-          return { code: 400, message: '이미 인증된 이메일입니다.' };
+            return { code: 400, message: '이미 인증된 이메일입니다.' };
         }
-    
+
         // 이메일 인증 상태 db 업데이트 (비동기 작업이므로 await 사용)
         const result = await userService.updateEmailVerifyStatus(email);
-    
+
         return { code: 200, message: '이메일 인증이 완료되었습니다!' };
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
@@ -158,7 +159,7 @@ async function sendEmail(email) {
         //email = 'koreerkorea@gmail.com';
         const token = createEmailVerifyToken(email);
 
-        const link = `http://localhost:3000/auth/verify-email/${token}`;
+        const link = `${process.env.CLIENT_URL}/auth/verify-email/${token}`;
 
         // OAuth2 클라이언트 설정
         const oauth2Client = new OAuth2(
@@ -206,7 +207,7 @@ async function sendEmail(email) {
     } catch (error) {
         console.error('이메일 전송 오류2:', error);
     }
-    
+
 }
 
 async function googleLogin(data) {
@@ -219,7 +220,7 @@ async function googleLogin(data) {
             email: profile.emails[0].value,
         };
         console.log(profile);
-        
+
         // 기존 사용자인지 체크
         const result = await userService.userDuplCheck(data.email);
         let rsltData = {loginInfo:data.email,accessToken:data.accessToken,refreshToken:data.refreshToken};
@@ -230,14 +231,14 @@ async function googleLogin(data) {
         const user2 = await userService.createUser(data.email);
         return rsltData;
         */
-       // 사용자가 구글 로그인 버튼을 눌렀을 때
-       passport.authenticate('google', { scope: ['profile', 'email'] });
-  
+        // 사용자가 구글 로그인 버튼을 눌렀을 때
+        passport.authenticate('google', { scope: ['profile', 'email'] });
+
 
     } catch (error) {
         console.error('구글로그인화면이동:', error);
     }
-   
+
 }
 
 async function googleCallBack() {
@@ -247,8 +248,6 @@ async function googleCallBack() {
 module.exports = {
     register,
     oauthRegister,
-    createAccessToken,
-    createRefreshToken,
     login,
     refreshAccessToken,
     sendEmail,

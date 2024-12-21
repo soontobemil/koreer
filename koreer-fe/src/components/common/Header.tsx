@@ -138,6 +138,19 @@ const menuItems: MenuItem[] = [
   }
 ];
 
+export enum SubMenu {
+  COMMUNITY = "커뮤니티",
+  SHARE_YOUR_TIPS = "여러분의 팁을 공유해주세요!",
+  CANADA = "캐나다",
+  USA = "미국",
+  BIG_TECH = "Big Tech 빅테크",
+  POSITION_SALARY = "직군별 연봉",
+  INTERVIEW_PROCESS = "인터뷰 과정",
+  JOB_LISTINGS = "채용 공고",
+  VISA_INFO = "비자 정보",
+  CAREER_TIPS = "취업 준비 팁",
+}
+
 export function Header() {
   const [headerStatus, setHeaderStatus] = useState(HeaderStatus.NONE);
   const [isLogin, setIsLogin] = useState(false);

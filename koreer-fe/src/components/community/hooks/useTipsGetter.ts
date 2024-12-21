@@ -8,18 +8,21 @@ export function useTipsGetter() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const dispatch = useDispatch<any>();
+    // @ts-ignore
     const getTip = useCallback(async () => {
         try {
             const result: ResponseDTO = await dispatch(getTips()).unwrap();
+
             setTips(result.result)
             return result;
         } catch (e) {
-            console.error('Error getting tips:', e);
-            return null;
+            console.log('error message : ', e)
         }finally {
             setIsLoaded(true)
         }
-    }, [dispatch]);
+
+        // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         if (!tips) {

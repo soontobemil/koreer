@@ -1,9 +1,10 @@
 // dtos/post.dto.js
 class CreatePostDTO {
-    constructor({ title, content, user_email }) {
+    constructor({ title, content, user_email, category }) {
         this.title = title;
         this.content = content;
         this.user_email = user_email;
+        this.category = category;
     }
 }
 
@@ -16,6 +17,7 @@ class PostResponseDTO {
         this.created_at = post.created_at;
         this.updated_at = post.updated_at;
         this.is_owner = post.is_owner;
+        this.category = post.category
     }
 }
 

@@ -64,11 +64,13 @@ jobs:
         working-directory: ./koreer-fe
         run: |
           yarn install
+          pwd
           yarn build
 
       # 빌드 결과물만 배포
       - name: Deploy build
         run: |
+          cd koreer-fe && \
           scp -r \
           build/ \
           package.json \

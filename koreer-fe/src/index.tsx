@@ -27,6 +27,7 @@ import {USALifeInfo} from "./components/life/USALifeInfo";
 import {CanadaLifeInfo} from "./components/life/CanadaLifeInfo";
 import {WorkPermit} from "./components/employment/WorkPermit";
 import {CommunityRegistration} from "./components/community/CommunityRegistration";
+import {Seminar} from "./components/seminar/Seminar";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -38,6 +39,7 @@ root.render(
                 <Routes>
                     <Route path="/" element={<App/>}>
                         <Route path="" element={<Main/>}/>
+                        <Route path="seminar-info" element={<Seminar/>}/>
                         <Route path="company-information" element={<CompanyInformation/>}/>
                         <Route path="employment-info" element={<EmploymentInfo/>}/>
                         <Route path="visa-info">

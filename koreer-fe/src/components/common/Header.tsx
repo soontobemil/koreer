@@ -50,6 +50,7 @@ export enum HeaderStatus {
   COMMUNITY = "COMMUNITY",
   CONTACT = "CONTACT",
   NONE = "NONE",
+  SEMINAR_INFO = "SEMINAR_INFO",
 }
 
 interface BaseMenuItem {
@@ -72,6 +73,12 @@ interface MenuItem extends BaseMenuItem {
 const MENU_CLOSE_DELAY = 300; // milliseconds
 
 const menuItems: MenuItem[] = [
+  {
+    label: '세미나 정보',
+    icon: <School />,
+    path: '/seminar-info',
+    status: HeaderStatus.SEMINAR_INFO,
+  },
   {
     label: '취업 정보',
     icon: <WorkOutline />,

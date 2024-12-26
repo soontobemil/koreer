@@ -1,6 +1,6 @@
 import {CommunityCategory} from "./community";
 
-export interface CreatePostDTO{
+export interface CommunitySubmitDTO {
     title: string;
     content: string;
     category: CommunityCategory;

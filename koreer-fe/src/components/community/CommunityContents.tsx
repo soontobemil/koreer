@@ -2,6 +2,8 @@ import style from "../../assets/scss/sub/community.module.scss"
 import {PageResponseDTO} from "@/slice/common";
 import {useCommunityGetter} from "./hooks/useCommunityGetter";
 import {useEffect, useRef, useState} from "react";
+import {CommunityFormProps} from "@/types/community";
+import {useNavigate} from "react-router-dom";
 
 interface Args {
     result?: PageResponseDTO;
@@ -21,18 +23,25 @@ export function CommunityContents(
      유효성 검증 로직 추가
      */
 
-    const {getCompanyInfo, posts, deletePost} = useCommunityGetter();
+    const {getCompanyInfo, posts, deletePost, getCommunityById, post} = useCommunityGetter();
     const [visibleModalIndex, setVisibleModalIndex] = useState(null);
     const modalRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate()
 
 
     const handleModifyClick = (index: any) => {
         setVisibleModalIndex((prev) => (prev === index ? null : index)); // 모달 토글
     };
 
-    const handleEdit = () => {
-        alert("수정하기 클릭됨");
+    const handleEdit = (idx: number) => {
         setVisibleModalIndex(null);
+
+        getCommunityById(idx).then((result) =>{
+            const props:CommunityFormProps =
+                {mode:'edit', postId: idx, initialData: result}
+            navigate('/community/post', { state: { ...props } });
+
+        });
     };
 
     const handleDelete = (idx: number) => {
@@ -89,7 +98,7 @@ export function CommunityContents(
                             </div>
                             {(visibleModalIndex === index) && (
                                 <div className={style.modalWrapper}>
-                                    <div onClick={handleEdit}>수정하기</div>
+                                    <div onClick={() => handleEdit(data.id)}>수정하기</div>
                                     <div onClick={() =>handleDelete(data.id)}>삭제하기</div>
                                 </div>
                             )}

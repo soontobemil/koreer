@@ -1,17 +1,31 @@
 import {useDispatch} from "react-redux";
 import {useCallback, useState} from "react";
-import {deletePostAsync, getPostsAsync} from "../../../slice/postSlice";
+import {deletePostAsync, getPostAsync, getPostsAsync} from "../../../slice/postSlice";
 import {PageResponse} from "@/types/common";
 import {PostsDTO} from "@/types/post";
 
 export function useCommunityGetter() {
     const dispatch = useDispatch<any>();
     const [posts, setPosts] = useState<PageResponse<PostsDTO>>();
+    const [post, setPost] = useState<PostsDTO>();
 
     const getCompanyInfo = useCallback(async (page:number) => {
             try {
                 const result: PageResponse<PostsDTO> = await dispatch(getPostsAsync(page)).unwrap();
                 setPosts(result)
+            } catch (e){
+                console.log(e)
+            }
+        },
+        [dispatch]
+    );
+
+    // @ts-ignore
+    const getCommunityById = useCallback(async (idx:number) => {
+            try {
+                const result: PostsDTO = await dispatch(getPostAsync(idx)).unwrap();
+                setPost(result)
+                return result
             } catch (e){
                 console.log(e)
             }
@@ -32,6 +46,7 @@ export function useCommunityGetter() {
     );
     return ({
         getCompanyInfo, posts, deletePost,
+        getCommunityById, post
 
     });
 }

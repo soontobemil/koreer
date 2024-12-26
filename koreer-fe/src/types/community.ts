@@ -14,3 +14,13 @@ export enum CommunityType {
     COMMUNITY = "COMMUNITY",
     TIPS = "TIPS",
 }
+
+export interface CommunityFormProps {
+    mode: 'create' | 'edit';
+    initialData?: {
+        title: string;
+        content: string;
+        category: CommunityCategory;
+    };
+    postId?: number;
+}

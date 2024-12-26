@@ -1,7 +1,7 @@
 import style from "../../assets/scss/sub/community.module.scss";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
-import {CommunityType} from "../../types/community";
+import {CommunityFormProps, CommunityType} from "../../types/community";
 
 interface Args {
     type: CommunityType;
@@ -34,7 +34,9 @@ export function CommunityCategory({type}: Args) {
             alert('로그인 후 시도해주세요');
             return false;
         }
-        navigate('/community/post')
+        const props:CommunityFormProps =
+            {mode:'create'}
+        navigate('/community/post', { state: { ...props } });
     };
 
     return (

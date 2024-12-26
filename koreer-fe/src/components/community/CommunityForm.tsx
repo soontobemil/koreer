@@ -1,18 +1,34 @@
 import style from "../../assets/scss/sub/community.module.scss"
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useCallback, useState} from "react";
 import {CommunityCategory} from "../../types/community";
 import {useCommunityValidator} from "./hooks/useCommunityValidator";
 import {useDispatch} from "react-redux";
-import {CreatePostDTO} from "@/types/post";
-import {createPostAsync} from "../../slice/postSlice";
+import {createPostAsync, updatePostAsync} from "../../slice/postSlice";
 
-export function CommunityRegistration() {
+export function CommunityForm() {
+    const location = useLocation();
+    const { mode, initialData, postId } = location.state || {};
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [category, setCategory] = useState<CommunityCategory | "">("");
+    const [title, setTitle] = useState(initialData?.title || '');
+    const [content, setContent] = useState(initialData?.content || '');
+    const [category, setCategory] = useState<CommunityCategory | "">(initialData?.category || "");
+
+    const modeText = {
+        create: {
+            title: '커뮤니티 작성하기',
+            button: '등록하기',
+            confirmMessage: '게시글을 등록하시겠습니까?',
+            successMessage: '등록이 완료됐습니다.'
+        },
+        edit: {
+            title: '게시글 수정하기',
+            button: '수정하기',
+            confirmMessage: '게시글을 수정하시겠습니까?',
+            successMessage: '수정이 완료됐습니다.'
+        }
+    };
 
     const onClickCancelHandler = () => {
         if (!window.confirm('취소하시면 작성중인 내용이 모두 사라집니다.\n정말 취소하시겠습니까?')) return ;
@@ -24,25 +40,30 @@ export function CommunityRegistration() {
     const handlePosting = useCallback(async () => {
         const isValidate = validate();
         if (!isValidate || category === "") return;
-        if (window.confirm("게시글을 등록하시겠습니까?")) {
-            const dto: CreatePostDTO = {
-                title: title,
-                content: content,
-                category: category
-            };
-            try {
-                await dispatch(
-                    createPostAsync(dto)
-                ).then(() => {
-                    alert('등록이 완료됐습니다.')
-                    navigate('/community')
-                });
 
+        // @ts-ignore
+        if (window.confirm(modeText[mode].confirmMessage)) {
+            const dto = {
+                title,
+                content,
+                category
+            };
+
+            try {
+                if (mode === 'create') {
+                    await dispatch(createPostAsync(dto));
+                } else {
+                    postId &&
+                    await dispatch(updatePostAsync({ dto, idx : postId }));
+                }
+                // @ts-ignore
+                alert(modeText[mode].successMessage);
+                navigate('/community');
             } catch (e) {
                 console.log('error message : ', e)
             }
         }
-    }, [title, content, category]);
+    }, [title, content, category, mode, postId]);
 
     return (
         <>

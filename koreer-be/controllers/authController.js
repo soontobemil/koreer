@@ -19,9 +19,9 @@ async function register(req,res) {
             password:data.password,
             is_email_verified:'N'
         });
-        if(rsltData.result) {
+        if(rsltData.dataValues) {
             // send email for verifying
-            const sendEmail = await authService.sendEmail(rsltData.data.user_email);
+            const sendEmail = await authService.sendEmail(rsltData.dataValues.user_email);
             res.status(201).json({data:rsltData.data,message:'성공적으로 등록되었습니다! 이메일을 확인해주세요.'});
         } else {
             res.status(201).json({message:'중복된 이메일입니다! 다른 이메일을 사용해주세요.'});
@@ -45,7 +45,7 @@ async function login(req, res) {
         res.json({ accessToken:result.accessToken,message:'로그인 되었습니다.'});
     } catch (error) {
         console.error('Error in controller:', error);
-        res.status(500).json({message:'로그인에 실패하였습니다.'+error.message});
+        res.status(500).json({message:'로그인에 실패하였습니다.\n'+error.message});
     }
 
 }

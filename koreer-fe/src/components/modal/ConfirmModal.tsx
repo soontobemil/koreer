@@ -14,7 +14,7 @@ export function ConfirmModal({modalClose}:Args) {
             <div className={style.confirmBackdrop}>
                 <div className={style.modalWrapper}>
                     <div className={style.textArea}>
-                        <span className={style.title}>Information</span>
+                        <span className={style.title}>가입 안내</span>
                         <span className={style.description}>회원 가입을 성공했습니다.<br/>이메일을 확인해주세요.</span>
                     </div>
 

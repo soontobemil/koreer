@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  TextField,
-  InputAdornment,
-} from '@mui/material';
-import { Email } from '@mui/icons-material';
-import { ValidateStatus } from '../../types/signup';
+import {InputAdornment, TextField,} from '@mui/material';
+import {Email} from '@mui/icons-material';
+import {ValidateStatus} from '../../types/signup';
 
 interface Args {
   id: string;
@@ -19,13 +16,12 @@ export function SignUpIdField({
   idValidate,
   setIdValidate,
 }: Args) {
-  const [dupleMessage, setDupleMessage] = React.useState('');
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setId(value);
     setIdValidate(ValidateStatus.UNFILLED);
-    setDupleMessage('');
+    setIdValidate(ValidateStatus.NONE);
   };
 
   const isError = idValidate !== ValidateStatus.NONE && id !== '';
@@ -38,7 +34,7 @@ export function SignUpIdField({
       value={id}
       onChange={handleIdChange}
       error={isError}
-      helperText={dupleMessage}
+      helperText={idValidate === ValidateStatus.NONE ? "" : "이메일을 다시 확인해주세요."}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

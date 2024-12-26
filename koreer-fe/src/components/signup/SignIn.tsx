@@ -1,4 +1,4 @@
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import {useNavigate, Link as RouterLink} from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../slice/signInSlice";
@@ -29,48 +29,51 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
+import {AuthProvider} from "../../components/common/AuthProvider";
+import {LoginResponseDTO} from "../../slice/common";
+import {useSignInValidator} from "../../components/signup/hooks/useSignInValidator";
+
+interface ErrorResponse{
+    message: string;
+}
 
 export function SignIn() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [emailValidate, setEmailValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-  const [passwordValidate, setPasswordValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-  const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const {validate, emailValidate, setEmailValidate, passwordValidate, setPasswordValidate} =
+        useSignInValidator({email,password} );
+    const {setAccessToken} = AuthProvider();
+    const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<any>();
 
-  const validate = emailValidate === ValidateStatus.NONE && passwordValidate === ValidateStatus.NONE;
+  // @ts-ignore
+    const handleLogin = useCallback(async () => {
+        const result = validate();
+        if(!result) return ;
 
-  useEffect(() => {
-    if (email.length === 0) {
-      setEmailValidate(ValidateStatus.UNFILLED);
-    }
-    if (password.length === 0) {
-      setPasswordValidate(ValidateStatus.UNFILLED);
-    }
-  }, [email, password]);
+        const loginDTO:LoginDTO = {user_email: email, password: password}
+        try {
+            const result: LoginResponseDTO = await dispatch(login(loginDTO)).unwrap();
+            setAccessToken(result.accessToken)
+            navigate('/')
 
-  const handleLogin = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const loginDTO: LoginDTO = {
-        user_email: email,
-        password
-      };
-      await dispatch(login(loginDTO)).unwrap();
-      navigate('/');
-    } catch (error: any) {
-      setErrorMessage(error.message || '로그인에 실패했습니다. 다시 시도해주세요.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [dispatch, email, navigate, password]);
+            return result;
+        } catch (error: any) {
+            const convert = error as ErrorResponse;
+            const parsedMessage = JSON.parse(convert.message);
+
+            setErrorMessage(parsedMessage.message);
+        }
+        // eslint-disable-next-line
+    }, [email, password]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    setErrorMessage("")
     if (e.target.value.length > 0) {
       setEmailValidate(ValidateStatus.NONE);
     }
@@ -78,6 +81,7 @@ export function SignIn() {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+      setErrorMessage("")
     if (e.target.value.length > 0) {
       setPasswordValidate(ValidateStatus.NONE);
     }
@@ -132,7 +136,7 @@ export function SignIn() {
               component="span"
               sx={{
                 fontWeight: 700,
-                background: (theme) => 
+                background: (theme) =>
                   `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -156,7 +160,7 @@ export function SignIn() {
             </Typography>
 
             {errorMessage && (
-              <Alert severity="error" sx={{ mb: 2 }}>
+              <Alert severity="error" sx={{ mb: 2, whiteSpace:"pre-line"}}>
                 {errorMessage}
               </Alert>
             )}

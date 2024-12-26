@@ -69,17 +69,17 @@ async function login(userinfo){
     try {
         const user = await userService.getUserByEmail(userinfo.user_email);
         if (!user) {
-            throw new Error('User not found');
+            throw new Error('존재하지 않는 계정입니다. 이메일을 확인해주세요.');
         }
 
         // check email is verified
         if ( user.is_email_verified == 'N') {
-            throw new Error('Email Verification is needed!!');
+            throw new Error('이메일 인증 후 다시 시도해주세요.');
         }
 
         const isPwdValid = await bcrypt.compare(userinfo.password, user.password);
         if (!isPwdValid) {
-            throw new Error('Invalid password');
+            throw new Error('비밀번호를 확인해주세요.');
         }
 
         const userPayload = { id: user.id, username: user.name, user_email: user.user_email };
@@ -92,7 +92,7 @@ async function login(userinfo){
         return {loginInfo:userPayload,accessToken:accessToken,refreshToken:refreshToken};
     } catch (error) {
         console.log(error);
-        throw new Error('Login Error');
+        throw error
     }
 
 }
@@ -159,7 +159,7 @@ async function sendEmail(email) {
         //email = 'koreerkorea@gmail.com';
         const token = createEmailVerifyToken(email);
 
-        const link = `${process.env.CLIENT_URL}/auth/verify-email/${token}`;
+        const link = `${process.env.API_URL}/auth/verify-email/${token}`;
 
         // OAuth2 클라이언트 설정
         const oauth2Client = new OAuth2(

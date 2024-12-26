@@ -22,6 +22,7 @@ import { SignUpPasswordField } from "./SignUpPasswordField";
 import { SignUpPasswordConfirmField } from "./SignUpPasswordConfirmField";
 import { SignUpNicknameField } from "./SignUpNicknameField";
 import { SignUpNationField } from "./SignUpNationField";
+import {ConfirmModal} from "../../components/modal/ConfirmModal";
 
 export function SignUp() {
   const navigate = useNavigate();
@@ -34,14 +35,15 @@ export function SignUp() {
   const [nickName, setNickName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
-  // Validation states
-  const [idValidate, setIdValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-  const [nickNameValidate, setNickNameValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-  const [passwordValidate, setPasswordValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-  const [passwordCheckValidate, setPasswordCheckValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-
-  const { validate } = useSignUpValidator({
+  const {
+    validate,
+    idValidate, setIdValidate,
+    nickNameValidate, setNickNameValidate,
+    passwordValidate, setPasswordValidate,
+    passwordCheckValidate, setPasswordCheckValidate
+  } = useSignUpValidator({
     nation,
     id,
     nickName,
@@ -62,16 +64,17 @@ export function SignUp() {
       const isSignupAble = validate();
       if (!isSignupAble) return;
 
-      const response = await dispatch(register({
-        user_email: id,
-        username: nickName,
-        nation: nation,
-        password: password
-      } as UserPostDTO)).unwrap();
+      await dispatch(
+          register({
+            user_email: id,
+            username: nickName,
+            nation: nation,
+            password: password
+          } as UserPostDTO)
+      ).then(() => {
+        setSignUpSuccess((re) => !re)
+      });
 
-      if (response.status === 200) {
-        navigate('/signin');
-      }
     } catch (e) {
       console.error('Signup error:', e);
     }
@@ -203,6 +206,9 @@ export function SignUp() {
           </Button>
         </DialogActions>
       </Dialog>
+      {signUpSuccess && (
+          <ConfirmModal modalClose={setSignUpSuccess}/>
+      )}
     </Container>
   );
 }

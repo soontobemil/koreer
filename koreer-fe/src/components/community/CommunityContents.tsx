@@ -111,9 +111,6 @@ export function CommunityContents(
                                 <span className={style.text}>
                                     {/*{data.hashTag}*/}
                                 </span>
-                                <span className={style.text}>
-                                    #DOCKER
-                                </span>
                             </div>
                         </div>
                     </div>

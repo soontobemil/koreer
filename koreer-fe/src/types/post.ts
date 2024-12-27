@@ -1,9 +1,9 @@
-import {CommunityCategory} from "./community";
+import {CommunityCategories} from "./community";
 
 export interface CommunitySubmitDTO {
     title: string;
     content: string;
-    category: CommunityCategory;
+    category: CommunityCategories;
 }
 
 export interface PostsDTO{
@@ -14,5 +14,5 @@ export interface PostsDTO{
     created_at: string,
     updated_at: string,
     is_owner: boolean;
-    category: CommunityCategory;
+    category: CommunityCategories;
 }

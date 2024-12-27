@@ -1,13 +1,17 @@
-export enum CommunityCategory{
+export enum CommunityCategories{
+    ALL = '',
     DAILY = "DAILY",
     TECH = "TECH",
     STUDY = "STUDY",
+    INFO = "INFO",
+    NEWS = "NEWS",
+    OVERSEAS_INFORMATION = "OVERSEAS_INFORMATION",
 }
 
 export interface CommunityPostDTO{
     title: string;
     content: string;
-    category: CommunityCategory;
+    category: CommunityCategories;
 }
 
 export enum CommunityType {
@@ -20,7 +24,7 @@ export interface CommunityFormProps {
     initialData?: {
         title: string;
         content: string;
-        category: CommunityCategory;
+        category: CommunityCategories;
     };
     postId?: number;
 }

@@ -1,11 +1,11 @@
 import {useCallback, useState} from "react";
 import {ValidateStatus} from "../../../types/signup";
-import {CommunityCategory} from "@/types/community";
+import {CommunityCategories} from "@/types/community";
 
 interface Args{
     title: string;
     content: string;
-    category: CommunityCategory | "";
+    category: CommunityCategories | "";
 }
 
 export function useCommunityValidator(

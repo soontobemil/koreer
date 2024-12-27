@@ -1,13 +1,14 @@
 import {useTipsGetter} from "./hooks/useTipsGetter";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import style from "../../assets/scss/sub/community.module.scss";
 import {CommunityCategory} from "./CommunityCategory";
 import spinner from "../../assets/img/community/loading_spinner.gif"
-import {CommunityType} from "../../types/community";
+import {CommunityCategories, CommunityType} from "../../types/community";
 
 export function Tips() {
 
     const {getTip, tips, isLoaded} = useTipsGetter();
+    const [category, setCategory] = useState<CommunityCategories>(CommunityCategories.ALL)
 
     useEffect(() => {
         getTip().then();
@@ -30,7 +31,8 @@ export function Tips() {
 
                 <div className={style.contents}>
                     {/*  정렬, 카테고리  */}
-                    <CommunityCategory type={CommunityType.TIPS}/>
+                    <CommunityCategory type={CommunityType.TIPS}
+                                       categoryType={category} setCategoryType={setCategory}/>
 
                     {/*  검색, 페이징  */}
                     <div className={style.searchAreaWrapper}>

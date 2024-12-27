@@ -10,15 +10,26 @@ class PostRepository {
         return await db.Post.findOne({ where: { id } });
     }
 
-    async getPostsWithPagination(offset, limit) {
+    async getPostsWithPagination(offset, limit, type) {
         try {
+            // 기본 쿼리 조건 설정
+            let whereCondition = {};
+
+            // type 파라미터가 있으면 조건에 추가
+            if (type !== undefined && type !== null && type !== '') {
+                whereCondition.category = type;
+            }
+
           // 전체 게시글 수와 페이징 처리된 게시글 가져오기
-          const { rows, count } = await db.Post.findAndCountAll({
-            offset, // 건너뛸 데이터 수
-            limit,  // 가져올 데이터 수
-            order: [['created_at', 'DESC']], // 최신순 정렬
-          });
-          return { rows, count };
+            const { rows, count } = await db.Post.findAndCountAll({
+                where: whereCondition,
+                offset,
+                limit,
+                order: [['created_at', 'DESC']],
+                distinct: true, // 중복 제거
+            });
+
+            return { rows, count };
         } catch (error) {
           console.error('Error fetching posts with pagination:', error);
           throw new Error('Error fetching posts with pagination');

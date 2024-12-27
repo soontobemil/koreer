@@ -1,5 +1,6 @@
 import {CommunitySubmitDTO} from "@/types/post";
 import {MainApi} from "../api/MainApi";
+import {CommunityCategories} from "@/types/community";
 
 export class PostApi{
     static url = `${process.env.REACT_APP_BASE_URL}/community`;
@@ -12,8 +13,8 @@ export class PostApi{
             }
         });
 
-    static getPosts = (page:number) => () =>
-        MainApi.api.get(`${PostApi.url}/posts?page=${page}`,{
+    static getPosts = ({page, type}: { page: number, type?: CommunityCategories }) => () =>
+        MainApi.api.get(`${PostApi.url}/posts?page=${page}&type=${type}`,{
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'

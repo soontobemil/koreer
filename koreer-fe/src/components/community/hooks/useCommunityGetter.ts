@@ -3,15 +3,17 @@ import {useCallback, useState} from "react";
 import {deletePostAsync, getPostAsync, getPostsAsync} from "../../../slice/postSlice";
 import {PageResponse} from "@/types/common";
 import {PostsDTO} from "@/types/post";
+import {CommunityCategories} from "@/types/community";
 
 export function useCommunityGetter() {
     const dispatch = useDispatch<any>();
     const [posts, setPosts] = useState<PageResponse<PostsDTO>>();
     const [post, setPost] = useState<PostsDTO>();
 
-    const getCompanyInfo = useCallback(async (page:number) => {
+    const getCompanyInfo = useCallback(async ({page, type}: { page: number, type?: CommunityCategories }) => {
             try {
-                const result: PageResponse<PostsDTO> = await dispatch(getPostsAsync(page)).unwrap();
+                console.log(type)
+                const result: PageResponse<PostsDTO> = await dispatch(getPostsAsync({page, type})).unwrap();
                 setPosts(result)
             } catch (e){
                 console.log(e)

@@ -2,13 +2,14 @@ import style from "../../assets/scss/sub/community.module.scss"
 import {CommunityContents} from "./CommunityContents";
 import {CommunityCategory} from "./CommunityCategory";
 import {Outlet} from "react-router-dom";
-import {CommunityType} from "../../types/community";
+import {CommunityCategories, CommunityType} from "../../types/community";
 import {useState} from "react";
 
 export function Community() {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPage, setTotalPage] = useState(1)
+    const [category, setCategory] = useState<CommunityCategories>(CommunityCategories.ALL)
 
     const handleNextPage = () =>{
         if (currentPage < totalPage) {
@@ -28,25 +29,42 @@ export function Community() {
 
                 <div className={style.contents}>
                     {/*  정렬, 카테고리  */}
-                    <CommunityCategory type={CommunityType.COMMUNITY}/>
+                    <CommunityCategory type={CommunityType.COMMUNITY}
+                                       categoryType={category}
+                                       setCategoryType={setCategory}/>
 
                     {/*  검색, 페이징  */}
                     <div className={style.searchAreaWrapper}>
-                        <div className={style.refreshImg}/>
+                        <div
+                            className={style.refreshImg}
+                            onClick={() => {
+                                // 새로고침 애니메이션을 위한 로직
+                            }}
+                        />
                         <div className={style.searchArea}>
                             <input
                                 className={style.searchInput}
-                                placeholder={"검색어를 입력하세요."}
+                                placeholder="검색어를 입력하세요."
+                                type="text"
+                                onChange={(e) => {
+                                    // 검색 로직
+                                }}
                             />
                         </div>
-                        <div className={style.pageArea} onClick={handleNextPage}>
+                        <div
+                            className={style.pageArea}
+                            onClick={handleNextPage}
+                            title="다음 페이지로 이동"
+                        >
                             {`${currentPage} / ${totalPage} page`}
                         </div>
                     </div>
 
                     <CommunityContents
                         currentPage={currentPage} setCurrentPage={setCurrentPage}
-                        totalPage={totalPage} setTotalPage={setTotalPage}/>
+                        totalPage={totalPage} setTotalPage={setTotalPage}
+                        category={category} setCategory={setCategory}
+                    />
                 </div>
             </div>
         </>

@@ -1,7 +1,7 @@
 import style from "../../assets/scss/sub/community.module.scss"
 import {useLocation, useNavigate} from "react-router-dom";
 import {useCallback, useState} from "react";
-import {CommunityCategory} from "../../types/community";
+import {CommunityCategories} from "../../types/community";
 import {useCommunityValidator} from "./hooks/useCommunityValidator";
 import {useDispatch} from "react-redux";
 import {createPostAsync, updatePostAsync} from "../../slice/postSlice";
@@ -13,7 +13,7 @@ export function CommunityForm() {
     const navigate = useNavigate();
     const [title, setTitle] = useState(initialData?.title || '');
     const [content, setContent] = useState(initialData?.content || '');
-    const [category, setCategory] = useState<CommunityCategory | "">(initialData?.category || "");
+    const [category, setCategory] = useState<CommunityCategories | "">(initialData?.category || "");
 
     const modeText = {
         create: {
@@ -77,7 +77,7 @@ export function CommunityForm() {
                         <select
                             className={style.select}
                             value={category}
-                            onChange={(e) => setCategory(e.target.value as CommunityCategory)}
+                            onChange={(e) => setCategory(e.target.value as CommunityCategories)}
                         >
                             <option value="">카테고리를 선택해주세요.</option>
                             <option value="DAILY">사는 이야기</option>

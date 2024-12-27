@@ -2,7 +2,7 @@ import style from "../../assets/scss/sub/community.module.scss"
 import {PageResponseDTO} from "@/slice/common";
 import {useCommunityGetter} from "./hooks/useCommunityGetter";
 import {useEffect, useRef, useState} from "react";
-import {CommunityFormProps} from "@/types/community";
+import {CommunityCategories, CommunityFormProps} from "../../types/community";
 import {useNavigate} from "react-router-dom";
 
 interface Args {
@@ -11,10 +11,12 @@ interface Args {
     setCurrentPage: (_: number) => void;
     totalPage: number;
     setTotalPage: (_: number) => void;
+    category: CommunityCategories;
+    setCategory: (_:CommunityCategories) => void;
 }
 
 export function CommunityContents(
-    {result, currentPage, setCurrentPage, totalPage, setTotalPage}: Args) {
+    {result, currentPage, setCurrentPage, totalPage, setTotalPage, category, setCategory}: Args) {
 
     /**
      todo
@@ -55,8 +57,8 @@ export function CommunityContents(
     };
 
     useEffect(() => {
-        getCompanyInfo(currentPage).then();
-    }, [currentPage]);
+        getCompanyInfo({page:currentPage, type:category}).then();
+    }, [currentPage, category]);
 
     // 모달 외부 클릭 감지 로직
     useEffect(() => {

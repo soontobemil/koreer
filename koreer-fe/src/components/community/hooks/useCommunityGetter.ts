@@ -10,10 +10,11 @@ export function useCommunityGetter() {
     const [posts, setPosts] = useState<PageResponse<PostsDTO>>();
     const [post, setPost] = useState<PostsDTO>();
 
-    const getCompanyInfo = useCallback(async ({page, type}: { page: number, type?: CommunityCategories }) => {
+    const getCompanyInfo = useCallback(async (
+        {page, type, searchWord}: { page: number, type?: CommunityCategories, searchWord:string }) => {
             try {
                 console.log(type)
-                const result: PageResponse<PostsDTO> = await dispatch(getPostsAsync({page, type})).unwrap();
+                const result: PageResponse<PostsDTO> = await dispatch(getPostsAsync({page, type, searchWord})).unwrap();
                 setPosts(result)
             } catch (e){
                 console.log(e)

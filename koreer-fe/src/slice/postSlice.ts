@@ -8,7 +8,7 @@ export const createPostAsync = createAsyncThunk("user/createPost",
     (dto: CommunitySubmitDTO) => executePromise(PostApi.createPost(dto)));
 
 export const getPostsAsync = createAsyncThunk("user/getPosts",
-    ({page, type}: { page: number, type?: CommunityCategories }) => executePromise(PostApi.getPosts({page, type})));
+    ({page, type, searchWord}: { page: number, type?: CommunityCategories, searchWord?: string }) => executePromise(PostApi.getPosts({page, type, searchWord})));
 
 export const getPostAsync = createAsyncThunk("user/getPost",
     (idx: number) => executePromise(PostApi.getPost(idx)));

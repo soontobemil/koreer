@@ -1,21 +1,53 @@
 import style from "../../assets/scss/sub/community.module.scss"
 import {CommunityContents} from "./CommunityContents";
 import {CommunityCategory} from "./CommunityCategory";
+import {CommunityEmpty} from "./CommunityEmpty";
 import {Outlet} from "react-router-dom";
 import {CommunityCategories, CommunityType} from "../../types/community";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useCommunityGetter} from "../../components/community/hooks/useCommunityGetter";
 
 export function Community() {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPage, setTotalPage] = useState(1)
+    const [searchWord, setSearchWord] = useState("")
     const [category, setCategory] = useState<CommunityCategories>(CommunityCategories.ALL)
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleNextPage = () =>{
-        if (currentPage < totalPage) {
-            setCurrentPage((prev) => prev +1);
+    const {getCompanyInfo, posts} = useCommunityGetter();
+
+    const fetchCompanyInfo = async () => {
+        setIsLoading(true);
+        await getCompanyInfo({ page: currentPage, type: category, searchWord });
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+        fetchCompanyInfo().then();
+    }, [currentPage, category]);
+
+    useEffect(() => {
+        if (posts) {
+            setTotalPage(posts.meta.totalPages);
         }
-    }
+    }, [posts]);
+
+    const handlePageChange = (page: number) => {
+        if (page <= totalPage) {
+            setCurrentPage(page);
+        }
+    };
+
+    const handleSearchWord = () => {
+        setCurrentPage(1)
+        fetchCompanyInfo().then();
+    };
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [category]);
+
     return (
         <>
             <Outlet/>
@@ -38,33 +70,58 @@ export function Community() {
                         <div
                             className={style.refreshImg}
                             onClick={() => {
-                                // 새로고침 애니메이션을 위한 로직
+                                window.location.reload()
                             }}
                         />
-                        <div className={style.searchArea}>
-                            <input
-                                className={style.searchInput}
-                                placeholder="검색어를 입력하세요."
-                                type="text"
-                                onChange={(e) => {
-                                    // 검색 로직
-                                }}
-                            />
+                        <div className={style.searchWrapper}>
+                            <div className={style.searchArea}>
+                                <input
+                                    className={style.searchInput}
+                                    placeholder="검색어를 입력하세요."
+                                    type="text"
+                                    onChange={(e) => setSearchWord(e.target.value)}
+                                />
+                            </div>
+                            <button className={style.searchButton} onClick={handleSearchWord}>
+                                검색
+                            </button>
                         </div>
-                        <div
-                            className={style.pageArea}
-                            onClick={handleNextPage}
-                            title="다음 페이지로 이동"
-                        >
-                            {`${currentPage} / ${totalPage} page`}
+                        <div className={style.paginationWrapper}>
+                            {isLoading ? (
+                                <div className={style.spinnerWrapper}>
+                                    <div className={style.spinner}></div>
+                                </div>
+                            ) : (
+                                <>
+                                    <button
+                                        className={`${style.pageButton} ${currentPage <= 1 ? style.disabled : ''}`}
+                                        onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                                        disabled={currentPage <= 1}
+                                        title="이전 페이지"
+                                    >
+                                        &lt;
+                                    </button>
+                                    <div className={style.pageArea}>
+                                        {`${totalPage === 0 ? 0 : currentPage} / ${totalPage}`}
+                                    </div>
+                                    <button
+                                        className={`${style.pageButton} ${currentPage >= totalPage ? style.disabled : ''}`}
+                                        onClick={() => currentPage < totalPage && handlePageChange(currentPage + 1)}
+                                        disabled={currentPage >= totalPage}
+                                        title="다음 페이지"
+                                    >
+                                        &gt;
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
 
-                    <CommunityContents
-                        currentPage={currentPage} setCurrentPage={setCurrentPage}
-                        totalPage={totalPage} setTotalPage={setTotalPage}
-                        category={category} setCategory={setCategory}
-                    />
+                    {posts && totalPage >= 1 ? (
+                        <CommunityContents posts={posts.data}/>
+                    ) : (
+                       <CommunityEmpty />
+                    )}
                 </div>
             </div>
         </>

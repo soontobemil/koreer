@@ -1,22 +1,16 @@
 import style from "../../assets/scss/sub/community.module.scss"
-import {PageResponseDTO} from "@/slice/common";
 import {useCommunityGetter} from "./hooks/useCommunityGetter";
 import {useEffect, useRef, useState} from "react";
-import {CommunityCategories, CommunityFormProps} from "../../types/community";
+import {CommunityFormProps} from "../../types/community";
 import {useNavigate} from "react-router-dom";
+import {PostsDTO} from "../../types/post";
 
 interface Args {
-    result?: PageResponseDTO;
-    currentPage: number;
-    setCurrentPage: (_: number) => void;
-    totalPage: number;
-    setTotalPage: (_: number) => void;
-    category: CommunityCategories;
-    setCategory: (_:CommunityCategories) => void;
+    posts:PostsDTO[]
 }
 
 export function CommunityContents(
-    {result, currentPage, setCurrentPage, totalPage, setTotalPage, category, setCategory}: Args) {
+    {posts}: Args) {
 
     /**
      todo
@@ -25,7 +19,7 @@ export function CommunityContents(
      유효성 검증 로직 추가
      */
 
-    const {getCompanyInfo, posts, deletePost, getCommunityById, post} = useCommunityGetter();
+    const { deletePost, getCommunityById, post} = useCommunityGetter();
     const [visibleModalIndex, setVisibleModalIndex] = useState(null);
     const modalRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate()
@@ -56,10 +50,6 @@ export function CommunityContents(
         setVisibleModalIndex(null);
     };
 
-    useEffect(() => {
-        getCompanyInfo({page:currentPage, type:category}).then();
-    }, [currentPage, category]);
-
     // 모달 외부 클릭 감지 로직
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -74,18 +64,11 @@ export function CommunityContents(
         };
     }, []);
 
-    useEffect(() => {
-        if (posts) {
-            setCurrentPage(posts.meta.currentPage);
-            setTotalPage(posts.meta.totalPages)
-        }
-    }, [getCompanyInfo, posts]);
-
     return (
         <>
             <div ref={modalRef} className={style.communityContentWrapper}>
                 {/*  커뮤니티 게시글  */}
-                {posts?.data.map((data, index) => (
+                {posts.map((data: PostsDTO, index: number) => (
                     <div className={style.communityContent} key={index}>
                         <div style={{position: "relative"}}>
                             {/*  커뮤니티 헤더 영역  */}

@@ -32,10 +32,10 @@ class PostService {
             // 페이지네이션 계산
             const offset = (page - 1) * limit;
             const currentUserEmail = getUserEmail(req)
-            const type = req.query.type || undefined;
 
             // 레포지토리에서 데이터 가져오기
-            const { rows: posts, count: total } = await PostRepository.getPostsWithPagination(offset, limit, type);
+            // todo 리팩토링
+            const { rows: posts, count: total } = await PostRepository.getPosts(offset, limit, req);
 
             // PostResponseDTO로 매핑
             const postsDTO = posts.map(post => {

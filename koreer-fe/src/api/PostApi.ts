@@ -13,8 +13,8 @@ export class PostApi{
             }
         });
 
-    static getPosts = ({page, type}: { page: number, type?: CommunityCategories }) => () =>
-        MainApi.api.get(`${PostApi.url}/posts?page=${page}&type=${type}`,{
+    static getPosts = ({page, type, searchWord}: { page: number, type?: CommunityCategories, searchWord?:string }) => () =>
+        MainApi.api.get(`${PostApi.url}/posts?page=${page}&type=${type}&searchWord=${searchWord}`,{
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'

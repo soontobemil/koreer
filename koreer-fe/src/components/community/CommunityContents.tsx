@@ -31,7 +31,7 @@ export function CommunityContents(
     };
 
     const handleEdit = () => {
-        alert("수정하기 클릭됨");
+        alert("수정 페이지로 이동합니다.");
         setVisibleModalIndex(null);
     };
 
@@ -89,8 +89,18 @@ export function CommunityContents(
                             </div>
                             {(visibleModalIndex === index) && (
                                 <div className={style.modalWrapper}>
-                                    <div onClick={handleEdit}>수정하기</div>
-                                    <div onClick={() =>handleDelete(data.id)}>삭제하기</div>
+                                    <button
+                                        className={style.modalButton}
+                                        onClick={handleEdit}
+                                    >
+                                        수정하기
+                                    </button>
+                                    <button
+                                        className={`${style.modalButton} ${style.deleteButton}`}
+                                        onClick={() => handleDelete(data.id)}
+                                    >
+                                        삭제하기
+                                    </button>
                                 </div>
                             )}
 

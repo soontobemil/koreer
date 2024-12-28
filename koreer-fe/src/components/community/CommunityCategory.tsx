@@ -40,28 +40,34 @@ export function CommunityCategory({type}: Args) {
     return (
         <>
             <div className={style.filterWrapper}>
-                <div className={style.buttonsWrapper}>
-                    <div className={style.sortButton}/>
-                    <span className={style.text}>최신순</span>
+                <div className={style.leftSection}>
+                    <button className={style.filterButton}>
+                        <div className={style.sortButton}/>
+                        <span className={style.text}>최신순</span>
+                    </button>
                 </div>
 
-                {/*  카테고리 및 정렬 영역  */}
                 <div className={style.categoryWrapper}>
                     <div className={style.categories}>
                         {category.map((data, idx) => (
-                            <span key={idx} className={style.categoryContent}>
-                              {data.label}
-                            </span>
-                            // @ts-ignore
-                        )).reduce((prev, curr) => [prev, ' | ', curr])}
-
+                            <button
+                                key={idx}
+                                className={`${style.categoryContent} ${data.value === '' ? style.active : ''}`}
+                            >
+                                {data.label}
+                            </button>
+                        ))}
                     </div>
                 </div>
 
-                {/*  게시글 포스팅  */}
-                <div className={style.buttonsWrapper} onClick={() =>onClickPosting()}>
-                    <div className={style.postingButton}/>
-                    <span className={style.text}>글 작성하기</span>
+                <div className={style.rightSection}>
+                    <button
+                        className={style.filterButton}
+                        onClick={onClickPosting}
+                    >
+                        <div className={style.postingButton}/>
+                        <span className={style.text}>글 작성하기</span>
+                    </button>
                 </div>
             </div>
 

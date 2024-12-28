@@ -19,28 +19,54 @@ export function Community() {
         <>
             <Outlet/>
             <div className={style.communityUpperWrapper}>
-                {/* 커뮤니티 헤더 */}
+                {/* Community Header */}
                 <div className={style.communityTitleWrapper}>
                     <span className={style.title}>커뮤니티</span>
-                    <span
-                        className={style.subTitle}>다른 사람들과 아이디어와 의견을 공유해보세요!</span>
+                    <span className={style.subTitle}>
+                        다른 사람들과 아이디어와 의견을 공유해보세요!
+                    </span>
                 </div>
 
                 <div className={style.contents}>
-                    {/*  정렬, 카테고리  */}
+                    {/* Sort and Categories */}
                     <CommunityCategory type={CommunityType.COMMUNITY}/>
 
-                    {/*  검색, 페이징  */}
+                    {/* Search and Pagination */}
                     <div className={style.searchAreaWrapper}>
-                        <div className={style.refreshImg}/>
+                        <button
+                            className={style.refreshButton}
+                            onClick={() => window.location.reload()}
+                            aria-label="Refresh page"
+                        >
+                            <div className={style.refreshImg}/>
+                        </button>
                         <div className={style.searchArea}>
                             <input
                                 className={style.searchInput}
-                                placeholder={"검색어를 입력하세요."}
+                                placeholder="검색어를 입력하세요..."
+                                aria-label="게시글 검색"
                             />
                         </div>
-                        <div className={style.pageArea} onClick={handleNextPage}>
-                            {`${currentPage} / ${totalPage} page`}
+                        <div className={style.paginationArea}>
+                            <button
+                                className={`${style.pageButton} ${currentPage === 1 ? style.disabled : ''}`}
+                                onClick={() => currentPage > 1 && setCurrentPage(prev => prev - 1)}
+                                disabled={currentPage === 1}
+                                aria-label="Previous page"
+                            >
+                                ←
+                            </button>
+                            <span className={style.pageArea}>
+                                페이지 {currentPage} / {totalPage}
+                            </span>
+                            <button
+                                className={`${style.pageButton} ${currentPage === totalPage ? style.disabled : ''}`}
+                                onClick={handleNextPage}
+                                disabled={currentPage === totalPage}
+                                aria-label="Next page"
+                            >
+                                →
+                            </button>
                         </div>
                     </div>
 

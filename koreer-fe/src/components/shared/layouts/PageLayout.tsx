@@ -1,7 +1,7 @@
 import { ReactNode, ReactElement } from 'react';
-import { Box, Container, Paper, Tabs, Tab, useTheme, Breadcrumbs, Link, Typography } from '@mui/material';
+import { Box, Container, Paper, Tabs, Tab, useTheme, Breadcrumbs, Link, Typography, Grid, IconButton, Stack } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { NavigateNext } from '@mui/icons-material';
+import { NavigateNext, Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
 
 interface TabItem {
   label: string;
@@ -25,17 +25,36 @@ export function PageLayout({ children, title, subtitle, tabs, breadcrumbs }: Pag
   const navigate = useNavigate();
   const location = useLocation();
 
-  const currentPath = location.pathname;
-  const currentTab = tabs?.findIndex(tab => currentPath.includes(tab.path)) ?? -1;
+  const currentPath = location.pathname + location.hash;
+  const currentTab = tabs?.findIndex(tab => {
+    // Remove the pathname part from tab.path if it matches current pathname
+    const tabPath = tab.path.startsWith(location.pathname)
+      ? tab.path.slice(location.pathname.length)
+      : tab.path;
+    return currentPath.endsWith(tabPath);
+  }) ?? -1;
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     if (tabs) {
-      navigate(tabs[newValue].path);
+      const newPath = tabs[newValue].path;
+      // If the path is just a hash, append it to current pathname
+      if (newPath.startsWith('#')) {
+        navigate(location.pathname + newPath);
+      } else {
+        navigate(newPath);
+      }
     }
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        bgcolor: 'background.default'
+      }}
+    >
       {/* Header Section */}
       <Box
         sx={{
@@ -131,9 +150,98 @@ export function PageLayout({ children, title, subtitle, tabs, breadcrumbs }: Pag
       )}
 
       {/* Main Content */}
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container maxWidth="lg" sx={{ py: 4, flex: 1 }}>
         {children}
       </Container>
+
+      {/* Footer */}
+      <Box
+        component="footer"
+        sx={{
+          bgcolor: 'primary.dark',
+          color: 'white',
+          py: 6,
+          mt: 'auto'
+        }}
+      >
+        <Container maxWidth="lg">
+          <Grid container spacing={4}>
+            {/* Company Info */}
+            <Grid item xs={12} md={4}>
+              <Typography variant="h6" gutterBottom>
+                Koreer
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 2, opacity: 0.8 }}>
+                Empowering tech professionals with career insights and community support for success in the Canadian tech industry.
+              </Typography>
+              <Stack direction="row" spacing={1}>
+                <IconButton size="small" sx={{ color: 'white' }}>
+                  <LinkedIn />
+                </IconButton>
+                <IconButton size="small" sx={{ color: 'white' }}>
+                  <Twitter />
+                </IconButton>
+                <IconButton size="small" sx={{ color: 'white' }}>
+                  <Facebook />
+                </IconButton>
+                <IconButton size="small" sx={{ color: 'white' }}>
+                  <Instagram />
+                </IconButton>
+              </Stack>
+            </Grid>
+
+            {/* Quick Links */}
+            <Grid item xs={12} md={4}>
+              <Typography variant="h6" gutterBottom>
+                Quick Links
+              </Typography>
+              <Stack spacing={1}>
+                <Link href="/employment" color="inherit" sx={{ opacity: 0.8, textDecoration: 'none', '&:hover': { opacity: 1, textDecoration: 'underline' } }}>
+                  Employment Guide
+                </Link>
+                <Link href="/community" color="inherit" sx={{ opacity: 0.8, textDecoration: 'none', '&:hover': { opacity: 1, textDecoration: 'underline' } }}>
+                  Community
+                </Link>
+                <Link href="/company" color="inherit" sx={{ opacity: 0.8, textDecoration: 'none', '&:hover': { opacity: 1, textDecoration: 'underline' } }}>
+                  Companies
+                </Link>
+                <Link href="/about" color="inherit" sx={{ opacity: 0.8, textDecoration: 'none', '&:hover': { opacity: 1, textDecoration: 'underline' } }}>
+                  About Us
+                </Link>
+              </Stack>
+            </Grid>
+
+            {/* Contact Info */}
+            <Grid item xs={12} md={4}>
+              <Typography variant="h6" gutterBottom>
+                Contact
+              </Typography>
+              <Stack spacing={1} sx={{ opacity: 0.8 }}>
+                <Typography variant="body2">
+                  Vancouver, BC, Canada
+                </Typography>
+                <Link href="mailto:contact@koreer.com" color="inherit" sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+                  contact@koreer.com
+                </Link>
+              </Stack>
+            </Grid>
+          </Grid>
+
+          {/* Copyright */}
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 4,
+              pt: 2,
+              borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+              opacity: 0.8,
+              textAlign: 'center'
+            }}
+          >
+            © {new Date().getFullYear()} Koreer. All rights reserved.
+          </Typography>
+        </Container>
+      </Box>
     </Box>
   );
 }

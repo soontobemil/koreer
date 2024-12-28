@@ -55,7 +55,12 @@ root.render(
                             <Route path="canada" element={<CanadaLifeInfo/>}/>
                         </Route>
                         <Route path="work-permit" element={<WorkPermit/>}/>
-                        <Route path="interview-guide" element={<InterviewGuide/>}/>
+                        <Route path="interview-guide">
+                            <Route path="" element={<InterviewGuide/>}/>
+                            <Route path="technical" element={<InterviewGuide/>}/>
+                            <Route path="behavioral" element={<InterviewGuide/>}/>
+                            <Route path="coding-test" element={<InterviewGuide/>}/>
+                        </Route>
                         <Route path="community" element={<Community/>} />
                         <Route path="community/post" element={<CommunityForm />} />
                         <Route path="tips" element={<Tips/>}/>

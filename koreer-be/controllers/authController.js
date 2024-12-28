@@ -106,6 +106,7 @@ async function googleCallBack(req,res) {
     const code = req.query.code;
     const requestUri = 'https://oauth2.googleapis.com/token'
     const redirectUri = `${process.env.API_URL}/auth/google/callback`
+    console.log('redirectUri : ',redirectUri)
 
     const userInfoRequestUri = 'https://www.googleapis.com/userinfo/v2/me';
 

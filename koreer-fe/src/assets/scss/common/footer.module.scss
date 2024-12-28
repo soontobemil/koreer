@@ -1,53 +1,149 @@
 @import "variables";
+.footer {
+  width: 100%;
+  background-color: #ffffff;
+  margin-top: 50px;
+}
 
-@include mobile {
-  .footerLine {
-    margin-top: 30px;
-    border-top: 1.1px solid #757575;
-    width: 100%;
-  }
+.footerLine {
+  border-top: 1.1px solid #757575;
+  width: 100%;
+}
 
-  .footer {
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  margin: 0 auto;
+
+  .footerInfoArea {
     display: flex;
     flex-direction: column;
+    gap: 30px;
+
+    .footerMenu {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      
+      span {
+        font-weight: 600;
+        cursor: pointer;
+        padding: 5px 10px;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: var(--primary-color);
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .mainContent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+
+      .leftContent {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1;
+        min-width: 280px;
+      }
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 140%;
+      color: var(--primary-color);
+    }
+
+    .description {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 160%;
+      color: #666;
+
+      a {
+        color: var(--primary-color);
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .socialLinks {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+
+      .socialIcon {
+        color: #666;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: var(--primary-color);
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .copyright {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+  }
+
+  .footerLogo {
+    width: 300px;
     height: auto;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    //width: 100%;
-    font-size: 18px;
+    object-fit: contain;
+  }
+}
+
+@include mobile {
+  .footer {
+    padding: 30px 15px;
 
     .footerInfoArea {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
       text-align: center;
 
+      .mainContent {
+        flex-direction: column;
+        text-align: center;
+
+        .leftContent {
+          align-items: center;
+        }
+      }
+
       .footerMenu {
-        display: flex;
-        align-self: center;
-        flex-direction: row;
-        gap: 15px;
-        font-weight: 600;
+        font-size: 16px;
       }
 
       .title {
         font-size: 20px;
-        font-weight: 700;
-        line-height: 140%;
       }
 
       .description {
-        font-size: 16px;
-        font-weight: 350;
-        line-height: 140%;
+        font-size: 14px;
       }
     }
 
     .footerLogo {
-      width: 100%;
-      max-width: 300px;
-      margin-top: 20px;
+      width: 200px;
+      margin: 20px auto;
     }
   }
 }
@@ -55,53 +151,25 @@
 @include desktop {
   .footerLine {
     margin-top: 70px;
-    border-top: 1.1px solid #757575;
-    width: 100%;
-
   }
 
   .footer {
-    align-items: center;
-    background-color: #ffffff;
-    display: flex;
-    height: 323px;
-    justify-content: space-between;
-    margin: 0 auto;
-    padding-bottom: 70px;
-    width: 1200px;
-
-    font-size: 24px;
+    padding: 50px 40px;
 
     .footerInfoArea {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-
       .footerMenu {
-        display: flex;
-        font-weight: 600;
-        gap: 30px;
-      }
-
-      .title {
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 140%;
-        letter-spacing: -0.36px;
-      }
-
-      .description {
         font-size: 18px;
-        font-style: normal;
-        font-weight: 350;
-        line-height: 140%;
-        //letter-spacing: -0.36px;
+      }
+
+      .mainContent {
+        .leftContent {
+          text-align: left;
+        }
       }
     }
 
     .footerLogo {
-      width: 440px;
+      width: 350px;
     }
   }
 }

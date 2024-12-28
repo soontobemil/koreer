@@ -53,6 +53,7 @@ export function CommunityCategory({type, categoryType, setCategoryType}: Args) {
                     <span className={style.text}>최신순</span>
                 </div>
 
+                {/*  카테고리 및 정렬 영역  */}
                 <div className={style.categoryWrapper}>
                     <div className={style.categories}>
                         {category.map((data, idx) => (

@@ -2,15 +2,18 @@ import React, { useState, useCallback } from 'react';
 import { Box, Stack, Button, Typography } from '@mui/material';
 import { useAuthValidator } from '../../hooks/form/useAuthValidator';
 import { UserPostDTO, ValidateStatus } from '../../types/signup';
-import { useSignUpMutation } from '../../hooks/api/useSignUpMutation';
+import { useDispatch } from 'react-redux';
+import { signup } from '../../store/auth/authSlice';
 import { motion } from 'framer-motion';
 import { IdField } from '../../components/shared/forms/IdField';
 import { PasswordField } from '../../components/shared/forms/PasswordField';
 import { NicknameField } from '../../components/shared/forms/NicknameField';
 import { PasswordConfirmField } from '../../components/shared/forms/PasswordConfirmField';
 import { ConfirmModal } from '../../components/shared/modals/ConfirmModal';
+import { AppDispatch } from '../../store/store';
 
 export function SignUp() {
+  const dispatch = useDispatch<AppDispatch>();
   const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +21,7 @@ export function SignUp() {
   const [nation, setNation] = useState("korea");
   const [signUpSuccess, setSignUpSuccess] = useState(false);
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const {
     emailValidate,
@@ -35,32 +39,30 @@ export function SignUp() {
   } = useAuthValidator('signup', {
     email: id,
     password,
+    passwordCheck,
     nation,
     nickName,
-    passwordCheck,
   });
 
-  const signUpMutation = useSignUpMutation();
+  const handleSignUp = useCallback(async () => {
+    if (!validate()) {
+      return;
+    }
 
-  const handleSignup = useCallback(async () => {
     try {
-      const isValid = validate();
-      if (!isValid) return;
-
-      const signUpData: UserPostDTO = {
+      await dispatch(signup({
         user_email: id,
         username: nickName,
-        password,
-        nation,
-      };
-
-      await signUpMutation(signUpData);
+        password: password,
+        nation: nation
+      })).unwrap();
+      
       setSignUpSuccess(true);
       resetValidation();
-    } catch (error) {
-      console.error('Signup failed:', error);
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign up');
     }
-  }, [id, nickName, password, nation, validate, signUpMutation, resetValidation]);
+  }, [dispatch, id, nickName, password, nation, validate, resetValidation]);
 
   const handleOpenDialog = () => setOpenCancelDialog(true);
   const handleCloseDialog = () => setOpenCancelDialog(false);
@@ -103,7 +105,7 @@ export function SignUp() {
           mt: 3,
         }}
       >
-        <form onSubmit={(e) => { e.preventDefault(); handleSignup(); }}>
+        <form onSubmit={(e) => { e.preventDefault(); handleSignUp(); }}>
           <Stack spacing={2}>
             <Typography variant="h5" align="center" gutterBottom>
               회원가입
@@ -168,7 +170,7 @@ export function SignUp() {
               <Button
                 variant="contained"
                 fullWidth
-                onClick={handleSignup}
+                onClick={handleSignUp}
                 disabled={
                   emailValidate !== ValidateStatus.NONE ||
                   nickNameValidate !== ValidateStatus.NONE ||

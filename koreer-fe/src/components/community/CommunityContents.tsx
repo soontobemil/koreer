@@ -24,7 +24,6 @@ export function CommunityContents(
     const modalRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate()
 
-
     const handleModifyClick = (index: any) => {
         setVisibleModalIndex((prev) => (prev === index ? null : index)); // 모달 토글
     };
@@ -35,10 +34,14 @@ export function CommunityContents(
         getCommunityById(idx).then((result) =>{
             const props:CommunityFormProps =
                 {mode:'edit', postId: idx, initialData: result}
-            navigate('/community/post', { state: { ...props } });
+            navigate('post', { state: { ...props } });
 
         });
     };
+
+    const handleDetail = (data:PostsDTO) => {
+        navigate('detail',{ state: { ...(data) } })
+    }
 
     const handleDelete = (idx: number) => {
         if (window.confirm("작성하신 게시글을 삭제하시겠습니까?")) {
@@ -69,7 +72,7 @@ export function CommunityContents(
             <div ref={modalRef} className={style.communityContentWrapper}>
                 {/*  커뮤니티 게시글  */}
                 {posts.map((data: PostsDTO, index: number) => (
-                    <div className={style.communityContent} key={index}>
+                    <div className={style.communityContent} key={index} onClick={() => handleDetail(data)}>
                         <div style={{position: "relative"}}>
                             {/*  커뮤니티 헤더 영역  */}
                             <div className={style.contentHeaderWrapper}>

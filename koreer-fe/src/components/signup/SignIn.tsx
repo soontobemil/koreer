@@ -32,6 +32,7 @@ import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
 import {AuthProvider} from "../../components/common/AuthProvider";
 import {LoginResponseDTO} from "../../slice/common";
 import {useSignInValidator} from "../../components/signup/hooks/useSignInValidator";
+import {ComponentHelmet} from "../../components/common/ComponentHelmet";
 
 interface ErrorResponse{
     message: string;
@@ -308,6 +309,7 @@ export function SignIn() {
           </Paper>
         </Box>
       </motion.div>
+      <ComponentHelmet title={"Koreer - 로그인"} />
     </Container>
   );
 }

@@ -29,6 +29,7 @@ import {WorkPermit} from "./components/employment/WorkPermit";
 import {CommunityForm} from "./components/community/CommunityForm";
 import {Seminar} from "./components/seminar/Seminar";
 import {CommunityDetail} from "./components/community/CommunityDetail";
+import {HelmetProvider} from "react-helmet-async";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -37,46 +38,48 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<App/>}>
-                        <Route path="" element={<Main/>}/>
-                        <Route path="seminar-info" element={<Seminar/>}/>
-                        <Route path="company-information" element={<CompanyInformation/>}/>
-                        <Route path="employment-info" element={<EmploymentInfo/>}/>
-                        <Route path="visa-info">
-                            <Route path="usa" element={<USAVisaInfo/>}/>
-                            <Route path="canada" element={<CanadaVisaInfo/>}/>
+                <HelmetProvider>
+                    <Routes>
+                        <Route path="/" element={<App/>}>
+                            <Route path="" element={<Main/>}/>
+                            <Route path="seminar-info" element={<Seminar/>}/>
+                            <Route path="company-information" element={<CompanyInformation/>}/>
+                            <Route path="employment-info" element={<EmploymentInfo/>}/>
+                            <Route path="visa-info">
+                                <Route path="usa" element={<USAVisaInfo/>}/>
+                                <Route path="canada" element={<CanadaVisaInfo/>}/>
+                            </Route>
+                            <Route path="salary-info">
+                                <Route path="usa" element={<USASalaryInfo/>}/>
+                                <Route path="canada" element={<CanadaSalaryInfo/>}/>
+                            </Route>
+                            <Route path="life-info">
+                                <Route path="usa" element={<USALifeInfo/>}/>
+                                <Route path="canada" element={<CanadaLifeInfo/>}/>
+                            </Route>
+                            <Route path="work-permit" element={<WorkPermit/>}/>
+                            <Route path="interview-guide">
+                                <Route path="" element={<InterviewGuide/>}/>
+                                <Route path="technical" element={<InterviewGuide/>}/>
+                                <Route path="behavioral" element={<InterviewGuide/>}/>
+                                <Route path="coding-test" element={<InterviewGuide/>}/>
+                            </Route>
+                            <Route path="community">
+                                <Route path="" element={<Community />} />
+                                <Route path="post" element={<CommunityForm />} />
+                                <Route path="detail" element={<CommunityDetail />} />
+                            </Route>
+                            <Route path="tips" element={<Tips/>}/>
+                            <Route path="tips/posting" element={<TipsPosting/>}/>
+                            <Route path="about-us" element={<AboutUs/>}/>
+                            <Route path="contact" element={<Contact/>}/>
+                            <Route path="signin" element={<SignIn/>}/>
+                            <Route path="signup" element={<SignUp/>}/>
+                            <Route path="success" element={<Success/>}/>
                         </Route>
-                        <Route path="salary-info">
-                            <Route path="usa" element={<USASalaryInfo/>}/>
-                            <Route path="canada" element={<CanadaSalaryInfo/>}/>
-                        </Route>
-                        <Route path="life-info">
-                            <Route path="usa" element={<USALifeInfo/>}/>
-                            <Route path="canada" element={<CanadaLifeInfo/>}/>
-                        </Route>
-                        <Route path="work-permit" element={<WorkPermit/>}/>
-                        <Route path="interview-guide">
-                            <Route path="" element={<InterviewGuide/>}/>
-                            <Route path="technical" element={<InterviewGuide/>}/>
-                            <Route path="behavioral" element={<InterviewGuide/>}/>
-                            <Route path="coding-test" element={<InterviewGuide/>}/>
-                        </Route>
-                        <Route path="community">
-                            <Route path="" element={<Community />} />
-                            <Route path="post" element={<CommunityForm />} />
-                            <Route path="detail" element={<CommunityDetail />} />
-                        </Route>
-                        <Route path="tips" element={<Tips/>}/>
-                        <Route path="tips/posting" element={<TipsPosting/>}/>
-                        <Route path="about-us" element={<AboutUs/>}/>
-                        <Route path="contact" element={<Contact/>}/>
-                        <Route path="signin" element={<SignIn/>}/>
-                        <Route path="signup" element={<SignUp/>}/>
-                        <Route path="success" element={<Success/>}/>
-                    </Route>
-                    <Route path="*" element={<NotFoundPage/>}/>
-                </Routes>
+                        <Route path="*" element={<NotFoundPage/>}/>
+                    </Routes>
+                </HelmetProvider>
             </BrowserRouter>
         </Provider>
     </React.StrictMode>

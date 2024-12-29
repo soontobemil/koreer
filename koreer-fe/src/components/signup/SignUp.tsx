@@ -23,6 +23,7 @@ import { SignUpPasswordConfirmField } from "./SignUpPasswordConfirmField";
 import { SignUpNicknameField } from "./SignUpNicknameField";
 import { SignUpNationField } from "./SignUpNationField";
 import {ConfirmModal} from "../../components/modal/ConfirmModal";
+import {ComponentHelmet} from "../../components/common/ComponentHelmet";
 
 export function SignUp() {
   const navigate = useNavigate();
@@ -212,6 +213,7 @@ export function SignUp() {
       {signUpSuccess && (
           <ConfirmModal modalClose={setSignUpSuccess}/>
       )}
+      <ComponentHelmet title={"Koreer - 회원가입"} />
     </Container>
   );
 }

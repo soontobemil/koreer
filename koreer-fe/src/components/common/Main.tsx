@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import koreerLogo from '../../assets/img/koreer_logo.png';
 import { CloudBackground } from './CloudBackground';
 import { ParticleBackground } from './ParticleBackground';
+import {ComponentHelmet} from "../../components/common/ComponentHelmet";
 
 const PlaneIcon = styled(motion.div)`
   width: 40px;
@@ -317,6 +318,7 @@ export default function Main() {
           ))}
         </Grid>
       </Container>
+      <ComponentHelmet title={"Koreer"} />
     </Box>
   );
 }

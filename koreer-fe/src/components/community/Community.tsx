@@ -6,6 +6,7 @@ import {Outlet} from "react-router-dom";
 import {CommunityCategories, CommunityType} from "../../types/community";
 import {useEffect, useState} from "react";
 import {useCommunityGetter} from "../../components/community/hooks/useCommunityGetter";
+import {ComponentHelmet} from "../../components/common/ComponentHelmet";
 
 export function Community() {
 
@@ -124,6 +125,7 @@ export function Community() {
                        <CommunityEmpty />
                     )}
                 </div>
+                <ComponentHelmet title={"Koreer - 커뮤니티"} />
             </div>
         </>
     )

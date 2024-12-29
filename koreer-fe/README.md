@@ -83,6 +83,9 @@ yarn add react-cookie jwt-decode
 # 빌드
 yarn add @craco/craco
 
+# 브라우저 헤더
+yarn add react-helmet-async
+
 ```
 
 4. 개발 서버 실행

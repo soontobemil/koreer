@@ -1,9 +1,9 @@
-import {useNavigate, Link as RouterLink} from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../slice/signInSlice";
-import { LoginDTO } from "../../types/signIn";
-import { ValidateStatus } from "../../types/signup";
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/auth/authSlice';
+import { LoginCredentials } from '../../store/auth/types';
+import { ValidateStatus } from '../../types/signup';
 import {
   Box,
   Container,
@@ -29,51 +29,62 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
-import {AuthProvider} from "../../components/common/AuthProvider";
-import {LoginResponseDTO} from "../../slice/common";
-import {useSignInValidator} from "../../components/signup/hooks/useSignInValidator";
+import { AuthProvider } from '../../components/common/AuthProvider';
+import { useAuthValidator } from '../../hooks/form/useAuthValidator';
+import { AppDispatch } from '../../store/store';
 
-interface ErrorResponse{
-    message: string;
+interface ErrorResponse {
+  message: string;
 }
 
 export function SignIn() {
-    const navigate = useNavigate()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const {validate, emailValidate, setEmailValidate, passwordValidate, setPasswordValidate} =
-        useSignInValidator({email,password} );
-    const {setAccessToken} = AuthProvider();
-    const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-    const dispatch = useDispatch<any>();
+  const {
+    emailValidate,
+    setEmailValidate,
+    passwordValidate,
+    setPasswordValidate,
+    validate,
+  } = useAuthValidator('signin', { email, password });
 
-  // @ts-ignore
-    const handleLogin = useCallback(async () => {
-        const result = validate();
-        if(!result) return ;
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsLoading(true);
+      setErrorMessage('');
 
-        const loginDTO:LoginDTO = {user_email: email, password: password}
-        try {
-            const result: LoginResponseDTO = await dispatch(login(loginDTO)).unwrap();
-            setAccessToken(result.accessToken)
-            navigate('/')
+      if (!validate()) {
+        setIsLoading(false);
+        return;
+      }
 
-            return result;
-        } catch (error: any) {
-            const convert = error as ErrorResponse;
-            const parsedMessage = JSON.parse(convert.message);
+      try {
+        const credentials: LoginCredentials = {
+          user_email: email,
+          password: password,
+        };
 
-            setErrorMessage(parsedMessage.message);
-        }
-        // eslint-disable-next-line
-    }, [email, password]);
+        await dispatch(login(credentials)).unwrap();
+        navigate('/');
+      } catch (error: any) {
+        setErrorMessage(error.message || 'Login failed');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [dispatch, email, password, navigate, validate]
+  );
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    setErrorMessage("")
+    setErrorMessage('');
     if (e.target.value.length > 0) {
       setEmailValidate(ValidateStatus.NONE);
     }
@@ -81,18 +92,17 @@ export function SignIn() {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-      setErrorMessage("")
+    setErrorMessage('');
     if (e.target.value.length > 0) {
       setPasswordValidate(ValidateStatus.NONE);
     }
   };
 
   const handleGoogleLogin = () => {
-      const redirectUri = `${process.env.REACT_APP_BASE_URL}/auth/google/callback`;
-      const googleClientId = '969073700844-r0dbph7gk0e9aqm5868ums9jgddqgvg2.apps.googleusercontent.com'
-
-      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
-  }
+    const redirectUri = `${process.env.REACT_APP_BASE_URL}/auth/google/callback`;
+    const googleClientId = '969073700844-r0dbph7gk0e9aqm5868ums9jgddqgvg2.apps.googleusercontent.com';
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -160,7 +170,7 @@ export function SignIn() {
             </Typography>
 
             {errorMessage && (
-              <Alert severity="error" sx={{ mb: 2, whiteSpace:"pre-line"}}>
+              <Alert severity="error" sx={{ mb: 2, whiteSpace: 'pre-line' }}>
                 {errorMessage}
               </Alert>
             )}
@@ -209,62 +219,34 @@ export function SignIn() {
                 }}
               />
 
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Link
-                  component={RouterLink}
-                  to="/forgot-password"
-                  variant="body2"
-                  sx={{ textDecoration: 'none' }}
-                >
-                  비밀번호를 잊으셨나요?
-                </Link>
-              </Box>
-
               <Button
                 fullWidth
                 variant="contained"
-                size="large"
-                onClick={handleLogin}
-                disabled={!validate || isLoading}
-                sx={{
-                  py: 1.5,
-                  mt: 2,
-                  position: 'relative',
-                  '&:hover': {
-                    transform: 'translateY(-2px)',
-                    boxShadow: 2,
-                  },
-                  transition: 'all 0.2s',
-                }}
+                onClick={handleSubmit}
+                disabled={isLoading}
+                sx={{ mt: 2 }}
               >
-                {isLoading ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  '로그인'
-                )}
+                {isLoading ? <CircularProgress size={24} /> : '로그인'}
               </Button>
 
-              <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
-                <Divider sx={{ flex: 1 }} />
-                <Typography variant="body2" color="text.secondary" sx={{ px: 2 }}>
-                  또는
-                </Typography>
-                <Divider sx={{ flex: 1 }} />g
+              <Box sx={{ mt: 2, textAlign: 'center' }}>
+                <Link
+                  component={RouterLink}
+                  to="/signup"
+                  variant="body2"
+                  sx={{ textDecoration: 'none' }}
+                >
+                  계정이 없으신가요? 회원가입
+                </Link>
               </Box>
 
-              <Stack direction="row" spacing={2}>
+              <Divider sx={{ my: 2 }}>또는</Divider>
+
+              <Stack spacing={2}>
                 <Button
                   fullWidth
                   variant="outlined"
                   startIcon={<Google />}
-                  sx={{
-                    py: 1.5,
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: 1,
-                    },
-                    transition: 'all 0.2s',
-                  }}
                   onClick={handleGoogleLogin}
                 >
                   Google로 로그인
@@ -273,38 +255,12 @@ export function SignIn() {
                   fullWidth
                   variant="outlined"
                   startIcon={<GitHub />}
-                  sx={{
-                    py: 1.5,
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: 1,
-                    },
-                    transition: 'all 0.2s',
-                  }}
+                  onClick={() => {/* TODO: Implement GitHub login */}}
                 >
                   GitHub로 로그인
                 </Button>
               </Stack>
             </Stack>
-
-            <Box sx={{ mt: 3, textAlign: 'center' }}>
-              <Typography variant="body2" color="text.secondary">
-                아직 계정이 없으신가요?{' '}
-                <Link
-                  component={RouterLink}
-                  to="/signup"
-                  sx={{
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    '&:hover': {
-                      textDecoration: 'underline',
-                    },
-                  }}
-                >
-                  회원가입
-                </Link>
-              </Typography>
-            </Box>
           </Paper>
         </Box>
       </motion.div>

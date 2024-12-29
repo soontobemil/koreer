@@ -1,8 +1,8 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Box, Stack, Button, Typography } from '@mui/material';
-import { useSignUpValidator } from "./hooks/useSignUpValidator";
-import { UserPostDTO, ValidateStatus } from "../../types/signup";
-import { useSignUpMutation } from "./hooks/useSignUpMutation";
+import { useAuthValidator } from '../../hooks/form/useAuthValidator';
+import { UserPostDTO, ValidateStatus } from '../../types/signup';
+import { useSignUpMutation } from '../../hooks/api/useSignUpMutation';
 import { motion } from 'framer-motion';
 import { IdField } from '../../components/shared/forms/IdField';
 import { PasswordField } from '../../components/shared/forms/PasswordField';
@@ -20,49 +20,67 @@ export function SignUp() {
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
   const {
-    idValidate,
-    setIdValidate,
-    nickNameValidate,
-    setNickNameValidate,
+    emailValidate,
+    setEmailValidate,
     passwordValidate,
     setPasswordValidate,
+    nationValidate,
+    setNationValidate,
+    nickNameValidate,
+    setNickNameValidate,
     passwordCheckValidate,
     setPasswordCheckValidate,
-  } = useSignUpValidator({
-    id,
-    nickName,
+    validate,
+    resetValidation,
+  } = useAuthValidator('signup', {
+    email: id,
     password,
-    passwordCheck,
     nation,
+    nickName,
+    passwordCheck,
   });
+
+  const signUpMutation = useSignUpMutation();
 
   const handleSignup = useCallback(async () => {
     try {
-      if (
-        idValidate !== ValidateStatus.NONE ||
-        nickNameValidate !== ValidateStatus.NONE ||
-        passwordValidate !== ValidateStatus.NONE ||
-        passwordCheckValidate !== ValidateStatus.NONE
-      ) {
-        return;
-      }
+      const isValid = validate();
+      if (!isValid) return;
 
-      await useSignUpMutation({
-        id,
-        nickName,
+      const signUpData: UserPostDTO = {
+        user_email: id,
+        username: nickName,
         password,
         nation,
-      });
+      };
+
+      await signUpMutation(signUpData);
       setSignUpSuccess(true);
+      resetValidation();
     } catch (error) {
       console.error('Signup failed:', error);
     }
-  }, [id, nickName, password, nation, idValidate, nickNameValidate, passwordValidate, passwordCheckValidate]);
+  }, [id, nickName, password, nation, validate, signUpMutation, resetValidation]);
 
   const handleOpenDialog = () => setOpenCancelDialog(true);
   const handleCloseDialog = () => setOpenCancelDialog(false);
   const handleConfirmCancel = () => {
     handleCloseDialog();
+    resetValidation();
+  };
+
+  const handleNickNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickName(e.target.value);
+    if (e.target.value.length >= 4 && e.target.value.length <= 16 && setNickNameValidate) {
+      setNickNameValidate(ValidateStatus.NONE);
+    }
+  };
+
+  const handlePasswordCheckChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordCheck(e.target.value);
+    if (e.target.value === password && setPasswordCheckValidate) {
+      setPasswordCheckValidate(ValidateStatus.NONE);
+    }
   };
 
   return (
@@ -94,14 +112,19 @@ export function SignUp() {
             <Stack spacing={2}>
               <IdField
                 value={id}
-                onChange={(e) => setId(e.target.value)}
-                error={idValidate !== ValidateStatus.NONE}
-                helperText={idValidate !== ValidateStatus.NONE ? "이메일을 다시 확인해주세요." : ""}
+                onChange={(e) => {
+                  setId(e.target.value);
+                  if (e.target.value.length > 0 && setEmailValidate) {
+                    setEmailValidate(ValidateStatus.NONE);
+                  }
+                }}
+                error={emailValidate !== ValidateStatus.NONE}
+                helperText={emailValidate !== ValidateStatus.NONE ? "이메일을 다시 확인해주세요." : ""}
               />
 
               <NicknameField
                 value={nickName}
-                onChange={(e) => setNickName(e.target.value)}
+                onChange={handleNickNameChange}
                 error={nickNameValidate !== ValidateStatus.NONE}
                 helperText={nickNameValidate !== ValidateStatus.NONE ? "닉네임은 4~16자로 입력해주세요." : ""}
               />
@@ -109,14 +132,19 @@ export function SignUp() {
               <PasswordField
                 label="비밀번호"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (e.target.value.length >= 4 && setPasswordValidate) {
+                    setPasswordValidate(ValidateStatus.NONE);
+                  }
+                }}
                 error={passwordValidate !== ValidateStatus.NONE}
                 helperText={passwordValidate !== ValidateStatus.NONE ? "비밀번호는 4자 이상이어야 합니다." : ""}
               />
 
               <PasswordConfirmField
                 value={passwordCheck}
-                onChange={(e) => setPasswordCheck(e.target.value)}
+                onChange={handlePasswordCheckChange}
                 error={passwordCheckValidate !== ValidateStatus.NONE}
                 helperText={
                   passwordCheckValidate === ValidateStatus.INVALID
@@ -142,7 +170,7 @@ export function SignUp() {
                 fullWidth
                 onClick={handleSignup}
                 disabled={
-                  idValidate !== ValidateStatus.NONE ||
+                  emailValidate !== ValidateStatus.NONE ||
                   nickNameValidate !== ValidateStatus.NONE ||
                   passwordValidate !== ValidateStatus.NONE ||
                   passwordCheckValidate !== ValidateStatus.NONE

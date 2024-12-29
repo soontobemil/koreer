@@ -2,7 +2,7 @@ import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/auth/authSlice';
-import { LoginCredentials } from '../../store/auth/types';
+import {AuthResponse, LoginCredentials} from '../../store/auth/types';
 import { ValidateStatus } from '../../types/signup';
 import {
   Box,
@@ -45,6 +45,7 @@ export function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const {setAccessToken} = AuthProvider();
 
   const {
     emailValidate,
@@ -71,7 +72,9 @@ export function SignIn() {
           password: password,
         };
 
-        await dispatch(login(credentials)).unwrap();
+        const result:AuthResponse = await dispatch(login(credentials)).unwrap();
+          setAccessToken(result.accessToken)
+
         navigate('/');
       } catch (error: any) {
         setErrorMessage(error.message || 'Login failed');

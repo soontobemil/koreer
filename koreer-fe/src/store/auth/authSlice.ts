@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthState, LoginCredentials, SignUpCredentials, AuthResponse, User } from './types';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {AuthResponse, AuthState, LoginCredentials, SignUpCredentials, User} from './types';
 import axios from '../../config/api';
 
 const initialState: AuthState = {
@@ -20,11 +20,6 @@ export const login = createAsyncThunk<AuthResponse, LoginCredentials>(
       
       if (!response.data) {
         throw new Error('Empty response received from server');
-      }
-
-      // Store the token
-      if (response.data.accessToken) {
-        localStorage.setItem('token', response.data.accessToken);
       }
 
       return response.data;
@@ -75,7 +70,8 @@ const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.user = null;
-      localStorage.removeItem('token');
+      document.cookie = `accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      document.cookie = `refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
     },
     clearError(state) {
       state.error = null;

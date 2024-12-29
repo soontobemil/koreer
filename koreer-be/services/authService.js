@@ -119,8 +119,8 @@ function createRefreshToken(user) {
 }
 
 // email verify token
-function createEmailVerifyToken(email) {
-    return jwt.sign({email}, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.EMAIL_VERIFY_EXPIRES_IN });
+function createEmailVerifyToken(user) {
+    return jwt.sign(user, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
 }
 
 async function emailVefify(token) {
@@ -157,8 +157,8 @@ async function emailVefify(token) {
 async function sendEmail(email) {
     try {
         //email = 'koreerkorea@gmail.com';
-        const token = createEmailVerifyToken(email);
-
+        const userPayload = {user_email:email}
+        const token = createEmailVerifyToken(userPayload);
         const link = `${process.env.API_URL}/auth/verify-email/${token}`;
 
         // OAuth2 클라이언트 설정

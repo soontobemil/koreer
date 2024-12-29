@@ -5,29 +5,30 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Main from "./components/common/Main";
 import App from "./App";
-import {Community} from "./components/community/Community";
+import {Community} from "./features/community/Community";
 import {Contact} from "./components/contactus/Contact";
 import {AboutUs} from "./components/aboutus/AboutUs";
 import {CompanyInformation} from "./components/companyinformation/CompanyInformation";
 import {Provider} from 'react-redux';
 import {store} from "./slice";
-import {SignIn} from "./components/signup/SignIn";
-import {SignUp} from "./components/signup/SignUp";
+import {SignIn} from "./features/auth/SignIn";
+import {SignUp} from "./features/auth/SignUp";
 import {NotFoundPage} from "./components/common/NotFoundPage";
-import {Tips} from "./components/community/Tips";
-import {TipsPosting} from "./components/community/TipsPosting";
+import {Tips} from "./features/community/Tips";
+import {TipsPosting} from "./features/community/TipsPosting";
 import {Success} from "./components/common/Success";
-import {EmploymentInfo} from "./components/employment/EmploymentInfo";
-import {USAVisaInfo} from "./components/visa/USAVisaInfo";
-import {CanadaVisaInfo} from "./components/visa/CanadaVisaInfo";
+import {EmploymentInfo} from "./features/employment/EmploymentInfo";
+import {USAVisaInfo} from "./features/visa/USAVisaInfo";
+import {CanadaVisaInfo} from "./features/visa/CanadaVisaInfo";
 import {USASalaryInfo} from "./components/salary/USASalaryInfo";
 import {CanadaSalaryInfo} from "./components/salary/CanadaSalaryInfo";
-import {InterviewGuide} from "./components/employment/InterviewGuide";
+import {InterviewGuide} from "./features/employment/InterviewGuide";
 import {USALifeInfo} from "./components/life/USALifeInfo";
 import {CanadaLifeInfo} from "./components/life/CanadaLifeInfo";
-import {WorkPermit} from "./components/employment/WorkPermit";
-import {CommunityForm} from "./components/community/CommunityForm";
+import {WorkPermit} from "./features/employment/WorkPermit";
+import {CommunityForm} from "./features/community/CommunityForm";
 import {Seminar} from "./components/seminar/Seminar";
+import {TestComponents} from './components/shared/TestComponents';
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -39,6 +40,7 @@ root.render(
                 <Routes>
                     <Route path="/" element={<App/>}>
                         <Route path="" element={<Main/>}/>
+                        <Route path="test" element={<TestComponents/>}/>
                         <Route path="seminar-info" element={<Seminar/>}/>
                         <Route path="company-information" element={<CompanyInformation/>}/>
                         <Route path="employment-info" element={<EmploymentInfo/>}/>

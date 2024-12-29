@@ -13,6 +13,8 @@ interface PageLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
+  country?: string;
+  category?: string;
   tabs?: TabItem[];
   breadcrumbs?: {
     label: string;
@@ -20,7 +22,7 @@ interface PageLayoutProps {
   }[];
 }
 
-export function PageLayout({ children, title, subtitle, tabs, breadcrumbs }: PageLayoutProps) {
+export function PageLayout({ children, title, subtitle, country, category, tabs, breadcrumbs }: PageLayoutProps) {
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -97,6 +99,16 @@ export function PageLayout({ children, title, subtitle, tabs, breadcrumbs }: Pag
           {subtitle && (
             <Typography variant="h6" sx={{ opacity: 0.8 }}>
               {subtitle}
+            </Typography>
+          )}
+          {country && (
+            <Typography variant="h6" sx={{ opacity: 0.8 }}>
+              {country}
+            </Typography>
+          )}
+          {category && (
+            <Typography variant="h6" sx={{ opacity: 0.8 }}>
+              {category}
             </Typography>
           )}
         </Container>
@@ -238,7 +250,7 @@ export function PageLayout({ children, title, subtitle, tabs, breadcrumbs }: Pag
               textAlign: 'center'
             }}
           >
-            © {new Date().getFullYear()} Koreer. All rights reserved.
+            {new Date().getFullYear()} Koreer. All rights reserved.
           </Typography>
         </Container>
       </Box>

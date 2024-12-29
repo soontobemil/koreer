@@ -11,6 +11,8 @@ export interface PostsDTO{
     title: string,
     content: string,
     user_email: string,
+    username: string,
+    nation: string,
     created_at: string,
     updated_at: string,
     is_owner: boolean;

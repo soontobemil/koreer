@@ -73,8 +73,8 @@ export function CommunityContents(
                         <div style={{position: "relative"}}>
                             {/*  커뮤니티 헤더 영역  */}
                             <div className={style.contentHeaderWrapper}>
-                                <div className={`${style.countryImg} ${style['kor']}`}></div>
-                                <span>{data.user_email}</span>|
+                                <div className={`${style.countryImg} ${style[`${data.nation}`]}`}></div>
+                                <span>{data.username}</span>|
                                 <span>{data.created_at}</span>
                                 {data.is_owner && (
                                     <div className={style.modifyImg}

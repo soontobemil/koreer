@@ -40,6 +40,7 @@ export function SignUp() {
   const {
     validate,
     idValidate, setIdValidate,
+    nationValidate, setNationValidate,
     nickNameValidate, setNickNameValidate,
     passwordValidate, setPasswordValidate,
     passwordCheckValidate, setPasswordCheckValidate
@@ -113,6 +114,8 @@ export function SignUp() {
               <SignUpNationField
                 nation={nation}
                 setNation={setNation}
+                nationValidate={nationValidate}
+                setNationValidate={setNationValidate}
               />
 
               <SignUpIdField

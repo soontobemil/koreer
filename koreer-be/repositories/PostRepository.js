@@ -8,7 +8,7 @@ class PostRepository {
     }
 
     async findById(id) {
-        return await db.Post.findOne({ where: { id } });
+        return await db.Post.findOne({where: {id}});
     }
 
     async getPosts(offset, limit, req) {
@@ -27,34 +27,50 @@ class PostRepository {
                 whereCondition = {
                     ...whereCondition,
                     [Op.or]: [
-                        { title: { [Op.like]: `%${searchWord}%` } },
-                        { content: { [Op.like]: `%${searchWord}%` } }
+                        {title: {[Op.like]: `%${searchWord}%`}},
+                        {content: {[Op.like]: `%${searchWord}%`}}
                     ]
                 };
             }
 
-          // 전체 게시글 수와 페이징 처리된 게시글 가져오기
-            const { rows, count } = await db.Post.findAndCountAll({
+            // 전체 게시글 수와 페이징 처리된 게시글 가져오기
+            const getUserSubQuery = (field) => [
+                db.sequelize.literal(`(
+                   SELECT ${field}
+                   FROM "users" 
+                   WHERE "users"."user_email" = "Post"."user_email"
+                   LIMIT 1
+               )`),
+                field
+            ];
+
+            const {rows, count} = await db.Post.findAndCountAll({
+                attributes: {
+                    include: [
+                        getUserSubQuery('username'),
+                        getUserSubQuery('nation')
+                    ]
+                },
                 where: whereCondition,
                 offset,
                 limit,
                 order: [['created_at', 'DESC']],
-                distinct: true, // 중복 제거
+                distinct: true
             });
 
-            return { rows, count };
+            return {rows, count};
         } catch (error) {
-          console.error('Error fetching posts with pagination:', error);
-          throw new Error('Error fetching posts with pagination');
+            console.error('Error fetching posts with pagination:', error);
+            throw new Error('Error fetching posts with pagination');
         }
     }
 
     async update(id, updateData) {
-        return await db.Post.update(updateData, { where: { id } });
+        return await db.Post.update(updateData, {where: {id}});
     }
 
     async delete(id) {
-        return await db.Post.destroy({ where: { id } });
+        return await db.Post.destroy({where: {id}});
     }
 
 }

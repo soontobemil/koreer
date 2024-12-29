@@ -11,7 +11,12 @@ const {generateAccessToken, generateRefreshToken} = require("../src/Auth");
 async function register(data) {
     try {
         const hashedPassword = await bcrypt.hash(data.password, 10);
-        const req = {user_email: data.user_email, username: data.username, password: hashedPassword};
+        const req = {
+            user_email: data.user_email,
+            username: data.username,
+            password: hashedPassword,
+            nation:data.nation
+        };
         const result = await userService.userDuplCheck(req.user_email);
         let rsltData = {};
 

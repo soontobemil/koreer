@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(50),
             allowNull: false
         },
+        nation: {
+            type: DataTypes.STRING(10),
+            allowNull: false
+        },
         password: {
             type: DataTypes.STRING,
             allowNull: false

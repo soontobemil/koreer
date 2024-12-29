@@ -17,6 +17,7 @@ async function register(req,res) {
             user_email:data.user_email,
             username:data.username,
             password:data.password,
+            nation:data.nation,
             is_email_verified:'N'
         });
         if(rsltData.dataValues) {

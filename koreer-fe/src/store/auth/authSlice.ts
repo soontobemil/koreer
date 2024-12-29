@@ -13,7 +13,7 @@ export const login = createAsyncThunk<AuthResponse, LoginCredentials>(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post('/auth/login', {
         user_email: credentials.user_email,
         password: credentials.password
       });
@@ -44,7 +44,7 @@ export const signup = createAsyncThunk<AuthResponse, SignUpCredentials>(
   'auth/signup',
   async (credentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/auth/register', {
+      const response = await axios.post('/auth/register', {
         user_email: credentials.user_email,
         username: credentials.username,
         password: credentials.password,

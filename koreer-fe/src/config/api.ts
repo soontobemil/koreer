@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Configure axios defaults
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 // Add request interceptor

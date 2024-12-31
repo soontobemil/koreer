@@ -15,7 +15,10 @@ async function createPost(req, res) {
 
 async function getPostById(req, res) {
   try {
-    const post = await PostService.getPostById(req.params.id);
+    if(!req.user) {
+      req.user = {id:"71",user_email:"iyeahs71@gmail.com"};
+    }
+    const post = await PostService.getPostById(req.params.id,req.user.id);
     if (post) {
       res.status(200).json(post);
     } else {

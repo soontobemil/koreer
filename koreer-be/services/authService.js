@@ -44,7 +44,8 @@ async function login(userinfo){
             throw new Error('Invalid password');
         }
 
-        const userPayload = { id: user.id, user_email: user.user_email };
+        //const userPayload = { id: user.id, user_email: user.user_email };
+        const userPayload = { id: user.id, username: user.username };
 
         // Create Access Token / Refresh Token
         const accessToken = createAccessToken(userPayload);

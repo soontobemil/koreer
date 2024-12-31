@@ -32,6 +32,10 @@ class PostRepository {
     async delete(id) {
         return await db.Post.destroy({ where: { id } });
     }
+
+    async incrementViewCnt({ by, id }) {
+        return await db.Post.increment('view_count', { by: by, where: { id } });
+    }
 }
 
 module.exports = new PostRepository();

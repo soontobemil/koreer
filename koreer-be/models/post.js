@@ -1,9 +1,14 @@
 const { formatDate } = require('@common/utils');
+const {ENUM} = require("sequelize");
 
 // Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
     const Post = sequelize.define('Post', {
     
+        user_id: {
+            type: DataTypes.INTEGER, // 양수만 허용
+            allowNull: true,
+        },
         user_email: {
             type: DataTypes.STRING(100),
             allowNull: false
@@ -15,6 +20,15 @@ module.exports = (sequelize, DataTypes) => {
         content: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+        category:{
+            type:ENUM('DAILY','TECH','STUDY'),
+            allowNull: false
+        },
+        view_count: {
+            type: DataTypes.INTEGER, // 양수만 허용
+            allowNull: true,
+            defaultValue: 0, // 기본값 0
         },
         created_at: {
             type: DataTypes.DATE,

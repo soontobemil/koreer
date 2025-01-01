@@ -1,5 +1,5 @@
 // Get request data from routes
-const postService = require('../services/postService');
+const postService = require('../services/PostService');
 const jwt = require("jsonwebtoken");
 
 async function createPost(req, res) {
@@ -19,7 +19,7 @@ async function getPostById(req, res) {
     if(!req.user) {
       req.user = {id:"71",user_email:"iyeahs71@gmail.com"};
     }
-    const post = await PostService.getPostById(req.params.id,req.user.id);
+    const post = await postService.getPostById(req.params.id,req.user.id);
     if (post) {
       res.status(200).json(post);
     } else {

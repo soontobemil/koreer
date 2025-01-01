@@ -1,6 +1,5 @@
 const { formatDate } = require('@common/utils');
 const {ENUM} = require("sequelize");
-const {ENUM} = require("sequelize");
 
 // Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {

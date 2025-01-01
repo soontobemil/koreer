@@ -18,6 +18,42 @@ function generateRefreshToken(user) {
     return jwt.sign(user, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
 }
 
+// 유저 정보 호출 함수
+function getUserEmail(req) {
+    try {
+
+        const accessToken = req.cookies?.accessToken;
+
+        if (accessToken) {
+            console.log("AccessToken from cookies:", accessToken);
+            const decoded = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET);
+            console.log("Decoded token:", decoded);
+            return decoded.user_email; // 쿠키에서 성공적으로 가져왔을 경우
+        }
+
+        // 헤더에서 Authorization 가져오기
+        const authHeader = req.headers.authorization;
+
+        if (authHeader) {
+            console.log("Authorization header:", authHeader);
+            const token = authHeader.split(" ")[1]; // Bearer 토큰 형태
+            if (token) {
+                const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+                console.log("Decoded token:", decoded);
+                return decoded.user_email; // 헤더에서 성공적으로 가져왔을 경우
+            }
+        }
+
+        // 쿠키와 헤더 모두 없으면 로그인되지 않은 상태
+        console.log("No access token found");
+        return ""; // 혹은 null 반환
+
+    } catch (error) {
+        console.error("Error verifying token:", error.message);
+        return ""; // 토큰 검증 실패시 빈 문자열 반환
+    }
+}
+
 // 로그인 라우트
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -28,7 +64,7 @@ app.post('/login', (req, res) => {
         return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    const userPayload = { id: user.id, username: user.username };
+    const userPayload = { id: user.id, username: user.username, user_email: user.user_email };
 
     // Access Token 및 Refresh Token 생성
     const accessToken = generateAccessToken(userPayload);
@@ -56,7 +92,7 @@ app.post('/token', (req, res) => {
         }
 
         // 새로운 Access Token 생성
-        const accessToken = generateAccessToken({ id: user.id, username: user.username });
+        const accessToken = generateAccessToken({ id: user.id, username: user.username, user_email: user.user_email });
         res.json({ accessToken });
     });
 });
@@ -86,7 +122,8 @@ app.post('/logout', (req, res) => {
     res.json({ message: 'Logged out' });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+module .exports = {
+    generateAccessToken,
+    generateRefreshToken,
+    getUserEmail
+}

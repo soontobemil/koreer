@@ -20,6 +20,7 @@ class PostResponseDTO {
         this.created_at = post.created_at;
         this.updated_at = post.updated_at;
         this.is_owner = post.is_owner;
+        this.category = post.category
     }
 }
 

@@ -1,14 +1,21 @@
-
-export interface UserPostDTO{
-    nation: string;
-    user_email: string;
-    username: string;
-    password: string;
+export interface UserPostDTO {
+  user_email: string;
+  username: string;
+  password: string;
+  nation: string;
 }
 
-export enum ValidateStatus{
-    UNFILLED = "UNFILLED", // 작성이나 체크 되지 않은 상태
-    BELOW_REQUIRED_LENGTH = "BELOW_REQUIRED_LENGTH", // 길이가 부족한 상태
-    INVALID = "INVALID", // 유효하지 않은 상태
-    NONE = "NONE",
+export enum ValidateStatus {
+  NONE = "NONE",
+  UNFILLED = "UNFILLED",
+  BELOW_REQUIRED_LENGTH = "BELOW_REQUIRED_LENGTH",
+  INVALID = "INVALID"
+}
+
+export interface Args {
+  id: string;
+  nickName: string;
+  password: string;
+  passwordCheck: string;
+  nation: string;
 }

@@ -1,5 +1,6 @@
 const { formatDate } = require('@common/utils');
 const {ENUM} = require("sequelize");
+const {ENUM} = require("sequelize");
 
 // Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
@@ -59,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true, // Soft Delete 활성화
         deletedAt: 'deleted_at', // 삭제 시간 필드 이름
     });
-  
+
     return Post;
-  };
+};
   

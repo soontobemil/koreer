@@ -34,6 +34,8 @@ export function MenuButton(
                 return window.location.href = '/community';
             case SubMenu.SHARE_YOUR_TIPS:
                 return window.location.href = '/tips';
+            default:
+                return "/";
         }
     }
 

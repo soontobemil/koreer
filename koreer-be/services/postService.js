@@ -2,10 +2,20 @@
 const PostRepository = require('../repositories/PostRepository');
 const { CreatePostDTO, PostResponseDTO } = require('../dtos/PostDTO');
 const Redis = require('ioredis');
+const jwt = require("jsonwebtoken");
+const {getUserEmail} = require("../src/Auth");
 
 class PostService {
-    async createPost(postData) {
-        const createPostDTO = new CreatePostDTO(postData); // DTO 적용
+    async createPost(req) {
+        const email = getUserEmail(req)
+        const data = req.body;
+
+        const createPostDTO = new CreatePostDTO({
+            user_email:email,
+            title:data.title,
+            content:data.content,
+            category:data.category,
+        }); // DTO 적용
         const post = await PostRepository.create(createPostDTO);
         return new PostResponseDTO(post); // DTO로 응답 생성
     }
@@ -54,13 +64,15 @@ class PostService {
 
     }
 
-    async getPosts(page = 1, limit = 10, currentUserEmail) {
+    async getPosts(page = 1, limit = 10, req) {
         try {
             // 페이지네이션 계산
             const offset = (page - 1) * limit;
-        
+            const currentUserEmail = getUserEmail(req)
+
             // 레포지토리에서 데이터 가져오기
-            const { rows: posts, count: total } = await PostRepository.getPostsWithPagination(offset, limit);
+            // todo 리팩토링
+            const { rows: posts, count: total } = await PostRepository.getPosts(offset, limit, req);
 
             // PostResponseDTO로 매핑
             const postsDTO = posts.map(post => {
@@ -68,7 +80,7 @@ class PostService {
                 const postObject = post.toJSON ? post.toJSON() : post; // Sequelize 객체일 경우 일반 객체로 변환
                 return new PostResponseDTO({ ...postObject, is_owner: isOwner });
             });
-        
+
             // 페이지네이션 메타데이터 포함 응답
             return {
                 data: postsDTO,
@@ -83,7 +95,7 @@ class PostService {
             throw new Error('Error fetching posts');
         }
     }
-      
+
 
     async updatePost(id, updateData) {
         if(updateData.title && updateData.content) {
@@ -147,5 +159,7 @@ class PostService {
         }
     }
 }
+
+
 
 module.exports = new PostService();

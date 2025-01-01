@@ -3,7 +3,7 @@ name: Deploy to Remote Server
 on:
   push:
     branches:
-      - KOR-9 # 테스트 
+      - main # 테스트 
 
 jobs:
   deploy:
@@ -42,19 +42,56 @@ jobs:
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "sudo apt-get -y autoremove && sudo apt-get clean"
           ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs"
 
+      # 캐싱
+#      - name: Cache Frontend Build
+#        uses: actions/cache@v3
+#        with:
+#          path: |
+#            /koreer/koreer-fe/build
+#            /koreer/koreer-fe/node_modules/.cache
+#          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+#          restore-keys: |
+#            ${{ runner.os }}-build-
 
-      # 실행
-      - name: Install and Build
-        run: |
-          node -v
-          pwd
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd /koreer/koreer-fe && yarn install && yarn build"
-
-      # Docker Compose 실행
-#      - name: Restart Docker Services
+#      - name: Install Dependencies
 #        run: |
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose down"
-#          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "cd / && export COMPOSE_PROJECT_NAME=koreer && docker-compose up -d"
+#          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 \
+#          -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+#            cd /koreer/koreer-fe && yarn cache clean &&
+#            yarn install --network-timeout 1000000 --prefer-offline
+#          "
+      - name: Build
+        working-directory: ./koreer-fe
+        run: |
+          yarn install
+          pwd
+          yarn build
+
+      # 빌드 결과물만 배포
+      - name: Deploy build
+        run: |
+          cd koreer-fe && \
+          scp -r \
+          build/ \
+          package.json \
+          yarn.lock \
+          ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/koreer/koreer-fe/
+
+      # 서버에서 의존성 설치
+      - name: Install production dependencies
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 \
+          -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "
+            cd /koreer/koreer-fe && 
+            yarn install --network-timeout 1000000 --prefer-offline
+          "
+
+      - name: Install&Build Backend
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_UESR }}@${{ secrets.REMOTE_HOST }} "
+            cd /koreer/koreer-be &&
+            yarn install 
+          "
 
         # 블루-그린 전환 스크립트 실행
       - name: Switch Blue-Green Environment

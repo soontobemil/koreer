@@ -1,16 +1,37 @@
-import style from "../../assets/scss/sub/login.module.scss"
-import {useNavigate} from "react-router-dom";
-import {useCallback, useEffect, useState} from "react";
-import {ResponseDTO} from "../../slice/common";
-import {useDispatch} from "react-redux";
-import {login} from "../../slice/signInSlice";
-import {LoginDTO} from "../../types/signIn";
-import {SignInIdField} from "./SignInIdField";
-import {SignInPasswordField} from "./SignInPasswordField";
-import {SignInSearchField} from "./SignInSearchField";
-import {AuthProvider} from "../common/AuthProvider";
-import {useSignInValidator} from "./hooks/useSignInValidator";
-import spinner from "../../assets/img/community/loading_spinner.gif";
+import {useNavigate, Link as RouterLink} from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../slice/signInSlice";
+import { LoginDTO } from "../../types/signIn";
+import { ValidateStatus } from "../../types/signup";
+import {
+  Box,
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Link,
+  Divider,
+  CircularProgress,
+  Alert,
+  IconButton,
+  InputAdornment,
+  Stack,
+} from '@mui/material';
+import {
+  Email,
+  Lock,
+  Visibility,
+  VisibilityOff,
+  Google,
+  GitHub,
+} from '@mui/icons-material';
+import { motion } from 'framer-motion';
+import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
+import {AuthProvider} from "../../components/common/AuthProvider";
+import {LoginResponseDTO} from "../../slice/common";
+import {useSignInValidator} from "../../components/signup/hooks/useSignInValidator";
 
 interface ErrorResponse{
     message: string;
@@ -20,51 +41,24 @@ export function SignIn() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const {validate, emailValidate, setEmailValidate, passwordValidate, setPasswordValidate} =
         useSignInValidator({email,password} );
     const {setAccessToken} = AuthProvider();
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch<any>();
 
-
-    const handleSignup = () => {
-        navigate('/signup')
-    }
-
-    // const googleAccountAccess = () => {
-    //     console.log('step1')
-    // }
-
-    // todo 테스트
-    const googleLoginssss = useCallback(async () => {
-        window.location.href = 'http://localhost:3000/auth/google';
-        // try {
-        //     await dispatch(googleLogin()).unwrap();
-        //
-        // } catch (error: any) {
-        //     // const convert = error as ErrorResponse;
-        //     // const parsedMessage = JSON.parse(convert.message);
-        //     //
-        //     // setErrorMessage(parsedMessage.message);
-        // }
-    }, []);
-
-    useEffect(() => {
-        setErrorMessage('')
-    }, [email, password]);
-
-    const signIn = useCallback(async () => {
-        setIsLoaded(true);
+  // @ts-ignore
+    const handleLogin = useCallback(async () => {
         const result = validate();
         if(!result) return ;
 
         const loginDTO:LoginDTO = {user_email: email, password: password}
         try {
-            const result: ResponseDTO = await dispatch(login(loginDTO)).unwrap();
-            console.log(result)
-            setAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsInVzZXJfZW1haWwiOiIxMzEzIiwiaWF0IjoxNzI4NDU4MTA1LCJleHAiOjE3Mjg0NjE3MDV9.EP30Lr_4bPWB2oy60uccx7bTJgogwsz1i4sOF6g5je8')
+            const result: LoginResponseDTO = await dispatch(login(loginDTO)).unwrap();
+            setAccessToken(result.accessToken)
             navigate('/')
 
             return result;
@@ -73,64 +67,247 @@ export function SignIn() {
             const parsedMessage = JSON.parse(convert.message);
 
             setErrorMessage(parsedMessage.message);
-        } finally {
-            setIsLoaded(false)
         }
         // eslint-disable-next-line
     }, [email, password]);
 
-    return (
-        <>
-            {isLoaded && (
-                <img className={style.spinner} src={spinner} alt={'spinner'}/>
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    setErrorMessage("")
+    if (e.target.value.length > 0) {
+      setEmailValidate(ValidateStatus.NONE);
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+      setErrorMessage("")
+    if (e.target.value.length > 0) {
+      setPasswordValidate(ValidateStatus.NONE);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+      const redirectUri = `${process.env.REACT_APP_BASE_URL}/auth/google/callback`;
+      const googleClientId = '969073700844-r0dbph7gk0e9aqm5868ums9jgddqgvg2.apps.googleusercontent.com'
+
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
+  }
+
+  return (
+    <Container component="main" maxWidth="sm">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Box
+          sx={{
+            mt: 8,
+            mb: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Box
+            component={RouterLink}
+            to="/"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: 'inherit',
+              mb: 3,
+            }}
+          >
+            <Box
+              component="img"
+              src={koreerLogo}
+              alt="Koreer Logo"
+              sx={{
+                height: 40,
+                width: 40,
+                mr: 1,
+              }}
+            />
+            <Typography
+              variant="h4"
+              component="span"
+              sx={{
+                fontWeight: 700,
+                background: (theme) =>
+                  `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Koreer
+            </Typography>
+          </Box>
+
+          <Paper
+            elevation={2}
+            sx={{
+              p: 4,
+              width: '100%',
+              borderRadius: 2,
+              bgcolor: 'background.paper',
+            }}
+          >
+            <Typography variant="h5" align="center" gutterBottom fontWeight={600}>
+              로그인
+            </Typography>
+
+            {errorMessage && (
+              <Alert severity="error" sx={{ mb: 2, whiteSpace:"pre-line"}}>
+                {errorMessage}
+              </Alert>
             )}
-            <div className={style.loginMainWrapper}>
-                <div className={style.loginContainer}>
-                    <div className={style.titleWrapper}>
-                        <span className={style.mainText}>Koreer</span>
-                        <span className={style.subText}>서비스 이용을 위해 로그인을 해주세요.</span>
-                        <span className={style.infoText}>회원이 아닌 경우, 회원 가입을 통해 서비스를 이용하실 수 있습니다.</span>
-                    </div>
 
-                    {/*  로그인 영역  */}
-                    <div className={style.loginInputWrapper}>
-                        <SignInIdField
-                            email={email} setEmail={ setEmail}
-                            emailValidate={emailValidate} setEmailValidate={setEmailValidate}
-                        />
+            <Stack spacing={2}>
+              <TextField
+                fullWidth
+                label="이메일"
+                value={email}
+                onChange={handleEmailChange}
+                error={emailValidate === ValidateStatus.UNFILLED}
+                helperText={emailValidate === ValidateStatus.UNFILLED ? "이메일을 입력해주세요" : ""}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Email color="action" />
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
-                        <SignInPasswordField
-                            password={password} setPassword={setPassword}
-                            passwordValidate={passwordValidate} setPasswordValidate={setPasswordValidate}
-                        />
-                        <span className={style.loginErrorText}>{errorMessage}</span>
-                        <SignInSearchField />
-                    </div>
+              <TextField
+                fullWidth
+                label="비밀번호"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={handlePasswordChange}
+                error={passwordValidate === ValidateStatus.UNFILLED}
+                helperText={passwordValidate === ValidateStatus.UNFILLED ? "비밀번호를 입력해주세요" : ""}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock color="action" />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
-                    <div className={style.buttonsWrapper}>
-                        <button className={style.loginButton}
-                                onClick={signIn}>
-                            로그인
-                        </button>
-                        <div className={style.imgWrapper}>
-                            <div className={style.googleImg} onClick={googleLoginssss}></div>
-                            <div className={style.kakaoImg}></div>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Link
+                  component={RouterLink}
+                  to="/forgot-password"
+                  variant="body2"
+                  sx={{ textDecoration: 'none' }}
+                >
+                  비밀번호를 잊으셨나요?
+                </Link>
+              </Box>
 
-                        </div>
-                    </div>
+              <Button
+                fullWidth
+                variant="contained"
+                size="large"
+                onClick={handleLogin}
+                disabled={!validate || isLoading}
+                sx={{
+                  py: 1.5,
+                  mt: 2,
+                  position: 'relative',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: 2,
+                  },
+                  transition: 'all 0.2s',
+                }}
+              >
+                {isLoading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  '로그인'
+                )}
+              </Button>
 
-                    <div className={style.signupWrapper} onClick={handleSignup}>
-                        <span className={style.text}>
-                            처음이신가요? 회원가입 후 이용해주세요!
-                        </span>
-                        <div className={style.buttonsWrapper}>
-                            <button className={style.signupButton}>
-                                회원 가입
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+              <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
+                <Divider sx={{ flex: 1 }} />
+                <Typography variant="body2" color="text.secondary" sx={{ px: 2 }}>
+                  또는
+                </Typography>
+                <Divider sx={{ flex: 1 }} />g
+              </Box>
+
+              <Stack direction="row" spacing={2}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  startIcon={<Google />}
+                  sx={{
+                    py: 1.5,
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: 1,
+                    },
+                    transition: 'all 0.2s',
+                  }}
+                  onClick={handleGoogleLogin}
+                >
+                  Google로 로그인
+                </Button>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  startIcon={<GitHub />}
+                  sx={{
+                    py: 1.5,
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: 1,
+                    },
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  GitHub로 로그인
+                </Button>
+              </Stack>
+            </Stack>
+
+            <Box sx={{ mt: 3, textAlign: 'center' }}>
+              <Typography variant="body2" color="text.secondary">
+                아직 계정이 없으신가요?{' '}
+                <Link
+                  component={RouterLink}
+                  to="/signup"
+                  sx={{
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
+                >
+                  회원가입
+                </Link>
+              </Typography>
+            </Box>
+          </Paper>
+        </Box>
+      </motion.div>
+    </Container>
+  );
 }

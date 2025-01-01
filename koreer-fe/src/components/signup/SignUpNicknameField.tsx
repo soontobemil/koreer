@@ -20,7 +20,7 @@ export function SignUpNicknameField({nickName, setNickName,
         <>
             <div className={style.content}>
                 <span className={style.contentText}>
-                    Nickname
+                    닉네임
                 </span>
                 <input
                     placeholder={"koreer123"}
@@ -29,7 +29,7 @@ export function SignUpNicknameField({nickName, setNickName,
                 />
             {nickNameValidate === ValidateStatus.BELOW_REQUIRED_LENGTH && (
                 <span className={style.duplicateMessage}>
-                    Please make sure the password and password confirmation match.
+                    닉네임을 작성해주세요!
                 </span>
             )}
             </div>

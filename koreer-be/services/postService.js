@@ -26,7 +26,9 @@ class PostService {
             throw new Error('Post not found');
         }
         const viewCnt = await this.viewPost(post.id, user_id);
-        post.view_count = viewCnt;
+        if(viewCnt) {
+            post.view_count = parseInt(post.view_count)+parseInt(viewCnt);
+        }
         return new PostResponseDTO(post);
     }
 

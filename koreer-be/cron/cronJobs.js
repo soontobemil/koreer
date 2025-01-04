@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const { fetchAdzunaJobInfos,fetchRapidJobInfos,deleteJobInfos } = require('../services/jobInfoService');
-const PostService = require('../services/PostService');
+const PostService = require('../services/postService');
 
 // Refine Promise.all process
 const adzunaInfoJob = async () => {

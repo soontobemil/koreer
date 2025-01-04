@@ -1,9 +1,16 @@
-import { Box, Container, Typography, Paper, Grid } from '@mui/material';
+import { Box, Container, Typography, Paper, Grid, Button, Divider } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { styled } from '@mui/material/styles';
-import koreerLogo from '../../assets/img/koreer_logo.png';
+import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
 import { CloudBackground } from './CloudBackground';
 import { ParticleBackground } from './ParticleBackground';
+import { 
+  TrendingUp, 
+  WorkOutline, 
+  Public, 
+  EmojiPeople,
+  ArrowForward
+} from '@mui/icons-material';
 
 const PlaneIcon = styled(motion.div)`
   width: 40px;
@@ -16,11 +23,16 @@ const PlaneIcon = styled(motion.div)`
 
 const LogoContainer = styled(motion.div)`
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 500px;
+  height: 500px;
   margin: 0 auto;
   perspective: 1000px;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
 `;
 
 const Logo = styled(motion.img)`
@@ -28,6 +40,18 @@ const Logo = styled(motion.img)`
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 0 20px rgba(33, 150, 243, 0.3));
+  mix-blend-mode: normal;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 `;
 
 const StyledPaper = styled(Paper)`
@@ -62,6 +86,41 @@ const BackgroundWrapper = styled(Box)`
   z-index: 1;
   overflow: hidden;
 `;
+
+const StatCard = styled(Paper)`
+  padding: 2rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.08);
+  }
+`;
+
+const statsVariants = {
+  initial: { 
+    opacity: 0,
+    y: 20
+  },
+  animate: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 3.3 + (i * 0.1),
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  })
+};
 
 export default function Main() {
   const planes = [
@@ -184,10 +243,34 @@ export default function Main() {
     }
   ];
 
+  const stats = [
+    {
+      icon: "📈",
+      value: "90%",
+      label: "취업 성공률"
+    },
+    {
+      icon: "💼",
+      value: "1000+",
+      label: "채용 정보"
+    },
+    {
+      icon: "🌏",
+      value: "50+",
+      label: "글로벌 기업"
+    },
+    {
+      icon: "👥",
+      value: "5000+",
+      label: "활성 사용자"
+    }
+  ];
+
   return (
     <Box sx={{ 
       minHeight: '100vh',
       pt: 8,
+      pb: 8,
       background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
       overflow: 'hidden',
       position: 'relative'
@@ -198,7 +281,7 @@ export default function Main() {
       </BackgroundWrapper>
       
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-        <Box sx={{ position: 'relative', height: '500px', mb: 8 }}>
+        <Box sx={{ position: 'relative', height: '600px', mb: 8 }}>
           <AnimatePresence>
             {planes.map((plane, index) => (
               <PlaneIcon
@@ -251,9 +334,27 @@ export default function Main() {
           </motion.div>
         </Box>
 
-        <Grid container spacing={3}>
+        <Grid 
+          container 
+          spacing={4}
+          sx={{
+            mt: 4,
+            justifyContent: 'center',
+            alignItems: 'stretch'
+          }}
+        >
           {features.map((feature, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid 
+              item 
+              xs={12} 
+              sm={6} 
+              md={3} 
+              key={index}
+              sx={{
+                display: 'flex',
+                minHeight: '200px'
+              }}
+            >
               <motion.div
                 variants={cardVariants}
                 initial="initial"
@@ -261,12 +362,16 @@ export default function Main() {
                 custom={index}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                style={{ width: '100%' }}
               >
                 <StyledPaper
                   elevation={0}
                   sx={{
-                    p: 3,
+                    p: 4,
                     height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
                     borderRadius: 4,
                     border: '1px solid rgba(255, 255, 255, 0.3)',
                     position: 'relative',
@@ -296,7 +401,8 @@ export default function Main() {
                       backgroundClip: 'text',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
-                      position: 'relative'
+                      position: 'relative',
+                      mb: 2
                     }}
                   >
                     {feature.title}
@@ -317,6 +423,122 @@ export default function Main() {
           ))}
         </Grid>
       </Container>
+
+      {/* Stats Section */}
+      <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
+        <Grid container spacing={3}>
+          {stats.map((stat, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <motion.div
+                variants={statsVariants}
+                initial="initial"
+                animate="animate"
+                custom={index}
+                style={{ height: '100%' }}
+              >
+                <StatCard elevation={0}>
+                  <Typography 
+                    variant="h1" 
+                    sx={{ 
+                      fontSize: '1.5rem',
+                      color: '#2196F3',
+                      opacity: 0.9,
+                      mb: 0.5
+                    }}
+                  >
+                    {stat.icon}
+                  </Typography>
+                  <Typography 
+                    variant="h2" 
+                    sx={{ 
+                      fontSize: '1.8rem',
+                      fontWeight: 600,
+                      color: '#2196F3',
+                      opacity: 0.9,
+                      mb: 0.5
+                    }}
+                  >
+                    {stat.value}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: 'text.secondary',
+                      fontSize: '0.95rem'
+                    }}
+                  >
+                    {stat.label}
+                  </Typography>
+                </StatCard>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* Call to Action Section */}
+      <Box 
+        sx={{ 
+          background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.05) 0%, rgba(33, 203, 243, 0.05) 100%)',
+          py: 10,
+          mt: 8,
+          borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+        }}
+      >
+        <Container maxWidth="lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <Grid container spacing={4} alignItems="center">
+              <Grid item xs={12} md={8}>
+                <Typography 
+                  variant="h3" 
+                  gutterBottom 
+                  sx={{ 
+                    fontWeight: 'bold',
+                    color: '#1a237e',
+                    fontSize: { xs: '2rem', md: '2.5rem' }
+                  }}
+                >
+                  지금 바로 시작하세요
+                </Typography>
+                <Typography 
+                  variant="h6" 
+                  sx={{ 
+                    mb: 4,
+                    color: 'text.secondary',
+                    lineHeight: 1.6,
+                    fontSize: { xs: '1rem', md: '1.25rem' }
+                  }}
+                >
+                  Koreer와 함께라면 해외 취업의 꿈이 현실이 됩니다.
+                  전문가의 도움을 받아 여러분의 커리어를 성장시켜보세요.
+                </Typography>
+                <Button 
+                  variant="contained" 
+                  size="large"
+                  endIcon={<ArrowForward />}
+                  sx={{ 
+                    borderRadius: 8,
+                    py: 1.5,
+                    px: 4,
+                    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+                    fontSize: '1.1rem',
+                    '&:hover': {
+                      background: 'linear-gradient(45deg, #1976D2 30%, #00BCD4 90%)',
+                    }
+                  }}
+                >
+                  무료로 시작하기
+                </Button>
+              </Grid>
+            </Grid>
+          </motion.div>
+        </Container>
+      </Box>
     </Box>
   );
 }

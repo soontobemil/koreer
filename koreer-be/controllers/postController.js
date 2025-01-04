@@ -1,5 +1,5 @@
 // Get request data from routes
-const postService = require('../services/PostService');
+const postService = require('../services/postService');
 const jwt = require("jsonwebtoken");
 
 async function createPost(req, res) {

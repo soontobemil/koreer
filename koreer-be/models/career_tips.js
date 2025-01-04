@@ -2,7 +2,7 @@ const {formatDate} = require('@common/utils');
 
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('CareerTips', {
-        id: {
+        tips_id: {
             type: DataTypes.INTEGER, // 양수만 허용
             allowNull: true,
         },

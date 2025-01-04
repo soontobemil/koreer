@@ -1,48 +1,41 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import {
   Box,
-  Container,
-  Grid,
-  Typography,
-  Paper,
-  TextField,
-  InputAdornment,
+  Button,
   Card,
   CardContent,
   CardMedia,
   Chip,
-  Stack,
-  Rating,
-  LinearProgress,
-  Button,
-  IconButton,
-  Tooltip,
-  Fade,
-  useTheme,
   Collapse,
+  Container,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Rating,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
 } from '@mui/material';
 import {
-  Search,
-  LocationOn,
-  Business,
-  People,
-  Info,
-  Star,
-  TrendingUp,
-  WorkOutline,
   AttachMoney,
-  FilterList,
-  Sort,
   Bookmark,
   BookmarkBorder,
-  Work,
-  EmojiEvents,
-  Psychology,
-  ExpandMore,
+  Business,
   ExpandLess,
+  ExpandMore,
+  LocationOn,
+  People,
+  Psychology,
+  Search,
+  Sort,
+  TrendingUp,
+  Work,
+  WorkOutline,
 } from '@mui/icons-material';
-import { motion, AnimatePresence } from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import styles from './CompanyInformation.module.scss';
+import {ComponentHelmet} from "../../features/common/ComponentHelmet";
 
 interface CompanyInfo {
   id: number;
@@ -2194,6 +2187,7 @@ export function CompanyInformation() {
           ))}
         </AnimatePresence>
       </motion.div>
+      <ComponentHelmet title={"Koreer - 기업 정보"} />
     </Container>
   );
 }

@@ -1,26 +1,31 @@
-import {useState, useCallback} from 'react';
-import {ValidateStatus} from '../../../types/signup';
+import {useCallback, useState} from "react";
+import {ValidateStatus} from "../../../types/signup";
+import {CommunityCategories} from "@/types/community";
 
-interface Args {
+interface Args{
   title: string;
   content: string;
-  category?: string;
+  category: CommunityCategories | "";
 }
 
-export function useCommunityValidator({title, content, category}: Args) {
-  const [titleValidate, setTitleValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-  const [contentValidate, setContentValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
-  const [categoryValidate, setCategoryValidate] = useState<ValidateStatus>(ValidateStatus.NONE);
+export function useCommunityValidator(
+    {title, content, category}:Args) {
+
+
+  const [titleValidate, setTitleValidate] = useState(ValidateStatus.NONE)
+  const [contentValidate, setContentValidate] = useState(ValidateStatus.NONE)
+  // eslint-disable-next-line max-len
+  const [categoryValidate, setCategoryValidate] = useState(ValidateStatus.NONE)
+  let isValidate = true
 
   const validate = useCallback(() => {
-    let isValidate = true;
 
-    if (title === '' || title.length >= 100) {
+    if (title === '' || title.length>=100) {
       setTitleValidate(ValidateStatus.UNFILLED);
       isValidate = false;
     }
 
-    if (content === '' || content.length >= 300) {
+    if (content === '' || content.length>=300) {
       setContentValidate(ValidateStatus.UNFILLED);
       isValidate = false;
     }
@@ -31,15 +36,12 @@ export function useCommunityValidator({title, content, category}: Args) {
     }
 
     return isValidate;
-  }, [title, content, category]);
+  }, [title, content, category, titleValidate, contentValidate, categoryValidate]);
 
   return {
-    titleValidate,
-    setTitleValidate,
-    contentValidate,
-    setContentValidate,
-    categoryValidate,
-    setCategoryValidate,
     validate,
-  };
+    titleValidate, setTitleValidate,
+    contentValidate, setContentValidate,
+    categoryValidate, setCategoryValidate
+  }
 }

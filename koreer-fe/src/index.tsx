@@ -17,6 +17,7 @@ import {TestComponents} from './components/shared/TestComponents';
 import {MembershipPage} from './features/membership/MembershipPage';
 import {Community} from './features/community/Community';
 import {CommunityForm} from './features/community/CommunityForm';
+import {CommunityDetail} from "./features/community/CommunityDetail";
 import {Tips} from './features/community/Tips';
 import {TipsPosting} from './features/community/TipsPosting';
 import {AboutUs} from './components/aboutus/AboutUs';
@@ -30,7 +31,6 @@ import {CanadaSalaryInfo} from './components/salary/CanadaSalaryInfo';
 import {USALifeInfo} from './components/life/USALifeInfo';
 import {CanadaLifeInfo} from './components/life/CanadaLifeInfo';
 import {MyPage} from "./components/MyPage";
-import {CommunityDetail} from "./components/community/CommunityDetail";
 import { HelmetProvider } from 'react-helmet-async';
 
 const router = createBrowserRouter([

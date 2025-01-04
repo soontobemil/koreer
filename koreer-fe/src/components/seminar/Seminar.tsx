@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, {useState} from 'react';
+import {motion} from 'framer-motion';
 import style from "../../assets/scss/sub/seminar.module.scss";
-import { Event, CalendarToday, People, ArrowForward, Search } from '@mui/icons-material';
+import {ArrowForward, CalendarToday, People, Search} from '@mui/icons-material';
+import {ComponentHelmet} from "../../features/common/ComponentHelmet";
 
 export function Seminar() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -213,6 +214,7 @@ export function Seminar() {
                     ))}
                 </div>
             </motion.div>
+            <ComponentHelmet title={"Koreer - 세미나"} />
         </div>
     );
 }

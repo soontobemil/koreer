@@ -28,6 +28,7 @@ import {
     Settings
 } from '@mui/icons-material';
 import { useState } from 'react';
+import {ComponentHelmet} from "..//features/common/ComponentHelmet";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -274,6 +275,7 @@ export function MyPage() {
                     </TabPanel>
                 </Paper>
             </motion.div>
+            <ComponentHelmet title={"Koreer - 마이페이지"} />
         </Container>
     );
 }

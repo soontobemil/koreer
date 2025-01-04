@@ -1,6 +1,6 @@
 // services/post.service.js
 const PostRepository = require('../repositories/PostRepository');
-const { CreatePostDTO, PostResponseDTO } = require('../dtos/PostDTO');
+const { CreatePostDTO, PostResponseDTO, PostDTO } = require('../dtos/PostDTO');
 const Redis = require('ioredis');
 const jwt = require("jsonwebtoken");
 const {getUserEmail} = require("../src/Auth");
@@ -21,7 +21,7 @@ class PostService {
     }
 
     async getPostById(id,user_id) {
-        const post = await PostRepository.findById(id);
+        const post = await PostRepository.searchById(id);
         if (!post) {
             throw new Error('Post not found');
         }
@@ -29,7 +29,7 @@ class PostService {
         if(viewCnt) {
             post.view_count = parseInt(post.view_count)+parseInt(viewCnt);
         }
-        return new PostResponseDTO(post);
+        return new PostDTO(post);
     }
 
     async viewPost(postId, userId) {

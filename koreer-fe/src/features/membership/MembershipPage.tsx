@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, {useState} from 'react';
+import {AnimatePresence, motion} from 'framer-motion';
 import styles from './membership.module.scss';
-import { Star, Check, Business, Person, Group } from '@mui/icons-material';
+import {Business, Check, Person, Star} from '@mui/icons-material';
+import {ComponentHelmet} from "../../features/common/ComponentHelmet";
 
 interface PricingPlan {
   name: string;
@@ -272,6 +273,7 @@ export const MembershipPage: React.FC = () => {
           ))}
         </div>
       </motion.div>
+      <ComponentHelmet title={"Koreer - 멤버십"} />
     </div>
   );
 };

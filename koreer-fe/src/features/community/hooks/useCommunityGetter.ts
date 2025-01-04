@@ -11,7 +11,7 @@ export function useCommunityGetter() {
     const [post, setPost] = useState<PostsDTO>();
 
     const getCompanyInfo = useCallback(async (
-        {page, type, searchWord}: { page: number, type?: CommunityCategories, searchWord:string }) => {
+            {page, type, searchWord}: { page: number, type?: CommunityCategories, searchWord:string }) => {
             try {
                 console.log(type)
                 const result: PageResponse<PostsDTO> = await dispatch(getPostsAsync({page, type, searchWord})).unwrap();

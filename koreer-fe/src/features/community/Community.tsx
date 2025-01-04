@@ -5,7 +5,8 @@ import {CommunityEmpty} from "./CommunityEmpty";
 import {Outlet} from "react-router-dom";
 import {CommunityCategories, CommunityType} from "../../types/community";
 import {useEffect, useState} from "react";
-import {useCommunityGetter} from "../../components/community/hooks/useCommunityGetter";
+import {useCommunityGetter} from "../../features/community/hooks/useCommunityGetter";
+import {ComponentHelmet} from "../../features/common/ComponentHelmet";
 
 export function Community() {
 
@@ -121,9 +122,10 @@ export function Community() {
                     {posts && totalPage >= 1 ? (
                         <CommunityContents posts={posts.data}/>
                     ) : (
-                       <CommunityEmpty />
+                        <CommunityEmpty />
                     )}
                 </div>
+                <ComponentHelmet title={"Koreer - 커뮤니티"} />
             </div>
         </>
     )

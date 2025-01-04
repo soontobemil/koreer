@@ -5,92 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
-      <change afterPath="$PROJECT_DIR$/models/post_views.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/public/img/companies/Google-Logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/refactoring_instructions.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/img/companies/Google-Logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/TestComponents.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/forms/IdField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/forms/NationField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/forms/NicknameField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/forms/PasswordConfirmField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/forms/PasswordField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/forms/SearchField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/forms/TextField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/modals/ConfirmModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/config/api.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/constants/countries.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/auth/SignIn.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/auth/SignUp.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/Community.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityCategory.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityContents.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityEmpty.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/Tips.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/TipsPosting.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityGetter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityValidator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useTipsGetter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/company/CompanyInformation.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/company/CompanyInformation.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/company/hooks/useCompanyInformationGetter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/employment/CanadaSalaryInfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/employment/EmploymentInfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/employment/InterviewGuide.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/employment/USASalaryInfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/employment/WorkPermit.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/membership/MembershipPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/membership/membership.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/visa/CanadaVisaInfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/visa/USAVisaInfo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/hooks/api/useCommunityGetter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/hooks/api/useSignUpMutation.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/hooks/form/useAuthValidator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/slice/membershipSlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/auth/authSlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/auth/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/community/communitySlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/community/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/company/companySlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/company/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/hooks.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/shared/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/shared/uiSlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/store/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.production" beforeDir="false" afterPath="$PROJECT_DIR$/.env.production" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/authController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/postController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/postController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cron/cronJobs.js" beforeDir="false" afterPath="$PROJECT_DIR$/cron/cronJobs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dtos/PostDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/PostDTO.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/career_tips.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/career_tips.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/post.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repositories/PostRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/PostRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/authService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/postService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/postService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/.env.development" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/craco.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/common/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/seminar.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/assets/scss/sub/seminar.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityDetail.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityEmpty.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Tips.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/TipsPosting.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommentFunctions.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommunityGetter.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommunityValidator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useTipsGetter.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/seminar/Seminar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/seminar/Seminar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/shared/InfoCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/InfoCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/shared/cards/InfoCard.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/shared/layouts/PageLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/shared/layouts/PageLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/hooks/useSignInValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/hooks/form/useSignInValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/Community.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/Community.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityContents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityContents.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityGetter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityGetter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityValidator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/company/CompanyInformation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/company/CompanyInformation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/employment/EmploymentInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/employment/EmploymentInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/membership/MembershipPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/membership/MembershipPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/signup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/signup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +122,7 @@
       <workItem from="1734524440539" duration="6477000" />
       <workItem from="1734695445607" duration="429000" />
       <workItem from="1734742750392" duration="377000" />
-      <workItem from="1735955546656" duration="8903000" />
+      <workItem from="1735955546656" duration="10511000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -210,7 +149,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="origin/KOR-9" />
                       </list>
                     </value>
                   </entry>

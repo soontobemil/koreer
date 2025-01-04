@@ -31,4 +31,4 @@ class PostDTO {
     }
 }
 
-module.exports = { CreatePostDTO, PostResponseDTO };
+module.exports = { CreatePostDTO, PostResponseDTO, PostDTO };

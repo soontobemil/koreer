@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { TrendingUp, AccessTime, CheckCircleOutline, Campaign, Warning, Info } from '@mui/icons-material';
 import { EmploymentLayout } from '../../components/shared/layouts/EmploymentLayout';
 import { InfoCard } from '../../components/shared/InfoCard';
+import {ComponentHelmet} from "../../features/common/ComponentHelmet";
 
 interface InfoCard {
   title: string;
@@ -190,6 +191,7 @@ export function EmploymentInfo() {
           ))}
         </Grid>
       </Stack>
+      <ComponentHelmet title={"Koreer - 취업 정보"} />
     </EmploymentLayout>
   );
 }

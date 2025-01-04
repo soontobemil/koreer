@@ -525,6 +525,28 @@ export function Header() {
                 </Box>
               ))}
 
+              {isLogin && (
+                  <Button
+                      color="inherit"
+                      variant="outlined"
+                      startIcon={<Person />}
+                      onClick={() => handleNavigation('/my-page', HeaderStatus.NONE)}
+                      sx={{
+                        px: 3,
+                        py: 1,
+                        borderRadius: 2,
+                        mr: 1,  // 오른쪽 마진 추가
+                        '&:hover': {
+                          transform: 'translateY(-2px)',
+                          boxShadow: 2
+                        },
+                        transition: 'all 0.2s'
+                      }}
+                  >
+                    My Page
+                  </Button>
+              )}
+
               <Button
                 color={isLogin ? "inherit" : "primary"}
                 variant={isLogin ? "outlined" : "contained"}

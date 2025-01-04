@@ -1,6 +1,6 @@
 const { formatDate } = require('@common/utils');
+const {ENUM} = require("sequelize");
 
-//todo enum 변경 해야함
 // Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
     const Post = sequelize.define('Post', {
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         category:{
-            type:DataTypes.STRING(255),
+            type:ENUM('DAILY','TECH','STUDY'),
             allowNull: false
         },
         view_count: {

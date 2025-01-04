@@ -14,6 +14,12 @@ import {
   Stack,
   Rating,
   LinearProgress,
+  Button,
+  IconButton,
+  Tooltip,
+  Fade,
+  useTheme,
+  Collapse,
 } from '@mui/material';
 import {
   Search,
@@ -22,8 +28,21 @@ import {
   People,
   Info,
   Star,
+  TrendingUp,
+  WorkOutline,
+  AttachMoney,
+  FilterList,
+  Sort,
+  Bookmark,
+  BookmarkBorder,
+  Work,
+  EmojiEvents,
+  Psychology,
+  ExpandMore,
+  ExpandLess,
 } from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import styles from './CompanyInformation.module.scss';
 
 interface CompanyInfo {
   id: number;
@@ -44,8 +63,19 @@ interface CompanyInfo {
   };
 }
 
+interface IndustryGroup {
+  name: string;
+  industries: string[];
+}
+
 export function CompanyInformation() {
+  const theme = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('rating');
+  const [savedCompanies, setSavedCompanies] = useState<number[]>([]);
+  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
 
   const companies: CompanyInfo[] = [
     {
@@ -105,19 +135,19 @@ export function CompanyInformation() {
     {
       id: 4,
       name: 'Google',
-      logo: '/companies/google-logo.png',
+      logo: '/img/companies/Google-Logo.png',
       location: 'Mountain View, CA',
       industry: 'Technology, Internet Services',
-      size: '150,000+ employees',
+      size: '180,000+ employees',
       rating: 4.5,
-      salaryRange: '$140K - $300K',
-      benefits: ['Top-tier Health Insurance', '401(k)', 'GSUs', 'Unlimited PTO'],
-      description: 'World\'s leading internet services and AI company',
+      salaryRange: '$130K - $380K',
+      benefits: ['Health Insurance', '401(k) Match', 'RSUs', 'Free Food', 'Unlimited PTO'],
+      description: 'Global technology leader in search, cloud computing, and artificial intelligence',
       culture: {
-        workLifeBalance: 90,
+        workLifeBalance: 85,
         careerGrowth: 95,
         compensation: 95,
-        culture: 95,
+        culture: 90,
       },
     },
     {
@@ -1851,11 +1881,80 @@ export function CompanyInformation() {
     }
   ];
 
-  const filteredCompanies = companies.filter(company =>
-    company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    company.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    company.industry.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const industryGroups: IndustryGroup[] = [
+    {
+      name: "Technology",
+      industries: [
+        "Technology, Consumer Electronics",
+        "Technology, Internet Services",
+        "Software, Cloud Computing",
+        "Cloud Computing, SaaS",
+        "Enterprise Software, Cloud Computing",
+      ]
+    },
+    {
+      name: "Financial",
+      industries: [
+        "Banking, Financial Services",
+        "Financial Technology",
+        "Financial Software",
+        "Financial Services, Insurance",
+      ]
+    },
+    {
+      name: "Media & Entertainment",
+      industries: [
+        "Entertainment, Technology",
+        "Social Media, Technology",
+        "Digital Entertainment",
+        "Game Development, Software",
+      ]
+    },
+    {
+      name: "Infrastructure",
+      industries: [
+        "Cloud Storage, Technology",
+        "Networking Technology",
+        "Cloud Computing, Virtualization",
+        "Data Analytics",
+        "Infrastructure Software",
+      ]
+    }
+  ];
+
+  const toggleGroup = (groupName: string) => {
+    setExpandedGroups(prev => 
+      prev.includes(groupName) 
+        ? prev.filter(name => name !== groupName)
+        : [...prev, groupName]
+    );
+  };
+
+  const toggleSaveCompany = (companyId: number) => {
+    setSavedCompanies(prev => 
+      prev.includes(companyId) 
+        ? prev.filter(id => id !== companyId)
+        : [...prev, companyId]
+    );
+  };
+
+  const industries = Array.from(new Set(companies.map(company => company.industry)));
+  const locations = Array.from(new Set(companies.map(company => company.location.split(',')[1]?.trim() || company.location)));
+
+  const filteredCompanies = companies
+    .filter(company => {
+      const searchLower = searchTerm.toLowerCase();
+      const matchesSearch = company.name.toLowerCase().includes(searchLower) ||
+        company.location.toLowerCase().includes(searchLower) ||
+        company.industry.toLowerCase().includes(searchLower);
+      const matchesIndustry = !selectedIndustry || company.industry === selectedIndustry;
+      const matchesLocation = !selectedLocation || company.location.includes(selectedLocation);
+      return matchesSearch && matchesIndustry && matchesLocation;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'rating') return b.rating - a.rating;
+      return a.name.localeCompare(b.name);
+    });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -1878,234 +1977,223 @@ export function CompanyInformation() {
     },
   };
 
-  return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Stack spacing={4}>
-        <Box>
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
-            기업 정보
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary" paragraph>
-            주요 IT 기업의 상세 정보와 근무 환경을 확인하세요
-          </Typography>
-        </Box>
-
-        <Paper
-          elevation={0}
-          sx={{
-            p: 2,
-            display: 'flex',
-            alignItems: 'center',
-            borderRadius: 2,
-            border: 1,
-            borderColor: 'divider',
+  const renderCultureScore = (label: string, value: number, icon: React.ReactNode) => (
+    <Box className={styles.cultureScore}>
+      <Box className={styles.cultureLabel}>
+        {icon}
+        <Typography variant="body2">{label}</Typography>
+      </Box>
+      <Box className={styles.progressWrapper}>
+        <LinearProgress
+          variant="determinate"
+          value={value}
+          className={styles.progress}
+          classes={{
+            bar: styles.progressBar,
           }}
-        >
+        />
+        <Typography variant="caption" className={styles.progressValue}>
+          {value}%
+        </Typography>
+      </Box>
+    </Box>
+  );
+
+  return (
+    <Container maxWidth="xl" className={styles.container}>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className={styles.hero}
+      >
+        <Typography variant="h2" className={styles.title}>
+          북미 기업 정보
+        </Typography>
+        <Typography variant="h5" className={styles.subtitle}>
+          북미 취업을 위한 기업 정보를 확인하세요
+        </Typography>
+      </motion.div>
+
+      <Paper elevation={0} className={styles.searchSection}>
+        <Box className={styles.searchBar}>
+          <Search className={styles.searchIcon} />
           <TextField
             fullWidth
-            placeholder="기업명, 지역, 산업군으로 검색"
+            variant="standard"
+            placeholder="기업명, 위치, 산업군으로 검색하세요"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search color="action" />
-                </InputAdornment>
-              ),
+              disableUnderline: true,
             }}
-            sx={{ bgcolor: 'background.paper' }}
           />
-        </Paper>
+          <Box className={styles.searchControls}>
+            <IconButton onClick={() => setSortBy(sortBy === 'rating' ? 'name' : 'rating')}>
+              <Sort />
+            </IconButton>
+          </Box>
+        </Box>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <Grid container spacing={3}>
-            {filteredCompanies.map((company) => (
-              <Grid item xs={12} key={company.id}>
-                <motion.div variants={itemVariants}>
-                  <Card
-                    elevation={0}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: { xs: 'column', md: 'row' },
-                      border: 1,
-                      borderColor: 'divider',
-                      borderRadius: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: { xs: '100%', md: 200 },
-                        p: 3,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRight: { md: 1 },
-                        borderBottom: { xs: 1, md: 0 },
-                        borderColor: 'divider',
-                      }}
-                    >
-                      <CardMedia
-                        component="img"
-                        image={company.logo}
-                        alt={company.name}
-                        sx={{
-                          width: 120,
-                          height: 120,
-                          objectFit: 'contain',
-                          mb: 2,
-                        }}
-                      />
-                      <Rating value={company.rating} precision={0.1} readOnly />
-                      <Typography variant="body2" color="text.secondary">
-                        {company.rating} / 5.0
-                      </Typography>
-                    </Box>
+        <Box className={styles.filterSection}>
+          <Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
+            산업군
+          </Typography>
+          {industryGroups.map((group) => (
+            <Box key={group.name} className={styles.filterGroup}>
+              <Button
+                onClick={() => toggleGroup(group.name)}
+                className={styles.groupButton}
+                fullWidth
+                startIcon={expandedGroups.includes(group.name) ? <ExpandLess /> : <ExpandMore />}
+                sx={{ justifyContent: 'flex-start', textAlign: 'left', mb: 1 }}
+              >
+                {group.name}
+              </Button>
+              <Collapse in={expandedGroups.includes(group.name)}>
+                <Stack direction="row" spacing={1} flexWrap="wrap" gap={1} sx={{ ml: 2, mb: 1 }}>
+                  {group.industries.map((industry) => (
+                    <Chip
+                      key={industry}
+                      label={industry}
+                      onClick={() => setSelectedIndustry(selectedIndustry === industry ? null : industry)}
+                      color={selectedIndustry === industry ? "primary" : "default"}
+                      variant={selectedIndustry === industry ? "filled" : "outlined"}
+                      className={styles.filterChip}
+                      size="small"
+                    />
+                  ))}
+                </Stack>
+              </Collapse>
+            </Box>
+          ))}
 
-                    <Box sx={{ flexGrow: 1 }}>
-                      <CardContent>
-                        <Grid container spacing={3}>
-                          <Grid item xs={12} md={8}>
-                            <Stack spacing={2}>
-                              <Box>
-                                <Typography variant="h6" gutterBottom>
-                                  {company.name}
-                                </Typography>
-                                <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-                                  <Chip
-                                    icon={<LocationOn />}
-                                    label={company.location}
-                                    size="small"
-                                  />
-                                  <Chip
-                                    icon={<Business />}
-                                    label={company.industry}
-                                    size="small"
-                                  />
-                                  <Chip
-                                    icon={<People />}
-                                    label={company.size}
-                                    size="small"
-                                  />
-                                </Stack>
-                                <Typography variant="body2" paragraph>
-                                  {company.description}
-                                </Typography>
-                              </Box>
-
-                              <Box>
-                                <Typography variant="subtitle2" gutterBottom>
-                                  주요 복리후생
-                                </Typography>
-                                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                                  {company.benefits.map((benefit, idx) => (
-                                    <Chip
-                                      key={idx}
-                                      icon={<Star fontSize="small" />}
-                                      label={benefit}
-                                      size="small"
-                                      variant="outlined"
-                                      sx={{ mt: 1 }}
-                                    />
-                                  ))}
-                                </Stack>
-                              </Box>
-                            </Stack>
-                          </Grid>
-
-                          <Grid item xs={12} md={4}>
-                            <Stack spacing={2}>
-                              <Box>
-                                <Typography variant="subtitle2" gutterBottom>
-                                  연봉 범위
-                                </Typography>
-                                <Typography variant="h6" color="primary">
-                                  {company.salaryRange}
-                                </Typography>
-                              </Box>
-
-                              <Box>
-                                <Typography variant="subtitle2" gutterBottom>
-                                  기업 문화
-                                </Typography>
-                                <Stack spacing={1.5}>
-                                  <Box>
-                                    <Typography variant="body2" gutterBottom>
-                                      워라밸
-                                    </Typography>
-                                    <LinearProgress
-                                      variant="determinate"
-                                      value={company.culture.workLifeBalance}
-                                      sx={{ height: 6, borderRadius: 3 }}
-                                    />
-                                  </Box>
-                                  <Box>
-                                    <Typography variant="body2" gutterBottom>
-                                      성장 기회
-                                    </Typography>
-                                    <LinearProgress
-                                      variant="determinate"
-                                      value={company.culture.careerGrowth}
-                                      sx={{ height: 6, borderRadius: 3 }}
-                                    />
-                                  </Box>
-                                  <Box>
-                                    <Typography variant="body2" gutterBottom>
-                                      보상 수준
-                                    </Typography>
-                                    <LinearProgress
-                                      variant="determinate"
-                                      value={company.culture.compensation}
-                                      sx={{ height: 6, borderRadius: 3 }}
-                                    />
-                                  </Box>
-                                  <Box>
-                                    <Typography variant="body2" gutterBottom>
-                                      기업 문화
-                                    </Typography>
-                                    <LinearProgress
-                                      variant="determinate"
-                                      value={company.culture.culture}
-                                      sx={{ height: 6, borderRadius: 3 }}
-                                    />
-                                  </Box>
-                                </Stack>
-                              </Box>
-                            </Stack>
-                          </Grid>
-                        </Grid>
-                      </CardContent>
-                    </Box>
-                  </Card>
-                </motion.div>
-              </Grid>
+          <Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
+            지역
+          </Typography>
+          <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+            {locations.map((location) => (
+              <Chip
+                key={location}
+                label={location}
+                onClick={() => setSelectedLocation(selectedLocation === location ? null : location)}
+                color={selectedLocation === location ? "primary" : "default"}
+                variant={selectedLocation === location ? "filled" : "outlined"}
+                className={styles.filterChip}
+                size="small"
+              />
             ))}
-          </Grid>
-        </motion.div>
-
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            border: 1,
-            borderColor: 'divider',
-            bgcolor: 'background.default',
-          }}
-        >
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Info color="info" />
-            <Typography variant="body2" color="text.secondary">
-              기업 정보는 정기적으로 업데이트되며, 실제 데이터와 차이가 있을 수 있습니다.
-              더 자세한 정보는 각 기업의 공식 채용 페이지를 참고해주세요.
-            </Typography>
           </Stack>
-        </Paper>
-      </Stack>
+        </Box>
+      </Paper>
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className={styles.companiesGrid}
+      >
+        <AnimatePresence>
+          {filteredCompanies.map((company) => (
+            <motion.div
+              key={company.id}
+              variants={itemVariants}
+              layout
+              className={styles.companyCard}
+            >
+              <Card elevation={0}>
+                <Box className={styles.cardHeader}>
+                  <CardMedia
+                    component="img"
+                    image={company.logo}
+                    alt={company.name}
+                    className={styles.companyLogo}
+                  />
+                  <IconButton
+                    className={styles.saveButton}
+                    onClick={() => toggleSaveCompany(company.id)}
+                  >
+                    {savedCompanies.includes(company.id) ? (
+                      <Bookmark color="primary" />
+                    ) : (
+                      <BookmarkBorder />
+                    )}
+                  </IconButton>
+                </Box>
+
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {company.name}
+                  </Typography>
+
+                  <Stack direction="row" alignItems="center" spacing={1} mb={1}>
+                    <Rating value={company.rating} precision={0.1} readOnly size="small" />
+                    <Typography variant="body2" color="text.secondary">
+                      {company.rating}
+                    </Typography>
+                  </Stack>
+
+                  <Stack spacing={1}>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <LocationOn fontSize="small" color="action" />
+                      <Typography variant="body2">{company.location}</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <Business fontSize="small" color="action" />
+                      <Typography variant="body2">{company.industry}</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <People fontSize="small" color="action" />
+                      <Typography variant="body2">{company.size}</Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <AttachMoney fontSize="small" color="action" />
+                      <Typography variant="body2">{company.salaryRange}</Typography>
+                    </Box>
+                  </Stack>
+
+                  <Box mt={2}>
+                    <Typography variant="subtitle2" gutterBottom>
+                      기업 문화
+                    </Typography>
+                    {renderCultureScore('Work-Life Balance', company.culture.workLifeBalance, <WorkOutline fontSize="small" />)}
+                    {renderCultureScore('Career Growth', company.culture.careerGrowth, <TrendingUp fontSize="small" />)}
+                    {renderCultureScore('Compensation', company.culture.compensation, <AttachMoney fontSize="small" />)}
+                    {renderCultureScore('Culture', company.culture.culture, <Psychology fontSize="small" />)}
+                  </Box>
+
+                  <Box mt={2}>
+                    <Typography variant="subtitle2" gutterBottom>
+                      복리후생
+                    </Typography>
+                    <Stack direction="row" flexWrap="wrap" gap={0.5}>
+                      {company.benefits.map((benefit, index) => (
+                        <Chip
+                          key={index}
+                          label={benefit}
+                          size="small"
+                          variant="outlined"
+                          className={styles.benefitChip}
+                        />
+                      ))}
+                    </Stack>
+                  </Box>
+
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    className={styles.applyButton}
+                    startIcon={<Work />}
+                    sx={{ mt: 2 }}
+                  >
+                    채용정보 보기
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </Container>
   );
 }

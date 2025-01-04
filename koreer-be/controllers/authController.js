@@ -87,7 +87,7 @@ async function emailVefify(req,res) {
         <head>
             <script>
                 alert('가입이 완료되었습니다.');
-                window.location.href = 'https://koreer.com/success?accessToken=${token}';
+                window.location.href = '${process.env.CLIENT_URL}/success?accessToken=${token}';
             </script>
         </head>
         <body>

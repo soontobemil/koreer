@@ -1,5 +1,5 @@
 import {useCallback, useState} from "react";
-import {ValidateStatus} from "../types/signup";
+import {ValidateStatus} from "../../types/signup";
 
 interface Args{
     nation: string;

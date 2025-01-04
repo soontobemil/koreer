@@ -40,6 +40,7 @@ export function CommunityContents(
     };
 
     const handleDetail = (data:PostsDTO) => {
+        console.log(14141)
         navigate(`detail/${data.id}`,{ state: { ...(data) } })
     }
 

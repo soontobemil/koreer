@@ -1,12 +1,10 @@
-const { formatDate } = require('@common/utils');
+const {formatDate} = require('@common/utils');
 
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('CareerTips', {
-        id: {
-            allowNull: false,
-            autoIncrement: true,
-            primaryKey: true,
-            type: DataTypes.NUMERIC
+        tips_id: {
+            type: DataTypes.INTEGER, // 양수만 허용
+            allowNull: true,
         },
         title: {
             type: DataTypes.STRING(100),
@@ -25,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         category: {
-            type: DataTypes.ENUM('info', 'daily', 'news'),
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         created_at: {

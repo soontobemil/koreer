@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import {
   Card,
   CardContent,
@@ -13,6 +14,7 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
+  styled,
 } from '@mui/material';
 import {
   ExpandMore as ExpandMoreIcon,
@@ -21,14 +23,33 @@ import {
   Warning as WarningIcon,
 } from '@mui/icons-material';
 
+type AppearanceVariant = 'default' | 'highlight' | 'outline';
+type CardVariant = 'elevation' | 'outlined';
+
+const StyledCard = styled(Card, {
+  shouldForwardProp: (prop) => !['appearanceVariant'].includes(prop as string),
+})<{ appearanceVariant?: AppearanceVariant }>(({ theme, appearanceVariant }) => ({
+  height: '100%',
+  ...(appearanceVariant === 'highlight' && {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.primary.contrastText,
+  }),
+  ...(appearanceVariant === 'outline' && {
+    border: `1px solid ${theme.palette.divider}`,
+  }),
+}));
+
 interface InfoCardProps {
   title: string;
   subtitle?: string;
   icon?: React.ReactNode;
   status?: 'success' | 'warning' | 'info';
   expandable?: boolean;
-  children: React.ReactNode;
-  action?: React.ReactNode;
+  children?: React.ReactNode;
+  action?: React.ReactNode | {
+    label: string;
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  };
   chips?: Array<{
     label: string;
     color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
@@ -38,9 +59,17 @@ interface InfoCardProps {
     icon?: React.ReactNode;
     color?: string;
   }>;
+  description?: string;
+  stats?: Array<{
+    label: string;
+    value: string;
+  }>;
+  onClick?: () => void;
+  className?: string;
+  variant?: AppearanceVariant;
 }
 
-export function InfoCard({
+export const InfoCard: React.FC<InfoCardProps> = ({
   title,
   subtitle,
   icon,
@@ -50,55 +79,135 @@ export function InfoCard({
   action,
   chips,
   bulletPoints,
-}: InfoCardProps) {
+  description,
+  stats,
+  onClick,
+  className,
+  variant = 'default'
+}) => {
   const [expanded, setExpanded] = React.useState(false);
   const theme = useTheme();
 
-  const statusColors = {
-    success: theme.palette.success.main,
-    warning: theme.palette.warning.main,
-    info: theme.palette.info.main,
+  const handleExpandClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpanded(!expanded);
   };
 
-  const StatusIcon = {
-    success: CheckCircleIcon,
-    warning: WarningIcon,
-    info: InfoIcon,
-  }[status];
+  const getStatusIcon = () => {
+    switch (status) {
+      case 'success':
+        return <CheckCircleIcon color="success" />;
+      case 'warning':
+        return <WarningIcon color="warning" />;
+      default:
+        return <InfoIcon color="info" />;
+    }
+  };
 
-  return (
-    <Card
-      elevation={2}
-      sx={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
-        overflow: 'visible',
-        '&::before': expandable ? {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: 4,
-          height: '100%',
-          backgroundColor: statusColors[status],
-          borderRadius: '4px 0 0 4px',
-        } : undefined,
-      }}
-    >
+  const renderAction = () => {
+    if (!action) return null;
+    if (React.isValidElement(action)) return action;
+    if (typeof action === 'object' && 'label' in action) {
+      return (
+        <Typography
+          component="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            action.onClick(e);
+          }}
+          sx={{ 
+            cursor: 'pointer', 
+            color: theme.palette.primary.main,
+            border: 'none',
+            background: 'none',
+            padding: 0,
+            '&:hover': {
+              textDecoration: 'underline',
+            }
+          }}
+        >
+          {action.label}
+        </Typography>
+      );
+    }
+    return null;
+  };
+
+  const cardContent = (
+    <>
+      {description && (
+        <Typography sx={{ mb: 2 }}>
+          {description}
+        </Typography>
+      )}
+
+      {chips && chips.length > 0 && (
+        <Box sx={{ mt: 1, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+          {chips.map((chip, index) => (
+            <Chip
+              key={index}
+              label={chip.label}
+              color={chip.color || 'default'}
+              size="small"
+            />
+          ))}
+        </Box>
+      )}
+
+      {stats && stats.length > 0 && (
+        <Box sx={{ mt: 2, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+          {stats.map((stat, index) => (
+            <Box key={index}>
+              <Typography variant="h6">{stat.value}</Typography>
+              <Typography variant="caption" color="text.secondary">
+                {stat.label}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      )}
+
+      {bulletPoints && bulletPoints.length > 0 && (
+        <List>
+          {bulletPoints.map((point, index) => (
+            <ListItem key={index}>
+              {point.icon && (
+                <ListItemIcon sx={{ color: point.color }}>
+                  {point.icon}
+                </ListItemIcon>
+              )}
+              <ListItemText primary={point.text} />
+            </ListItem>
+          ))}
+        </List>
+      )}
+
+      {children}
+    </>
+  );
+
+  const muiVariant: CardVariant = variant === 'outline' ? 'outlined' : 'elevation';
+
+  const cardProps = {
+    className,
+    onClick,
+    elevation: variant === 'outline' ? 0 : 1,
+    variant: muiVariant,
+    appearanceVariant: variant,
+  };
+
+  const card = (
+    <StyledCard {...cardProps}>
       <CardHeader
         avatar={icon}
         action={
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {action}
+            {renderAction()}
             {expandable && (
               <IconButton
-                onClick={() => setExpanded(!expanded)}
-                sx={{
-                  transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s',
-                }}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
@@ -107,69 +216,41 @@ export function InfoCard({
         }
         title={
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <StatusIcon
-              sx={{
-                color: statusColors[status],
-                fontSize: 20,
-              }}
-            />
+            {getStatusIcon()}
             <Typography variant="h6" component="div">
               {title}
             </Typography>
           </Box>
         }
         subheader={subtitle}
-        sx={{
-          pb: chips ? 0 : undefined,
-        }}
       />
-
-      {chips && (
-        <Box sx={{ px: 2, pb: 2, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-          {chips.map((chip, index) => (
-            <Chip
-              key={index}
-              label={chip.label}
-              color={chip.color || 'default'}
-              size="small"
-              sx={{
-                fontWeight: 500,
-              }}
-            />
-          ))}
-        </Box>
-      )}
-
-      <CardContent sx={{ flex: 1, pt: chips ? 0 : undefined }}>
-        {bulletPoints ? (
-          <List disablePadding>
-            {bulletPoints.map((point, index) => (
-              <ListItem key={index} disablePadding sx={{ mb: 1 }}>
-                <ListItemIcon sx={{ minWidth: 36 }}>
-                  {point.icon || <CheckCircleIcon sx={{ color: point.color || theme.palette.success.main }} />}
-                </ListItemIcon>
-                <ListItemText
-                  primary={point.text}
-                  primaryTypographyProps={{
-                    variant: 'body2',
-                    color: 'text.primary',
-                  }}
-                />
-              </ListItem>
-            ))}
-          </List>
-        ) : (
-          children
-        )}
+      
+      <CardContent>
+        {cardContent}
       </CardContent>
 
       {expandable && (
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent sx={{ pt: 0 }}>
+          <CardContent>
             {children}
           </CardContent>
         </Collapse>
       )}
-    </Card>
+    </StyledCard>
   );
-}
+
+  if (onClick) {
+    return (
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {card}
+      </motion.div>
+    );
+  }
+
+  return card;
+};

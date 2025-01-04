@@ -29,6 +29,7 @@ import {WorkPermit} from "./features/employment/WorkPermit";
 import {CommunityForm} from "./features/community/CommunityForm";
 import {Seminar} from "./components/seminar/Seminar";
 import {TestComponents} from './components/shared/TestComponents';
+import {MembershipPage} from './features/membership/MembershipPage';
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -72,6 +73,7 @@ root.render(
                         <Route path="signin" element={<SignIn/>}/>
                         <Route path="signup" element={<SignUp/>}/>
                         <Route path="success" element={<Success/>}/>
+                        <Route path="membership" element={<MembershipPage/>}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>

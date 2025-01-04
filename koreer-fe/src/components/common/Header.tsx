@@ -51,6 +51,7 @@ export enum HeaderStatus {
   CONTACT = "CONTACT",
   NONE = "NONE",
   SEMINAR_INFO = "SEMINAR_INFO",
+  MEMBERSHIP = "MEMBERSHIP",
 }
 
 interface BaseMenuItem {
@@ -78,6 +79,12 @@ const menuItems: MenuItem[] = [
     icon: <School />,
     path: '/seminar-info',
     status: HeaderStatus.SEMINAR_INFO,
+  },
+  {
+    label: '멤버십',
+    icon: <Person />,
+    path: '/membership',
+    status: HeaderStatus.MEMBERSHIP,
   },
   {
     label: '취업 정보',

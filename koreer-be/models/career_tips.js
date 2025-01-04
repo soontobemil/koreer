@@ -1,5 +1,4 @@
 const { formatDate } = require('@common/utils');
-const {ENUM} = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('CareerTips', {
@@ -26,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         category: {
-            type:ENUM('info', 'daily', 'news'),
+            type:DataTypes.STRING(255),
             allowNull: false,
         },
         created_at: {

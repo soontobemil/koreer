@@ -8,7 +8,7 @@ import App from "./App";
 import {Community} from "./features/community/Community";
 import {Contact} from "./components/contactus/Contact";
 import {AboutUs} from "./components/aboutus/AboutUs";
-import {CompanyInformation} from "./components/companyinformation/CompanyInformation";
+import {CompanyInformation} from "./features/company/CompanyInformation";
 import {Provider} from 'react-redux';
 import {store} from "./slice";
 import {SignIn} from "./features/auth/SignIn";

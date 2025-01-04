@@ -33,7 +33,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: '프리미엄 멤버십',
-    price: '₩29,900',
+    price: '₩500,000',
     period: '월',
     description: '전문가의 도움으로 해외 취업을 앞당기세요',
     icon: <Star sx={{ fontSize: 40 }} />,

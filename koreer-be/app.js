@@ -98,7 +98,7 @@ passport.use(new GoogleStrategy({
 }));
 
 app.use('/jobinfos', jobInfoRouter);
-app.use('/careertips', careerTips);
+//app.use('/careertips', careerTips);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

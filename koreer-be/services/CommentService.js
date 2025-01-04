@@ -1,9 +1,17 @@
 const CommentRepository = require('../repositories/CommentRepository');
 const { CreateCommentDTO, CommentResponseDTO } = require('../dtos/CommentDTO');
+const {getUserEmail} = require("../src/Auth");
 
 class CommentService {
-    async createComment(commentData) {
-        const createCommentDTO = new CreateCommentDTO(commentData); // DTO 적용
+    async createComment(req) {
+        const data = req.body;
+        const email = getUserEmail(req)
+        if (email === '') {
+            throw new Error("로그인 후 시도해주세요.")
+        }
+
+        const createCommentDTO = new CreateCommentDTO( data.post_id, data.content, email); // DTO 적용
+
         const comment = await CommentRepository.create(createCommentDTO);
         return new CommentResponseDTO(comment); // DTO로 응답 생성
     }

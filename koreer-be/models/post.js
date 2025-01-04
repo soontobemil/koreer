@@ -51,6 +51,13 @@ module.exports = (sequelize, DataTypes) => {
         deletedAt: 'deleted_at', // 삭제 시간 필드 이름
     });
 
+    Post.associate = (models) => {
+        Post.hasMany(models.Comment, {
+            foreignKey: 'post_id',
+            as: 'comments'
+        });
+    };
+
     return Post;
 };
   

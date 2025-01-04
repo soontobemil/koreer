@@ -45,6 +45,13 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true, // Soft Delete 활성화
         deletedAt: 'deleted_at', // 삭제 시간 필드 이름
     });
+
+    Comment.associate = (models) => {
+        Comment.belongsTo(models.Post, {
+            foreignKey: 'post_id',
+            as: 'post'
+        });
+    };
   
     return Comment;
   };

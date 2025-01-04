@@ -1,6 +1,6 @@
 // services/post.service.js
 const PostRepository = require('../repositories/PostRepository');
-const { CreatePostDTO, PostResponseDTO } = require('../dtos/PostDTO');
+const { CreatePostDTO, PostResponseDTO, PostDTO } = require('../dtos/PostDTO');
 const jwt = require("jsonwebtoken");
 const {getUserEmail} = require("../src/Auth");
 
@@ -20,11 +20,11 @@ class PostService {
     }
 
     async getPostById(id) {
-        const post = await PostRepository.findById(id);
+        const post = await PostRepository.searchById(id);
         if (!post) {
             throw new Error('Post not found');
         }
-        return new PostResponseDTO(post);
+        return new PostDTO(post);
     }
 
     async getPosts(page = 1, limit = 10, req) {

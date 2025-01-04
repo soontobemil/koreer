@@ -1,6 +1,6 @@
 // dtos/post.dto.js
 class CreateCommentDTO {
-    constructor({ post_id, content, user_email }) {
+    constructor( post_id, content, user_email ) {
         this.post_id = post_id;
         this.content = content;
         this.user_email = user_email;

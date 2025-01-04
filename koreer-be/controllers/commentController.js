@@ -4,8 +4,7 @@ const CommentService = require('../services/CommentService');
 async function createComment(req, res) {
   try {
     // start data processing logic
-    const data = req.body;
-    const post = await CommentService.createComment(data);
+    const post = await CommentService.createComment(req);
     res.status(201).json(post);
   } catch (error) {
     console.error('Error creating post:', error); // error log

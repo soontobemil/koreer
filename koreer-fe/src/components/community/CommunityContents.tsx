@@ -40,7 +40,7 @@ export function CommunityContents(
     };
 
     const handleDetail = (data:PostsDTO) => {
-        navigate('detail',{ state: { ...(data) } })
+        navigate(`detail/${data.id}`,{ state: { ...(data) } })
     }
 
     const handleDelete = (idx: number) => {

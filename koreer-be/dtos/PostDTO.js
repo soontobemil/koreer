@@ -23,4 +23,10 @@ class PostResponseDTO {
     }
 }
 
-module.exports = { CreatePostDTO, PostResponseDTO };
+class PostDTO {
+    constructor(post) {
+        Object.assign(this, post.dataValues);
+    }
+}
+
+module.exports = { CreatePostDTO, PostResponseDTO, PostDTO };

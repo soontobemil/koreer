@@ -30,6 +30,7 @@ import {CommunityForm} from "./components/community/CommunityForm";
 import {Seminar} from "./components/seminar/Seminar";
 import {CommunityDetail} from "./components/community/CommunityDetail";
 import {HelmetProvider} from "react-helmet-async";
+import {MyPage} from "./components/MyPage";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -42,6 +43,7 @@ root.render(
                     <Routes>
                         <Route path="/" element={<App/>}>
                             <Route path="" element={<Main/>}/>
+                            <Route path="my-page" element={<MyPage/>}/>
                             <Route path="seminar-info" element={<Seminar/>}/>
                             <Route path="company-information" element={<CompanyInformation/>}/>
                             <Route path="employment-info" element={<EmploymentInfo/>}/>
@@ -67,7 +69,7 @@ root.render(
                             <Route path="community">
                                 <Route path="" element={<Community />} />
                                 <Route path="post" element={<CommunityForm />} />
-                                <Route path="detail" element={<CommunityDetail />} />
+                                <Route path="detail/:id" element={<CommunityDetail />} />
                             </Route>
                             <Route path="tips" element={<Tips/>}/>
                             <Route path="tips/posting" element={<TipsPosting/>}/>

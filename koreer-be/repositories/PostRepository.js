@@ -7,8 +7,47 @@ class PostRepository {
         return await db.Post.create(postData);
     }
 
+    async searchById(id) {
+        return await db.Post.findOne({
+            where: { id },
+            include: [{
+                model: db.Comment,
+                as: 'comments',
+                attributes: ['id', 'content', 'user_email', 'created_at']
+            }],
+            attributes: {
+                include: [
+                    [
+                        db.sequelize.literal(`(
+                        SELECT username
+                        FROM "users" 
+                        WHERE "users"."user_email" = "Post"."user_email"
+                        LIMIT 1
+                    )`),
+                        'username'
+                    ]
+                ]
+            }
+        });
+    }
+
     async findById(id) {
-        return await db.Post.findOne({where: {id}});
+        return await db.Post.findOne({
+            where: { id },
+            attributes: {
+                include: [
+                    [
+                        db.sequelize.literal(`(
+                        SELECT username
+                        FROM "users" 
+                        WHERE "users"."user_email" = "Post"."user_email"
+                        LIMIT 1
+                    )`),
+                        'username'
+                    ]
+                ]
+            },
+        });
     }
 
     async getPosts(offset, limit, req) {

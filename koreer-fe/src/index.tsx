@@ -32,6 +32,8 @@ import {USALifeInfo} from './components/life/USALifeInfo';
 import {CanadaLifeInfo} from './components/life/CanadaLifeInfo';
 import {MyPage} from "./components/MyPage";
 import { HelmetProvider } from 'react-helmet-async';
+import { TermsAndConditions } from './components/legal/TermsAndConditions';
+import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
 
 const router = createBrowserRouter([
   {
@@ -150,6 +152,14 @@ const router = createBrowserRouter([
       {
         path: "membership",
         element: <MembershipPage />
+      },
+      {
+        path: "terms",
+        element: <TermsAndConditions />
+      },
+      {
+        path: "privacy",
+        element: <PrivacyPolicy />
       }
     ]
   }

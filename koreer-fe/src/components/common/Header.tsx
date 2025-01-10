@@ -75,19 +75,27 @@ const MENU_CLOSE_DELAY = 300; // milliseconds
 
 const menuItems: MenuItem[] = [
   {
-    label: '세미나 정보',
-    icon: <School />,
-    path: '/seminar-info',
-    status: HeaderStatus.SEMINAR_INFO,
-  },
-  {
     label: '멤버십',
     icon: <Person />,
     path: '/membership',
     status: HeaderStatus.MEMBERSHIP,
+    subItems: [
+      {
+        label: '멤버십 안내',
+        icon: <Person />,
+        path: '/membership',
+        subItems: []
+      },
+      {
+        label: '세미나',
+        icon: <School />,
+        path: '/seminar-info',
+        subItems: []
+      }
+    ]
   },
   {
-    label: '취업 정보',
+    label: '해외취업',
     icon: <WorkOutline />,
     path: '/employment-info',
     status: HeaderStatus.EMPLOYMENT_INFO,
@@ -95,7 +103,7 @@ const menuItems: MenuItem[] = [
       {
         label: '미국',
         icon: <Flight />,
-        path: '/usa',
+        path: '/visa-info/usa',
         subItems: [
           { label: "미국 비자", icon: <Flight />, path: '/visa-info/usa' },
           { label: "미국 연봉", icon: <AttachMoney />, path: '/salary-info/usa' },
@@ -105,7 +113,7 @@ const menuItems: MenuItem[] = [
       {
         label: '캐나다',
         icon: <Flight />,
-        path: '/canada',
+        path: '/visa-info/canada',
         subItems: [
           { label: "캐나다 비자", icon: <Flight />, path: '/visa-info/canada' },
           { label: "캐나다 연봉", icon: <AttachMoney />, path: '/salary-info/canada' },
@@ -117,15 +125,15 @@ const menuItems: MenuItem[] = [
         icon: <School />,
         path: '/interview-guide',
         subItems: [
-          { label: "기술 면접", icon: <Code />, path: '/interview-guide#technical' },
-          { label: "인성 면접", icon: <Person />, path: '/interview-guide#behavioral' },
-          { label: "코딩 테스트", icon: <Code />, path: '/interview-guide#coding-test' }
+          { label: "기술 면접", icon: <Code />, path: '/interview-guide/technical' },
+          { label: "인성 면접", icon: <Person />, path: '/interview-guide/behavioral' },
+          { label: "코딩 테스트", icon: <Code />, path: '/interview-guide/coding' }
         ]
       }
     ]
   },
   {
-    label: '회사 정보',
+    label: '회사 찾기',
     icon: <Business />,
     path: '/company-information',
     status: HeaderStatus.COMPANY_INFORMATION,
@@ -247,32 +255,6 @@ export function Header() {
     return () => clearCloseTimeout();
   }, []);
 
-  const renderSubMenu = (items: SubMenuItem[], parentIndex: number) => (
-    <MenuList>
-      {items.map((item, index) => (
-        <MenuItem
-          key={index}
-          onClick={() => handleNavigation(item.path, menuItems[parentIndex].status)}
-          sx={{
-            minWidth: 200,
-            py: 1.5,
-            px: 2,
-            '&:hover': {
-              bgcolor: 'primary.light',
-              color: 'primary.contrastText',
-              '& .MuiListItemIcon-root': {
-                color: 'primary.contrastText',
-              }
-            }
-          }}
-        >
-          <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.label} />
-        </MenuItem>
-      ))}
-    </MenuList>
-  );
-
   const drawer = (
     <Box sx={{ width: 280, bgcolor: 'background.paper' }}>
       <List>
@@ -314,7 +296,7 @@ export function Header() {
                   {item.subItems.map((subItem, subIndex) => (
                     <Box key={subItem.label}>
                       <ListItemButton
-                        onClick={() => subItem.subItems.length ? setOpenSubMenuIndex(subIndex) : handleNavigation(subItem.path, item.status)}
+                        onClick={() => handleNavigation(subItem.path, item.status)}
                         sx={{
                           pl: 4,
                           py: 1.5,
@@ -362,14 +344,50 @@ export function Header() {
     </Box>
   );
 
+  const renderSubMenu = (items: BaseMenuItem[], parentIndex: number) => (
+    <MenuList>
+      {items.map((item, index) => (
+        <MenuItem
+          key={index}
+          onClick={() => handleNavigation(item.path, menuItems[parentIndex].status)}
+          sx={{
+            minWidth: 200,
+            py: 1.5,
+            px: 2,
+            transition: 'all 0.2s ease',
+            '&:hover': {
+              bgcolor: 'rgba(25, 118, 210, 0.08)',
+              transform: 'translateX(5px)',
+              '& .MuiListItemIcon-root': {
+                color: 'primary.main',
+              }
+            }
+          }}
+        >
+          <ListItemIcon 
+            sx={{ 
+              minWidth: 40,
+              transition: 'color 0.2s ease'
+            }}
+          >
+            {item.icon}
+          </ListItemIcon>
+          <ListItemText primary={item.label} />
+        </MenuItem>
+      ))}
+    </MenuList>
+  );
+
   return (
     <>
       <AppBar 
         position="fixed" 
         sx={{ 
-          bgcolor: 'background.paper',
+          bgcolor: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(8px)',
           borderBottom: 1,
           borderColor: 'divider',
+          background: 'linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.95))',
         }}
         elevation={0}
       >
@@ -380,7 +398,14 @@ export function Header() {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { md: 'none' } }}
+              sx={{ 
+                mr: 2, 
+                display: { md: 'none' },
+                transition: 'transform 0.2s',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                }
+              }}
             >
               <MenuIcon />
             </IconButton>
@@ -390,12 +415,15 @@ export function Header() {
               src={koreerLogo}
               alt="Koreer Logo"
               sx={{
-                height: 36,
-                width: 36,
+                height: 40,
+                width: 40,
                 cursor: 'pointer',
                 mr: 2,
-                '&:hover': { transform: 'scale(1.1)' },
-                transition: 'transform 0.2s',
+                '&:hover': { 
+                  transform: 'scale(1.1)',
+                  filter: 'brightness(1.1)'
+                },
+                transition: 'all 0.3s ease',
                 objectFit: 'contain'
               }}
               onClick={() => handleNavigation('/', HeaderStatus.NONE)}
@@ -409,15 +437,20 @@ export function Header() {
                 flexGrow: 1,
                 cursor: 'pointer',
                 fontWeight: 700,
-                color: 'primary.main',
-                '&:hover': { opacity: 0.8 },
+                background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                '&:hover': { 
+                  transform: 'scale(1.02)',
+                  transition: 'transform 0.2s ease'
+                },
               }}
               onClick={() => handleNavigation('/', HeaderStatus.NONE)}
             >
               Koreer
             </Typography>
 
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
               {menuItems.map((item, index) => (
                 <Box
                   key={item.label}
@@ -431,22 +464,38 @@ export function Header() {
                     endIcon={item.subItems ? <ExpandMore /> : null}
                     onClick={() => !item.subItems && handleNavigation(item.path, item.status)}
                     sx={{
-                      mx: 1,
+                      mx: 0.5,
                       py: 1,
                       px: 2,
-                      borderRadius: 1,
-                      ...(headerStatus === item.status && {
+                      borderRadius: 2,
+                      transition: 'all 0.2s ease',
+                      position: 'relative',
+                      '&:after': {
+                        content: '""',
+                        position: 'absolute',
+                        bottom: 0,
+                        left: '50%',
+                        width: headerStatus === item.status ? '100%' : '0%',
+                        height: '2px',
                         bgcolor: 'primary.main',
-                        color: 'primary.contrastText',
+                        transition: 'all 0.3s ease',
+                        transform: 'translateX(-50%)',
+                      },
+                      ...(headerStatus === item.status && {
+                        bgcolor: 'rgba(25, 118, 210, 0.08)',
+                        fontWeight: 600,
                         '& .MuiSvgIcon-root': {
-                          color: 'primary.contrastText',
+                          color: 'primary.main',
                         }
                       }),
                       '&:hover': { 
-                        bgcolor: 'primary.light',
-                        color: 'primary.contrastText',
+                        bgcolor: 'rgba(25, 118, 210, 0.08)',
+                        transform: 'translateY(-2px)',
                         '& .MuiSvgIcon-root': {
-                          color: 'primary.contrastText',
+                          color: 'primary.main',
+                        },
+                        '&:after': {
+                          width: '100%',
                         }
                       },
                     }}
@@ -455,79 +504,102 @@ export function Header() {
                   </Button>
 
                   {item.subItems && openMenuIndex === index && (
-                    <Popper
-                      open={true}
-                      anchorEl={anchorEl}
-                      placement="bottom-start"
-                      transition
-                      disablePortal
-                      sx={{ zIndex: theme.zIndex.modal }}
-                      onMouseEnter={handleMenuEnter}
-                      onMouseLeave={handleMenuLeave}
+                    <Paper
+                      sx={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: 0,
+                        mt: 0.5,
+                        minWidth: 200,
+                        boxShadow: 3,
+                        borderRadius: 2,
+                        bgcolor: 'rgba(255, 255, 255, 0.95)',
+                        backdropFilter: 'blur(8px)',
+                        zIndex: theme.zIndex.modal,
+                      }}
                     >
-                      {({ TransitionProps }) => (
-                        <Grow {...TransitionProps}>
-                          <Paper
-                            elevation={3}
-                            sx={{
-                              mt: 1,
-                              borderRadius: 2,
-                              border: 1,
-                              borderColor: 'divider',
-                            }}
+                      <MenuList>
+                        {item.subItems?.map((subItem, subIndex) => (
+                          <Box
+                            key={subItem.label}
+                            onMouseEnter={() => handleSubMenuOpen(subIndex)}
+                            sx={{ position: 'relative' }}
                           >
-                            <ClickAwayListener onClickAway={handleMenuClose}>
-                              <MenuList
-                                autoFocusItem={openMenuIndex === index}
+                            <MenuItem
+                              onClick={() => handleNavigation(subItem.path, item.status)}
+                              sx={{
+                                py: 1.5,
+                                px: 2,
+                                transition: 'all 0.2s ease',
+                                '&:hover': {
+                                  bgcolor: 'rgba(25, 118, 210, 0.08)',
+                                  '& .MuiListItemIcon-root': {
+                                    color: 'primary.main',
+                                  }
+                                }
+                              }}
+                            >
+                              <ListItemIcon 
+                                sx={{ 
+                                  minWidth: 40,
+                                  transition: 'color 0.2s ease'
+                                }}
                               >
-                                {item.subItems?.map((subItem, subIndex) => (
-                                  <Box
-                                    key={subItem.label}
-                                    onMouseEnter={() => handleSubMenuOpen(subIndex)}
-                                    sx={{ position: 'relative' }}
-                                  >
+                                {subItem.icon}
+                              </ListItemIcon>
+                              <ListItemText primary={subItem.label} />
+                              {subItem.subItems.length > 0 && <ChevronRight />}
+                            </MenuItem>
+                            {subItem.subItems.length > 0 && openSubMenuIndex === subIndex && (
+                              <Paper
+                                sx={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  left: '100%',
+                                  ml: 0.5,
+                                  minWidth: 200,
+                                  boxShadow: 3,
+                                  borderRadius: 2,
+                                  bgcolor: 'rgba(255, 255, 255, 0.95)',
+                                  backdropFilter: 'blur(8px)',
+                                  zIndex: theme.zIndex.modal + 1,
+                                }}
+                              >
+                                <MenuList>
+                                  {subItem.subItems.map((subSubItem, subSubIndex) => (
                                     <MenuItem
-                                      onClick={() => !subItem.subItems.length && handleNavigation(subItem.path, item.status)}
+                                      key={subSubIndex}
+                                      onClick={() => handleNavigation(subSubItem.path, item.status)}
                                       sx={{
                                         py: 1.5,
                                         px: 2,
+                                        transition: 'all 0.2s ease',
                                         '&:hover': {
-                                          bgcolor: 'primary.light',
-                                          color: 'primary.contrastText',
+                                          bgcolor: 'rgba(25, 118, 210, 0.08)',
                                           '& .MuiListItemIcon-root': {
-                                            color: 'primary.contrastText',
+                                            color: 'primary.main',
                                           }
                                         }
                                       }}
                                     >
-                                      <ListItemIcon>{subItem.icon}</ListItemIcon>
-                                      <ListItemText primary={subItem.label} />
-                                      {subItem.subItems.length > 0 && <ChevronRight />}
-                                    </MenuItem>
-                                    {subItem.subItems.length > 0 && openSubMenuIndex === subIndex && (
-                                      <Paper
-                                        sx={{
-                                          position: 'absolute',
-                                          top: 0,
-                                          left: '100%',
-                                          ml: 0.5,
-                                          zIndex: 2,
-                                          minWidth: 200,
-                                          boxShadow: 3,
-                                          borderRadius: 2,
+                                      <ListItemIcon 
+                                        sx={{ 
+                                          minWidth: 40,
+                                          transition: 'color 0.2s ease'
                                         }}
                                       >
-                                        {renderSubMenu(subItem.subItems, index)}
-                                      </Paper>
-                                    )}
-                                  </Box>
-                                ))}
-                              </MenuList>
-                            </ClickAwayListener>
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
+                                        {subSubItem.icon}
+                                      </ListItemIcon>
+                                      <ListItemText primary={subSubItem.label} />
+                                    </MenuItem>
+                                  ))}
+                                </MenuList>
+                              </Paper>
+                            )}
+                          </Box>
+                        ))}
+                      </MenuList>
+                    </Paper>
                   )}
                 </Box>
               ))}

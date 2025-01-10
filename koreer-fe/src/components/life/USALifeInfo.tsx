@@ -1,19 +1,44 @@
 import { PageLayout } from '../shared/layouts/PageLayout';
-import { Box, Grid, Stack, Typography, List, ListItem, ListItemIcon, ListItemText, Chip } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Stack,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Card,
+  CardContent,
+  Button,
+  Link,
+} from '@mui/material';
 import { InfoCard } from '../shared/InfoCard';
 import {
-  Home,
   Flight,
   AttachMoney,
+  Home,
+  LocationOn,
+  DirectionsCar,
   LocalHospital,
   School,
-  DirectionsCar,
   AccountBalance,
-  LocationCity,
-  Warning,
-  CheckCircle,
-  AcUnit,
-  WbSunny,
+  ShoppingCart,
+  Restaurant,
+  Info,
+  House,
+  Apartment,
+  LocalAtm,
+  CreditCard,
+  LocalParking,
+  DirectionsTransit,
+  LocalGroceryStore,
+  LocalDining,
+  LocalCafe,
+  Wifi,
+  PhoneIphone,
+  LocalLaundryService,
+  LocalMovies,
 } from '@mui/icons-material';
 
 export function USALifeInfo() {
@@ -42,196 +67,232 @@ export function USALifeInfo() {
     { label: '생활 정보' }
   ];
 
-  const cityInfo = [
+  const housingInfo = [
     {
-      city: '샌프란시스코',
-      description: '실리콘밸리의 중심, 기술 혁신의 허브',
-      pros: [
-        '최고의 IT 기업들',
-        '높은 연봉 수준',
-        '혁신적인 환경',
-        '온화한 기후'
-      ],
-      cons: [
-        '세계 최고 수준의 생활비',
-        '극심한 주택난',
-        '소득 격차',
-        '노숙자 문제'
-      ],
-      weather: '여름 평균 20°C, 겨울 평균 12°C',
-      costOfLiving: {
-        rent: '$3,000-4,500 (1베드룸)',
-        utilities: '$150-200',
-        transport: '$100 (월간 패스)',
-        food: '$600-800 (월)',
-      }
+      category: '주거 형태',
+      icon: <House />,
+      options: [
+        {
+          type: '아파트/콘도',
+          details: [
+            '월 임대료: $2,000-4,000 (1BR), $3,000-5,500 (2BR)',
+            '보증금: 1-2개월 임대료',
+            '계약 기간: 보통 12개월',
+            '공과금 별도'
+          ]
+        },
+        {
+          type: '단독주택',
+          details: [
+            '월 임대료: $3,500-7,000',
+            '보증금: 1-2개월 임대료',
+            '계약 기간: 12개월 이상',
+            '마당 관리비 추가될 수 있음'
+          ]
+        }
+      ]
     },
     {
-      city: '시애틀',
-      description: '아마존, 마이크로소프트의 본거지',
-      pros: [
-        '주요 IT 기업 밀집',
-        '자연과의 근접성',
-        '무소득세 주',
-        '높은 삶의 질'
-      ],
-      cons: [
-        '높은 생활비',
-        '잦은 강우',
-        '긴 겨울',
-        '교통 체증'
-      ],
-      weather: '여름 평균 23°C, 겨울 평균 5°C',
-      costOfLiving: {
-        rent: '$2,200-3,500 (1베드룸)',
-        utilities: '$130-180',
-        transport: '$99 (월간 패스)',
-        food: '$500-700 (월)',
-      }
+      category: '주거 비용',
+      icon: <LocalAtm />,
+      items: [
+        '임대료 (지역에 따라 큰 차이)',
+        '공과금 (전기, 가스, 수도)',
+        '인터넷/케이블 TV',
+        '주택 보험',
+        '관리비/HOA'
+      ]
     },
     {
-      city: '뉴욕',
-      description: '세계 금융의 중심지, 다양한 기회의 도시',
-      pros: [
-        '다양한 취업 기회',
-        '문화적 다양성',
-        '편리한 대중교통',
-        '24시간 활기찬 도시'
-      ],
-      cons: [
-        '극도로 높은 생활비',
-        '좁은 주거 공간',
-        '혼잡한 환경',
-        '높은 세금'
-      ],
-      weather: '여름 평균 28°C, 겨울 평균 0°C',
-      costOfLiving: {
-        rent: '$3,500-5,000 (1베드룸)',
-        utilities: '$150-250',
-        transport: '$127 (월간 패스)',
-        food: '$600-900 (월)',
-      }
+      category: '임대 시 준비물',
+      icon: <CreditCard />,
+      items: [
+        '신용 점수 (보통 650 이상)',
+        '소득 증명서 (연봉의 40배)',
+        '신분증/여권',
+        '은행 계좌 내역',
+        '이전 임대 기록'
+      ]
     }
   ];
 
-  const lifeCategories = [
+  const transportationInfo = [
     {
-      title: '의료 시스템',
-      icon: <LocalHospital />,
-      points: [
-        {
-          subtitle: '의료보험',
-          details: [
-            '회사 제공 의료보험 일반적',
-            '보험사별 네트워크 확인 필요',
-            'Deductible과 Copay 이해',
-            '처방약 보장 범위 확인'
-          ]
-        },
-        {
-          subtitle: '의료 서비스',
-          details: [
-            'Primary Care Physician 지정',
-            '전문의 진료 의뢰(Referral) 시스템',
-            '응급실 이용 비용 높음',
-            '예방 접종 및 검진 보장'
-          ]
-        }
-      ]
-    },
-    {
-      title: '교육 시스템',
-      icon: <School />,
-      points: [
-        {
-          subtitle: '공립 교육',
-          details: [
-            '거주지역 학군 중요',
-            '학군별 교육 수준 차이',
-            'ESL 프로그램 제공',
-            '방과후 활동 다양'
-          ]
-        },
-        {
-          subtitle: '고등 교육',
-          details: [
-            '세계 최고 수준 대학들',
-            '높은 등록금',
-            '장학금/학자금 대출',
-            'OPT 프로그램 활용'
-          ]
-        }
-      ]
-    },
-    {
-      title: '교통 시스템',
+      category: '자가용',
       icon: <DirectionsCar />,
-      points: [
+      items: [
+        '차량 구매/리스: $300-600/월',
+        '자동차 보험: $100-300/월',
+        '주유비: $150-300/월',
+        '주차비: $100-400/월 (도시)',
+        '유지보수: $50-200/월'
+      ]
+    },
+    {
+      category: '대중교통',
+      icon: <DirectionsTransit />,
+      items: [
+        '월 교통카드: $80-120',
+        '우버/리프트: $15-30/회',
+        '버스/지하철: $2.50-3.50/회',
+        '공유 자전거: $10-15/월'
+      ]
+    },
+    {
+      category: '주차/기타',
+      icon: <LocalParking />,
+      items: [
+        '주차 허가증 필요 지역',
+        '거주자 주차 등록',
+        '공유 차량 서비스',
+        '전기차 충전소 위치'
+      ]
+    }
+  ];
+
+  const livingExpenses = [
+    {
+      category: '식비',
+      icon: <LocalGroceryStore />,
+      items: [
         {
-          subtitle: '대중교통',
+          type: '식료품',
+          cost: '$400-600/월/인',
           details: [
-            '도시별 편차 큼',
-            '대도시 중심 발달',
-            'Uber/Lyft 보편화',
-            '도시간 이동은 비행기 선호'
+            '대형마트 (Costco, Walmart)',
+            '로컬마켓',
+            '한인마트 (20-30% 비쌈)'
           ]
         },
         {
-          subtitle: '자가용',
+          type: '외식',
+          cost: '$15-30/끼니',
           details: [
-            '운전면허 시험 필수',
-            '자동차 보험 의무',
-            '주차 비용 고려',
-            '장거리 운전 일반적'
+            '점심 외식: $15-20',
+            '저녁 외식: $25-40',
+            '배달: $20-35'
           ]
         }
       ]
     },
     {
-      title: '금융 시스템',
-      icon: <AccountBalance />,
-      points: [
+      category: '공과금',
+      icon: <Home />,
+      items: [
         {
-          subtitle: '은행 계좌',
+          type: '기본 공과금',
+          cost: '$150-300/월',
           details: [
-            'SSN 또는 ITIN 필요',
-            '신용점수 관리 중요',
-            '체크카드 사용 일반적',
-            '온라인 뱅킹 보편화'
+            '전기: $60-120',
+            '가스: $30-80',
+            '수도: $40-80'
           ]
         },
         {
-          subtitle: '세금',
+          type: '통신비',
+          cost: '$100-200/월',
           details: [
-            '연방세/주세/지방세',
-            '세금 신고 의무',
-            '401(k) 은퇴 계획',
-            'W-2/1099 양식 이해'
+            '인터넷: $50-80',
+            '휴대폰: $50-90',
+            '케이블 TV: $50-100'
+          ]
+        }
+      ]
+    },
+    {
+      category: '기타 생활비',
+      icon: <ShoppingCart />,
+      items: [
+        {
+          type: '의료/보험',
+          cost: '$200-400/월',
+          details: [
+            '건강보험 본인부담금',
+            '치과/안과 보험',
+            '약국비용'
+          ]
+        },
+        {
+          type: '여가/문화',
+          cost: '$200-500/월',
+          details: [
+            '헬스장: $30-100',
+            '영화/공연: $15-50/회',
+            '취미활동'
           ]
         }
       ]
     }
   ];
 
-  const seasonalTips = [
+  const healthcareInfo = [
     {
-      season: '여름 (6-8월)',
-      icon: <WbSunny />,
-      tips: [
-        '에어컨 필수',
-        '전기세 증가 예상',
-        '자외선 차단 중요',
-        '휴가 시즌 계획'
+      category: '의료 보험',
+      icon: <LocalHospital />,
+      items: [
+        '회사 제공 보험 플랜',
+        'Deductible: $500-3,000',
+        'Co-pay: $20-50',
+        'Out-of-pocket maximum',
+        '가족 보장 옵션'
       ]
     },
     {
-      season: '겨울 (12-2월)',
-      icon: <AcUnit />,
-      tips: [
-        '난방비 증가',
-        '겨울 의류 준비',
-        '제설 장비 구비',
-        '월동 준비'
+      category: '의료 기관',
+      icon: <LocalHospital />,
+      items: [
+        'Primary Care Physician',
+        '전문의 (Specialist)',
+        '응급실/긴급진료',
+        '한인 병원',
+        '약국'
+      ]
+    },
+    {
+      category: '의료비 관리',
+      icon: <AccountBalance />,
+      items: [
+        'HSA/FSA 계좌 활용',
+        '보험 네트워크 내 진료',
+        '예방 진료 활용',
+        '처방약 제네릭 사용',
+        '의료비 세금 공제'
+      ]
+    }
+  ];
+
+  const lifestyleTips = [
+    {
+      category: '은행/금융',
+      icon: <AccountBalance />,
+      items: [
+        '주요 은행 계좌 개설',
+        '신용카드 발급과 관리',
+        '신용점수 관리',
+        '세금 신고 방법',
+        '송금/환전'
+      ]
+    },
+    {
+      category: '쇼핑/소비',
+      icon: <ShoppingCart />,
+      items: [
+        '대형마트 멤버십',
+        '온라인 쇼핑몰',
+        '할인/프로모션 활용',
+        '계절별 세일 기간',
+        '리워드 프로그램'
+      ]
+    },
+    {
+      category: '여가/문화',
+      icon: <LocalMovies />,
+      items: [
+        '지역 커뮤니티 활동',
+        '스포츠/레저 시설',
+        '공원/자연 명소',
+        '문화 행사/페스티벌',
+        '한인 모임'
       ]
     }
   ];
@@ -239,151 +300,371 @@ export function USALifeInfo() {
   return (
     <PageLayout
       title="미국 생활 정보"
-      subtitle="도시별 생활 정보와 정착 가이드"
+      subtitle="주거, 교통, 생활비 등 실용적인 정보를 확인하세요"
       tabs={navigationTabs}
       breadcrumbs={breadcrumbs}
     >
-      <Stack spacing={6}>
-        {/* 도시 정보 */}
+      <Stack spacing={4}>
+        {/* 주거 정보 */}
         <Box>
-          <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
-            주요 도시 정보
+          <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 700 }}>
+            주거 정보
           </Typography>
           <Grid container spacing={3}>
-            {cityInfo.map((city, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                <InfoCard
-                  title={city.city}
-                  subtitle={city.description}
-                  icon={<LocationCity />}
-                  status="info"
+            {housingInfo.map((section, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
+                    height: '100%',
+                    transition: 'transform 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                    },
+                  }}
                 >
-                  <Stack spacing={3}>
-                    <Box>
-                      <Typography variant="subtitle1" gutterBottom>장점</Typography>
+                  <CardContent>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 1,
+                      pb: 2,
+                      mb: 2,
+                      borderBottom: '2px solid',
+                      borderColor: 'primary.light'
+                    }}>
+                      {section.icon}
+                      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                        {section.category}
+                      </Typography>
+                    </Box>
+                    {section.options ? (
+                      section.options.map((option, idx) => (
+                        <Box key={idx} sx={{ mb: 2 }}>
+                          <Typography 
+                            variant="subtitle1" 
+                            gutterBottom 
+                            sx={{ 
+                              fontWeight: 600,
+                              color: 'primary.main'
+                            }}
+                          >
+                            {option.type}
+                          </Typography>
+                          <List dense>
+                            {option.details.map((detail, detailIdx) => (
+                              <ListItem key={detailIdx} sx={{
+                                borderBottom: detailIdx !== option.details.length - 1 ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
+                                py: 1
+                              }}>
+                                <ListItemText
+                                  primary={detail}
+                                  primaryTypographyProps={{
+                                    variant: 'body2',
+                                    color: 'text.secondary',
+                                    sx: { fontWeight: 500 }
+                                  }}
+                                />
+                              </ListItem>
+                            ))}
+                          </List>
+                        </Box>
+                      ))
+                    ) : (
                       <List dense>
-                        {city.pros.map((pro, idx) => (
-                          <ListItem key={idx}>
-                            <ListItemIcon>
-                              <CheckCircle color="success" fontSize="small" />
-                            </ListItemIcon>
-                            <ListItemText primary={pro} />
+                        {section.items.map((item, itemIdx) => (
+                          <ListItem key={itemIdx} sx={{
+                            borderBottom: itemIdx !== section.items.length - 1 ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
+                            py: 1
+                          }}>
+                            <ListItemText
+                              primary={item}
+                              primaryTypographyProps={{
+                                variant: 'body2',
+                                color: 'text.secondary',
+                                sx: { fontWeight: 500 }
+                              }}
+                            />
                           </ListItem>
                         ))}
                       </List>
-                    </Box>
-                    <Box>
-                      <Typography variant="subtitle1" gutterBottom>단점</Typography>
-                      <List dense>
-                        {city.cons.map((con, idx) => (
-                          <ListItem key={idx}>
-                            <ListItemIcon>
-                              <Warning color="error" fontSize="small" />
-                            </ListItemIcon>
-                            <ListItemText primary={con} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
-                    <Box>
-                      <Typography variant="subtitle1" gutterBottom>생활비</Typography>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          <Chip label={`월세: ${city.costOfLiving.rent}`} sx={{ mb: 1 }} />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Chip label={`공과금: ${city.costOfLiving.utilities}`} sx={{ mb: 1 }} />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Chip label={`교통비: ${city.costOfLiving.transport}`} sx={{ mb: 1 }} />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Chip label={`식비: ${city.costOfLiving.food}`} sx={{ mb: 1 }} />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Stack>
-                </InfoCard>
+                    )}
+                  </CardContent>
+                </Card>
               </Grid>
             ))}
           </Grid>
         </Box>
 
-        {/* 생활 카테고리 */}
-        {lifeCategories.map((category, index) => (
-          <Box key={index}>
-            <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
-              {category.title}
-            </Typography>
-            <Grid container spacing={3}>
-              {category.points.map((point, pidx) => (
-                <Grid item xs={12} md={6} key={pidx}>
-                  <InfoCard
-                    title={point.subtitle}
-                    icon={category.icon}
-                    status="info"
-                  >
+        {/* 교통 정보 */}
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 700 }}>
+            교통 정보
+          </Typography>
+          <Grid container spacing={3}>
+            {transportationInfo.map((section, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
+                    height: '100%',
+                    transition: 'transform 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 1,
+                      pb: 2,
+                      mb: 2,
+                      borderBottom: '2px solid',
+                      borderColor: 'primary.light'
+                    }}>
+                      {section.icon}
+                      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                        {section.category}
+                      </Typography>
+                    </Box>
                     <List dense>
-                      {point.details.map((detail, didx) => (
-                        <ListItem key={didx}>
-                          <ListItemIcon>
-                            <CheckCircle color="success" fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary={detail} />
+                      {section.items.map((item, itemIdx) => (
+                        <ListItem key={itemIdx} sx={{
+                          borderBottom: itemIdx !== section.items.length - 1 ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
+                          py: 1
+                        }}>
+                          <ListItemText
+                            primary={item}
+                            primaryTypographyProps={{
+                              variant: 'body2',
+                              color: 'text.secondary',
+                              sx: { fontWeight: 500 }
+                            }}
+                          />
                         </ListItem>
                       ))}
                     </List>
-                  </InfoCard>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        ))}
-
-        {/* 계절별 팁 */}
-        <Box>
-          <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
-            계절별 생활 팁
-          </Typography>
-          <Grid container spacing={3}>
-            {seasonalTips.map((season, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                <InfoCard
-                  title={season.season}
-                  icon={season.icon}
-                  status="info"
-                >
-                  <List dense>
-                    {season.tips.map((tip, tidx) => (
-                      <ListItem key={tidx}>
-                        <ListItemIcon>
-                          <CheckCircle color="success" fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText primary={tip} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </InfoCard>
+                  </CardContent>
+                </Card>
               </Grid>
             ))}
           </Grid>
         </Box>
 
-        {/* 주의사항 */}
+        {/* 생활비 */}
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 700 }}>
+            생활비 정보
+          </Typography>
+          <Grid container spacing={3}>
+            {livingExpenses.map((section, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
+                    height: '100%',
+                    transition: 'transform 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 1,
+                      pb: 2,
+                      mb: 2,
+                      borderBottom: '2px solid',
+                      borderColor: 'primary.light'
+                    }}>
+                      {section.icon}
+                      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                        {section.category}
+                      </Typography>
+                    </Box>
+                    {section.items.map((item, idx) => (
+                      <Box key={idx} sx={{ mb: 2 }}>
+                        <Box sx={{ 
+                          p: 1.5, 
+                          bgcolor: 'primary.light', 
+                          borderRadius: 1,
+                          color: 'white',
+                          mb: 1
+                        }}>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            {item.type} ({item.cost})
+                          </Typography>
+                        </Box>
+                        <List dense>
+                          {item.details.map((detail, detailIdx) => (
+                            <ListItem key={detailIdx} sx={{
+                              borderBottom: detailIdx !== item.details.length - 1 ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
+                              py: 1
+                            }}>
+                              <ListItemText
+                                primary={detail}
+                                primaryTypographyProps={{
+                                  variant: 'body2',
+                                  color: 'text.secondary',
+                                  sx: { fontWeight: 500 }
+                                }}
+                              />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Box>
+                    ))}
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* 의료/보험 정보 */}
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 700 }}>
+            의료/보험 정보
+          </Typography>
+          <Grid container spacing={3}>
+            {healthcareInfo.map((section, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
+                    height: '100%',
+                    transition: 'transform 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 1,
+                      pb: 2,
+                      mb: 2,
+                      borderBottom: '2px solid',
+                      borderColor: 'primary.light'
+                    }}>
+                      {section.icon}
+                      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                        {section.category}
+                      </Typography>
+                    </Box>
+                    <List dense>
+                      {section.items.map((item, itemIdx) => (
+                        <ListItem key={itemIdx} sx={{
+                          borderBottom: itemIdx !== section.items.length - 1 ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
+                          py: 1
+                        }}>
+                          <ListItemText
+                            primary={item}
+                            primaryTypographyProps={{
+                              variant: 'body2',
+                              color: 'text.secondary',
+                              sx: { fontWeight: 500 }
+                            }}
+                          />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* 생활 팁 */}
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 700 }}>
+            생활 팁
+          </Typography>
+          <Grid container spacing={3}>
+            {lifestyleTips.map((section, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
+                    height: '100%',
+                    transition: 'transform 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 1,
+                      pb: 2,
+                      mb: 2,
+                      borderBottom: '2px solid',
+                      borderColor: 'primary.light'
+                    }}>
+                      {section.icon}
+                      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                        {section.category}
+                      </Typography>
+                    </Box>
+                    <List dense>
+                      {section.items.map((item, itemIdx) => (
+                        <ListItem key={itemIdx} sx={{
+                          borderBottom: itemIdx !== section.items.length - 1 ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
+                          py: 1
+                        }}>
+                          <ListItemText
+                            primary={item}
+                            primaryTypographyProps={{
+                              variant: 'body2',
+                              color: 'text.secondary',
+                              sx: { fontWeight: 500 }
+                            }}
+                          />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* 참고사항 */}
         <Box
           sx={{
             p: 3,
             borderRadius: 2,
-            border: 1,
-            borderColor: 'divider',
-            bgcolor: 'background.default',
+            border: '1px solid',
+            borderColor: 'primary.light',
+            bgcolor: 'primary.50',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
           }}
         >
           <Stack direction="row" spacing={2} alignItems="center">
-            <Warning color="info" />
-            <Typography variant="body2" color="text.secondary">
-              제공된 정보는 일반적인 가이드라인이며, 지역과 시기에 따라 차이가 있을 수 있습니다.
-              최신 정보는 미국 정부 공식 웹사이트나 현지 기관을 통해 확인하시기 바랍니다.
+            <Info color="primary" sx={{ fontSize: 24 }} />
+            <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
+              제시된 비용은 2024년 기준이며, 지역과 개인의 생활 방식에 따라 차이가 있을 수 있습니다.
+              구체적인 정보는 현지 부동산 사이트, 생활비 계산기, 지역 커뮤니티 등을 참고하시기 바랍니다.
             </Typography>
           </Stack>
         </Box>

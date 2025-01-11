@@ -40,7 +40,14 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: 'updated_at', // set up the `updatedAt` field as 'updated_at'
         createdAt: 'created_at' // set up the `createdAt` field as 'updated_at'
     });
-  
+
+    User.associate = (models) => {
+        User.hasOne(models.UserInfo, {
+            foreignKey: 'user_id',
+            as: 'userInfo'
+        });
+    };
+
     return User;
   };
   

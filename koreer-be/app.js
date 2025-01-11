@@ -33,6 +33,7 @@ var usersRouter = require('./routes/users');
 var jobInfoRouter = require('./routes/jobinfos');
 var careerTips = require('./routes/careertips');
 var communityRouter = require('./routes/community');
+var userInfoRouter = require('./routes/userInfo');
 
 var userService = require('./services/userService');
 
@@ -65,6 +66,7 @@ app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/jobinfos', jobInfoRouter);
 app.use('/community', communityRouter);
+app.use('/user-info', userInfoRouter);
 
 passport.use(new GoogleStrategy({
     clientID: process.env.OAUTH2_CID_SOCIAL_LOGIN,  // Google에서 받은 Client ID

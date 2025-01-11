@@ -32,6 +32,7 @@ import {USALifeInfo} from './components/life/USALifeInfo';
 import {CanadaLifeInfo} from './components/life/CanadaLifeInfo';
 import {MyPage} from "./components/MyPage";
 import { HelmetProvider } from 'react-helmet-async';
+import {UserInfo} from "./features/auth/UserInfo";
 
 const router = createBrowserRouter([
   {
@@ -142,6 +143,10 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignUp />
+      },
+      {
+        path: "user-info",
+        element: <UserInfo />
       },
       {
         path: "success",

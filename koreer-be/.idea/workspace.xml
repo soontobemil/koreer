@@ -5,30 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
+      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dtos/PostDTO.js" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/PostDTO.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/postService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/postService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Community.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityCategory.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityContents.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityDetail.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityEmpty.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/CommunityForm.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/Tips.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/TipsPosting.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommentFunctions.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommunityGetter.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useCommunityValidator.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/community/hooks/useTipsGetter.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/seminar/Seminar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/seminar/Seminar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/Community.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/Community.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityContents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityContents.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityGetter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityGetter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityValidator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/hooks/useCommunityValidator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/company/CompanyInformation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/company/CompanyInformation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/employment/EmploymentInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/employment/EmploymentInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/membership/MembershipPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/membership/MembershipPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +103,10 @@
       <workItem from="1734524440539" duration="6477000" />
       <workItem from="1734695445607" duration="429000" />
       <workItem from="1734742750392" duration="377000" />
-      <workItem from="1735955546656" duration="10511000" />
+      <workItem from="1735955546656" duration="10959000" />
+      <workItem from="1736250102190" duration="4583000" />
+      <workItem from="1736504304912" duration="716000" />
+      <workItem from="1736557331066" duration="2444000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -149,7 +133,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/KOR-9" />
+                        <option value="origin/main" />
                       </list>
                     </value>
                   </entry>

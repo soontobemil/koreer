@@ -34,6 +34,7 @@ import {MyPage} from "./components/MyPage";
 import { HelmetProvider } from 'react-helmet-async';
 import { TermsAndConditions } from './components/legal/TermsAndConditions';
 import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
+import {UserInfo} from "./features/auth/UserInfo";
 
 const router = createBrowserRouter([
   {
@@ -144,6 +145,10 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignUp />
+      },
+      {
+        path: "user-info",
+        element: <UserInfo />
       },
       {
         path: "success",

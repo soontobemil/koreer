@@ -7,10 +7,15 @@
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
       <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/postService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/postService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/authController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user_info.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_info.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/authService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/userInfoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/userInfoService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/userService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/auth/UserInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/auth/UserInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/userInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/userInfo.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +30,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pnci1029&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/soontobemil/koreer.git&quot;,
+    &quot;accountId&quot;: &quot;ea8fafc2-adea-4f06-8452-e906f187f4d2&quot;
+  }
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -43,9 +60,11 @@
   &quot;keyToString&quot;: {
     &quot;Node.js.authController.js.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;KOR-9&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;21.7.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -67,8 +86,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
       </set>
     </attachedChunks>
   </component>
@@ -107,6 +126,8 @@
       <workItem from="1736250102190" duration="4583000" />
       <workItem from="1736504304912" duration="716000" />
       <workItem from="1736557331066" duration="2444000" />
+      <workItem from="1736851569617" duration="40000" />
+      <workItem from="1736938387567" duration="1019000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />

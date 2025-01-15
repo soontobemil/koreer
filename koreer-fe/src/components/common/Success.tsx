@@ -16,7 +16,7 @@ export function Success() {
         if (refreshToken) {
             document.cookie = `refreshToken=${refreshToken}; path=/; max-age=${60 * 60 * 24 * 7};`; // 7일
         }
-        window.location.href = "/"
+        window.location.href = "/user-info"
     }, [location]);
 
     return(

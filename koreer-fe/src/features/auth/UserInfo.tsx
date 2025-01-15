@@ -1,30 +1,52 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-    Container,
-    Paper,
-    Typography,
-    Grid,
-    TextField,
-    Button,
-    Box,
-    Chip,
+    Alert,
     Autocomplete,
-    Divider, Snackbar, Alert,
+    Box,
+    Button,
+    Chip,
+    Container,
+    Divider,
+    Grid,
+    Paper,
+    Snackbar,
+    TextField,
+    Typography,
 } from '@mui/material';
 import {SubmitStatus, UserInfoDTO} from "../../types/userInfo";
+import {useCookieFunctions} from "../../components/common/hooks/useCookieFunctions";
+import {useNavigate} from "react-router-dom";
 
-interface UserInfoFormData {
-    school: string;
-    major: string;
-    graduationYear: string;
-    location: string;
-    desiredCountry: string;
-    skills: string[];
-    interests: string[];
-    introduction: string;
-    githubUrl?: string;
-    portfolioUrl?: string;
-}
+const employmentStatuses = ['employed', 'student'] as const;
+type EmploymentStatus = typeof employmentStatuses[number];  // 'employed' | 'student'
+
+// 표시될 레이블 매핑
+const employmentStatusLabels: Record<EmploymentStatus, string> = {
+    'employed': '직장인',
+    'student': '학생'
+};
+
+const experienceRanges = [
+    '신입',
+    '1-3년',
+    '4-5년',
+    '6-8년',
+    '9년 이상'
+];
+
+const salaryRanges = [
+    '2천만원 이하',
+    '2천만원-3천만원',
+    '3천만원-4천만원',
+    '4천만원-5천만원',
+    '5천만원 이상'
+];
+
+const workStyles = [
+    '풀재택',
+    '부분재택',
+    '오피스 출근'
+];
 
 // 기술 스택 예시 데이터
 const skillSuggestions = [
@@ -49,10 +71,28 @@ const interestSuggestions = [
 const countries = ['미국', '캐나다', '일본', '동남아', '유럽'];
 
 export function UserInfo() {
-    const [formData, setFormData] = useState<UserInfoFormData>({
-        school: '',
-        major: '',
-        graduationYear: '',
+
+    const { getCookie } = useCookieFunctions();
+    const navigate = useNavigate();
+
+    // 비로그인 접근 시 로그인 페이지로 이동
+    useEffect(() => {
+        const checkAuth = () => {
+            const accessToken = getCookie('accessToken');
+            const isNotLogin = accessToken === null;
+
+            if (isNotLogin) {
+                alert("로그인 후 접근해주세요.");
+                navigate('/signin');
+            }
+        };
+
+        checkAuth();
+    }, []);
+
+    const [formData, setFormData] = useState<UserInfoDTO>({
+        employmentStatus: 'student',
+        birthDate: '',
         location: '',
         desiredCountry: '',
         skills: [],
@@ -88,20 +128,24 @@ export function UserInfo() {
         e.preventDefault();
         setSubmitStatus('loading');
 
+        /**
+         * user id 꺼내야함
+         */
         try {
             // form 데이터를 DTO 형식으로 변환
             const userInfoDTO: UserInfoDTO = {
-                school: formData.school,
-                major: formData.major,
-                graduation_year: formData.graduationYear,
+                employmentStatus: formData.employmentStatus,
+                yearsOfExperience: formData.yearsOfExperience,
+                salaryRange: formData.salaryRange,
+                workStyle: formData.workStyle,
+                birthDate: formData.birthDate,
                 location: formData.location,
-                desired_country: formData.desiredCountry,
+                desiredCountry: formData.desiredCountry,
                 skills: formData.skills,
                 interests: formData.interests,
                 introduction: formData.introduction,
-                github_url: formData.githubUrl || null,
-                portfolio_url: formData.portfolioUrl || null,
-                user_id: "1" // TODO: 실제 사용자 ID로 변경 필요
+                githubUrl: formData.githubUrl || null,
+                portfolioUrl: formData.portfolioUrl || null,
             };
 
             const response = await fetch('http://localhost:3000/user-info', {
@@ -199,45 +243,118 @@ export function UserInfo() {
                         {/* 기본 정보 섹션 */}
                         <Grid item xs={12}>
                             <Typography variant="h6" fontWeight="bold" color="primary">
-                                학교 및 기본 정보
+                                기본 정보
                             </Typography>
                             <Divider sx={{ mt: 1, mb: 3 }} />
                         </Grid>
+
+                        {/* 재직상태 */}
+                        <Grid item xs={12} md={6}>
+                            <Autocomplete
+                                options={employmentStatuses}
+                                value={formData.employmentStatus}
+                                getOptionLabel={(option) => employmentStatusLabels[option]} // 한글 레이블 표시
+                                onChange={(_, newValue: EmploymentStatus | null) => {
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        employmentStatus: newValue || 'student',
+                                        ...(newValue === 'student' && {
+                                            yearsOfExperience: undefined,
+                                            salaryRange: undefined,
+                                            workStyle: undefined
+                                        })
+                                    }));
+                                }}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="재직상태"
+                                        required
+                                        variant="outlined"
+                                    />
+                                )}
+                            />
+                        </Grid>
+
+                        {/* 생년월일 */}
                         <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth
-                                label="학교"
-                                name="school"
-                                value={formData.school}
+                                label="생년월일"
+                                name="birthDate"
+                                value={formData.birthDate}
                                 onChange={handleInputChange}
-                                required
-                                variant="outlined"
-                                sx={{ backgroundColor: 'white' }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label="전공"
-                                name="major"
-                                value={formData.major}
-                                onChange={handleInputChange}
+                                placeholder="YYYY. MM. DD"
                                 required
                                 variant="outlined"
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label="졸업년도"
-                                name="graduationYear"
-                                value={formData.graduationYear}
-                                onChange={handleInputChange}
-                                placeholder="YYYY"
-                                required
-                                variant="outlined"
-                            />
-                        </Grid>
+
+                        {/* 직장인인 경우에만 표시되는 필드들 */}
+                        {formData.employmentStatus === 'employed' && (
+                            <>
+                                <Grid item xs={12} md={4}>
+                                    <Autocomplete
+                                        options={experienceRanges}
+                                        value={formData.yearsOfExperience}
+                                        onChange={(_, newValue) => {
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                yearsOfExperience: newValue || ''
+                                            }));
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="경력"
+                                                required
+                                                variant="outlined"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <Autocomplete
+                                        options={salaryRanges}
+                                        value={formData.salaryRange}
+                                        onChange={(_, newValue) => {
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                salaryRange: newValue || ''
+                                            }));
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="연봉수준"
+                                                required
+                                                variant="outlined"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <Autocomplete
+                                        options={workStyles}
+                                        value={formData.workStyle}
+                                        onChange={(_, newValue) => {
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                workStyle: newValue || ''
+                                            }));
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="근무형태"
+                                                required
+                                                variant="outlined"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                            </>
+                        )}
                         <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth

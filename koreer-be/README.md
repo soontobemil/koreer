@@ -71,3 +71,9 @@ Here are some of the API endpoints available in this project:
  - GET /users/email@example.com - Get a user by Email
 
  Refer to the API documentation for a complete list of endpoints and their descriptions.
+
+## 백엔드 실행 시 유의사항
+````
+   1. 로컬 환경 테스트 시 레디스 실행
+      ( docker run --name myredis -d -p 6379:6379 redis )
+````

@@ -1,19 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
     const UserInfo = sequelize.define('UserInfo', {
-        school: {
-            type: DataTypes.STRING(100),
+        employment_status: {
+            type: DataTypes.STRING,
             allowNull: false,
-            comment: '학교명'
+            defaultValue: 'student',
+            validate: {
+                isIn: [['employed', 'student']]
+            },
+            comment: '재직상태 (직장인/학생)'
         },
-        major: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-            comment: '전공'
+        years_of_experience: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+            comment: '경력 연차'
         },
-        graduation_year: {
-            type: DataTypes.STRING(4),
+        salary_range: {
+            type: DataTypes.STRING(50),
+            allowNull: true,
+            comment: '연봉 범위'
+        },
+        work_style: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+            comment: '근무 형태'
+        },
+        birth_date: {
+            type: DataTypes.STRING(20),
             allowNull: false,
-            comment: '졸업년도'
+            comment: '생년월일'
         },
         location: {
             type: DataTypes.STRING(100),

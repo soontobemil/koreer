@@ -6,6 +6,7 @@ const OAuth2 = google.auth.OAuth2;
 const passport = require('passport');
 const userService = require('../services/userService');
 const {generateAccessToken, generateRefreshToken} = require("../src/Auth");
+const db = require("../models");
 
 
 async function register(data) {
@@ -149,6 +150,20 @@ async function emailVefify(token) {
 
         // 이메일 인증 상태 db 업데이트 (비동기 작업이므로 await 사용)
         const result = await userService.updateEmailVerifyStatus(email);
+
+        // 유저 인포 생성
+        db.UserInfo.create({
+            user_id: user.id,
+            employment_status: 'student',    // 기본값 student로 설정
+            birth_date: '-',                 // 생년월일 기본값
+            location: '-',                   // 거주지
+            desired_country: '-',            // 희망 취업 국가
+            introduction: '-',               // 자기소개
+            skills: [],                      // 빈 기술 스택 배열
+            interests: [],                   // 빈 관심 분야 배열
+            github_url: null,                // null로 초기화
+            portfolio_url: null              // null로 초기화
+        });
 
         return { code: 200, message: '이메일 인증이 완료되었습니다!' };
     } catch (error) {

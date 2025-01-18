@@ -1,70 +1,99 @@
-import style from "../../assets/scss/common/footer.module.scss"
-import logo from "../../assets/img/koreer_logo.png"
-import { useNavigate } from "react-router-dom";
-import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import React from 'react';
+import { Container, Grid, Typography, Link, Box, IconButton } from '@mui/material';
+import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router-dom';
+import styles from '../../assets/scss/common/footer.module.scss';
 
-export function Footer() {
-    const navigate = useNavigate()
-
-    const handleUrl = (path: string) => {
-        navigate(`${path}`)
-        window.scrollBy({
-            left: 0,
-            top: -window.scrollY,
-            behavior: "smooth",
-        });
-    }
-
-    const socialLinks = [
-        { icon: <LinkedIn />, url: 'https://linkedin.com' },
-        { icon: <Twitter />, url: 'https://twitter.com' },
-        { icon: <Facebook />, url: 'https://facebook.com' },
-        { icon: <Instagram />, url: 'https://instagram.com' }
-    ];
-
-    return (
-        <footer className={style.footer}>
-            <div className={style.footerLine} />
-            <div className={style.footerContent}>
-                <div className={style.footerInfoArea}>
-                    <div className={style.footerMenu}>
-                        <span onClick={() => handleUrl('about-us')}>About Us</span>
-                        <span onClick={() => handleUrl('contact')}>Contact</span>
-                        <span onClick={() => handleUrl('signin')}>Login</span>
-                        <span onClick={() => handleUrl('community')}>Community</span>
-                    </div>
-                    <div className={style.mainContent}>
-                        <div className={style.leftContent}>
-                            <span className={style.title}>
-                                Koreer
-                            </span>
-                            <span className={style.description}>
-                                Email: koreerkorea@gmail.com<br />
-                                Address: Vancouver, BC, Canada<br />
-                                KakaoTalk: <a href="https://open.kakao.com/o/gMhi2YJg" target="_blank" rel="noopener noreferrer">Open Chat</a>
-                            </span>
-                            <div className={style.socialLinks}>
-                                {socialLinks.map((link, index) => (
-                                    <IconButton
-                                        key={index}
-                                        href={link.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={style.socialIcon}
-                                    >
-                                        {link.icon}
-                                    </IconButton>
-                                ))}
-                            </div>
-                        </div>
-                        <img className={style.footerLogo} src={logo} alt="Koreer logo" />
-                    </div>
-                    <div className={style.copyright}>
-                        © {new Date().getFullYear()} Koreer. All rights reserved.
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
-}
+export const Footer: React.FC = () => {
+  return (
+    <footer className={styles.footer}>
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="h6" gutterBottom className={styles.title}>
+              About Koreer
+            </Typography>
+            <Typography variant="body2" className={styles.description}>
+              해외 취업을 꿈꾸는 분들을 위한 최고의 파트너, Koreer가 함께합니다.
+              전문적인 취업 정보와 맞춤형 서비스로 여러분의 글로벌 커리어를 지원합니다.
+            </Typography>
+          </Grid>
+          
+          <Grid item xs={12} sm={4}>
+            <Typography variant="h6" gutterBottom className={styles.title}>
+              Quick Links
+            </Typography>
+            <ul className={styles.linkList}>
+              <li>
+                <RouterLink to="/about-us" className={styles.link}>회사 소개</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/membership" className={styles.link}>멤버십</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/contact" className={styles.link}>문의하기</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/terms" className={styles.link}>이용약관</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/privacy" className={styles.link}>개인정보처리방침</RouterLink>
+              </li>
+            </ul>
+          </Grid>
+          
+          <Grid item xs={12} sm={4}>
+            <Typography variant="h6" gutterBottom className={styles.title}>
+              Contact Us
+            </Typography>
+            <Typography variant="body2" paragraph className={styles.contactInfo}>
+              Email: koreerkorea@gmail.com<br />
+              Phone: +82 02-123-4567<br />
+              Address: 서울특별시 강남구 테헤란로
+            </Typography>
+            <Box className={styles.socialLinks}>
+              <IconButton
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.socialIcon}
+              >
+                <Facebook />
+              </IconButton>
+              <IconButton
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.socialIcon}
+              >
+                <Twitter />
+              </IconButton>
+              <IconButton
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.socialIcon}
+              >
+                <Instagram />
+              </IconButton>
+              <IconButton
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.socialIcon}
+              >
+                <LinkedIn />
+              </IconButton>
+            </Box>
+          </Grid>
+        </Grid>
+        
+        <Box className={styles.bottom}>
+          <Typography variant="body2" align="center" className={styles.copyright}>
+            © {new Date().getFullYear()} Koreer. All rights reserved.
+          </Typography>
+        </Box>
+      </Container>
+    </footer>
+  );
+};

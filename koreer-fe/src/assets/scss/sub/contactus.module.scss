@@ -1,460 +1,165 @@
-@import "../common/variables";
+@import '../common/variables';
 
-@include mobile {
-  /* Contact Info */
+.contactContainer {
+  padding: $spacing-xl 0;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, rgba($primary-color, 0.02), rgba($secondary-color, 0.02));
+
+  .header {
+    text-align: center;
+    margin-bottom: $spacing-xl * 2;
+
+    .title {
+      font-weight: 700;
+      margin-bottom: $spacing-md;
+      background: linear-gradient(135deg, $primary-color, $secondary-color);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: $text-color-light;
+      font-weight: 400;
+    }
+  }
+
+  .sectionTitle {
+    color: $text-color;
+    font-weight: 600;
+    margin-bottom: $spacing-lg;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, $primary-color, $secondary-color);
+      border-radius: 2px;
+    }
+  }
+
   .contactInfo {
-    display: flex;
-    flex-direction: column;
-    padding: 30px 0;
-    gap: 20px;
-    background-color: #ffffff;
-    color: #0072b3;
-    text-align: center;
-  }
+    padding: $spacing-xl;
+    height: 100%;
+    background: white;
+    border-radius: $border-radius-xl;
+    box-shadow: $box-shadow-sm;
+    border: 1px solid rgba($primary-color, 0.1);
 
-  .contactInfoTitle {
-    font-size: 32px;
-    margin-bottom: 10px;
-  }
+    .infoItem {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: $spacing-lg;
+      padding: $spacing-md;
+      border-radius: $border-radius-lg;
+      transition: all $transition-normal;
 
-  .contactInfoContent {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-  }
+      &:hover {
+        background: rgba($primary-color, 0.05);
+        transform: translateX(5px);
+      }
 
-  .infoBlock {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 20px;
-    gap: 20px;
-    width: 80%;
-    justify-content: space-between;
-  }
+      .infoIcon {
+        margin-right: $spacing-md;
+        color: $primary-color;
+        background: rgba($primary-color, 0.1);
+        padding: $spacing-sm;
 
-  .infoImg {
-    width: 80px;
-    height: 80px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .infoImg.kakao {
-    background-image: url("../../img/kakao.png");
-  }
+        &:hover {
+          background: rgba($primary-color, 0.15);
+        }
+      }
 
-  .infoImg.email {
-    background-image: url("../../img/email.svg");
-  }
+      h6 {
+        margin-bottom: $spacing-xs;
+        color: $text-color;
+      }
+    }
 
-  .infoBlock p {
-    width: 70%;
-    font-size: 15px;
-    color: #424242;
-  }
+    .businessHours {
+      margin-top: $spacing-xl;
+      padding: $spacing-lg;
+      background: rgba($primary-color, 0.05);
+      border-radius: $border-radius-lg;
 
-  /* Contact Container */
-  .contactContainer {
-    padding: 60px 30px;
-    background-color: #1e1e1e;
-    color: #ffffff;
-  }
+      .hoursHeader {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        margin-bottom: $spacing-md;
+        color: $primary-color;
 
-  .contactTitle {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-
-  .contactDescription {
-    font-size: 18px;
-    color: #cccccc;
-    margin-bottom: 40px;
-  }
-
-  .contactOptions {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .optionBox {
-    background-color: #f1f4f8;
-    border-radius: 15px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .optionBox:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
-  }
-
-  .iconPlaceholder {
-    width: 80px;
-    height: 80px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-  }
-
-  .iconImg {
-    width: 70px;
-    height: 70px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .iconImg.sales {
-    background-image: url("../../img/sales.svg");
-  }
-
-  .iconImg.support {
-    background-image: url("../../img/support.svg");
-  }
-
-  .iconImg.media {
-    background-image: url("../../img/youtube.svg");
-  }
-
-  .optionTitle {
-    font-size: 22px;
-    font-weight: bold;
-    color: #0072b3;
-    margin-bottom: 10px;
-  }
-
-  .optionDescription {
-    font-size: 16px;
-    color: #666666;
-  }
-
-  .optionLink {
-    font-size: 18px;
-    color: #007bff;
-    text-decoration: none;
-  }
-
-  .optionLink:hover {
-    text-decoration: underline;
-  }
-
-  /* Contact form */
-  .contactFormWrapper {
-    margin: 40px 0;
-    padding: 0 20px;
+        h6 {
+          margin: 0;
+          color: $text-color;
+        }
+      }
+    }
   }
 
   .contactForm {
-    //width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    background-color: #ffffff;
-    padding: 40px 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+    padding: $spacing-xl;
+    background: white;
+    border-radius: $border-radius-xl;
+    box-shadow: $box-shadow-sm;
+    border: 1px solid rgba($primary-color, 0.1);
 
-  .formTitle {
-    font-size: 28px;
-    color: #0072b3;
-    margin-bottom: 20px;
-  }
+    form {
+      .MuiTextField-root {
+        margin-bottom: $spacing-md;
+      }
 
-  .formWrapper {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+      .submitButton {
+        width: 100%;
+        padding: $spacing-md;
+        background: linear-gradient(135deg, $primary-color, $secondary-color);
+        border-radius: $border-radius-lg;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: none;
+        transition: all $transition-normal;
 
-  .formLabel {
-    font-size: 16px;
-    color: #424242;
-    text-align: left;
-  }
-
-  .formInput,
-  .formTextarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #0072b3;
-    background-color: #f1f4f8;
-    color: #424242;
-    font-size: 16px;
-  }
-
-  .formTextarea {
-    height: 100px;
-    resize: none;
-  }
-
-  .formButton {
-    align-self: center;
-    width: 300px;
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 12px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-  }
-
-  .formButton:hover {
-    background-color: #0056b3;
-  }
-
-  .underline {
-    width: 100%;
-    margin: 20px auto;
-    border-bottom: 1.1px solid #757575;
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: $box-shadow-md;
+        }
+      }
+    }
   }
 }
 
-
-@include desktop {
-  /* Contact Info */
-  .contactInfo {
-    display: flex;
-    flex-direction: column;
-    padding: 60px 0;
-    background-color: #ffffff; /* 배경 흰색 */
-    color: #0072b3; /* 파란색 텍스트 */
-    text-align: center;
-    gap: 50px;
-  }
-
-  .contactInfoTitle {
-    font-size: 48px;
-    margin-bottom: 20px;
-  }
-
-  .contactInfoContent {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .infoBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-  }
-
-  .infoImg {
-    width: 100px;
-    height: 100px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  .infoImg.kakao {
-    background-image: url("../../img/kakao.png");
-  }
-
-  .infoImg.email {
-    background-image: url("../../img/email.svg");
-  }
-
-  .infoBlock p {
-    font-size: 27px;
-    color: #424242; /* 어두운 회색 */
-  }
-
-  /* Contact Container */
+@media (max-width: $breakpoint-mobile) {
   .contactContainer {
-    background-color: #1e1e1e; /* 어두운 배경 */
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 100px 20px;
-  }
+    padding: $spacing-lg $spacing-md;
 
-  .contactTitle {
-    font-size: 56px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
+    .header {
+      margin-bottom: $spacing-xl;
 
-  .contactDescription {
-    font-size: 24px;
-    color: #cccccc;
-    margin-bottom: 60px;
-  }
+      .title {
+        font-size: 2rem;
+      }
 
-  .contactOptions {
-    display: flex;
-    gap: 60px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+      .subtitle {
+        font-size: 1.1rem;
+      }
+    }
 
-  .optionBox {
-    background-color: #f1f4f8; /* 밝은 배경으로 변경 */
-    border-radius: 15px;
-    padding: 50px;
-    text-align: center;
-    width: 400px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
+    .contactInfo, .contactForm {
+      padding: $spacing-lg;
+    }
 
-  .optionBox:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-  }
+    .infoItem {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
 
-  .iconPlaceholder {
-    width: 120px;
-    height: 120px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    margin: 0 auto 30px;
+      .infoIcon {
+        margin-right: 0;
+        margin-bottom: $spacing-sm;
+      }
+    }
   }
-
-  .iconImg {
-    width: 110px;
-    height: 110px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    margin: 0 auto 10px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  .iconImg.sales {
-    background-image: url("../../img/sales.svg");
-  }
-
-  .iconImg.support {
-    background-image: url("../../img/support.svg");
-  }
-
-  .iconImg.media {
-    background-image: url("../../img/youtube.svg");
-  }
-
-  .optionTitle {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #0072b3;
-  }
-
-  .optionDescription {
-    font-size: 20px;
-    color: #666666; /* 어두운 회색으로 수정 */
-    margin-bottom: 30px;
-  }
-
-  .optionLink {
-    font-size: 20px;
-    color: #007bff; /* 파란색 링크 */
-    text-decoration: none;
-  }
-
-  .optionLink:hover {
-    text-decoration: underline;
-  }
-
-  /* Contact form */
-  .contactFormWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 80px 0;
-  }
-
-  .contactForm {
-    min-width: 1100px;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    align-self: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    background-color: #ffffff; /* 문의 폼 배경 */
-    padding: 60px 40px;
-    border-radius: 10px;
-    text-align: center;
-  }
-
-  .formTitle {
-    font-size: 36px;
-    color: #0072b3; /* 파란색 폼 타이틀 */
-    margin-bottom: 20px;
-  }
-
-  .formWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .formLabel {
-    font-size: 18px;
-    color: #424242; /* 어두운 회색 텍스트 */
-    text-align: left;
-  }
-
-  .formInput,
-  .formTextarea {
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #0072b3; /* 파란색 테두리 */
-    background-color: #f1f4f8; /* 밝은 배경 */
-    color: #424242;
-    font-size: 16px;
-  }
-
-  .formTextarea {
-    height: 150px;
-    resize: none;
-  }
-
-  .formButton {
-    width: 300px;
-    align-self: center;
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 15px 30px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-  }
-
-  .formButton:hover {
-    background-color: #0056b3;
-  }
-
-  .underline {
-    width: 85%;
-    margin: 40px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1.1px solid #757575;
-  }
-
 }

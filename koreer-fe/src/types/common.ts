@@ -18,3 +18,8 @@ export interface PageResponse<T>{
     meta: PageInfo;
     data: Array<T>;
 }
+
+export interface JsonResponseDTO<T>{
+    success: string;
+    data: T;
+}

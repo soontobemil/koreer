@@ -39,8 +39,34 @@ async function userDuplCheck(req, res) {
   }
 }
 
+async function getCurrentUser(req, res) {
+  try {
+    const user = await userService.getCurrentUser(req);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: '사용자를 찾을 수 없습니다.'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: user
+    });
+
+  } catch (error) {
+    console.error('getCurrentUser error:', error);
+    return res.status(500).json({
+      success: false,
+      message: '서버 오류가 발생했습니다.'
+    });
+  }
+}
+
 module.exports = {
   createUser,
   getUserByEmail,
-  userDuplCheck
+  userDuplCheck,
+  getCurrentUser
 };

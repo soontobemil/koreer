@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
     Alert,
     Autocomplete,
     Box,
     Button,
     Chip,
-    Container,
+    Container, Dialog, DialogContent,
     Divider,
     Grid,
     Paper,
@@ -16,6 +16,11 @@ import {
 import {SubmitStatus, UserInfoDTO} from "../../types/userInfo";
 import {useCookieFunctions} from "../../components/common/hooks/useCookieFunctions";
 import {useNavigate} from "react-router-dom";
+import {getCurrentUserAsync} from "../../slice/AuthSlice";
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../../store/store';
+import {UserDTO} from "@/types/auth";
+import {JsonResponseDTO} from "@/types/common";
 
 const employmentStatuses = ['employed', 'student'] as const;
 type EmploymentStatus = typeof employmentStatuses[number];  // 'employed' | 'student'
@@ -34,7 +39,7 @@ const experienceRanges = [
     '9년 이상'
 ];
 
-const salaryRanges = [
+const salary_ranges = [
     '2천만원 이하',
     '2천만원-3천만원',
     '3천만원-4천만원',
@@ -42,7 +47,7 @@ const salaryRanges = [
     '5천만원 이상'
 ];
 
-const workStyles = [
+const work_styles = [
     '풀재택',
     '부분재택',
     '오피스 출근'
@@ -70,10 +75,14 @@ const interestSuggestions = [
 // 국가 데이터
 const countries = ['미국', '캐나다', '일본', '동남아', '유럽'];
 
+
 export function UserInfo() {
 
     const { getCookie } = useCookieFunctions();
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+
+    const [userInfo, setUserInfo] = useState<UserDTO>()
 
     // 비로그인 접근 시 로그인 페이지로 이동
     useEffect(() => {
@@ -88,13 +97,38 @@ export function UserInfo() {
         };
 
         checkAuth();
+        getCurrentUserInfo()
     }, []);
 
+    useEffect(() => {
+        if(!userInfo) return;
+        setFormData(prev => ({
+            ...prev,
+            userId: userInfo.id
+        }));
+
+    }, [setUserInfo]);
+
+    const getCurrentUserInfo = useCallback(async () => {
+        try {
+            const result:JsonResponseDTO<UserDTO> = await dispatch(getCurrentUserAsync()).unwrap();
+            setUserInfo(result.data)
+            setFormData(prev => ({
+                ...prev,
+                userId: result.data.id
+            }));
+
+        } catch (err: any) {
+            console.log(err.message || 'Failed to sign up');
+        }
+    }, [dispatch]);
+
     const [formData, setFormData] = useState<UserInfoDTO>({
-        employmentStatus: 'student',
-        birthDate: '',
+        user_id: userInfo?.id ?? 0,
+        employment_status: 'student',
+        birth_date: '',
         location: '',
-        desiredCountry: '',
+        desired_country: '',
         skills: [],
         interests: [],
         introduction: '',
@@ -127,20 +161,17 @@ export function UserInfo() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitStatus('loading');
-
-        /**
-         * user id 꺼내야함
-         */
         try {
             // form 데이터를 DTO 형식으로 변환
             const userInfoDTO: UserInfoDTO = {
-                employmentStatus: formData.employmentStatus,
-                yearsOfExperience: formData.yearsOfExperience,
-                salaryRange: formData.salaryRange,
-                workStyle: formData.workStyle,
-                birthDate: formData.birthDate,
+                user_id: userInfo?.id ?? formData.user_id,
+                employment_status: formData.employment_status,
+                years_of_experience: formData.years_of_experience,
+                salary_range: formData.salary_range,
+                work_style: formData.work_style,
+                birth_date: formData.birth_date,
                 location: formData.location,
-                desiredCountry: formData.desiredCountry,
+                desired_country: formData.desired_country,
                 skills: formData.skills,
                 interests: formData.interests,
                 introduction: formData.introduction,
@@ -148,7 +179,8 @@ export function UserInfo() {
                 portfolioUrl: formData.portfolioUrl || null,
             };
 
-            const response = await fetch('http://localhost:3000/user-info', {
+            // eslint-disable-next-line max-len
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/user-info`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -164,8 +196,6 @@ export function UserInfo() {
 
             setSubmitStatus('success');
             setShowSnackbar(true);
-            // 성공 후 추가 처리 (예: 다른 페이지로 이동)
-            // navigate('/profile');
 
         } catch (error) {
             setErrorMessage(error instanceof Error ? error.message : '알 수 없는 에러가 발생했습니다.');
@@ -174,40 +204,77 @@ export function UserInfo() {
         }
     };
 
+
     const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [showSnackbar, setShowSnackbar] = useState(false);
 
-    const renderSnackbar = () => (
-        <>
-            <Snackbar
-                open={showSnackbar && submitStatus === 'success'}
-                autoHideDuration={6000}
-                onClose={() => setShowSnackbar(false)}
-            >
-                <Alert
-                    onClose={() => setShowSnackbar(false)}
-                    severity="success"
-                    sx={{ width: '100%' }}
-                >
-                    추가 정보가 성공적으로 저장되었습니다!
-                </Alert>
-            </Snackbar>
-            <Snackbar
-                open={showSnackbar && submitStatus === 'error'}
-                autoHideDuration={6000}
-                onClose={() => setShowSnackbar(false)}
-            >
-                <Alert
-                    onClose={() => setShowSnackbar(false)}
-                    severity="error"
-                    sx={{ width: '100%' }}
-                >
-                    {errorMessage}
-                </Alert>
-            </Snackbar>
-        </>
+    const renderSuccessDialog = () => (
+        <Dialog
+            open={showSnackbar && submitStatus === 'success'}
+            onClose={() => setShowSnackbar(false)}
+            maxWidth="sm"
+            fullWidth
+        >
+            <DialogContent>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    p: 3
+                }}>
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            mb: 3,
+                            fontWeight: 'bold',
+                            textAlign: 'center'
+                        }}
+                    >
+                        추가 정보가 성공적으로 저장되었습니다!
+                    </Typography>
+                    <Button
+                        variant="contained"
+                        size="large"
+                        onClick={() => {
+                            setShowSnackbar(false);
+                            navigate('/my-page');
+                        }}
+                        sx={{
+                            mt: 2,
+                            px: 4,
+                            py: 1.5,
+                            borderRadius: '12px',
+                            fontSize: '1.1rem',
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        마이페이지로 이동
+                    </Button>
+                </Box>
+            </DialogContent>
+        </Dialog>
     );
+
+// 에러 Snackbar
+    const renderErrorSnackbar = () => (
+        <Snackbar
+            open={showSnackbar && submitStatus === 'error'}
+            autoHideDuration={3000}
+            onClose={() => setShowSnackbar(false)}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+            <Alert
+                onClose={() => setShowSnackbar(false)}
+                severity="error"
+                variant="filled"
+                sx={{ width: '100%' }}
+            >
+                {errorMessage}
+            </Alert>
+        </Snackbar>
+    );
+
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -252,16 +319,16 @@ export function UserInfo() {
                         <Grid item xs={12} md={6}>
                             <Autocomplete
                                 options={employmentStatuses}
-                                value={formData.employmentStatus}
+                                value={formData.employment_status}
                                 getOptionLabel={(option) => employmentStatusLabels[option]} // 한글 레이블 표시
                                 onChange={(_, newValue: EmploymentStatus | null) => {
                                     setFormData(prev => ({
                                         ...prev,
-                                        employmentStatus: newValue || 'student',
+                                        employment_status: newValue || 'student',
                                         ...(newValue === 'student' && {
-                                            yearsOfExperience: undefined,
-                                            salaryRange: undefined,
-                                            workStyle: undefined
+                                            years_of_experience: undefined,
+                                            salary_range: undefined,
+                                            work_style: undefined
                                         })
                                     }));
                                 }}
@@ -281,8 +348,8 @@ export function UserInfo() {
                             <TextField
                                 fullWidth
                                 label="생년월일"
-                                name="birthDate"
-                                value={formData.birthDate}
+                                name="birth_date"
+                                value={formData.birth_date}
                                 onChange={handleInputChange}
                                 placeholder="YYYY. MM. DD"
                                 required
@@ -291,16 +358,16 @@ export function UserInfo() {
                         </Grid>
 
                         {/* 직장인인 경우에만 표시되는 필드들 */}
-                        {formData.employmentStatus === 'employed' && (
+                        {formData.employment_status === 'employed' && (
                             <>
                                 <Grid item xs={12} md={4}>
                                     <Autocomplete
                                         options={experienceRanges}
-                                        value={formData.yearsOfExperience}
+                                        value={formData.years_of_experience}
                                         onChange={(_, newValue) => {
                                             setFormData(prev => ({
                                                 ...prev,
-                                                yearsOfExperience: newValue || ''
+                                                years_of_experience: newValue || ''
                                             }));
                                         }}
                                         renderInput={(params) => (
@@ -315,12 +382,12 @@ export function UserInfo() {
                                 </Grid>
                                 <Grid item xs={12} md={4}>
                                     <Autocomplete
-                                        options={salaryRanges}
-                                        value={formData.salaryRange}
+                                        options={salary_ranges}
+                                        value={formData.salary_range}
                                         onChange={(_, newValue) => {
                                             setFormData(prev => ({
                                                 ...prev,
-                                                salaryRange: newValue || ''
+                                                salary_range: newValue || ''
                                             }));
                                         }}
                                         renderInput={(params) => (
@@ -335,12 +402,12 @@ export function UserInfo() {
                                 </Grid>
                                 <Grid item xs={12} md={4}>
                                     <Autocomplete
-                                        options={workStyles}
-                                        value={formData.workStyle}
+                                        options={work_styles}
+                                        value={formData.work_style}
                                         onChange={(_, newValue) => {
                                             setFormData(prev => ({
                                                 ...prev,
-                                                workStyle: newValue || ''
+                                                work_style: newValue || ''
                                             }));
                                         }}
                                         renderInput={(params) => (
@@ -370,11 +437,11 @@ export function UserInfo() {
                         <Grid item xs={12} md={6}>
                             <Autocomplete
                                 options={countries}
-                                value={formData.desiredCountry}
+                                value={formData.desired_country}
                                 onChange={(_, newValue) => {
                                     setFormData(prev => ({
                                         ...prev,
-                                        desiredCountry: newValue || ''
+                                        desired_country: newValue || ''
                                     }));
                                 }}
                                 renderInput={(params) => (
@@ -549,7 +616,8 @@ export function UserInfo() {
                     * 필수 입력 정보: 학교, 전공, 졸업년도, 거주지, 희망 취업 국가, 자기소개
                 </Typography>
             </Paper>
-            {renderSnackbar()}
+            {renderSuccessDialog()}
+            {renderErrorSnackbar()}
         </Container>
     );
 }

@@ -1,5 +1,6 @@
 // Add Business logics here
 const db = require('../models');
+const {getUserEmail} = require("../src/Auth");
 
 async function createUser(userData) {
   try {
@@ -71,9 +72,40 @@ async function updateEmailVerifyStatus(email) {
   }
 }
 
+async function getCurrentUser(req) {
+  try {
+    const userEmail = getUserEmail(req);
+
+    if (!userEmail) {
+      return null;
+    }
+
+    const user = await db.User.findOne({
+      where: {
+        user_email: userEmail,
+        is_active: 'Y'
+      },
+      include: [{
+        model: db.UserInfo,
+        as: 'userInfo'
+      }],
+      attributes: {
+        exclude: ['password']
+      }
+    });
+
+    return user;
+
+  } catch (error) {
+    console.error('Service getCurrentUser error:', error);
+    throw error;
+  }
+  }
+
 module.exports = {
   createUser,
   getUserByEmail,
   userDuplCheck,
-  updateEmailVerifyStatus
+  updateEmailVerifyStatus,
+  getCurrentUser
 };

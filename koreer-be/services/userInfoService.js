@@ -1,9 +1,13 @@
 // services/userInfoService.js
 const userInfoRepository = require('../repositories/userInfoRepository');
+const userRepository = require('../repositories/userRepository');
 
 class UserInfoService {
     async createUserInfo(userInfoData) {
         try {
+            // 데이터 검증
+            this.validateUserInfoData(userInfoData);
+
             const formattedData = {
                 // employment_status는 이미 'employed' | 'student' 이므로 변환 불필요
                 employment_status: userInfoData.employment_status,
@@ -29,7 +33,60 @@ class UserInfoService {
                 user_id: userInfoData.user_id
             };
 
-            return  await userInfoRepository.create(formattedData);
+            // 기존 레코드 확인
+            const existingUser = await userInfoRepository.findByUserId(formattedData.user_id);
+
+            const updateResult = await userRepository.update(
+                { role: 'auth_user' },
+                {
+                    where: { id: formattedData.user_id }
+                }
+            );
+            console.log('User role 업데이트 결과:', updateResult);
+
+            if (existingUser) {
+                return await userInfoRepository.update(formattedData.user_id, formattedData);
+            }
+
+            // UserInfo 생성
+            await userInfoRepository.create(formattedData);
+            return { message: "추가 정보를 성공적으로 작성 완료했습니다." };
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getCurrentUserInfo(userId) {
+        try {
+            const userInfo = await userInfoRepository.findByUserId(userId);
+
+            if (!userInfo) {
+                throw new Error('유저 정보를 찾을 수 없습니다.');
+            }
+
+            return  {
+                id: userInfo.id,
+                employment_status: userInfo.employment_status,
+                years_of_experience: userInfo.years_of_experience,
+                salary_range: userInfo.salary_range,
+                work_style: userInfo.work_style,
+                birth_date: userInfo.birth_date,
+                location: userInfo.location,
+                desired_country: userInfo.desired_country,
+                skills: JSON.parse(userInfo.skills || '[]'),
+                interests: JSON.parse(userInfo.interests || '[]'),
+                introduction: userInfo.introduction,
+                github_url: userInfo.github_url,
+                portfolio_url: userInfo.portfolio_url,
+                user_id: userInfo.user_id,
+                created_at: userInfo.created_at,
+                updated_at: userInfo.updated_at
+            };
+            // return {
+            //     ...userInfo,
+            //     skills: userInfo.skills ? JSON.parse(userInfo.skills) : [],
+            //     interests: userInfo.interests ? JSON.parse(userInfo.interests) : []
+            // };
         } catch (error) {
             throw error;
         }
@@ -37,17 +94,17 @@ class UserInfoService {
 
     validateUserInfoData(data) {
         const commonRequiredFields = [
-            'birthDate',           // camelCase로 변경
-            'employmentStatus',    // camelCase로 변경
+            'birth_date',
+            'employment_status',
             'location',
-            'desiredCountry',      // camelCase로 변경
+            'desired_country',
             'introduction'
         ];
 
         const employedRequiredFields = [
-            'yearsOfExperience',   // camelCase로 변경
-            'salaryRange',         // camelCase로 변경
-            'workStyle'            // camelCase로 변경
+            'yearsOfExperience',
+            'salaryRange',
+            'workStyle'
         ];
 
         // 공통 필드 검증
@@ -58,15 +115,17 @@ class UserInfoService {
         }
 
         // 고용상태 검증
-        if (!['employed', 'student'].includes(data.employmentStatus)) {
+        if (!['employed', 'student'].includes(data.employment_status)) {
             throw new Error('Invalid employment status');
         }
 
         // 직장인인 경우 추가 필드 검증
         if (data.employmentStatus === 'employed') {
             for (const field of employedRequiredFields) {
-                if (!data[field]) {
-                    throw new Error(`${field} is required for employed status`);
+                for (const field of employedRequiredFields) {
+                    if (!data[field]) {
+                        throw new Error(`${field} is required for employed status`);
+                    }
                 }
             }
         }

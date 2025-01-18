@@ -5,16 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
-      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/authController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user_info.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user_info.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/authService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/authService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/userInfoController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userInfoController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repositories/userInfoRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/userInfoRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/userinfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/userinfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/userInfoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/userInfoService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/userService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/api/UserInfoApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/api/UserInfoApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/data/employmentData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/data/employmentData.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/auth/UserInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/auth/UserInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/common.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/userInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/userInfo.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +70,7 @@
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;21.7.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be/repositories&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -80,6 +84,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/repositories" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -127,7 +132,10 @@
       <workItem from="1736504304912" duration="716000" />
       <workItem from="1736557331066" duration="2444000" />
       <workItem from="1736851569617" duration="40000" />
-      <workItem from="1736938387567" duration="1019000" />
+      <workItem from="1736938387567" duration="4811000" />
+      <workItem from="1737023952853" duration="57000" />
+      <workItem from="1737111174102" duration="4826000" />
+      <workItem from="1737162342077" duration="1140000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -170,16 +178,5 @@
     <MESSAGE value="add model &amp; api for career tips" />
     <MESSAGE value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
     <option name="LAST_COMMIT_MESSAGE" value="fix signup &amp; login, convert sing up language from English to Korean for Korean user" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/Auth.js</url>
-          <line>29</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -33,6 +33,24 @@ const userInfoController = {
                 error: error.message
             });
         }
+    },
+
+    async getCurrentUserInfo(req, res) {
+        try {
+            const userId = req.params.id;
+            const userInfo = await userInfoService.getCurrentUserInfo(userId);
+
+            return res.status(200).json({
+                status: 'success',
+                message: '유저 정보를 성공적으로 조회했습니다.',
+                data: userInfo
+            });
+        } catch (error) {
+            return res.status(500).json({
+                status: 'error',
+                message: error.message || '유저 정보 조회 중 오류가 발생했습니다.'
+            });
+        }
     }
 };
 

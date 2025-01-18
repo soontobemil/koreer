@@ -12,23 +12,25 @@ export interface UserInfoFormData {
 }
 
 export interface UserInfoDTO {
-    employmentStatus: 'employed' | 'student';  // 재직상태
-    yearsOfExperience?: string;               // 경력 연차 (직장인인 경우)
-    salaryRange?: string;                     // 연봉 수준 (직장인인 경우)
-    workStyle?: string;                       // 근무 형태 (직장인인 경우)
-    birthDate: string;                        // 생년월일
+    user_id: number;
+    employment_status: 'employed' | 'student';
+    years_of_experience?: string;       // 직장인인 경우
+    salary_range?: string;              // 직장인인 경우
+    work_style?: string;                // 직장인인 경우
+    birth_date: string;
     location: string;
-    desiredCountry: string;
+    desired_country: string;
     skills: string[];
     interests: string[];
     introduction: string;
-    githubUrl?: string | undefined | null;
-    portfolioUrl?: string | undefined | null;
+    githubUrl: string | null;
+    portfolioUrl: string | null;
 }
 
 export interface ApiResponse<T> {
-    success: boolean;
-    data?: T;
+
+    message?: string;
+    data: T;
     error?: string;
 }
 

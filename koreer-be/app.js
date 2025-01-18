@@ -33,7 +33,7 @@ var usersRouter = require('./routes/users');
 var jobInfoRouter = require('./routes/jobinfos');
 var careerTips = require('./routes/careertips');
 var communityRouter = require('./routes/community');
-var userInfoRouter = require('./routes/userInfo');
+var userInfoRouter = require('./routes/userinfo');
 
 var userService = require('./services/userService');
 

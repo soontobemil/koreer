@@ -379,263 +379,240 @@ export function Header() {
   );
 
   return (
-    <>
-      <AppBar 
-        position="fixed" 
-        sx={{ 
-          bgcolor: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(8px)',
-          borderBottom: 1,
-          borderColor: 'divider',
-          background: 'linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.95))',
-        }}
-        elevation={0}
-      >
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
+    <AppBar position="sticky" color="inherit" elevation={1}>
+      <Container maxWidth="xl">
+        <Toolbar 
+          disableGutters 
+          sx={{ 
+            minHeight: '80px',
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}
+        >
+          {/* Left side: Logo and Brand */}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {/* Mobile menu button */}
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ 
-                mr: 2, 
-                display: { md: 'none' },
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.1)',
-                }
-              }}
+              sx={{ mr: 2, display: { md: 'none' } }}
             >
               <MenuIcon />
             </IconButton>
 
+            {/* Logo and Brand */}
             <Box
-              component="img"
-              src={koreerLogo}
-              alt="Koreer Logo"
-              sx={{
-                height: 40,
-                width: 40,
-                cursor: 'pointer',
-                mr: 2,
-                '&:hover': { 
-                  transform: 'scale(1.1)',
-                  filter: 'brightness(1.1)'
-                },
-                transition: 'all 0.3s ease',
-                objectFit: 'contain'
-              }}
               onClick={() => handleNavigation('/', HeaderStatus.NONE)}
-            />
-
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
               sx={{
-                flexGrow: 1,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
                 cursor: 'pointer',
-                fontWeight: 700,
-                background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                '&:hover': { 
-                  transform: 'scale(1.02)',
-                  transition: 'transform 0.2s ease'
-                },
+                height: '60px'
               }}
-              onClick={() => handleNavigation('/', HeaderStatus.NONE)}
             >
-              Koreer
-            </Typography>
+              <img
+                src={koreerLogo}
+                alt="Koreer Logo"
+                style={{
+                  height: '100%',
+                  width: 'auto',
+                  objectFit: 'contain'
+                }}
+              />
+              <Typography
+                variant="h4"
+                noWrap
+                sx={{
+                  fontWeight: 800,
+                  fontSize: { xs: '1.5rem', md: '1.8rem' },
+                  background: 'linear-gradient(135deg, #2196f3, #1565c0)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                Koreer
+              </Typography>
+            </Box>
+          </Box>
 
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
-              {menuItems.map((item, index) => (
-                <Box
-                  key={item.label}
-                  onMouseEnter={(e) => item.subItems && handleMenuOpen(e, index)}
-                  onMouseLeave={handleMenuLeave}
-                  sx={{ position: 'relative' }}
-                >
-                  <Button
-                    color="inherit"
-                    startIcon={item.icon}
-                    endIcon={item.subItems ? <ExpandMore /> : null}
-                    onClick={() => !item.subItems && handleNavigation(item.path, item.status)}
-                    sx={{
-                      mx: 0.5,
-                      py: 1,
-                      px: 2,
-                      borderRadius: 2,
-                      transition: 'all 0.2s ease',
-                      position: 'relative',
+          {/* Right side: Navigation and Buttons */}
+          <Box 
+            sx={{ 
+              display: { xs: 'none', md: 'flex' }, 
+              alignItems: 'center', 
+              gap: 1,
+              ml: 'auto'
+            }}
+          >
+            {menuItems.map((item, index) => (
+              <Box
+                key={item.label}
+                onMouseEnter={(e) => item.subItems && handleMenuOpen(e, index)}
+                onMouseLeave={handleMenuLeave}
+                sx={{ position: 'relative' }}
+              >
+                <Button
+                  color="inherit"
+                  startIcon={item.icon}
+                  endIcon={item.subItems ? <ExpandMore /> : null}
+                  onClick={() => !item.subItems && handleNavigation(item.path, item.status)}
+                  sx={{
+                    mx: 0.5,
+                    py: 1,
+                    px: 2,
+                    fontSize: { xs: '1rem', md: '1.1rem' },
+                    fontWeight: 600,
+                    position: 'relative',
+                    '&:after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: '50%',
+                      width: headerStatus === item.status ? '100%' : '0%',
+                      height: '2px',
+                      bgcolor: 'primary.main',
+                      transition: 'all 0.3s ease',
+                      transform: 'translateX(-50%)',
+                    },
+                    ...(headerStatus === item.status && {
+                      bgcolor: 'rgba(25, 118, 210, 0.08)',
+                      fontWeight: 700,
+                      '& .MuiSvgIcon-root': {
+                        color: 'primary.main',
+                      }
+                    }),
+                    '&:hover': { 
+                      bgcolor: 'rgba(25, 118, 210, 0.08)',
+                      transform: 'translateY(-2px)',
+                      '& .MuiSvgIcon-root': {
+                        color: 'primary.main',
+                      },
                       '&:after': {
-                        content: '""',
-                        position: 'absolute',
-                        bottom: 0,
-                        left: '50%',
-                        width: headerStatus === item.status ? '100%' : '0%',
-                        height: '2px',
-                        bgcolor: 'primary.main',
-                        transition: 'all 0.3s ease',
-                        transform: 'translateX(-50%)',
-                      },
-                      ...(headerStatus === item.status && {
-                        bgcolor: 'rgba(25, 118, 210, 0.08)',
-                        fontWeight: 600,
-                        '& .MuiSvgIcon-root': {
-                          color: 'primary.main',
-                        }
-                      }),
-                      '&:hover': { 
-                        bgcolor: 'rgba(25, 118, 210, 0.08)',
-                        transform: 'translateY(-2px)',
-                        '& .MuiSvgIcon-root': {
-                          color: 'primary.main',
-                        },
-                        '&:after': {
-                          width: '100%',
-                        }
-                      },
+                        width: '100%',
+                      }
+                    },
+                  }}
+                >
+                  {item.label}
+                </Button>
+
+                {item.subItems && openMenuIndex === index && (
+                  <Paper
+                    sx={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      mt: 0.5,
+                      minWidth: 200,
+                      boxShadow: 3,
+                      borderRadius: 2,
+                      bgcolor: 'rgba(255, 255, 255, 0.95)',
+                      backdropFilter: 'blur(8px)',
+                      zIndex: theme.zIndex.modal,
                     }}
                   >
-                    {item.label}
-                  </Button>
-
-                  {item.subItems && openMenuIndex === index && (
-                    <Paper
-                      sx={{
-                        position: 'absolute',
-                        top: '100%',
-                        left: 0,
-                        mt: 0.5,
-                        minWidth: 200,
-                        boxShadow: 3,
-                        borderRadius: 2,
-                        bgcolor: 'rgba(255, 255, 255, 0.95)',
-                        backdropFilter: 'blur(8px)',
-                        zIndex: theme.zIndex.modal,
-                      }}
-                    >
-                      <MenuList>
-                        {item.subItems?.map((subItem, subIndex) => (
-                          <Box
-                            key={subItem.label}
-                            onMouseEnter={() => handleSubMenuOpen(subIndex)}
-                            sx={{ position: 'relative' }}
-                          >
-                            <MenuItem
-                              onClick={() => handleNavigation(subItem.path, item.status)}
-                              sx={{
-                                py: 1.5,
-                                px: 2,
-                                transition: 'all 0.2s ease',
-                                '&:hover': {
-                                  bgcolor: 'rgba(25, 118, 210, 0.08)',
-                                  '& .MuiListItemIcon-root': {
-                                    color: 'primary.main',
-                                  }
+                    <MenuList>
+                      {item.subItems?.map((subItem, subIndex) => (
+                        <Box
+                          key={subItem.label}
+                          onMouseEnter={() => handleSubMenuOpen(subIndex)}
+                          sx={{ position: 'relative' }}
+                        >
+                          <MenuItem
+                            onClick={() => handleNavigation(subItem.path, item.status)}
+                            sx={{
+                              py: 1.5,
+                              px: 2,
+                              transition: 'all 0.2s ease',
+                              '&:hover': {
+                                bgcolor: 'rgba(25, 118, 210, 0.08)',
+                                '& .MuiListItemIcon-root': {
+                                  color: 'primary.main',
                                 }
+                              }
+                            }}
+                          >
+                            <ListItemIcon 
+                              sx={{ 
+                                minWidth: 40,
+                                transition: 'color 0.2s ease'
                               }}
                             >
-                              <ListItemIcon 
-                                sx={{ 
-                                  minWidth: 40,
-                                  transition: 'color 0.2s ease'
-                                }}
-                              >
-                                {subItem.icon}
-                              </ListItemIcon>
-                              <ListItemText primary={subItem.label} />
-                              {subItem.subItems.length > 0 && <ChevronRight />}
-                            </MenuItem>
-                            {subItem.subItems.length > 0 && openSubMenuIndex === subIndex && (
-                              <Paper
-                                sx={{
-                                  position: 'absolute',
-                                  top: 0,
-                                  left: '100%',
-                                  ml: 0.5,
-                                  minWidth: 200,
-                                  boxShadow: 3,
-                                  borderRadius: 2,
-                                  bgcolor: 'rgba(255, 255, 255, 0.95)',
-                                  backdropFilter: 'blur(8px)',
-                                  zIndex: theme.zIndex.modal + 1,
-                                }}
-                              >
-                                <MenuList>
-                                  {subItem.subItems.map((subSubItem, subSubIndex) => (
-                                    <MenuItem
-                                      key={subSubIndex}
-                                      onClick={() => handleNavigation(subSubItem.path, item.status)}
-                                      sx={{
-                                        py: 1.5,
-                                        px: 2,
-                                        transition: 'all 0.2s ease',
-                                        '&:hover': {
-                                          bgcolor: 'rgba(25, 118, 210, 0.08)',
-                                          '& .MuiListItemIcon-root': {
-                                            color: 'primary.main',
-                                          }
+                              {subItem.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={subItem.label} />
+                            {subItem.subItems.length > 0 && <ChevronRight />}
+                          </MenuItem>
+
+                          {subItem.subItems.length > 0 && openSubMenuIndex === subIndex && (
+                            <Paper
+                              sx={{
+                                position: 'absolute',
+                                top: 0,
+                                left: '100%',
+                                ml: 0.5,
+                                minWidth: 200,
+                                boxShadow: 3,
+                                borderRadius: 2,
+                                bgcolor: 'rgba(255, 255, 255, 0.95)',
+                                backdropFilter: 'blur(8px)',
+                                zIndex: theme.zIndex.modal + 1,
+                              }}
+                            >
+                              <MenuList>
+                                {subItem.subItems.map((subSubItem, subSubIndex) => (
+                                  <MenuItem
+                                    key={subSubIndex}
+                                    onClick={() => handleNavigation(subSubItem.path, item.status)}
+                                    sx={{
+                                      py: 1.5,
+                                      px: 2,
+                                      transition: 'all 0.2s ease',
+                                      '&:hover': {
+                                        bgcolor: 'rgba(25, 118, 210, 0.08)',
+                                        '& .MuiListItemIcon-root': {
+                                          color: 'primary.main',
                                         }
+                                      }
+                                    }}
+                                  >
+                                    <ListItemIcon 
+                                      sx={{ 
+                                        minWidth: 40,
+                                        transition: 'color 0.2s ease'
                                       }}
                                     >
-                                      <ListItemIcon 
-                                        sx={{ 
-                                          minWidth: 40,
-                                          transition: 'color 0.2s ease'
-                                        }}
-                                      >
-                                        {subSubItem.icon}
-                                      </ListItemIcon>
-                                      <ListItemText primary={subSubItem.label} />
-                                    </MenuItem>
-                                  ))}
-                                </MenuList>
-                              </Paper>
-                            )}
-                          </Box>
-                        ))}
-                      </MenuList>
-                    </Paper>
-                  )}
-                </Box>
-              ))}
+                                      {subSubItem.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={subSubItem.label} />
+                                  </MenuItem>
+                                ))}
+                              </MenuList>
+                            </Paper>
+                          )}
+                        </Box>
+                      ))}
+                    </MenuList>
+                  </Paper>
+                )}
+              </Box>
+            ))}
 
-              {isLogin && (
-                  <Button
-                      color="inherit"
-                      variant="outlined"
-                      startIcon={<Person />}
-                      onClick={() => handleNavigation('/my-page', HeaderStatus.NONE)}
-                      sx={{
-                        px: 3,
-                        py: 1,
-                        borderRadius: 2,
-                        mr: 1,  // 오른쪽 마진 추가
-                        '&:hover': {
-                          transform: 'translateY(-2px)',
-                          boxShadow: 2
-                        },
-                        transition: 'all 0.2s'
-                      }}
-                  >
-                    My Page
-                  </Button>
-              )}
-
+            {isLogin && (
               <Button
-                color={isLogin ? "inherit" : "primary"}
-                variant={isLogin ? "outlined" : "contained"}
-                startIcon={isLogin ? <Logout /> : <Login />}
-                onClick={isLogin ? handleLogout : () => handleNavigation('/signin', HeaderStatus.NONE)}
-                sx={{ 
-                  ml: 2,
+                color="inherit"
+                variant="outlined"
+                startIcon={<Person />}
+                onClick={() => handleNavigation('/my-page', HeaderStatus.NONE)}
+                sx={{
                   px: 3,
                   py: 1,
                   borderRadius: 2,
+                  mr: 1,
                   '&:hover': {
                     transform: 'translateY(-2px)',
                     boxShadow: 2
@@ -643,36 +620,32 @@ export function Header() {
                   transition: 'all 0.2s'
                 }}
               >
-                {isLogin ? 'Logout' : 'Login'}
+                My Page
               </Button>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
+            )}
 
-      <Box component="nav">
-        <Drawer
-          variant="temporary"
-          anchor="left"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true }}
-          PaperProps={{
-            sx: {
-              width: 280,
-              borderRight: 1,
-              borderColor: 'divider'
-            }
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      
-      <Toolbar />
-    </>
+            <Button
+              color={isLogin ? "inherit" : "primary"}
+              variant={isLogin ? "outlined" : "contained"}
+              startIcon={isLogin ? <Logout /> : <Login />}
+              onClick={isLogin ? handleLogout : () => handleNavigation('/signin', HeaderStatus.NONE)}
+              sx={{ 
+                ml: 2,
+                px: 3,
+                py: 1,
+                borderRadius: 2,
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: 2
+                },
+                transition: 'all 0.2s'
+              }}
+            >
+              {isLogin ? 'Logout' : 'Login'}
+            </Button>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }

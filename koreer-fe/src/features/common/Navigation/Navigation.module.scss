@@ -1,0 +1,55 @@
+.navigation {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0 1.5rem;
+  height: 72px; // Fixed height for navbar
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: $text-color;
+    height: 90%; // Almost full height of navbar
+
+    .logo {
+      width: 64px;  // Much bigger
+      height: 64px; // Much bigger
+      object-fit: contain;
+    }
+
+    .brandName {
+      font-size: 2.8rem;  // Much bigger
+      font-weight: 800;
+      color: #1565c0;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #2196f3, #1565c0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    height: 64px;
+    padding: 0 1rem;
+
+    .brand {
+      .logo {
+        width: 52px;
+        height: 52px;
+      }
+
+      .brandName {
+        font-size: 2.2rem;
+      }
+    }
+  }
+} 

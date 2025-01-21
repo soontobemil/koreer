@@ -27,8 +27,14 @@ $breakpoint-desktop: 1380px;
 // Colors
 $primary-color: #1e90ff;
 $secondary-color: #00bcd4;
+$accent-color: #f50057;
+
+// Text colors (maintaining both old and new names for compatibility)
 $text-color: #2d3748;
+$text-primary: $text-color;
 $text-color-light: #718096;
+$text-secondary: $text-color-light;
+
 $background-color: #f8fafc;
 $border-color: #e2e8f0;
 

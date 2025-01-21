@@ -12,6 +12,7 @@ import {
   ArrowForward
 } from '@mui/icons-material';
 import {ComponentHelmet} from "../../components/common/ComponentHelmet";
+import { useNavigate } from 'react-router-dom';
 
 
 const PlaneIcon = styled(motion.div)`
@@ -125,6 +126,8 @@ const statsVariants = {
 };
 
 export default function Main() {
+  const navigate = useNavigate();
+
   const planes = [
     {
       initial: { x: -100, y: 100, rotate: 25 },
@@ -224,47 +227,28 @@ export default function Main() {
 
   const features = [
     {
-      title: "해외 취업 정보",
-      description: "미국, 캐나다 등 주요 국가의 IT 취업 정보를 제공합니다.",
-      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      title: '해외 취업 정보',
+      description: '북미 지역 취업에 필요한 모든 정보를 제공합니다.',
+      gradient: 'linear-gradient(135deg, #2196F3 0%, #21CBF3 100%)',
+      path: '/company-information'
     },
     {
-      title: "비자 가이드",
-      description: "취업 비자 신청부터 승인까지 상세한 가이드를 제공합니다.",
-      gradient: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)"
+      title: '비자 가이드',
+      description: '비자 준비부터 인터뷰까지 전문가의 도움을 받으세요.',
+      gradient: 'linear-gradient(135deg, #00BFA5 0%, #00E5FF 100%)',
+      path: '/visa-info/usa'
     },
     {
-      title: "연봉 정보",
-      description: "국가별, 도시별 실제 연봉 정보와 생활비를 확인하세요.",
-      gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)"
+      title: '연봉 정보',
+      description: '실제 현직자들의 연봉 정보와 협상 팁을 확인하세요.',
+      gradient: 'linear-gradient(135deg, #7C4DFF 0%, #448AFF 100%)',
+      path: '/interview-guide/technical'
     },
     {
-      title: "커뮤니티",
-      description: "해외 취업 준비생들과 정보를 공유하고 소통하세요.",
-      gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)"
-    }
-  ];
-
-  const stats = [
-    {
-      icon: "📈",
-      value: "90%",
-      label: "취업 성공률"
-    },
-    {
-      icon: "💼",
-      value: "1000+",
-      label: "채용 정보"
-    },
-    {
-      icon: "🌏",
-      value: "50+",
-      label: "글로벌 기업"
-    },
-    {
-      icon: "👥",
-      value: "5000+",
-      label: "활성 사용자"
+      title: '커뮤니티',
+      description: '현지에서 일하는 개발자들과 정보를 공유하세요.',
+      gradient: 'linear-gradient(135deg, #FF4081 0%, #FF80AB 100%)',
+      path: '/community'
     }
   ];
 
@@ -364,7 +348,8 @@ export default function Main() {
                 custom={index}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                style={{ width: '100%' }}
+                style={{ width: '100%', cursor: 'pointer' }}
+                onClick={() => navigate(feature.path)}
               >
                 <StyledPaper
                   elevation={0}
@@ -378,6 +363,11 @@ export default function Main() {
                     border: '1px solid rgba(255, 255, 255, 0.3)',
                     position: 'relative',
                     overflow: 'hidden',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+                    },
                     '&::before': {
                       content: '""',
                       position: 'absolute',
@@ -420,58 +410,6 @@ export default function Main() {
                     {feature.description}
                   </Typography>
                 </StyledPaper>
-              </motion.div>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-
-      {/* Stats Section */}
-      <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
-        <Grid container spacing={3}>
-          {stats.map((stat, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <motion.div
-                variants={statsVariants}
-                initial="initial"
-                animate="animate"
-                custom={index}
-                style={{ height: '100%' }}
-              >
-                <StatCard elevation={0}>
-                  <Typography
-                    variant="h1"
-                    sx={{
-                      fontSize: '1.5rem',
-                      color: '#2196F3',
-                      opacity: 0.9,
-                      mb: 0.5
-                    }}
-                  >
-                    {stat.icon}
-                  </Typography>
-                  <Typography
-                    variant="h2"
-                    sx={{
-                      fontSize: '1.8rem',
-                      fontWeight: 600,
-                      color: '#2196F3',
-                      opacity: 0.9,
-                      mb: 0.5
-                    }}
-                  >
-                    {stat.value}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: 'text.secondary',
-                      fontSize: '0.95rem'
-                    }}
-                  >
-                    {stat.label}
-                  </Typography>
-                </StatCard>
               </motion.div>
             </Grid>
           ))}
@@ -522,6 +460,7 @@ export default function Main() {
                   variant="contained"
                   size="large"
                   endIcon={<ArrowForward />}
+                  onClick={() => navigate('/membership')}
                   sx={{
                     borderRadius: 8,
                     py: 1.5,
@@ -529,6 +468,9 @@ export default function Main() {
                     background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
                     boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
                     fontSize: '1.1rem',
+                    position: 'relative',
+                    zIndex: 10,
+                    cursor: 'pointer',
                     '&:hover': {
                       background: 'linear-gradient(45deg, #1976D2 30%, #00BCD4 90%)',
                     }
@@ -541,7 +483,7 @@ export default function Main() {
           </motion.div>
         </Container>
       </Box>
-        <ComponentHelmet title={"Koreer"} />
+        <ComponentHelmet title={"Koreer - 메인"} />
     </Box>
   );
 }

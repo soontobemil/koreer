@@ -1,10 +1,11 @@
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "./components/common/Header";
 import { Footer } from "./components/common/Footer";
 import theme from './theme';
 import { useEffect, useLayoutEffect } from 'react';
 import Contact from './components/contactus/Contact';
+import { ChatBot } from './components/common/ChatBot';
 
 function App() {
   const location = useLocation();
@@ -25,11 +26,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Header />
-        <Outlet />
+        <Box component="main" sx={{ flexGrow: 1 }}>
+          <Outlet />
+        </Box>
         <Footer />
-      </div>
+        <ChatBot />
+      </Box>
     </ThemeProvider>
   );
 }

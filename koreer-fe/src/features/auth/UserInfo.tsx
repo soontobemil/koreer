@@ -21,6 +21,7 @@ import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../store/store';
 import {UserDTO} from "@/types/auth";
 import {JsonResponseDTO} from "@/types/common";
+import {useCommonFunctions} from "../../components/common/hooks/useCommonFunctions";
 
 const employmentStatuses = ['employed', 'student'] as const;
 type EmploymentStatus = typeof employmentStatuses[number];  // 'employed' | 'student'
@@ -78,26 +79,16 @@ const countries = ['미국', '캐나다', '일본', '동남아', '유럽'];
 
 export function UserInfo() {
 
-    const { getCookie } = useCookieFunctions();
-    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const { checkAuth } = useCommonFunctions();
 
     const [userInfo, setUserInfo] = useState<UserDTO>()
 
     // 비로그인 접근 시 로그인 페이지로 이동
     useEffect(() => {
-        const checkAuth = () => {
-            const accessToken = getCookie('accessToken');
-            const isNotLogin = accessToken === null;
-
-            if (isNotLogin) {
-                alert("로그인 후 접근해주세요.");
-                navigate('/signin');
-            }
-        };
-
         checkAuth();
-        getCurrentUserInfo()
+        getCurrentUserInfo().then()
     }, []);
 
     useEffect(() => {

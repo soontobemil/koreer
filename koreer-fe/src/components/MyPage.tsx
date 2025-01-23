@@ -27,6 +27,7 @@ import { useState, useEffect } from 'react';
 import { ComponentHelmet } from "../features/common/ComponentHelmet";
 import {ApiResponse, UserInfoDTO} from '@/types/userInfo';
 import { UserDTO } from '@/types/auth';
+import {useCommonFunctions} from "../components/common/hooks/useCommonFunctions";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -47,6 +48,12 @@ export function MyPage() {
     const [tabValue, setTabValue] = useState(0);
     const [userInfo, setUserInfo] = useState<UserInfoDTO | null>(null);
     const [user, setUser] = useState<UserDTO | null>(null);
+    const {checkAuth}=useCommonFunctions();
+
+    // 비로그인 여부 체크
+    useEffect(() => {
+        checkAuth();
+    }, []);
 
     // 유저 정보 및 추가 정보 가져오기
     useEffect(() => {

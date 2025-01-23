@@ -25,6 +25,7 @@ export interface UserInfoDTO {
     introduction: string;
     githubUrl: string | null;
     portfolioUrl: string | null;
+    role?: string;
 }
 
 export interface ApiResponse<T> {

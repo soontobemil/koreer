@@ -8,5 +8,6 @@ const userInfoController = require('../controllers/userInfoController');
 // UserInfo CRUD 라우트
 router.post('/', userInfoController.createUserInfo);
 router.get('/:id', userInfoController.getCurrentUserInfo);
+router.put('/', userInfoController.updateUserInfo);
 
 module.exports = router;

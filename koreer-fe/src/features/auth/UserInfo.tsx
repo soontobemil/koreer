@@ -100,6 +100,34 @@ export function UserInfo() {
 
     }, [setUserInfo]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // 추가 정보 가져오기
+                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/user-info/${userInfo?.id}`, {
+                    credentials: 'include'
+                });
+
+                const userInfoData = await response.json();
+
+                if (response.ok && userInfoData.data) {
+                    // formData에 가져온 데이터 초기값 할당
+                    setFormData({
+                        id: userInfoData.data.id,
+                        ...userInfoData.data,
+                        user_id: userInfo?.id ?? 0
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to fetch user data:', error);
+            }
+        };
+
+        if(userInfo?.id) {
+            fetchData();
+        }
+    }, [userInfo]);
+
     const getCurrentUserInfo = useCallback(async () => {
         try {
             const result:JsonResponseDTO<UserDTO> = await dispatch(getCurrentUserAsync()).unwrap();
@@ -123,8 +151,8 @@ export function UserInfo() {
         skills: [],
         interests: [],
         introduction: '',
-        githubUrl: '',
-        portfolioUrl: ''
+        github_url: '',
+        portfolio_url: ''
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -149,11 +177,11 @@ export function UserInfo() {
         }));
     };
 
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitStatus('loading');
         try {
-            // form 데이터를 DTO 형식으로 변환
             const userInfoDTO: UserInfoDTO = {
                 user_id: userInfo?.id ?? formData.user_id,
                 employment_status: formData.employment_status,
@@ -166,23 +194,19 @@ export function UserInfo() {
                 skills: formData.skills,
                 interests: formData.interests,
                 introduction: formData.introduction,
-                githubUrl: formData.githubUrl || null,
-                portfolioUrl: formData.portfolioUrl || null,
+                github_url: formData.github_url || null,
+                portfolio_url: formData.portfolio_url || null,
             };
 
-            // eslint-disable-next-line max-len
             const response = await fetch(`${process.env.REACT_APP_BASE_URL}/user-info`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                method: formData.id  ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(userInfoDTO)
             });
 
-            const result = await response.json();
-
             if (!response.ok) {
-                throw new Error(result.message || '서버 에러가 발생했습니다.');
+                throw new Error( '서버 에러가 발생했습니다.');
             }
 
             setSubmitStatus('success');
@@ -194,7 +218,6 @@ export function UserInfo() {
             setShowSnackbar(true);
         }
     };
-
 
     const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -548,8 +571,8 @@ export function UserInfo() {
                             <TextField
                                 fullWidth
                                 label="GitHub URL"
-                                name="githubUrl"
-                                value={formData.githubUrl}
+                                name="github_url"
+                                value={formData.github_url}
                                 onChange={handleInputChange}
                                 placeholder="https://github.com/username"
                                 variant="outlined"
@@ -559,8 +582,8 @@ export function UserInfo() {
                             <TextField
                                 fullWidth
                                 label="포트폴리오 URL"
-                                name="portfolioUrl"
-                                value={formData.portfolioUrl}
+                                name="portfolio_url"
+                                value={formData.portfolio_url}
                                 onChange={handleInputChange}
                                 placeholder="https://your-portfolio.com"
                                 variant="outlined"

@@ -25,9 +25,13 @@ DB_NAME=yourdbname
 
 ## Setting Up Redis
 1. Install Redis
-    ```docker run --name my-redis -d -p 6379:6379 redis```
+    ```
+    docker run --name my-redis -d -p 6379:6379 redis
+    ```
 2. Check Docker Redis ps
-    ```docker ps```
+    ```
+    docker ps
+    ```
 
 ## Running the Application
 1. Start the development server:

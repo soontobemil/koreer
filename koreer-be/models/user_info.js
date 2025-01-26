@@ -2,27 +2,27 @@ module.exports = (sequelize, DataTypes) => {
     const UserInfo = sequelize.define('UserInfo', {
         school: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true,
             comment: '학교명'
         },
         major: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true,
             comment: '전공'
         },
         graduation_year: {
             type: DataTypes.STRING(4),
-            allowNull: false,
+            allowNull: true,
             comment: '졸업년도'
         },
         location: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true,
             comment: '현재 거주지'
         },
         desired_country: {
             type: DataTypes.STRING(50),
-            allowNull: false,
+            allowNull: true,
             comment: '희망 취업 국가'
         },
         skills: {
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         introduction: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
             comment: '자기소개'
         },
         github_url: {

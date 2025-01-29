@@ -26,7 +26,24 @@ async function getUserByCondition(req, res) {
   }
 }
 
+async function updateUser(req, res) {
+  try {
+    // start data processing logic
+    const data = req.body;
+    const userId = req.params.id;
+    if(!userId) {
+      throw new Error('회원 아이디가 존재하지 않습니다.');
+    }
+    const user = await adminUserService.updateUser(userId,data);
+    res.status(201).json(user);
+  } catch (error) {
+    console.error('Error updating user:', error); // error log
+    res.status(400).json({ message: '회원 수정 중 에러가 발생하였습니다. ' + error.message });
+  }
+}
+
 module.exports = {
   getUsers,
-  getUserByCondition
+  getUserByCondition,
+  updateUser
 };

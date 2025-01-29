@@ -8,6 +8,7 @@ var adminAuthMiddleware = require('../../src/middlewares/adminAuthMiddleware');
 router.use(adminAuthMiddleware);
 router.get('/users', adminUserController.getUsers);
 router.get('/users/:id', adminUserController.getUserByCondition);
+router.post('/users/:id/modify', adminUserController.updateUser);
 //router.delete('/users/:id/delete', postController.deletePost);
 
 // Commnunities

@@ -61,6 +61,39 @@ class AdminUserService {
             throw new Error('Error fetching user');
         }
     }
+
+    async updateUser(id, updateData) {
+        const numericUserId = Number(id);
+        const [updatedCnt1] = await AdminUserRepository.updateUser(numericUserId, updateData);
+        if (updatedCnt1 === 0) {
+            throw new Error('User not found or update failed');
+        }
+        if (!updateData.userInfo) {
+            throw new Error('UserInfo data is missing');
+        }
+        const numericUserInfoId = updateData.userInfo ? Number(updateData.userInfo.id) : null;
+
+        const [updatedCnt2] = await AdminUserRepository.updateUserInfo(numericUserInfoId, updateData.userInfo);
+        if (updatedCnt2 === 0) {
+            throw new Error('UserInfo not found or update failed');
+        }
+        const updatedUser = await AdminUserRepository.findById(id);
+        const userObject = updatedUser.toJSON ? updatedUser.toJSON() : updatedUser; // Sequelize 객체를 일반 객체로 변환
+
+        // user_info를 userObject에 병합
+        const userInfoObject = userObject.userInfo || {}; // user_info가 없으면 빈 객체로 처리
+        const userInfoDTO = new AdminUserInfoDTO(userInfoObject); // userInfoDTO 생성
+
+        // AdminUserDTO에 userInfoDTO 추가
+        const userDTO = new AdminUserDTO({
+            ...userObject, // users 테이블 데이터
+            user_info: userInfoDTO // userInfo를 DTO로 추가
+        });
+
+        return {
+            data: userDTO
+        };
+    }
 }
 
 

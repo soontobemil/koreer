@@ -77,6 +77,44 @@ class AdminUserRepository {
             throw new Error('Error fetching user');
         }
     }
+
+    async updateUser(id, updateData) {
+        return await db.User.update(updateData, {where: {id}});
+    }
+
+    async updateUserInfo(id, updateData) {
+        return await db.UserInfo.update(updateData, {where: {id}});
+    }
+
+    async findById(id) {
+        try {
+            const user = await db.User.findOne({
+                attributes: {
+                    include: [
+                        // user_info의 모든 필드를 JSON 형태로 가져오기
+                        //[db.sequelize.literal(`row_to_json("user_info")`), 'user_info']
+                        [db.sequelize.literal(`row_to_json("userInfo")`), 'userInfo'] // userInfo를 JSON으로 변환
+                    ]
+                },
+                include: [
+                    {
+                        model: db.UserInfo, // user_info 테이블의 모델
+                        //as: 'user_info',    // alias 설정
+                        as: 'userInfo',    // alias 설정
+                        attributes: { exclude: [] } // 모든 필드 포함
+                    }
+                ],
+                where: { id },
+                order: [['created_at', 'DESC']],
+                distinct: true
+            });
+
+            return user;
+        } catch (error) {
+            console.error('Error fetching user:', error);
+            throw new Error('Error fetching user');
+        }
+    }
 }
 
 module.exports = new AdminUserRepository();

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-//const postController = require('../../controllers/admin/postController');
 const adminUserController = require('../../controllers/admin/adminUserController');
 const adminCommCodeController = require('../../controllers/admin/adminCommCodeController');
+const adminComInfoController = require('../../controllers/admin/adminComInfoController');
+//const postController = require('../../controllers/admin/postController');
+
 var adminAuthMiddleware = require('../../src/middlewares/adminAuthMiddleware');
 
 // Users
@@ -17,6 +19,13 @@ router.get('/codes/:groupCode', adminCommCodeController.getCodeByGroupCode);
 router.post('/codes', adminCommCodeController.createCode);
 router.post('/codes/:id/modify', adminCommCodeController.updateCode);
 router.post('/codes/:id/delete', adminCommCodeController.deleteCode);
+
+// Company Information
+router.post('/company-info', adminComInfoController.createInfo);
+router.get('/company-info', adminComInfoController.getInfos);
+router.get('/company-info/:id', adminComInfoController.getInfoById);
+router.post('/company-info/:id/modify', adminComInfoController.updateInfo);
+router.post('/company-info/:id/delete', adminComInfoController.deleteInfo);
 
 // Commnunities
 // router.get('/posts', postController.getPosts);

@@ -55,12 +55,14 @@ async function updateCode(req, res) {
 }
 
 async function deleteCode(req, res) {
-  const codeId = req.params.id;
-  const deleted = await adminCommCodeService.deleteCode(codeId);
-  if (!deleted) {
-      throw new Error('Code not found or delete failed');
+  try {
+    const codeId = req.params.id;
+    const result = await adminCommCodeService.deleteCode(codeId);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error updating code:', error); // error log
+    res.status(400).json({ message: '코드 삭제 중 에러가 발생하였습니다. ' + error.message });
   }
-  return { message: 'Code deleted successfully' };
 }
 
 module.exports = {

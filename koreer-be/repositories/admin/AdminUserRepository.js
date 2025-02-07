@@ -115,6 +115,7 @@ class AdminUserRepository {
             throw new Error('Error fetching user');
         }
     }
+
 }
 
 module.exports = new AdminUserRepository();

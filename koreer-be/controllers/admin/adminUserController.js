@@ -42,8 +42,9 @@ async function updateUser(req, res) {
   }
 }
 
+
 module.exports = {
   getUsers,
   getUserByCondition,
-  updateUser
+  updateUser,
 };

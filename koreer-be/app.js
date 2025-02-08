@@ -35,6 +35,7 @@ var careerTips = require('./routes/careertips');
 var communityRouter = require('./routes/community');
 var userInfoRouter = require('./routes/userInfo');
 var adminRouter = require('./routes/admin/admin');
+var commCodeRouter = require('./routes/commcode');
 
 var userService = require('./services/userService');
 
@@ -101,7 +102,7 @@ passport.use(new GoogleStrategy({
 }));
 
 app.use('/jobinfos', jobInfoRouter);
-//app.use('/careertips', careerTips);
+app.use('/codes', commCodeRouter);
 
 app.use('/admin', adminRouter);
 

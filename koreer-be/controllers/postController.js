@@ -1,5 +1,5 @@
 // Get request data from routes
-const postService = require('../services/PostService');
+const postService = require('../services/postService');
 const jwt = require("jsonwebtoken");
 
 async function createPost(req, res) {
@@ -16,9 +16,6 @@ async function createPost(req, res) {
 
 async function getPostById(req, res) {
   try {
-    if(!req.user) {
-      req.user = {id:"71",user_email:"iyeahs71@gmail.com"};
-    }
     const post = await postService.getPostById(req.params.id,req.user.id);
     if (post) {
       res.status(200).json(post);
@@ -33,12 +30,6 @@ async function getPostById(req, res) {
 async function getPosts(req, res) {
   try {
     const { page = 1, limit = 10 } = req.query; // 쿼리 파라미터에서 page와 limit 가져오기
-
-    // if(!req.user) {
-    //   req.user = {user_email:"iyeahs71@gmail.com"};
-    // }
-
-    // const currentUserEmail = req.user.user_email; // 현재 로그인한 유저의 이메일 (예: 미들웨어에서 추가된 사용자 정보)
 
     const posts = await postService.getPosts(Number(page), Number(limit), req);
 

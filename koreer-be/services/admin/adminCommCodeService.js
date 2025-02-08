@@ -1,12 +1,16 @@
 // services/post.service.js
 const AdminCommCodeRepository = require('../../repositories/admin/AdminCommCodeRepository');
 const { AdminCommCodeDTO } = require('../../dtos/admin/AdminCommCodeDTO');
+const {redisClient} = require('../../config/redisClient'); // 전역 Redis 클라이언트 사용
 
 class adminCommCodeService {
     async createCode(data) {
         try {
-          const code = await AdminCommCodeRepository.createCode(data);
-          return code;
+            const code = await AdminCommCodeRepository.createCode(data);
+            // 캐시 무효화 메시지 전송
+            await redisClient.publish('CACHE_INVALIDATION', data.group_code);
+
+            return code;
         } catch (error) {
           console.log(error);
           throw new Error('Error creating code');
@@ -73,6 +77,9 @@ class adminCommCodeService {
         if (updatedCnt1 === 0) {
             throw new Error('Code not found or update failed');
         }
+        // 캐시 무효화 메시지 전송
+        await redisClient.publish('CACHE_INVALIDATION', updateData.group_code);
+
         const updatedCode = await AdminCommCodeRepository.findById(id);
         const codeObject = updatedCode.toJSON ? updatedCode.toJSON() : updatedCode; // Sequelize 객체를 일반 객체로 변환
 
@@ -85,15 +92,17 @@ class adminCommCodeService {
     }
 
     async deleteCode(id) {
+        const deletedCode = await AdminCommCodeRepository.findById(id);
         const deleted = await AdminCommCodeRepository.delete(id);
         if (!deleted) {
             throw new Error('Code not found or delete failed');
         }
+        // 캐시 무효화 메시지 전송
+        await redisClient.publish('CACHE_INVALIDATION', deletedCode.group_code);
+
         return { message: 'Code deleted successfully' };
     }
 
 }
-
-
 
 module.exports = new adminCommCodeService();

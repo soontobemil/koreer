@@ -5,8 +5,8 @@ const {Op} = require("sequelize");
 class AdminCommCodeRepository {
     async createCode(data) {
         try {
-          const code = await db.CommonCode.create(data);
-          return code;
+            const code = await db.CommonCode.create(data);
+            return code;
         } catch (error) {
           console.log(error);
           throw new Error('Error creating code');
@@ -62,6 +62,7 @@ class AdminCommCodeRepository {
     }
 
     async updateCode(id, updateData) {
+
         return await db.CommonCode.update(updateData, {where: {id}});
     }
 

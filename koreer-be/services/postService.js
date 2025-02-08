@@ -72,11 +72,26 @@ class PostService {
             // todo 리팩토링
             const { rows: posts, count: total } = await PostRepository.getPosts(offset, limit, req);
 
-            // PostResponseDTO로 매핑
-            const postsDTO = posts.map(post => {
+            if (!posts.length) {
+                return {
+                    data: [],
+                    meta: {
+                        total,
+                        currentPage: page,
+                        totalPages: Math.ceil(total / limit),
+                    },
+                };
+            }
+            
+            // ✅ Redis에서 조회수 가져오기 (MGET 사용으로 최적화)
+            const postIds = posts.map(post => `post:${post.id}:views`);
+            const viewCounts = await redisClient.mget(postIds);
+
+            const postsDTO = posts.map((post, index) => {
                 const isOwner = post.user_email === currentUserEmail; // 현재 사용자와 작성자 비교
-                const postObject = post.toJSON ? post.toJSON() : post; // Sequelize 객체일 경우 일반 객체로 변환
-                return new PostResponseDTO({ ...postObject, is_owner: isOwner });
+                const postObject = post.toJSON ? post.toJSON() : post; // Sequelize 객체 변환
+                const redisViews = viewCounts[index] ? parseInt(viewCounts[index], 10) : 0; // 조회수 가져오기
+                return new PostResponseDTO({ ...postObject, is_owner: isOwner, view_count: post.view_count + redisViews });
             });
 
             // 페이지네이션 메타데이터 포함 응답

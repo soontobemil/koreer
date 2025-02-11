@@ -8,7 +8,7 @@ class adminCommCodeService {
         try {
             const code = await AdminCommCodeRepository.createCode(data);
             // 캐시 무효화 메시지 전송
-            await redisClient.publish('CACHE_INVALIDATION', data.group_code);
+            await redisClient.publish('CACHE_INVALIDATION', `common_code:${data.group_code}`);
 
             return code;
         } catch (error) {
@@ -78,7 +78,7 @@ class adminCommCodeService {
             throw new Error('Code not found or update failed');
         }
         // 캐시 무효화 메시지 전송
-        await redisClient.publish('CACHE_INVALIDATION', updateData.group_code);
+        await redisClient.publish('CACHE_INVALIDATION', `common_code:${updateData.group_code}`);
 
         const updatedCode = await AdminCommCodeRepository.findById(id);
         const codeObject = updatedCode.toJSON ? updatedCode.toJSON() : updatedCode; // Sequelize 객체를 일반 객체로 변환
@@ -98,7 +98,7 @@ class adminCommCodeService {
             throw new Error('Code not found or delete failed');
         }
         // 캐시 무효화 메시지 전송
-        await redisClient.publish('CACHE_INVALIDATION', deletedCode.group_code);
+        await redisClient.publish('CACHE_INVALIDATION', `common_code:${deletedCode.group_code}`);
 
         return { message: 'Code deleted successfully' };
     }

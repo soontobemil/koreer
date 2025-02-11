@@ -101,7 +101,6 @@ passport.use(new GoogleStrategy({
     }
 }));
 
-app.use('/jobinfos', jobInfoRouter);
 app.use('/codes', commCodeRouter);
 
 app.use('/admin', adminRouter);

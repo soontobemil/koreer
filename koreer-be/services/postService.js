@@ -131,7 +131,10 @@ class PostService {
         }
 
         // ✅ Redis에서 해당 게시글의 조회수 캐시 삭제
-        await redisClient.del(`post:${id}:views`);
+        //await redisClient.del(`post:${id}:views`);
+
+        // 캐시 무효화 메시지 전송
+        await redisClient.publish('CACHE_INVALIDATION', `post:${id}:views`);
 
         return { message: 'Post deleted successfully' };
     }

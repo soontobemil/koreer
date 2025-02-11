@@ -28,7 +28,7 @@ subscriber.subscribe('CACHE_INVALIDATION', (err, count) => {
 subscriber.on('message', async (channel, message) => {
     if (channel === 'CACHE_INVALIDATION') {
         console.log(`♻️ 캐시 무효화 요청: ${message}`);
-        await redisClient.del(`common_code:${message}`);
+        await redisClient.del(message);
     }
 });
 

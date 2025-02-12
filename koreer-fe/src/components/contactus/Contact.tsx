@@ -1,34 +1,18 @@
-import React, { useState } from 'react';
-import {
-  Container,
-  Typography,
-  Paper,
-  TextField,
-  Button,
-  Box,
-  Grid,
-  IconButton,
-  Snackbar,
-} from '@mui/material';
-import {
-  Email,
-  Phone,
-  LocationOn,
-  Send,
-  Message,
-  AccessTime,
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import React, {useState} from 'react';
+import {Box, Button, Container, Grid, IconButton, Paper, Snackbar, TextField, Typography,} from '@mui/material';
+import {AccessTime, Email, LocationOn, Phone, Send,} from '@mui/icons-material';
+import {motion} from 'framer-motion';
 import styles from '../../assets/scss/sub/contactus.module.scss';
-import { ComponentHelmet } from "../../features/common/ComponentHelmet";
+import {ComponentHelmet} from "../../features/common/ComponentHelmet";
+import {InquiryPostDTO} from "@/types/inquiry";
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
-    subject: '',
-    message: '',
+    phone_number: '',
+    title: '',
+    content: '',
   });
 
   const [snackbar, setSnackbar] = useState({
@@ -44,21 +28,52 @@ export const Contact: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission logic
+
+    try {
+      const dto: InquiryPostDTO = {
+        name: formData.name,
+        email: formData.email,
+        phone_number: formData.phone_number,
+        title: formData.title,
+        content: formData.content
+      };
+
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/inquiry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // credentials: 'include',
+        body: JSON.stringify(dto)
+      });
+
+      if (!response.ok) {
+        throw new Error( '서버 에러가 발생했습니다.');
+      }
+
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: error instanceof Error ? error.message : '일시적인 오류가 발생했습니다.\n다시 시도해주세요.',
+      });
+    }
+
     setSnackbar({
       open: true,
       message: '문의가 성공적으로 전송되었습니다. 빠른 시일 내에 답변 드리겠습니다.',
     });
+    resetFormData();
+  };
+
+  const resetFormData = () =>{
     setFormData({
       name: '',
       email: '',
-      phone: '',
-      subject: '',
-      message: '',
+      phone_number: '',
+      title: '',
+      content: '',
     });
-  };
+  }
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
@@ -112,7 +127,7 @@ export const Contact: React.FC = () => {
               <Typography variant="h5" gutterBottom className={styles.sectionTitle}>
                 연락처 정보
               </Typography>
-              
+
               {contactInfo.map((info, index) => (
                 <Box key={index} className={styles.infoItem}>
                   <IconButton className={styles.infoIcon}>
@@ -153,7 +168,7 @@ export const Contact: React.FC = () => {
               <Typography variant="h5" gutterBottom className={styles.sectionTitle}>
                 문의하기
               </Typography>
-              
+
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
@@ -183,8 +198,8 @@ export const Contact: React.FC = () => {
                     <TextField
                       fullWidth
                       label="연락처"
-                      name="phone"
-                      value={formData.phone}
+                      name="phone_number"
+                      value={formData.phone_number}
                       onChange={handleChange}
                       variant="outlined"
                     />
@@ -194,8 +209,8 @@ export const Contact: React.FC = () => {
                       required
                       fullWidth
                       label="제목"
-                      name="subject"
-                      value={formData.subject}
+                      name="title"
+                      value={formData.title}
                       onChange={handleChange}
                       variant="outlined"
                     />
@@ -205,8 +220,8 @@ export const Contact: React.FC = () => {
                       required
                       fullWidth
                       label="문의 내용"
-                      name="message"
-                      value={formData.message}
+                      name="content"
+                      value={formData.content}
                       onChange={handleChange}
                       multiline
                       rows={6}

@@ -1,10 +1,10 @@
 // Get request data from routes
-const adminCommunityService = require('../../services/adminCommunityService');
+const AdminCommunityService = require('../../services/AdminCommunityService');
 const jwt = require("jsonwebtoken");
 
 async function getPostById(req, res) {
   try {
-    const post = await adminCommunityService.getPostById(req.params.id,req.user.id);
+    const post = await AdminCommunityService.getPostById(req.params.id,req.user.id);
     if (post) {
       res.status(200).json(post);
     } else {
@@ -19,7 +19,7 @@ async function getPosts(req, res) {
   try {
     const { page = 1, limit = 10 } = req.query; // 쿼리 파라미터에서 page와 limit 가져오기
 
-    const posts = await adminCommunityService.getPosts(Number(page), Number(limit), req);
+    const posts = await AdminCommunityService.getPosts(Number(page), Number(limit), req);
 
     res.status(200).json(posts);
   } catch (error) {
@@ -36,7 +36,7 @@ async function updatePost(req, res) {
     if(!id) {
       throw new Error('게시글 아이디가 존재하지 않습니다.');
     }
-    const post = await adminCommunityService.updatePost(id,data);
+    const post = await AdminCommunityService.updatePost(id,data);
     res.status(201).json(post);
   } catch (error) {
     console.error('Error updating post:', error); // error log
@@ -48,7 +48,7 @@ async function deletePost(req, res) {
   try {
     // start data processing logic
     const id = req.params.id;
-    const post = await adminCommunityService.deletePost(id);
+    const post = await AdminCommunityService.deletePost(id);
     res.status(201).json(post);
   } catch (error) {
     console.error('Error deleting post:', error); // error log

@@ -1,11 +1,11 @@
 // Get request data from routes
-const adminUserService = require('../../services/admin/adminUserService');
+const AdminUserService = require('../../services/admin/AdminUserService');
 
 async function getUsers(req, res) {
   try {
     const { page = 1, limit = 10 } = req.query; // 쿼리 파라미터에서 page와 limit 가져오기
 
-    const users = await adminUserService.getUsers(Number(page), Number(limit), req);
+    const users = await AdminUserService.getUsers(Number(page), Number(limit), req);
 
     res.status(200).json(users);
   } catch (error) {
@@ -15,7 +15,7 @@ async function getUsers(req, res) {
 }
 async function getUserByCondition(req, res) {
   try {
-    const user = await adminUserService.getUserByCondition(req);
+    const user = await AdminUserService.getUserByCondition(req);
     if (user) {
       res.status(200).json(user);
     } else {
@@ -34,7 +34,7 @@ async function updateUser(req, res) {
     if(!userId) {
       throw new Error('회원 아이디가 존재하지 않습니다.');
     }
-    const user = await adminUserService.updateUser(userId,data);
+    const user = await AdminUserService.updateUser(userId,data);
     res.status(201).json(user);
   } catch (error) {
     console.error('Error updating user:', error); // error log

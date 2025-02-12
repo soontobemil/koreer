@@ -1,11 +1,11 @@
 // Get request data from routes
-const adminCommCodeService = require('../../services/admin/adminCommCodeService');
+const AdminCommCodeService = require('../../services/admin/AdminCommCodeService');
 
 async function createCode(req, res) {
   try {
     // start data processing logic
     const data = req.body;
-    const code = await adminCommCodeService.createCode(data);
+    const code = await AdminCommCodeService.createCode(data);
     res.status(201).json(code);
   } catch (error) {
     console.error('Error creating code:', error); // error log
@@ -17,7 +17,7 @@ async function getCodes(req, res) {
   try {
     const { page = 1, limit = 10 } = req.query; // 쿼리 파라미터에서 page와 limit 가져오기
 
-    const codes = await adminCommCodeService.getCodes(Number(page), Number(limit), req);
+    const codes = await AdminCommCodeService.getCodes(Number(page), Number(limit), req);
 
     res.status(200).json(codes);
   } catch (error) {
@@ -27,7 +27,7 @@ async function getCodes(req, res) {
 }
 async function getCodeByGroupCode(req, res) {
   try {
-    const codes = await adminCommCodeService.getCodeByGroupCode(req);
+    const codes = await AdminCommCodeService.getCodeByGroupCode(req);
     if (codes) {
       res.status(200).json(codes);
     } else {
@@ -46,7 +46,7 @@ async function updateCode(req, res) {
     if(!codeId) {
       throw new Error('코드 아이디가 존재하지 않습니다.');
     }
-    const code = await adminCommCodeService.updateCode(codeId,data);
+    const code = await AdminCommCodeService.updateCode(codeId,data);
     res.status(201).json(code);
   } catch (error) {
     console.error('Error updating code:', error); // error log
@@ -57,7 +57,7 @@ async function updateCode(req, res) {
 async function deleteCode(req, res) {
   try {
     const codeId = req.params.id;
-    const result = await adminCommCodeService.deleteCode(codeId);
+    const result = await AdminCommCodeService.deleteCode(codeId);
     res.status(201).json(result);
   } catch (error) {
     console.error('Error updating code:', error); // error log

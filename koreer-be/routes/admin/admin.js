@@ -3,7 +3,7 @@ const router = express.Router();
 const adminUserController = require('../../controllers/admin/adminUserController');
 const adminCommCodeController = require('../../controllers/admin/adminCommCodeController');
 const adminComInfoController = require('../../controllers/admin/adminComInfoController');
-//const postController = require('../../controllers/admin/postController');
+const adminCommunityController = require('../../controllers/admin/adminCommunityController');
 
 var adminAuthMiddleware = require('../../src/middlewares/adminAuthMiddleware');
 
@@ -25,14 +25,12 @@ router.post('/company-info', adminComInfoController.createInfo);
 router.get('/company-info', adminComInfoController.getInfos);
 router.get('/company-info/:id', adminComInfoController.getInfoById);
 router.post('/company-info/:id/modify', adminComInfoController.updateInfo);
-router.post('/company-info/:id/delete', adminComInfoController.deleteInfo);
+router.delete('/company-info/:id/delete', adminComInfoController.deleteInfo);
 
 // Commnunities
-// router.get('/posts', postController.getPosts);
-// router.get('/posts/:userId', commentController.getCommentById);
-// router.post('/posts/:userId/delete', commentController.deleteComment);
-// router.get('/comments', postController.getPosts);
-// router.get('/comments/:userId', commentController.getComments);
-// router.post('/comments/:postId/delete', commentController.deleteComment);
+router.get('/posts', adminCommunityController.getPosts);
+router.get('/posts/:userId', adminCommunityController.getPostById);
+router.delete('/posts/:postId/delete', adminCommunityController.deletePost);
+router.delete('/comments/:commentId/delete', adminCommunityController.deleteComment);
 
 module.exports = router;

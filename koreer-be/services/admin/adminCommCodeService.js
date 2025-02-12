@@ -3,7 +3,7 @@ const AdminCommCodeRepository = require('../../repositories/admin/AdminCommCodeR
 const { AdminCommCodeDTO } = require('../../dtos/admin/AdminCommCodeDTO');
 const {redisClient} = require('../../config/redisClient'); // 전역 Redis 클라이언트 사용
 
-class adminCommCodeService {
+class AdminCommCodeService {
     async createCode(data) {
         try {
             const code = await AdminCommCodeRepository.createCode(data);
@@ -105,4 +105,4 @@ class adminCommCodeService {
 
 }
 
-module.exports = new adminCommCodeService();
+module.exports = new AdminCommCodeService();

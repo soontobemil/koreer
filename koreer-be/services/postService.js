@@ -120,7 +120,7 @@ class PostService {
         if (!updated) {
             throw new Error('Post not found or update failed');
         }
-        const updatedPost = await PostRepository.findById(id);
+        const updatedPost = await PostRepository.searchById(id);
         return new PostResponseDTO(updatedPost);
     }
 

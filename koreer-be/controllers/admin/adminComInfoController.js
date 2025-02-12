@@ -1,11 +1,11 @@
 // Get request data from routes
-const adminComInfoService = require('../../services/admin/adminComInfoService');
+const AdminComInfoService = require('../../services/admin/AdminComInfoService');
 
 async function createInfo(req, res) {
   try {
     // start data processing logic
     const data = req.body;
-    const info = await adminComInfoService.createInfo(data);
+    const info = await AdminComInfoService.createInfo(data);
     res.status(201).json(info);
   } catch (error) {
     console.error('Error creating company-info:', error); // error log
@@ -17,7 +17,7 @@ async function getInfos(req, res) {
   try {
     const { page = 1, limit = 10 } = req.query; // 쿼리 파라미터에서 page와 limit 가져오기
 
-    const infos = await adminComInfoService.getInfos(Number(page), Number(limit), req);
+    const infos = await AdminComInfoService.getInfos(Number(page), Number(limit), req);
 
     res.status(200).json(infos);
   } catch (error) {
@@ -27,7 +27,7 @@ async function getInfos(req, res) {
 }
 async function getInfoById(req, res) {
   try {
-    const infos = await adminComInfoService.getInfoById(req);
+    const infos = await AdminComInfoService.getInfoById(req);
     if (infos) {
       res.status(200).json(infos);
     } else {
@@ -46,7 +46,7 @@ async function updateInfo(req, res) {
     if(!infoId) {
       throw new Error('회사 아이디가 존재하지 않습니다.');
     }
-    const info = await adminComInfoService.updateInfo(infoId,data);
+    const info = await AdminComInfoService.updateInfo(infoId,data);
     res.status(201).json(info);
   } catch (error) {
     console.error('Error updating info:', error); // error log
@@ -57,7 +57,7 @@ async function updateInfo(req, res) {
 async function deleteInfo(req, res) {
   try {
     const infoId = req.params.id;
-    const result = await adminComInfoService.deleteInfo(infoId);
+    const result = await AdminComInfoService.deleteInfo(infoId);
     
     res.status(201).json(result);
   } catch (error) {

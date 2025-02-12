@@ -2,7 +2,7 @@
 const AdminComInfoRepository = require('../../repositories/admin/AdminComInfoRepository');
 const { AdminComInfoDTO } = require('../../dtos/admin/AdminComInfoDTO');
 
-class adminComInfoService {
+class AdminComInfoService {
     async createInfo(data) {
         try {
           const info = await AdminComInfoRepository.create(data);
@@ -90,4 +90,4 @@ class adminComInfoService {
 
 }
 
-module.exports = new adminComInfoService();
+module.exports = new AdminComInfoService();

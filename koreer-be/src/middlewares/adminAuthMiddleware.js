@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 const adminAuthMiddleware = (req, res, next) => {
-    req.user = { role: 'admin' }; // role 값을 설정
     // Get Authorization from Request Header
     const authHeader = req.headers.authorization || `Bearer ${req.cookies.accessToken}`;
     console.log('Auth Middleware - Request Details:');
@@ -24,10 +23,10 @@ const adminAuthMiddleware = (req, res, next) => {
 
     try {
         // Verify Access Token
-        //const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
         // 토큰이 유효한 경우, req.user에 토큰에서 해석된 정보 할당
-        //req.user = decoded;
+        req.user = decoded;
         
         if (req.user.role !== "admin") {
             return res.status(403).json({ success: false, message: "You don't have 'admin' role!" });

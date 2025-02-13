@@ -1,172 +1,88 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   Box,
   Button,
   Card,
   CardContent,
-  Chip,
   Container,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
   TextField,
   Typography,
 } from '@mui/material';
-import {DataGrid, GridColDef, GridRenderCellParams} from '@mui/x-data-grid';
-import {Delete, Edit, Visibility} from '@mui/icons-material';
+import {DataGrid} from '@mui/x-data-grid';
 import {motion} from 'framer-motion';
-
-// 타입 정의
-interface User {
-  id: number;
-  user_email: string;
-  username: string;
-  nation: string;
-  is_active: 'Y' | 'N';
-  is_email_verified: 'Y' | 'N';
-  role: string;
-  created_at: string;
-  updated_at?: string;
-  password?: string; // API 응답에서는 제외될 수 있음
-}
-
-// 칩 상태에 대한 타입
-type ChipStatus = {
-  label: string;
-  color: 'success' | 'error' | 'warning' | 'primary' | 'default';
-};
-
-// 칩 상태 매핑을 위한 타입
-type StatusMapping = {
-  [key: string]: ChipStatus;
-};
+import {useCookieFunctions} from "../../components/common/hooks/useCookieFunctions";
+import {AdminUser} from "../../types/adminUser";
+import {ApiResponse} from "../../types/common";
+import {useAdminUserColumns} from "../../features/admin/hooks/useAdminUserColumns";
 
 export function AdminUserManagement() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  // 상태 매핑 객체
-  const activeStatusMap: StatusMapping = {
-    'Y': { label: '활성', color: 'success' },
-    'N': { label: '비활성', color: 'error' }
+  const { columns } = useAdminUserColumns();
+  const { getCookie } = useCookieFunctions();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [users, setUsers] = useState<AdminUser[]>([]);
+  const [totalUsers, setTotalUsers] = useState<number>(0);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+
+  const fetchUsers = async (page: number, limit: number): Promise<void> => {
+    setLoading(true);
+    try {
+      const accessToken = getCookie('accessToken');
+
+      const response = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/admin/users?page=${page + 1}&limit=${limit}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json'
+            }
+          }
+      );
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          window.location.href = '/admin/login';
+          return;
+        }
+        throw new Error('Failed to fetch users');
+      }
+
+      const responseData: ApiResponse = await response.json();
+      setUsers(responseData.data);
+      setTotalUsers(responseData.meta.total);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const verificationStatusMap: StatusMapping = {
-    'Y': { label: '인증됨', color: 'success' },
-    'N': { label: '미인증', color: 'warning' }
+  const handlePaginationModelChange = (newModel: typeof paginationModel): void => {
+    setPaginationModel(newModel);
   };
 
-  // 더미 데이터
-  const users: User[] = [
-    {
-      id: 1,
-      user_email: 'user1@example.com',
-      username: '홍길동',
-      nation: 'KOR',
-      is_active: 'Y',
-      is_email_verified: 'Y',
-      role: 'user',
-      created_at: '2024-02-12 10:00:00',
-    },
-    // ... 더 많은 사용자 데이터
-  ];
+  useEffect(() => {
+    fetchUsers(paginationModel.page, paginationModel.pageSize);
+  }, [paginationModel]);
 
-  const columns: GridColDef[] = [
-    { field: 'username', headerName: '사용자명', flex: 1 },
-    { field: 'user_email', headerName: '이메일', flex: 1.5 },
-    {
-      field: 'nation',
-      headerName: '국가',
-      width: 120,
-      renderCell: (params: GridRenderCellParams<User, string>) => (
-          <Chip
-              label={params.value}
-              color={params.value === 'KOR' ? 'primary' : 'default'}
-              size="small"
-          />
-      )
-    },
-    {
-      field: 'is_active',
-      headerName: '활성화',
-      width: 100,
-      renderCell: (params: GridRenderCellParams<User, 'Y' | 'N'>) => {
-        // @ts-ignore
-        const status = activeStatusMap[params.value];
-        return (
-            <Chip
-                label={status.label}
-                color={status.color}
-                size="small"
-            />
-        );
-      }
-    },
-    {
-      field: 'is_email_verified',
-      headerName: '이메일 인증',
-      width: 120,
-      renderCell: (params: GridRenderCellParams<User, 'Y' | 'N'>) => {
-        // @ts-ignore
-        const status = verificationStatusMap[params.value];
-        return (
-            <Chip
-                label={status.label}
-                color={status.color}
-                size="small"
-            />
-        );
-      }
-    },
-    { field: 'role', headerName: '권한', width: 120 },
-    { field: 'created_at', headerName: '가입일', width: 180 },
-    {
-      field: 'actions',
-      headerName: '관리',
-      width: 150,
-      renderCell: (params: GridRenderCellParams<User>) => (
-          <Box>
-            <IconButton
-                size="small"
-                onClick={() => handleViewUser(params.row)}
-                color="primary"
-            >
-              <Visibility />
-            </IconButton>
-            <IconButton
-                size="small"
-                onClick={() => handleEditUser(params.row)}
-                color="secondary"
-            >
-              <Edit />
-            </IconButton>
-            <IconButton
-                size="small"
-                onClick={() => handleDeleteUser(params.row)}
-                color="error"
-            >
-              <Delete />
-            </IconButton>
-          </Box>
-      ),
-    },
-  ];
-
-  const handleViewUser = (user: User): void => {
+  const handleViewUser = (user: AdminUser): void => {
     setSelectedUser(user);
     setOpenDialog(true);
   };
 
-  const handleEditUser = (user: User): void => {
-    // 수정 로직 구현
-    console.log('Edit user:', user);
-  };
-
-  const handleDeleteUser = (user: User): void => {
-    // 삭제 로직 구현
-    console.log('Delete user:', user);
+  const handleCloseDialog = (): void => {
+    setOpenDialog(false);
+    setSelectedUser(null);
   };
 
   return (
@@ -181,17 +97,15 @@ export function AdminUserManagement() {
           <Card>
             <CardContent>
               <Box sx={{ height: 600 }}>
-                <DataGrid<User>
+                <DataGrid<AdminUser>
                     rows={users}
                     columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 10,
-                        },
-                      },
-                    }}
+                    rowCount={totalUsers}
+                    paginationModel={paginationModel}
+                    paginationMode="server"
+                    onPaginationModelChange={handlePaginationModelChange}
                     pageSizeOptions={[10, 25, 50]}
+                    loading={loading}
                     checkboxSelection
                     disableRowSelectionOnClick
                     sx={{
@@ -206,7 +120,7 @@ export function AdminUserManagement() {
 
           <Dialog
               open={openDialog}
-              onClose={() => setOpenDialog(false)}
+              onClose={handleCloseDialog}
               maxWidth="sm"
               fullWidth
           >
@@ -216,14 +130,14 @@ export function AdminUserManagement() {
                   <Box sx={{ p: 2 }}>
                     <TextField
                         label="사용자명"
-                        value={selectedUser.username}
+                        value={selectedUser.name}
                         fullWidth
                         margin="normal"
                         InputProps={{ readOnly: true }}
                     />
                     <TextField
                         label="이메일"
-                        value={selectedUser.user_email}
+                        value={selectedUser.email}
                         fullWidth
                         margin="normal"
                         InputProps={{ readOnly: true }}
@@ -253,7 +167,7 @@ export function AdminUserManagement() {
               )}
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => setOpenDialog(false)}>닫기</Button>
+              <Button onClick={handleCloseDialog}>닫기</Button>
             </DialogActions>
           </Dialog>
         </motion.div>

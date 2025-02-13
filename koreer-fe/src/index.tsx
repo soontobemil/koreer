@@ -38,6 +38,7 @@ import {UserInfo} from "./features/auth/UserInfo";
 import {AdminDashboard} from "./features/admin/AdminDashboard";
 import { AdminLayout } from './features/admin/AdminLayout';
 import {AdminUserManagement} from "./features/admin/AdminUserManagement";
+import {AdminCover} from "./features/admin/AdminCover";
 
 const router = createBrowserRouter([
   {
@@ -181,14 +182,14 @@ const router = createBrowserRouter([
             path: "users",
             element: <AdminUserManagement />
           },
-          // {
-          //   path: "posts",
-          //   element: <AdminPostManagement />
-          // },
-          // {
-          //   path: "mails",
-          //   element: <AdminMailManagement />
-          // }
+          {
+            path: "posts",
+            element: <AdminCover />
+          },
+          {
+            path: "mails",
+            element: <AdminCover />
+          }
         ]
       }
     ]

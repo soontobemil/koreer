@@ -1,10 +1,11 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, Typography, Box } from '@mui/material';
 import { Person, Article, Email, Dashboard } from '@mui/icons-material';
-import { Link, useLocation } from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export function AdminNavbar() {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const navItems = [
         { icon: Dashboard, text: '대시보드', path: '/admin' },
@@ -27,7 +28,14 @@ export function AdminNavbar() {
             }}
         >
             <Box sx={{ p: 3 }}>
-                <Typography variant="h6" color="primary" fontWeight="bold">
+                <Typography variant="h6" color="primary" fontWeight="bold"
+                            onClick={() => navigate('/')}
+                            sx={{
+                                cursor: 'pointer',
+                                '&:hover': {
+                                    opacity: 0.8
+                                }
+                            }}>
                     Admin Panel
                 </Typography>
             </Box>

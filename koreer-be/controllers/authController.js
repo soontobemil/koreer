@@ -149,7 +149,7 @@ async function googleCallBack(req,res) {
         })
 
 
-        const userPayload = { id: result.id, username: result.username, user_email: result.user_email };
+        const userPayload = { id: result.id, username: result.username, user_email: result.user_email, role: result.role };
         generateAccessToken(userPayload);
         generateRefreshToken(userPayload);
 

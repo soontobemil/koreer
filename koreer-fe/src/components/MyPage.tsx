@@ -13,7 +13,7 @@ import {
     List,
     ListItem,
     ListItemText,
-    Chip,
+    Chip, Button,
 } from '@mui/material';
 import {
     Person,
@@ -27,6 +27,8 @@ import { useState, useEffect } from 'react';
 import { ComponentHelmet } from "../features/common/ComponentHelmet";
 import {ApiResponse, UserInfoDTO} from '@/types/userInfo';
 import { UserDTO } from '@/types/auth';
+import {useCommonFunctions} from "../components/common/hooks/useCommonFunctions";
+import {useNavigate} from "react-router-dom";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -47,6 +49,14 @@ export function MyPage() {
     const [tabValue, setTabValue] = useState(0);
     const [userInfo, setUserInfo] = useState<UserInfoDTO | null>(null);
     const [user, setUser] = useState<UserDTO | null>(null);
+    const {checkAuth}=useCommonFunctions();
+    const navigate = useNavigate();
+
+
+    // 비로그인 여부 체크
+    useEffect(() => {
+        checkAuth();
+    }, []);
 
     // 유저 정보 및 추가 정보 가져오기
     useEffect(() => {
@@ -111,9 +121,24 @@ export function MyPage() {
                         mb: 4,
                         background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
                         color: 'white',
-                        borderRadius: 2
+                        borderRadius: 2,
+                        position: 'relative'
                     }}
                 >
+                    <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
+                        <Button
+                            variant="contained"
+                            onClick={() => navigate('/user-info')}
+                            sx={{
+                                bgcolor: 'rgba(255, 255, 255, 0.2)',
+                                '&:hover': {
+                                    bgcolor: 'rgba(255, 255, 255, 0.3)'
+                                }
+                            }}
+                        >
+                            프로필 수정
+                        </Button>
+                    </Box>
                     <Grid container spacing={3} alignItems="center">
                         <Grid item>
                             <motion.div whileHover={{ scale: 1.1 }}>
@@ -278,19 +303,19 @@ export function MyPage() {
                                             외부 링크
                                         </Typography>
                                         <List>
-                                            {userInfo?.githubUrl && (
+                                            {userInfo?.github_url && (
                                                 <ListItem>
                                                     <ListItemText
                                                         primary="GitHub"
-                                                        secondary={userInfo.githubUrl}
+                                                        secondary={userInfo.github_url}
                                                     />
                                                 </ListItem>
                                             )}
-                                            {userInfo?.portfolioUrl && (
+                                            {userInfo?.portfolio_url && (
                                                 <ListItem>
                                                     <ListItemText
                                                         primary="포트폴리오"
-                                                        secondary={userInfo.portfolioUrl}
+                                                        secondary={userInfo.portfolio_url}
                                                     />
                                                 </ListItem>
                                             )}

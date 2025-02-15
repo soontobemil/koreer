@@ -5,21 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/chabotController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/inquiryController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/inquiry.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/chatbot.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/inquiry.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/inquiryService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/middlewares/rateLimiter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/hooks/useCommonFunctions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/main/ChatBot.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/config/ProtectedRoute.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminCover.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminDashboard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminLayout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminNavBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminUserManagement.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/hooks/useAdminModifyFunctions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/hooks/useAdminUserColumns.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/types/adminUser.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/types/inquiry.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.production" beforeDir="false" afterPath="$PROJECT_DIR$/.env.production" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/userInfoController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userInfoController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repositories/userInfoRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/userInfoRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/userinfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/userinfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/userInfoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/userInfoService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/userService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/api/UserInfoApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/api/UserInfoApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/data/employmentData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/data/employmentData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/contactus/Contact.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/contactus/Contact.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/auth/UserInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/auth/UserInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/common.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/userInfo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/userInfo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,28 +83,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Node.js.authController.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;KOR-9&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;21.7.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be/repositories&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.12699747&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.authController.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Merging main",
+    "javascript.nodejs.core.library.configured.version": "21.7.1",
+    "javascript.nodejs.core.library.typings.version": "22.10.6",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be/repositories",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.12699747",
+    "project.structure.side.proportion": "0.2",
+    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/repositories" />

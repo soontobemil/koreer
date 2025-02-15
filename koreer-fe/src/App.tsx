@@ -8,6 +8,7 @@ import Contact from './components/contactus/Contact';
 
 function App() {
   const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   // 페이지 이동 시 스크롤 처리
   useEffect(() => {
@@ -23,14 +24,14 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className="App">
-        <Header />
-        <Outlet />
-        <Footer />
-      </div>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="App">
+          {!isAdminRoute && <Header />}
+          <Outlet />
+          {!isAdminRoute && <Footer />}
+        </div>
+      </ThemeProvider>
   );
 }
 

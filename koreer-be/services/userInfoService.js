@@ -92,6 +92,33 @@ class UserInfoService {
         }
     }
 
+    async updateUserInfo(userInfoData) {
+        try {
+            this.validateUserInfoData(userInfoData);
+
+            const formattedData = {
+                employment_status: userInfoData.employment_status,
+                ...(userInfoData.employment_status === 'employed' && {
+                    years_of_experience: userInfoData.years_of_experience,
+                    salary_range: userInfoData.salary_range,
+                    work_style: userInfoData.work_style
+                }),
+                birth_date: userInfoData.birth_date,
+                location: userInfoData.location,
+                desired_country: userInfoData.desired_country,
+                skills: JSON.stringify(userInfoData.skills || []),
+                interests: JSON.stringify(userInfoData.interests || []),
+                introduction: userInfoData.introduction,
+                github_url: userInfoData.github_url || null,
+                portfolio_url: userInfoData.portfolio_url || null
+            };
+
+            return await userInfoRepository.update(userInfoData.user_id, formattedData);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     validateUserInfoData(data) {
         const commonRequiredFields = [
             'birth_date',

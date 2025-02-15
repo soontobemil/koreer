@@ -12,6 +12,7 @@ export interface UserInfoFormData {
 }
 
 export interface UserInfoDTO {
+    id?: number;
     user_id: number;
     employment_status: 'employed' | 'student';
     years_of_experience?: string;       // 직장인인 경우
@@ -23,8 +24,9 @@ export interface UserInfoDTO {
     skills: string[];
     interests: string[];
     introduction: string;
-    githubUrl: string | null;
-    portfolioUrl: string | null;
+    github_url: string | null;
+    portfolio_url: string | null;
+    role?: string;
 }
 
 export interface ApiResponse<T> {

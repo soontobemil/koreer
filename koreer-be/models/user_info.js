@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         birth_date: {
             type: DataTypes.STRING(20),
-            allowNull: false,
+            allowNull: true,
             comment: '생년월일'
         },
         location: {

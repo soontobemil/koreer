@@ -1,5 +1,5 @@
 // services/post.service.js
-const AdminCommunityRepository = require('../../repositories/AdminCommunityRepository');
+const AdminCommunityRepository = require('../../repositories/admin/AdminCommunityRepository');
 const { CreatePostDTO, PostResponseDTO, PostDTO } = require('../../dtos/PostDTO');
 const { redisClient } = require('../../config/redisClient'); // 전역 Redis 클라이언트 사용
 

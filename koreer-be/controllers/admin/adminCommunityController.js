@@ -1,5 +1,5 @@
 // Get request data from routes
-const AdminCommunityService = require('../../services/AdminCommunityService');
+const AdminCommunityService = require('../../services/admin/AdminCommunityService');
 const jwt = require("jsonwebtoken");
 
 async function getPostById(req, res) {

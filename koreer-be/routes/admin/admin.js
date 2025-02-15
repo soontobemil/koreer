@@ -1,0 +1,36 @@
+const express = require('express');
+const router = express.Router();
+const adminUserController = require('../../controllers/admin/adminUserController');
+const adminCommCodeController = require('../../controllers/admin/adminCommCodeController');
+const adminComInfoController = require('../../controllers/admin/adminComInfoController');
+const adminCommunityController = require('../../controllers/admin/adminCommunityController');
+
+var adminAuthMiddleware = require('../../src/middlewares/adminAuthMiddleware');
+
+// Users
+router.use(adminAuthMiddleware);
+router.get('/users', adminUserController.getUsers);
+router.get('/users/:id', adminUserController.getUserByCondition);
+router.post('/users/:id/modify', adminUserController.updateUser);
+
+// Codes
+router.get('/codes', adminCommCodeController.getCodes);
+router.get('/codes/:groupCode', adminCommCodeController.getCodeByGroupCode);
+router.post('/codes', adminCommCodeController.createCode);
+router.post('/codes/:id/modify', adminCommCodeController.updateCode);
+router.post('/codes/:id/delete', adminCommCodeController.deleteCode);
+
+// Company Information
+router.post('/company-info', adminComInfoController.createInfo);
+router.get('/company-info', adminComInfoController.getInfos);
+router.get('/company-info/:id', adminComInfoController.getInfoById);
+router.post('/company-info/:id/modify', adminComInfoController.updateInfo);
+router.delete('/company-info/:id/delete', adminComInfoController.deleteInfo);
+
+// Commnunities
+router.get('/posts', adminCommunityController.getPosts);
+router.get('/posts/:userId', adminCommunityController.getPostById);
+router.delete('/posts/:postId/delete', adminCommunityController.deletePost);
+router.delete('/comments/:commentId/delete', adminCommunityController.deleteComment);
+
+module.exports = router;

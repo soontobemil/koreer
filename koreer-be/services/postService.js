@@ -1,7 +1,7 @@
 // services/post.service.js
 const PostRepository = require('../repositories/PostRepository');
 const { CreatePostDTO, PostResponseDTO, PostDTO } = require('../dtos/PostDTO');
-const Redis = require('ioredis');
+const { redisClient } = require('../config/redisClient'); // 전역 Redis 클라이언트 사용
 const jwt = require("jsonwebtoken");
 const {getUserEmail} = require("../src/Auth");
 
@@ -20,50 +20,46 @@ class PostService {
         return new PostResponseDTO(post); // DTO로 응답 생성
     }
 
-    async getPostById(id,user_id) {
+    async getPostById(id, user_id) {
         const post = await PostRepository.searchById(id);
         if (!post) {
             throw new Error('Post not found');
         }
-        const viewCnt = await this.viewPost(post.id, user_id);
-        if(viewCnt) {
-            post.view_count = parseInt(post.view_count)+parseInt(viewCnt);
+
+        // 작성자가 아닐때만 조회수 증가
+        if(user_id && user_id !== post.user_id) {
+            // ✅ 조회수 증가 후 업데이트된 값 가져오기
+            await this.viewPost(post.id, user_id);
+            const key = `post:${post.id}:views`;
+            const updatedViews = (await redisClient.get(key)) || '0';
+            if (updatedViews) {
+                post.view_count = parseInt(post.view_count) + parseInt(updatedViews);
+            }
         }
+        
         return new PostDTO(post);
     }
 
     async viewPost(postId, userId) {
         try {
-            // Redis 클라이언트 생성
-            const redis = new Redis({
-                host: process.env.REDIS_HOST,
-                port: process.env.REDIS_PORT,
-            });
             const redisKey = `view:${postId}:${userId}`;
-
-            // 중복 조회 방지: Redis에서 조회 기록 확인
-            const isViewed = await redis.get(redisKey);
+            
+            // ✅ 중복 조회 방지 (조회 기록 있는 경우 무시)
+            const isViewed = await redisClient.exists(redisKey);
             if (isViewed) {
                 console.log(`User ${userId} already viewed post ${postId}`);
                 return;
             }
 
-            // 조회수 증가 처리: Redis에 조회 상태 저장 (1시간 TTL)
-            await redis.set(redisKey, true, 'EX', 3600); // 1시간 동안 유지
-            await redis.incr(`post:${postId}:views`); // Redis에 조회수 증가
+            // ✅ 조회수 증가 처리: Redis에 조회 상태 저장 (3시간 TTL)
+            await redisClient.set(redisKey, '1', 'EX', 10800); // 3시간 유지
+            await redisClient.incr(`post:${postId}:views`); // Redis에 조회수 증가
 
-            // 증가된 조회수 가져오기
-            const newViewCount = await redis.get(`post:${postId}:views`);
-
-            console.log(`Post ${postId} viewed by user ${userId}`);
-            console.log(`New view count for post ${postId}: ${newViewCount}`);
-
-            return newViewCount;  // 증가된 조회수 반환
+            console.log(`✅ Post ${postId} viewed by user ${userId}`);
         } catch (error) {
-            console.error('Error in viewPost:', error);
+            console.error('❌ Error in viewPost:', error);
             throw new Error('Unable to process viewPost');
         }
-
     }
 
     async getPosts(page = 1, limit = 10, req) {
@@ -76,11 +72,26 @@ class PostService {
             // todo 리팩토링
             const { rows: posts, count: total } = await PostRepository.getPosts(offset, limit, req);
 
-            // PostResponseDTO로 매핑
-            const postsDTO = posts.map(post => {
+            if (!posts.length) {
+                return {
+                    data: [],
+                    meta: {
+                        total,
+                        currentPage: page,
+                        totalPages: Math.ceil(total / limit),
+                    },
+                };
+            }
+            
+            // ✅ Redis에서 조회수 가져오기 (MGET 사용으로 최적화)
+            const postIds = posts.map(post => `post:${post.id}:views`);
+            const viewCounts = await redisClient.mget(postIds);
+
+            const postsDTO = posts.map((post, index) => {
                 const isOwner = post.user_email === currentUserEmail; // 현재 사용자와 작성자 비교
-                const postObject = post.toJSON ? post.toJSON() : post; // Sequelize 객체일 경우 일반 객체로 변환
-                return new PostResponseDTO({ ...postObject, is_owner: isOwner });
+                const postObject = post.toJSON ? post.toJSON() : post; // Sequelize 객체 변환
+                const redisViews = viewCounts[index] ? parseInt(viewCounts[index], 10) : 0; // 조회수 가져오기
+                return new PostResponseDTO({ ...postObject, is_owner: isOwner, view_count: post.view_count + redisViews });
             });
 
             // 페이지네이션 메타데이터 포함 응답
@@ -109,7 +120,7 @@ class PostService {
         if (!updated) {
             throw new Error('Post not found or update failed');
         }
-        const updatedPost = await PostRepository.findById(id);
+        const updatedPost = await PostRepository.searchById(id);
         return new PostResponseDTO(updatedPost);
     }
 
@@ -118,46 +129,58 @@ class PostService {
         if (!deleted) {
             throw new Error('Post not found or delete failed');
         }
+
+        // ✅ Redis에서 해당 게시글의 조회수 캐시 삭제
+        //await redisClient.del(`post:${id}:views`);
+
+        // 캐시 무효화 메시지 전송
+        await redisClient.publish('CACHE_INVALIDATION', `post:${id}:views`);
+
         return { message: 'Post deleted successfully' };
     }
 
     async syncViewsToDatabase() {
-        // Redis 클라이언트 생성
-        const redis = new Redis({
-            host: process.env.REDIS_HOST,
-            port: process.env.REDIS_PORT,
-        });
+        try {
+            let cursor = '0';
+            do {
+                // ✅ SCAN 명령어로 Redis에서 `post:*:views` 패턴 찾기 (최적화)
+                const reply = await redisClient.scan(cursor, 'MATCH', 'post:*:views', 'COUNT', 100);
+                cursor = reply[0]; // 다음 검색 위치
+                const keys = reply[1];
 
-        const keys = await redis.keys('post:*:views');
+                for (const key of keys) {
+                    console.log(`Processing key: ${key}`);
+                    const postId = key.split(':')[1];
 
-        for (const key of keys) {
-            console.log(`Processing key: ${key}`);  // key 값 확인
-            const postId = key.split(':')[1];
+                    if (!postId) {
+                        console.error(`Invalid key format for ${key}`);
+                        continue;
+                    }
 
-            if (!postId) {
-                console.error(`Invalid key format for ${key}`);
-                continue;
-            }
+                    const views = await redisClient.get(key);
 
-            const views = await redis.get(key);
+                    if (!views) {
+                        console.error(`No views found for postId ${postId}`);
+                        continue;
+                    }
 
-            if (!views) {
-                console.error(`No views found for postId ${postId}`);
-                continue;
-            }
+                    const viewCount = parseInt(views);
 
-            const viewCount = parseInt(views);
+                    if (isNaN(viewCount)) {
+                        console.error(`Invalid view count for postId ${postId}`);
+                        continue;
+                    }
 
-            if (isNaN(viewCount)) {
-                console.error(`Invalid view count for postId ${postId}`);
-                continue;
-            }
+                    // ✅ DB에 조회수 반영
+                    await PostRepository.incrementViewCnt({ by: viewCount, id: postId });
 
-            // DB에 조회수 반영
-            await PostRepository.incrementViewCnt({ by: viewCount, id: postId });
-
-            // Redis에서 삭제
-            await redis.del(key);
+                    // ✅ Redis에서 삭제
+                    await redisClient.del(key);
+                }
+            } while (cursor !== '0'); // 모든 키 검색이 끝날 때까지 반복
+        } catch (error) {
+            console.error('❌ Error syncing views to database:', error);
+            throw new Error('Failed to sync views to database');
         }
     }
 }

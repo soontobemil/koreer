@@ -88,7 +88,7 @@ async function login(userinfo){
             throw new Error('비밀번호를 확인해주세요.');
         }
 
-        const userPayload = { id: user.id, username: user.name, user_email: user.user_email };
+        const userPayload = { id: user.id, username: user.name, user_email: user.user_email,role:user.role };
 
         // Create Access Token / Refresh Token
         const accessToken = generateAccessToken(userPayload);

@@ -39,6 +39,7 @@ import {AdminDashboard} from "./features/admin/AdminDashboard";
 import { AdminLayout } from './features/admin/AdminLayout';
 import {AdminUserManagement} from "./features/admin/AdminUserManagement";
 import {AdminCover} from "./features/admin/AdminCover";
+import ProtectedRoute from "./config/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -172,7 +173,10 @@ const router = createBrowserRouter([
       },
       {
         path: "admin",
-        element: <AdminLayout />,
+        element:
+            // <ProtectedRoute>
+              <AdminLayout />,
+            // </ProtectedRoute>,
         children: [
           {
             path: "",

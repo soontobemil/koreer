@@ -1,59 +1,31 @@
-import { Box, Container, Typography, Paper, Grid, Button, Divider } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
-import { styled } from '@mui/material/styles';
+import {useState} from 'react';
+import {Alert, Box, Button, Container, Grid, IconButton, Paper, Snackbar, TextField, Typography,} from '@mui/material';
+import {motion} from 'framer-motion';
+import {styled} from '@mui/material/styles';
 import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
-import { CloudBackground } from './CloudBackground';
-import { ParticleBackground } from './ParticleBackground';
-import {
-  TrendingUp,
-  WorkOutline,
-  Public,
-  EmojiPeople,
-  ArrowForward
-} from '@mui/icons-material';
+import {CloudBackground} from './CloudBackground';
+import {ParticleBackground} from './ParticleBackground';
+import {Code, Public, School, Send, WorkOutline,} from '@mui/icons-material';
 import {ComponentHelmet} from "../../components/common/ComponentHelmet";
+import {ChatBot} from "../../components/common/main/ChatBot";
 
+interface TopicOption {
+  id: string;
+  label: string;
+  description: string;
+  icon: React.ReactNode;
+}
 
-const PlaneIcon = styled(motion.div)`
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  font-size: 2rem;
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
-  z-index: 3;
-`;
+interface FormData {
+  email: string;
+  topics: string[];
+}
 
-const LogoContainer = styled(motion.div)`
-  position: relative;
-  width: 500px;
-  height: 500px;
-  margin: 0 auto;
-  perspective: 1000px;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform-style: preserve-3d;
-  will-change: transform;
-`;
-
-const Logo = styled(motion.img)`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 20px rgba(33, 150, 243, 0.3));
-  mix-blend-mode: normal;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  max-width: 100%;
-  display: block;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+// Styled Components
+const Logo = styled('img')`
+  width: 300px;  // 200px에서 300px로 증가
+  height: auto;
+  margin-bottom: 3rem;  // 2rem에서 3rem으로 증가
 `;
 
 const StyledPaper = styled(Paper)`
@@ -61,487 +33,242 @@ const StyledPaper = styled(Paper)`
   backdrop-filter: blur(10px);
   transition: all 0.3s ease-in-out;
   z-index: 3;
-  
-  &:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const GradientText = styled(Typography)`
-  background: linear-gradient(45deg, #2196F3 30%, #21CBF3 90%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
-  letter-spacing: -0.5px;
-  position: relative;
-  z-index: 3;
-`;
-
-const BackgroundWrapper = styled(Box)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  overflow: hidden;
-`;
-
-const StatCard = styled(Paper)`
-  padding: 2rem;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
+  padding: 3rem;  // 2rem에서 3rem으로 증가
+  border-radius: 20px;  // 16px에서 20px로 증가
   border: 1px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  
+
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);  // 그림자 강화
   }
 `;
 
-const statsVariants = {
-  initial: {
-    opacity: 0,
-    y: 20
-  },
-  animate: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 3.3 + (i * 0.1),
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  })
-};
+interface NewsItem {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+interface EmailFormData {
+  email: string;
+}
 
 export default function Main() {
-  const planes = [
+  const [formData, setFormData] = useState<FormData>({
+    email: '',
+    topics: []
+  });
+  const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
+  const handleSubmit = () => {
+    alert("구독 완료!")
+  }
+
+  const topicOptions: TopicOption[] = [
     {
-      initial: { x: -100, y: 100, rotate: 25 },
-      animate: {
-        x: [-100, 500, 1000],
-        y: [100, -50, -200],
-        rotate: [25, 15, 25],
-        transition: {
-          duration: 4,
-          times: [0, 0.5, 1],
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatDelay: 1
-        }
-      },
-      emoji: "✈️"
+      id: 'tech-trend',
+      label: '실리콘밸리 트렌드',
+      description: '최신 기술 스택과 개발 문화',
+      icon: <Code />
     },
     {
-      initial: { x: -100, y: 300, rotate: 15 },
-      animate: {
-        x: [-100, 400, 1000],
-        y: [300, 200, 100],
-        rotate: [15, 25, 15],
-        transition: {
-          duration: 5,
-          times: [0, 0.6, 1],
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatDelay: 0.5
-        }
-      },
-      emoji: "🛩️"
+      id: 'interview',
+      label: '빅테크 인터뷰',
+      description: '코딩 테스트부터 시스템 디자인까지',
+      icon: <School />
     },
     {
-      initial: { x: -100, y: 200, rotate: 20 },
-      animate: {
-        x: [-100, 600, 1000],
-        y: [200, 0, -100],
-        rotate: [20, 30, 20],
-        transition: {
-          duration: 4.5,
-          times: [0, 0.7, 1],
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatDelay: 0.8
-        }
-      },
-      emoji: "✈️"
+      id: 'life',
+      label: '글로벌 커리어',
+      description: 'H1B, 주거, 연봉 협상 등',
+      icon: <Public />
+    },
+    {
+      id: 'job-market',
+      label: '채용 인사이트',
+      description: '현직자의 실시간 채용 정보',
+      icon: <WorkOutline />
     }
   ];
 
-  const logoVariants = {
-    initial: { 
-      scale: 0,
-      rotateY: -180,
-      opacity: 0 
-    },
-    animate: { 
-      scale: [0, 1.2, 1],
-      rotateY: [-180, 0, 0],
-      opacity: 1,
-      transition: { 
-        delay: 0.5,
-        duration: 1.5,
-        times: [0, 0.6, 1],
-        type: "spring",
-        stiffness: 100
-      }
-    }
+  const handleTopicToggle = (topicId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      topics: prev.topics.includes(topicId)
+          ? prev.topics.filter(id => id !== topicId)
+          : [...prev.topics, topicId]
+    }));
   };
-
-  const textVariants = {
-    initial: { y: 50, opacity: 0 },
-    animate: { 
-      y: 0, 
-      opacity: 1,
-      transition: { 
-        delay: 2,
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const cardVariants = {
-    initial: { y: 50, opacity: 0 },
-    animate: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        delay: 2.5 + (i * 0.2),
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
-
-  const features = [
-    {
-      title: "해외 취업 정보",
-      description: "미국, 캐나다 등 주요 국가의 IT 취업 정보를 제공합니다.",
-      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-    },
-    {
-      title: "비자 가이드",
-      description: "취업 비자 신청부터 승인까지 상세한 가이드를 제공합니다.",
-      gradient: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)"
-    },
-    {
-      title: "연봉 정보",
-      description: "국가별, 도시별 실제 연봉 정보와 생활비를 확인하세요.",
-      gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)"
-    },
-    {
-      title: "커뮤니티",
-      description: "해외 취업 준비생들과 정보를 공유하고 소통하세요.",
-      gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)"
-    }
-  ];
-
-  const stats = [
-    {
-      icon: "📈",
-      value: "90%",
-      label: "취업 성공률"
-    },
-    {
-      icon: "💼",
-      value: "1000+",
-      label: "채용 정보"
-    },
-    {
-      icon: "🌏",
-      value: "50+",
-      label: "글로벌 기업"
-    },
-    {
-      icon: "👥",
-      value: "5000+",
-      label: "활성 사용자"
-    }
-  ];
 
   return (
-    <Box sx={{ 
-      minHeight: '100vh',
-      pt: 8,
-      pb: 8,
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      overflow: 'hidden',
-      position: 'relative'
-    }}>
-      <BackgroundWrapper>
+      <Box sx={{
+        minHeight: '100vh',
+        pt: { xs: 8, md: 12 },
+        pb: { xs: 8, md: 12 },
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
         <ParticleBackground />
         <CloudBackground />
-      </BackgroundWrapper>
-      
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-        <Box sx={{ position: 'relative', height: '600px', mb: 8 }}>
-          <AnimatePresence>
-            {planes.map((plane, index) => (
-              <PlaneIcon
-                key={index}
-                initial={plane.initial}
-                animate={plane.animate}
-                exit={{ opacity: 0 }}
-              >
-                {plane.emoji}
-              </PlaneIcon>
-            ))}
-          </AnimatePresence>
 
-          <LogoContainer>
-            <Logo
-              src={koreerLogo}
-              alt="Koreer Logo"
-              variants={logoVariants}
-              initial="initial"
-              animate="animate"
-            />
-          </LogoContainer>
-          
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
           <motion.div
-            variants={textVariants}
-            initial="initial"
-            animate="animate"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
           >
-            <GradientText 
-              variant="h2" 
-              align="center" 
-              gutterBottom
-              sx={{ fontWeight: 700 }}
-            >
-              해외 IT 취업의 시작
-            </GradientText>
-            <Typography 
-              variant="h5" 
-              align="center" 
-              sx={{ 
-                mb: 6,
-                color: 'text.secondary',
-                textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-                position: 'relative',
-                zIndex: 3
-              }}
-            >
-              당신의 글로벌 커리어를 Koreer와 함께 시작하세요
-            </Typography>
-          </motion.div>
-        </Box>
-
-        <Grid
-          container
-          spacing={4}
-          sx={{
-            mt: 4,
-            justifyContent: 'center',
-            alignItems: 'stretch'
-          }}
-        >
-          {features.map((feature, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={3}
-              key={index}
-              sx={{
-                display: 'flex',
-                minHeight: '200px'
-              }}
-            >
-              <motion.div
-                variants={cardVariants}
-                initial="initial"
-                animate="animate"
-                custom={index}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{ width: '100%' }}
-              >
-                <StyledPaper
-                  elevation={0}
-                  sx={{
-                    p: 4,
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    borderRadius: 4,
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    '&::before': {
-                      content: '""',
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: feature.gradient,
-                      opacity: 0.1,
-                      transition: 'opacity 0.3s ease-in-out',
-                    },
-                    '&:hover::before': {
-                      opacity: 0.2,
-                    }
-                  }}
-                >
-                  <Typography 
-                    variant="h6" 
-                    gutterBottom
-                    sx={{ 
-                      fontWeight: 600,
-                      background: feature.gradient,
-                      backgroundClip: 'text',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      position: 'relative',
-                      mb: 2
-                    }}
-                  >
-                    {feature.title}
-                  </Typography>
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
-                      color: 'text.secondary',
-                      lineHeight: 1.6,
-                      position: 'relative'
-                    }}
-                  >
-                    {feature.description}
-                  </Typography>
-                </StyledPaper>
-              </motion.div>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-
-      {/* Stats Section */}
-      <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
-        <Grid container spacing={3}>
-          {stats.map((stat, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <motion.div
-                variants={statsVariants}
-                initial="initial"
-                animate="animate"
-                custom={index}
-                style={{ height: '100%' }}
-              >
-                <StatCard elevation={0}>
-                  <Typography
-                    variant="h1"
-                    sx={{
-                      fontSize: '1.5rem',
-                      color: '#2196F3',
-                      opacity: 0.9,
-                      mb: 0.5
-                    }}
-                  >
-                    {stat.icon}
-                  </Typography>
-                  <Typography
-                    variant="h2"
-                    sx={{
-                      fontSize: '1.8rem',
-                      fontWeight: 600,
-                      color: '#2196F3',
-                      opacity: 0.9,
-                      mb: 0.5
-                    }}
-                  >
-                    {stat.value}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: 'text.secondary',
-                      fontSize: '0.95rem'
-                    }}
-                  >
-                    {stat.label}
-                  </Typography>
-                </StatCard>
-              </motion.div>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-
-      {/* Call to Action Section */}
-      <Box
-        sx={{
-          background: 'linear-gradient(135deg, rgba(33, 150, 243, 0.05) 0%, rgba(33, 203, 243, 0.05) 100%)',
-          py: 10,
-          mt: 8,
-          borderTop: '1px solid rgba(255, 255, 255, 0.3)',
-        }}
-      >
-        <Container maxWidth="lg">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Grid container spacing={4} alignItems="center">
-              <Grid item xs={12} md={8}>
-                <Typography
-                  variant="h3"
+            <Box textAlign="center" mb={12}>
+              <Logo src={koreerLogo} alt="Koreer Logo" />
+              <Typography
+                  variant="h2"
                   gutterBottom
                   sx={{
                     fontWeight: 'bold',
-                    color: '#1a237e',
-                    fontSize: { xs: '2rem', md: '2.5rem' }
+                    fontSize: { xs: '2.5rem', md: '3.5rem' }
                   }}
-                >
-                  지금 바로 시작하세요
-                </Typography>
-                <Typography
+              >
+                실리콘밸리의 모든 것
+              </Typography>
+              <Typography
+                  variant="h3"
+                  gutterBottom
+                  color="primary"
+                  sx={{ fontSize: { xs: '2rem', md: '2.75rem' } }}
+              >
+                매일 아침 메일로 받아보세요
+              </Typography>
+              <Typography
                   variant="h6"
+                  color="text.secondary"
+                  mb={6}
                   sx={{
-                    mb: 4,
-                    color: 'text.secondary',
-                    lineHeight: 1.6,
-                    fontSize: { xs: '1rem', md: '1.25rem' }
+                    lineHeight: 1.8,
+                    fontSize: { xs: '1.1rem', md: '1.3rem' }
                   }}
-                >
-                  Koreer와 함께라면 해외 취업의 꿈이 현실이 됩니다.
-                  전문가의 도움을 받아 여러분의 커리어를 성장시켜보세요.
-                </Typography>
-                <Button
-                  variant="contained"
-                  size="large"
-                  endIcon={<ArrowForward />}
-                  sx={{
-                    borderRadius: 8,
-                    py: 1.5,
-                    px: 4,
-                    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-                    fontSize: '1.1rem',
-                    '&:hover': {
-                      background: 'linear-gradient(45deg, #1976D2 30%, #00BCD4 90%)',
-                    }
-                  }}
-                >
-                  무료로 시작하기
-                </Button>
+              >
+                현지 개발자들의 생생한 이야기부터<br />
+                실전 면접 준비까지, 여러분의 커리어를 함께 만들어갑니다
+              </Typography>
+            </Box>
+
+            <Grid container spacing={6} justifyContent="center">
+              <Grid item xs={12} md={8}>
+                <StyledPaper elevation={3}>
+                  <Typography
+                      variant="h4"
+                      gutterBottom
+                      fontWeight="bold"
+                      sx={{ mb: 4 }}
+                  >
+                    관심있는 소식을 선택하세요
+                  </Typography>
+
+                  <Grid container spacing={3} sx={{ mb: 4 }}>
+                    {topicOptions.map((topic) => (
+                        <Grid item xs={12} sm={6} key={topic.id}>
+                          <Paper
+                              onClick={() => handleTopicToggle(topic.id)}
+                              sx={{
+                                p: 3,
+                                cursor: 'pointer',
+                                border: '2px solid',
+                                borderColor: formData.topics.includes(topic.id)
+                                    ? 'primary.main'
+                                    : 'transparent',
+                                transition: 'all 0.3s ease',
+                                '&:hover': {
+                                  transform: 'translateY(-2px)',
+                                  boxShadow: 3
+                                }
+                              }}
+                          >
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                              <IconButton
+                                  sx={{
+                                    color: 'primary.main',
+                                    mr: 2
+                                  }}
+                              >
+                                {topic.icon}
+                              </IconButton>
+                              <Typography variant="h6" fontWeight="bold">
+                                {topic.label}
+                              </Typography>
+                            </Box>
+                            <Typography variant="body2" color="text.secondary">
+                              {topic.description}
+                            </Typography>
+                          </Paper>
+                        </Grid>
+                    ))}
+                  </Grid>
+
+                  <form onSubmit={handleSubmit}>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                      <TextField
+                          fullWidth
+                          variant="outlined"
+                          placeholder="이메일 주소를 입력하세요"
+                          value={formData.email}
+                          onChange={(e) => setFormData(prev => ({
+                            ...prev,
+                            email: e.target.value
+                          }))}
+                          error={!!error}
+                          helperText={error}
+                          sx={{
+                            '& .MuiOutlinedInput-root': {
+                              height: '60px',
+                              fontSize: '1.1rem'
+                            }
+                          }}
+                      />
+                      <Button
+                          type="submit"
+                          variant="contained"
+                          size="large"
+                          endIcon={<Send />}
+                          sx={{
+                            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            color: 'white',
+                            minWidth: '160px',
+                            height: '60px',
+                            fontSize: '1.1rem'
+                          }}
+                      >
+                        구독하기
+                      </Button>
+                    </Box>
+                  </form>
+                </StyledPaper>
               </Grid>
             </Grid>
           </motion.div>
         </Container>
+
+        <Snackbar
+            open={openSnackbar}
+            autoHideDuration={6000}
+            onClose={() => setOpenSnackbar(false)}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert
+              severity="success"
+              sx={{
+                width: '100%',
+                fontSize: '1.1rem',
+                '& .MuiAlert-icon': {
+                  fontSize: '2rem'
+                }
+              }}
+          >
+            구독 신청이 완료되었습니다!
+          </Alert>
+        </Snackbar>
+        <ChatBot />
+        <ComponentHelmet title="Koreer - 실리콘밸리 커리어 뉴스레터" />
       </Box>
-        <ComponentHelmet title={"Koreer"} />
-    </Box>
   );
 }

@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const { fetchAdzunaJobInfos,fetchRapidJobInfos,deleteJobInfos } = require('../services/jobInfoService');
-const PostService = require('../services/PostService');
+const postService = require('../services/postService');
 
 // Refine Promise.all process
 const adzunaInfoJob = async () => {
@@ -57,7 +57,7 @@ cron.schedule('35 00 * * *', () => {
 
 // 매시간 동기화
 cron.schedule('*/5 * * * *', () => {
-    PostService.syncViewsToDatabase().then(() => {
+    postService.syncViewsToDatabase().then(() => {
     console.log('View counts synced to database');
   });
 });

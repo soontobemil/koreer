@@ -29,8 +29,8 @@ router.delete('/company-info/:id/delete', adminComInfoController.deleteInfo);
 
 // Commnunities
 router.get('/posts', adminCommunityController.getPosts);
-router.get('/posts/:userId', adminCommunityController.getPostById);
-router.delete('/posts/:postId/delete', adminCommunityController.deletePost);
-// router.delete('/comments/:commentId/delete', adminCommunityController.deleteComment);
+router.get('/posts/:id', adminCommunityController.getPostById);
+router.delete('/posts/:id/delete', adminCommunityController.deletePost);
+router.delete('/comments/:id/delete', adminCommunityController.deleteComment);
 
 module.exports = router;

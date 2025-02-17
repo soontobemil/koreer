@@ -56,9 +56,22 @@ async function deletePost(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  try {
+    // start data processing logic
+    const id = req.params.id;
+    const comment = await AdminCommunityService.deleteComment(id);
+    res.status(201).json(comment);
+  } catch (error) {
+    console.error('Error deleting comment:', error); // error log
+    res.status(400).json({ message: '댓글 삭제 중 에러가 발생하였습니다. ' + error.message });
+  }
+}
+
 module.exports = {
   getPostById,
   getPosts,
   updatePost,
-  deletePost
+  deletePost,
+  deleteComment
 };

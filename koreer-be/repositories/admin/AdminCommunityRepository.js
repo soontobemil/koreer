@@ -89,6 +89,10 @@ class AdminCommunityRepository {
         return await db.Post.destroy({where: {id}});
     }
 
+    async deleteComment(id) {
+        return await db.Comment.destroy({where: {id}});
+    }
+
 }
 
 module.exports = new AdminCommunityRepository();

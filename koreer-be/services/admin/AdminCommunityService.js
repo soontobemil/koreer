@@ -83,6 +83,14 @@ class AdminCommunityService {
 
         return { message: 'Post deleted successfully' };
     }
+
+    async deleteComment(id) {
+        const deleted = await AdminCommunityRepository.deleteComment(id);
+        if (!deleted) {
+            throw new Error('Comment not found or delete failed');
+        }
+        return { message: 'Comment deleted successfully' };
+    }
 }
 
 module.exports = new AdminCommunityService();

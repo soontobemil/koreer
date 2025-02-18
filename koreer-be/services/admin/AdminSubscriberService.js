@@ -1,6 +1,7 @@
 // services/post.service.js
 const AdminSubscriberRepository = require('../../repositories/admin/AdminSubscriberRepository');
 const AdminNewsLetterRepository = require('../../repositories/admin/AdminNewsLetterRepository');
+const PostRepository = require('../../repositories/PostRepository');
 const { AdminSubscriberDTO } = require('../../dtos/admin/AdminSubscriberDTO');
 const nodemailer = require('nodemailer');
 const {google} = require('googleapis');
@@ -68,23 +69,24 @@ class AdminSubscriberService {
         try {
             /**
              * 1. 등록된 메일 내용 가져오기
-             * 2. 구독자 목록 돌면서 전송
-             * 3. 전송 후 메일 전송 로그 남기기
+             * 2. 메일 내용 게시글 남기기
+             * 3. 구독자 목록 돌면서 전송
              */
-            const today = new Date().toISOString().split("T")[0];
-            const newsletter = await AdminNewsLetterRepository.findToday(today);
-            if (!newsletter) {
+            const today = new Date();
+            // 한국 시간(KST) 기준으로 자정 시간을 설정
+            today.setHours(0, 0, 0, 0);  // 자정으로 시간을 맞춰줍니다.
+
+            // 한국 시간(KST)으로 날짜만 추출 (ISO 8601 형식)
+            const localDate = today.toLocaleDateString('en-CA');  // 'en-CA' 형식은 YYYY-MM-DD 형식
+            
+            const reqData = {cols:'code',tbl:'common_code',where:{group_code:'NEWSLETTER_CATEGORY'}};
+            const newsletters = await AdminNewsLetterRepository.findToday(localDate,reqData);
+            if (newsletters.length === 0) {
                 console.log("📭 오늘 보낼 뉴스레터 없음.");
                 return;
             }
 
-            // 📧 모든 구독자 이메일 가져오기
-            const subscribers = await AdminSubscriberRepository.getAllSubscribers();
-            if (subscribers.length === 0) {
-                console.log("📭 구독자가 없음.");
-                return;
-            }
-
+            console.log(`${localDate} 일자 전송 준비`);
             // OAuth2 클라이언트 설정
             const oauth2Client = new OAuth2(
                 process.env.OAUTH2_CLIENT_ID, // 발급받은 클라이언트 ID
@@ -113,22 +115,53 @@ class AdminSubscriberService {
                 },
             });
 
-            // 모든 구독자에게 이메일 발송
-            for (let subscriber of subscribers) {
-                const mailOptions = {
-                    from: process.env.EMAIL_USER,
-                    to: subscriber.user_email,
-                    subject: newsletter.title,
-                    html: newsletter.content
-                };
-
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                        console.error(`❌ ${subscriber.user_email} 전송 실패:`, error);
-                    } else {
-                        console.log(`✅ ${subscriber.user_email} 에게 뉴스레터 발송 완료!`);
-                    }
+            // 각 뉴스레터의 카테고리별 구독자에게 이메일 전송
+            for (let newsletter of newsletters) {
+                const category = newsletter.category;
+                // 📧 모든 구독자 이메일 가져오기
+                const subscribers = await AdminSubscriberRepository.getAllSubscribers(category);
+                if (subscribers.length === 0) {
+                    console.log("📭 구독자가 없음.");
+                    continue;
+                }
+                // 전송할 내용 게시글에 저장
+                const post = await PostRepository.create({
+                    user_email:'admin',
+                    title:newsletter.title,
+                    content:newsletter.content,
+                    category:newsletter.category
                 });
+                console.log(`뉴스레터 ${newsletter.category} 전송 완료 게시글 저장`);
+                // 내용에 게시글 링크 추가
+                newsletter.content = await this.replaceUrl(newsletter.content,'POST_LINK',`/community/post/${post.id}`);
+                // 구독자들에게 이메일을 병렬로 발송
+                const emailPromises = subscribers.map(subscriber => {
+                    // 구독해지 링크 추가
+                    //newsletter.content = this.replaceUrl(newsletter.content,'SUBSCRIPTION_CANCEL',`/community/post/${post.id}`);
+                    const mailOptions = {
+                        //from: process.env.EMAIL_USER,
+                        from: `"KOReer" <${process.env.EMAIL_USER}>`,
+                        to: subscriber.user_email,
+                        subject: newsletter.title,
+                        html: newsletter.content
+                    };
+
+                    return new Promise((resolve, reject) => {
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                console.error(`❌ ${subscriber.user_email} 전송 실패:`, error);
+                                reject(error);
+                            } else {
+                                console.log(`✅ ${subscriber.user_email} 에게 뉴스레터 발송 완료!`);
+                                resolve(info);
+                            }
+                        });
+                    });
+                });
+
+                // 모든 이메일 전송을 기다리고 처리합니다.
+                await Promise.all(emailPromises);
+
             }
         
         } catch (error) {
@@ -137,6 +170,14 @@ class AdminSubscriberService {
         }
     }
 
+    async replaceUrl(htmlString, code, newUrl) {
+        const parsedUrl = new URL(process.env.API_URL);
+        const baseUrl = `${parsedUrl.protocol}//${parsedUrl.hostname}`; // 포트 제외한 URL
+        // 동적으로 코드에 맞는 값으로 교체하기 위한 정규식
+        const regex = new RegExp(`href=\\\\?"${code}\\\\?"`, 'g');  // code를 이용해 동적 교체
+
+        return htmlString.replace(regex, `href="${baseUrl}:3001${newUrl}"`);
+    }    
 }
 
 module.exports = new AdminSubscriberService();

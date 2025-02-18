@@ -41,8 +41,8 @@ class AdminSubscriberRepository {
         return await db.Subscriber.destroy({where: {id}});
     }
 
-    async getAllSubscribers() {
-        return await db.Subscriber.findAll();
+    async getAllSubscribers(category) {
+        return await db.Subscriber.findAll({where:{category:category}});
     }
 
 }

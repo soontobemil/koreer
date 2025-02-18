@@ -1,5 +1,6 @@
 // repositories/post.repository.js
 const db = require('../../models');
+const { getSubQuery } = require('@common/utils');
 
 class AdminNewsLetterRepository {
     async create(data) {
@@ -54,8 +55,23 @@ class AdminNewsLetterRepository {
         return await db.NewsLetter.destroy({where: {id}});
     }
 
-    async findToday(date) {
-        return await db.NewsLetter.findOne( {where: { send_date: date },order: [['updated_at', 'DESC']] });
+    async findToday(date,data) {
+        return await db.NewsLetter.findAll( {
+            where: { 
+                send_date: date,
+                category: {
+                    [db.Op.in]: db.sequelize.literal(getSubQuery(data.cols, data.tbl, data.where))  // 조건 추가
+                  }
+            },
+            attributes: [
+                'category',
+                'title',  // 다른 컬럼도 포함
+                'content', // 다른 컬럼도 포함
+                [db.Sequelize.fn('COUNT', db.Sequelize.col('category')), 'category_count']  // 카테고리별 갯수
+              ],
+            group: ['category', 'title', 'content'],  // 'category'를 기준으로 그룹화
+            raw: true  // raw 데이터를 반환
+        });
     }
 }
 

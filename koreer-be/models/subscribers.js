@@ -3,10 +3,12 @@ const { formatDate } = require('@common/utils');
 // Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
     const Subscriber = sequelize.define('Subscriber', {
-    
         user_email: {
             type: DataTypes.STRING(100),
             allowNull: false
+        },
+        category:{
+            type:DataTypes.STRING(255),
         },
         created_at: {
             type: DataTypes.DATE,

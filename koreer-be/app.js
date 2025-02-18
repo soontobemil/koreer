@@ -38,6 +38,7 @@ var commCodeRouter = require('./routes/commcode');
 var userInfoRouter = require('./routes/userinfo');
 var inquiryRouter = require('./routes/inquiry');
 var chatbotRouter = require('./routes/chatbot');
+var subscriberRouter = require('./routes/subscriber');
 
 
 var userService = require('./services/userService');
@@ -68,6 +69,8 @@ app.options('*', cors({}));
 app.use(apiUrlToRequest);
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+//subscriberRouter
+app.use('/subscriber', subscriberRouter);
 app.use('/users', usersRouter);
 app.use('/jobinfos', jobInfoRouter);
 app.use('/community', communityRouter);

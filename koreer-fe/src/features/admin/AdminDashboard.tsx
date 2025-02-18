@@ -9,13 +9,22 @@ import {
     CardContent,
 } from '@mui/material';
 import { Person, Article, Email } from '@mui/icons-material';
+import {useAdminCommonGetter} from "../../features/admin/hooks/useAdminCommonGetter";
+import {useEffect} from "react";
 
 export function AdminDashboard() {
+
+    const { getCompanyInfo, currentCount, } = useAdminCommonGetter();
+
     const statsCards = [
-        { icon: Person, label: '전체 사용자', value: '1,234', color: '#1976d2' },
-        { icon: Article, label: '전체 게시글', value: '5,678', color: '#2e7d32' },
+        { icon: Person, label: '전체 사용자', value: currentCount?.userCount, color: '#1976d2' },
+        { icon: Article, label: '전체 게시글', value: currentCount?.communityCount, color: '#2e7d32' },
         { icon: Email, label: '전체 메일', value: '9,012', color: '#ed6c02' },
     ];
+
+    useEffect(() => {
+        getCompanyInfo();
+    }, [getCompanyInfo]);
 
     const container = {
         hidden: { opacity: 0 },

@@ -1,19 +1,74 @@
-import {AdminUser} from "@/types/adminUser";
+import {useCookieFunctions} from "../../../components/common/hooks/useCookieFunctions";
+import {ModifyAuthUser} from "@/types/adminUser";
 
 export function useAdminModifyFunctions() {
+    const { getCookie } = useCookieFunctions();
+    const handleAuthUser = async (id: string): Promise<void> => {
+        try {
+            const accessToken = getCookie('accessToken');
+            const data: ModifyAuthUser = {
+                id: id,
+                role: 'admin',
+                is_active: 'Y'
 
-    const handleEditUser = (user: AdminUser): void => {
-        // 수정 로직 구현
-        console.log('Edit user:', user);
+            };
+
+            const response = await fetch(
+                `${process.env.REACT_APP_BASE_URL}/admin/users/${id}/modify`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to update user auth');
+            }
+
+            window.location.reload();
+        } catch (error) {
+            console.error('Error updating user auth:', error);
+        }
     };
 
-    const handleDeleteUser = (user: AdminUser): void => {
-        // 삭제 로직 구현
-        console.log('Delete user:', user);
+
+    const handleDeactivateUser = async (id: string): Promise<void> => {
+        try {
+            const accessToken = getCookie('accessToken');
+            const data: ModifyAuthUser = {
+                id: id,
+                role: 'user',
+                is_active: 'N'
+            };
+
+            const response = await fetch(
+                `${process.env.REACT_APP_BASE_URL}/admin/users/${id}/modify`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to deactivate user');
+            }
+
+            window.location.reload();
+        } catch (error) {
+            console.error('Error deactivating user:', error);
+        }
     };
 
     return{
-        handleDeleteUser, handleEditUser,
+        handleAuthUser, handleDeactivateUser
 
     }
 }

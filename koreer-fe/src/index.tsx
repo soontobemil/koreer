@@ -40,6 +40,7 @@ import { AdminLayout } from './features/admin/AdminLayout';
 import {AdminUserManagement} from "./features/admin/AdminUserManagement";
 import {AdminCover} from "./features/admin/AdminCover";
 import ProtectedRoute from "./config/ProtectedRoute";
+import {AdminCommunityManagement} from "./features/admin/AdminCommunityManagement";
 
 const router = createBrowserRouter([
   {
@@ -152,7 +153,7 @@ const router = createBrowserRouter([
         element: <SignUp />
       },
       {
-        path: "user-info",
+        path: "user-info/:id",
         element: <UserInfo />
       },
       {
@@ -174,9 +175,9 @@ const router = createBrowserRouter([
       {
         path: "admin",
         element:
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <AdminLayout />,
-            // </ProtectedRoute>,
+            </ProtectedRoute>,
         children: [
           {
             path: "",
@@ -188,10 +189,14 @@ const router = createBrowserRouter([
           },
           {
             path: "posts",
-            element: <AdminCover />
+            element: <AdminCommunityManagement />
           },
           {
             path: "mails",
+            element: <AdminCover />
+          },
+          {
+            path: "codes",
             element: <AdminCover />
           }
         ]

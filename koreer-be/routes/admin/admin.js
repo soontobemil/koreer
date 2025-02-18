@@ -4,6 +4,7 @@ const adminUserController = require('../../controllers/admin/adminUserController
 const adminCommCodeController = require('../../controllers/admin/adminCommCodeController');
 const adminComInfoController = require('../../controllers/admin/adminComInfoController');
 const adminCommunityController = require('../../controllers/admin/adminCommunityController');
+const adminCommonController = require('../../controllers/admin/adminCommonController');
 
 var adminAuthMiddleware = require('../../src/middlewares/adminAuthMiddleware');
 
@@ -32,5 +33,8 @@ router.get('/posts', adminCommunityController.getPosts);
 router.get('/posts/:userId', adminCommunityController.getPostById);
 router.delete('/posts/:postId/delete', adminCommunityController.deletePost);
 // router.delete('/comments/:commentId/delete', adminCommunityController.deleteComment);
+
+//common
+router.get('/common/count', adminCommonController.getCurrentCounts);
 
 module.exports = router;

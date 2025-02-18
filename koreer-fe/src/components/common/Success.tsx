@@ -3,6 +3,8 @@ import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "@/store/store";
 import {getCurrentUserAsync} from "../../slice/AuthSlice";
+import {JsonResponseDTO} from "@/types/common";
+import {UserDTO} from "@/types/auth";
 
 export function Success() {
     const location = useLocation(); // 현재 URL 정보를 가져옴
@@ -25,11 +27,12 @@ export function Success() {
             }
 
             // 유저 정보 확인
-            const result = await dispatch(getCurrentUserAsync()).unwrap();
-            if (result.data.role === "auth_user") {
-                navigate('/', { replace: true });
+            const result:JsonResponseDTO<UserDTO> = await dispatch(getCurrentUserAsync()).unwrap();
+            console.log('success result : ', result)
+            if (result.data.role === "user") {
+                navigate(`/user-info/${result.data.id}`, { replace: true });
             } else {
-                navigate('/user-info', { replace: true });
+                navigate('/', { replace: true });
             }
         };
 

@@ -108,6 +108,7 @@ export function MyPage() {
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            {user && (
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -128,7 +129,7 @@ export function MyPage() {
                     <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
                         <Button
                             variant="contained"
-                            onClick={() => navigate('/user-info')}
+                            onClick={() => navigate(`/user-info/${user?.id}`)}
                             sx={{
                                 bgcolor: 'rgba(255, 255, 255, 0.2)',
                                 '&:hover': {
@@ -339,6 +340,7 @@ export function MyPage() {
                     </TabPanel>
                 </Paper>
             </motion.div>
+            )}
             <ComponentHelmet title={"Koreer - 마이페이지"} />
         </Container>
     );

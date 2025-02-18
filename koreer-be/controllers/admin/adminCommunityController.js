@@ -47,7 +47,7 @@ async function updatePost(req, res) {
 async function deletePost(req, res) {
   try {
     // start data processing logic
-    const id = req.params.id;
+    const id = req.params.postId;
     const post = await AdminCommunityService.deletePost(id);
     res.status(201).json(post);
   } catch (error) {

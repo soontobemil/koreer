@@ -41,6 +41,7 @@ import {AdminUserManagement} from "./features/admin/AdminUserManagement";
 import {AdminCover} from "./features/admin/AdminCover";
 import ProtectedRoute from "./config/ProtectedRoute";
 import {AdminCommunityManagement} from "./features/admin/AdminCommunityManagement";
+import {AdminCodesManagement} from "./features/admin/AdminCodesManagement";
 
 const router = createBrowserRouter([
   {
@@ -197,7 +198,7 @@ const router = createBrowserRouter([
           },
           {
             path: "codes",
-            element: <AdminCover />
+            element: <AdminCodesManagement />
           }
         ]
       }

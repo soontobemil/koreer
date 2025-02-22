@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {Alert, Box, Button, Container, Grid, IconButton, Paper, Snackbar, TextField, Typography,} from '@mui/material';
 import {motion} from 'framer-motion';
 import {styled} from '@mui/material/styles';
@@ -9,16 +9,24 @@ import {Code, Public, School, Send, WorkOutline,} from '@mui/icons-material';
 import {ComponentHelmet} from "../../components/common/ComponentHelmet";
 import {ChatBot} from "../../components/common/main/ChatBot";
 
+enum TopicCategory {
+    TECH = "TECH",
+    INTERVIEW = "INTERVIEW",
+    MARKETING = "MARKETING",
+}
+
 interface TopicOption {
   id: string;
   label: string;
+  category: TopicCategory;
   description: string;
   icon: React.ReactNode;
 }
 
 interface FormData {
   email: string;
-  topics: string[];
+  topics: string;
+  category: TopicCategory;
 }
 
 // Styled Components
@@ -56,50 +64,104 @@ interface EmailFormData {
 export default function Main() {
   const [formData, setFormData] = useState<FormData>({
     email: '',
-    topics: []
+    topics: 'tech-trend',
+    category: TopicCategory.TECH,
   });
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const handleSubmit = () => {
-    alert("구독 완료!")
-  }
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            // 이메일 유효성 검사를 위한 정규식
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            // 이메일 빈값 체크
+            if (!formData.email.trim()) {
+                alert("이메일을 입력해주세요.");
+                return;
+            }
+
+            // 이메일 형식 체크
+            if (!emailRegex.test(formData.email)) {
+                alert("올바른 이메일 형식이 아닙니다.");
+                return;
+            }
+
+            // 카테고리 선택 체크
+            if (!formData.category) {
+                alert("관심있는 소식을 선택해주세요.");
+                return;
+            }
+
+            const requestData = {
+                user_email: formData.email,
+                category: formData.category
+            };
+
+            if (window.confirm(`${formData.email}로 구독하시겠습니까?`)) {
+                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/subscriber/subscribers`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('구독 신청에 실패했습니다.');
+                }
+
+                setOpenSnackbar(true);
+            }
+
+        } catch (error) {
+            setError('구독 신청 중 오류가 발생했습니다.');
+            console.error('Subscription error:', error);
+        }
+    };
 
   const topicOptions: TopicOption[] = [
     {
       id: 'tech-trend',
+      category: TopicCategory.TECH,
       label: '실리콘밸리 트렌드',
       description: '최신 기술 스택과 개발 문화',
       icon: <Code />
     },
     {
       id: 'interview',
+      category: TopicCategory.INTERVIEW,
       label: '빅테크 인터뷰',
       description: '코딩 테스트부터 시스템 디자인까지',
       icon: <School />
     },
     {
       id: 'life',
+      category: TopicCategory.MARKETING,
       label: '글로벌 커리어',
       description: 'H1B, 주거, 연봉 협상 등',
       icon: <Public />
     },
     {
       id: 'job-market',
+      category: TopicCategory.MARKETING,
       label: '채용 인사이트',
       description: '현직자의 실시간 채용 정보',
       icon: <WorkOutline />
     }
   ];
 
-  const handleTopicToggle = (topicId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      topics: prev.topics.includes(topicId)
-          ? prev.topics.filter(id => id !== topicId)
-          : [...prev.topics, topicId]
-    }));
-  };
+    const handleTopicToggle = (
+        {topicId, category}: { topicId: string, category: TopicCategory }) => {
+        setFormData(prev => ({
+            ...prev,
+            topics: prev.topics.includes(topicId)
+                ? "" // 이미 선택된 토픽을 다시 클릭하면 빈 문자열로
+                : topicId, // 새로운 토픽 선택 시 해당 topicId 문자열로
+            category: category
+        }));
+    };
 
   return (
       <Box sx={{
@@ -169,7 +231,9 @@ export default function Main() {
                     {topicOptions.map((topic) => (
                         <Grid item xs={12} sm={6} key={topic.id}>
                           <Paper
-                              onClick={() => handleTopicToggle(topic.id)}
+                              onClick={() => handleTopicToggle(
+                                  {topicId: topic.id, category:topic.category}
+                              )}
                               sx={{
                                 p: 3,
                                 cursor: 'pointer',
@@ -248,25 +312,38 @@ export default function Main() {
           </motion.div>
         </Container>
 
-        <Snackbar
-            open={openSnackbar}
-            autoHideDuration={6000}
-            onClose={() => setOpenSnackbar(false)}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        >
-          <Alert
-              severity="success"
+          <Snackbar
+              open={openSnackbar}
+              autoHideDuration={4000}
+              onClose={() => setOpenSnackbar(false)}
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
               sx={{
-                width: '100%',
-                fontSize: '1.1rem',
-                '& .MuiAlert-icon': {
-                  fontSize: '2rem'
-                }
+                  top: '30% !important',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
               }}
           >
-            구독 신청이 완료되었습니다!
-          </Alert>
-        </Snackbar>
+              <Alert
+                  severity="success"
+                  sx={{
+                      width: 'auto',
+                      minWidth: '400px',
+                      fontSize: '1.3rem',
+                      padding: '20px 40px',
+                      '& .MuiAlert-icon': {
+                          fontSize: '2.5rem'
+                      },
+                      '& .MuiAlert-message': {
+                          textAlign: 'center',
+                          fontWeight: 'bold'
+                      }
+                  }}
+              >
+                  구독 신청이 완료되었습니다!
+              </Alert>
+          </Snackbar>
         <ChatBot />
         <ComponentHelmet title="Koreer - 실리콘밸리 커리어 뉴스레터" />
       </Box>

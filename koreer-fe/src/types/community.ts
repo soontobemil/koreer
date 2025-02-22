@@ -8,6 +8,21 @@ export enum CommunityCategories{
     OVERSEAS_INFORMATION = "OVERSEAS_INFORMATION",
 }
 
+export interface CommunityDTO{
+    "id": number,
+    "title": string,
+    "content": string,
+    "username": string,
+    "user_email": string,
+    "user_id": number,
+    "view_count": string,
+    "nation": string,
+    "created_at": string,
+    "updated_at": string,
+    "is_owner": true,
+    "category": CommunityCategories
+}
+
 export interface CommunityPostDTO{
     title: string;
     content: string;

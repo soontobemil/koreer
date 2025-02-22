@@ -1,13 +1,14 @@
 import {GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
 import {AdminUser} from "../../../types/adminUser";
-import {Box, Chip, IconButton} from "@mui/material";
-import {Delete, Edit, Visibility} from "@mui/icons-material";
+import {Box, Button, Chip, IconButton} from "@mui/material";
+import {AdminPanelSettings, Block, Delete, Edit, Visibility} from "@mui/icons-material";
 import {StatusMapping} from "../../../types/common";
 import {useAdminModifyFunctions} from "../../../features/admin/hooks/useAdminModifyFunctions";
+import React from "react";
 
 export function useAdminUserColumns() {
 
-    const { handleEditUser, handleDeleteUser } = useAdminModifyFunctions();
+    const { handleDeactivateUser, handleAuthUser } = useAdminModifyFunctions();
     const activeStatusMap: StatusMapping = {
         'Y': { label: '활성', color: 'success' },
         'N': { label: '비활성', color: 'error' }
@@ -76,30 +77,34 @@ export function useAdminUserColumns() {
         {
             field: 'actions',
             headerName: '관리',
-            width: 150,
-            renderCell: (params: GridRenderCellParams<AdminUser>) => (
-                <Box>
-                    <IconButton
+            width: 120,
+            renderCell: (params) => (
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                    {params.id && (
+                        <>
+                    <Button
+                        variant="outlined"
                         size="small"
-                        // onClick={() => handleViewUser(params.row)}
-                        color="primary"
+                        sx={{ minWidth: 'auto', p: 1 }}
+                        onClick={() => handleAuthUser(params.id.toString())}
+                        title="권한 부여"
                     >
-                        <Visibility />
-                    </IconButton>
-                    <IconButton
+                        <AdminPanelSettings
+                            fontSize="small"
+                            sx={{ color: params.row.role === 'auth_user' ? 'primary.main' : 'text.secondary' }}
+                        />
+                    </Button>
+                    <Button
+                        variant="outlined"
                         size="small"
-                        onClick={() => handleEditUser(params.row)}
-                        color="secondary"
-                    >
-                        <Edit />
-                    </IconButton>
-                    <IconButton
-                        size="small"
-                        onClick={() => handleDeleteUser(params.row)}
                         color="error"
+                        sx={{ minWidth: 'auto', p: 1 }}
+                        onClick={() => handleDeactivateUser(params.id.toString())}
+                        title="계정 비활성화"
                     >
-                        <Delete />
-                    </IconButton>
+                        <Block fontSize="small" />
+                    </Button>
+            </>)}
                 </Box>
             ),
         },

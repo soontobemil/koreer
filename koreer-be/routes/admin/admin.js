@@ -6,6 +6,7 @@ const adminComInfoController = require('../../controllers/admin/adminComInfoCont
 const adminCommunityController = require('../../controllers/admin/adminCommunityController');
 const adminSubscriberController = require('../../controllers/admin/adminSubscriberController');
 const adminNewsLetterController = require('../../controllers/admin/adminNewsLetterController');
+const adminCommonController = require('../../controllers/admin/adminCommonController');
 
 var adminAuthMiddleware = require('../../src/middlewares/adminAuthMiddleware');
 
@@ -46,5 +47,8 @@ router.get('/newsletter', adminNewsLetterController.getNewsLetters);
 router.get('/newsletter/:id', adminNewsLetterController.getNewsLetterById);
 router.post('/newsletter/:id/modify', adminNewsLetterController.updateNewsLetter);
 router.delete('/newsletter/:id/delete', adminNewsLetterController.deleteNewsLetter);
+
+//common
+router.get('/common/count', adminCommonController.getCurrentCounts);
 
 module.exports = router;

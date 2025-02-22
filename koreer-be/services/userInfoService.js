@@ -64,7 +64,25 @@ class UserInfoService {
                 throw new Error('유저 정보를 찾을 수 없습니다.');
             }
 
-            return  {
+            // skills와 interests 파싱을 try-catch로 감싸기
+            let parsedSkills = [];
+            let parsedInterests = [];
+
+            try {
+                parsedSkills = userInfo.skills ? JSON.parse(userInfo.skills) : [];
+            } catch (e) {
+                console.error('Skills 파싱 에러:', e);
+                // 에러가 나도 빈 배열 유지
+            }
+
+            try {
+                parsedInterests = userInfo.interests ? JSON.parse(userInfo.interests) : [];
+            } catch (e) {
+                console.error('Interests 파싱 에러:', e);
+                // 에러가 나도 빈 배열 유지
+            }
+
+            return {
                 id: userInfo.id,
                 employment_status: userInfo.employment_status,
                 years_of_experience: userInfo.years_of_experience,
@@ -73,8 +91,8 @@ class UserInfoService {
                 birth_date: userInfo.birth_date,
                 location: userInfo.location,
                 desired_country: userInfo.desired_country,
-                skills: JSON.parse(userInfo.skills || '[]'),
-                interests: JSON.parse(userInfo.interests || '[]'),
+                skills: parsedSkills,
+                interests: parsedInterests,
                 introduction: userInfo.introduction,
                 github_url: userInfo.github_url,
                 portfolio_url: userInfo.portfolio_url,
@@ -82,13 +100,9 @@ class UserInfoService {
                 created_at: userInfo.created_at,
                 updated_at: userInfo.updated_at
             };
-            // return {
-            //     ...userInfo,
-            //     skills: userInfo.skills ? JSON.parse(userInfo.skills) : [],
-            //     interests: userInfo.interests ? JSON.parse(userInfo.interests) : []
-            // };
         } catch (error) {
-            throw error;
+            console.error('getCurrentUserInfo 에러:', error);
+            throw new Error(`유저 정보 조회 중 오류: ${error.message}`);
         }
     }
 
@@ -113,6 +127,7 @@ class UserInfoService {
                 portfolio_url: userInfoData.portfolio_url || null
             };
 
+            await userRepository.updateUserAsAuthUser(userInfoData.user_id);
             return await userInfoRepository.update(userInfoData.user_id, formattedData);
         } catch (error) {
             throw error;

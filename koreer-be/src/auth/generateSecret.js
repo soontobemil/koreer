@@ -58,4 +58,4 @@ function generateSecret() {
         console.error('Error Generating Secret Key:', error);
     }
 }
-generateSecret();
+// generateSecret(); ㅂㅣㅎㅗㅏㄹㅅㅓㅇㅎㅗㅏ

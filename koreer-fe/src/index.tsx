@@ -6,8 +6,6 @@ import {Provider} from 'react-redux';
 import {store} from './store';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import Main from "./components/common/Main";
-import {Seminar} from './components/seminar/Seminar';
-import {CompanyInformation} from './features/company/CompanyInformation';
 import {EmploymentInfo} from './features/employment/EmploymentInfo';
 import {USAVisaInfo} from './features/visa/USAVisaInfo';
 import {CanadaVisaInfo} from './features/visa/CanadaVisaInfo';
@@ -18,10 +16,6 @@ import {MembershipPage} from './features/membership/MembershipPage';
 import {Community} from './features/community/Community';
 import {CommunityForm} from './features/community/CommunityForm';
 import {CommunityDetail} from "./features/community/CommunityDetail";
-import {Tips} from './features/community/Tips';
-import {TipsPosting} from './features/community/TipsPosting';
-import {AboutUs} from './components/aboutus/AboutUs';
-import {Contact} from './components/contactus/Contact';
 import {SignIn} from './features/auth/SignIn';
 import {SignUp} from './features/auth/SignUp';
 import {InterviewGuide} from './features/employment/InterviewGuide';
@@ -31,12 +25,12 @@ import {CanadaSalaryInfo} from './components/salary/CanadaSalaryInfo';
 import {USALifeInfo} from './components/life/USALifeInfo';
 import {CanadaLifeInfo} from './components/life/CanadaLifeInfo';
 import {MyPage} from "./components/MyPage";
-import { HelmetProvider } from 'react-helmet-async';
-import { TermsAndConditions } from './components/legal/TermsAndConditions';
-import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
+import {HelmetProvider} from 'react-helmet-async';
+import {TermsAndConditions} from './components/legal/TermsAndConditions';
+import {PrivacyPolicy} from './components/legal/PrivacyPolicy';
 import {UserInfo} from "./features/auth/UserInfo";
 import {AdminDashboard} from "./features/admin/AdminDashboard";
-import { AdminLayout } from './features/admin/AdminLayout';
+import {AdminLayout} from './features/admin/AdminLayout';
 import {AdminUserManagement} from "./features/admin/AdminUserManagement";
 import {AdminCover} from "./features/admin/AdminCover";
 import ProtectedRoute from "./config/ProtectedRoute";
@@ -61,14 +55,14 @@ const router = createBrowserRouter([
         path: "test",
         element: <TestComponents />
       },
-      {
-        path: "seminar-info",
-        element: <Seminar />
-      },
-      {
-        path: "company-information",
-        element: <CompanyInformation />
-      },
+      // {
+      //   path: "seminar-info",
+      //   element: <Seminar />
+      // },
+      // {
+      //   path: "company-information",
+      //   element: <CompanyInformation />
+      // },
       {
         path: "employment-info",
         element: <EmploymentInfo />
@@ -129,22 +123,22 @@ const router = createBrowserRouter([
         path: "community/detail/:id",
         element: <CommunityDetail />
       },
-      {
-        path: "tips",
-        element: <Tips />
-      },
-      {
-        path: "tips/posting",
-        element: <TipsPosting />
-      },
-      {
-        path: "about-us",
-        element: <AboutUs />
-      },
-      {
-        path: "contact",
-        element: <Contact />
-      },
+      // {
+      //   path: "tips",
+      //   element: <Tips />
+      // },
+      // {
+      //   path: "tips/posting",
+      //   element: <TipsPosting />
+      // },
+      // {
+      //   path: "about-us",
+      //   element: <AboutUs />
+      // },
+      // {
+      //   path: "contact",
+      //   element: <Contact />
+      // },
       {
         path: "signin",
         element: <SignIn />

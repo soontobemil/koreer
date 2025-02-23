@@ -1,45 +1,40 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCookieFunctions } from './hooks/useCookieFunctions';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useCookieFunctions} from './hooks/useCookieFunctions';
 import {
   AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Typography,
   Box,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
+  Button,
+  Collapse,
+  Container,
   Drawer,
+  IconButton,
   List,
   ListItemButton,
-  Collapse,
-  useTheme,
-  useMediaQuery,
-  Container,
-  Paper,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
   MenuList,
-  Popper,
-  Grow,
-  ClickAwayListener,
+  Paper,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import {
-  Menu as MenuIcon,
-  WorkOutline,
-  Business,
-  Forum,
-  ExpandMore,
-  ChevronRight,
-  Flight,
   AttachMoney,
-  School,
+  ChevronRight,
+  Code,
+  ExpandMore,
+  Flight,
+  Forum,
+  Home,
   Login,
   Logout,
-  Description,
-  Code,
+  Menu as MenuIcon,
   Person,
-  Home,
+  School,
+  WorkOutline,
 } from '@mui/icons-material';
 import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
 
@@ -74,26 +69,26 @@ interface MenuItem extends BaseMenuItem {
 const MENU_CLOSE_DELAY = 300; // milliseconds
 
 const menuItems: MenuItem[] = [
-  {
-    label: '멤버십',
-    icon: <Person />,
-    path: '/membership',
-    status: HeaderStatus.MEMBERSHIP,
-    subItems: [
-      {
-        label: '멤버십 안내',
-        icon: <Person />,
-        path: '/membership',
-        subItems: []
-      },
-      {
-        label: '세미나',
-        icon: <School />,
-        path: '/seminar-info',
-        subItems: []
-      }
-    ]
-  },
+  // {
+  //   label: '멤버십',
+  //   icon: <Person />,
+  //   path: '/membership',
+  //   status: HeaderStatus.MEMBERSHIP,
+  //   subItems: [
+  //     {
+  //       label: '멤버십 안내',
+  //       icon: <Person />,
+  //       path: '/membership',
+  //       subItems: []
+  //     },
+  //     {
+  //       label: '세미나',
+  //       icon: <School />,
+  //       path: '/seminar-info',
+  //       subItems: []
+  //     }
+  //   ]
+  // },
   {
     label: '해외취업',
     icon: <WorkOutline />,
@@ -132,12 +127,12 @@ const menuItems: MenuItem[] = [
       }
     ]
   },
-  {
-    label: '회사 찾기',
-    icon: <Business />,
-    path: '/company-information',
-    status: HeaderStatus.COMPANY_INFORMATION,
-  },
+  // {
+  //   label: '회사 찾기',
+  //   icon: <Business />,
+  //   path: '/company-information',
+  //   status: HeaderStatus.COMPANY_INFORMATION,
+  // },
   {
     label: '커뮤니티',
     icon: <Forum />,
@@ -150,12 +145,12 @@ const menuItems: MenuItem[] = [
         path: '/community',
         subItems: []
       },
-      {
-        label: "취업 팁 공유",
-        icon: <Description />,
-        path: '/tips',
-        subItems: []
-      }
+      // {
+      //   label: "취업 팁 공유",
+      //   icon: <Description />,
+      //   path: '/tips',
+      //   subItems: []
+      // }
     ]
   }
 ];

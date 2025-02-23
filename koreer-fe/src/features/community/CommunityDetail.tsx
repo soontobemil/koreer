@@ -182,20 +182,6 @@ export function CommunityDetail() {
                             >
                                 <motion.div whileHover={{ scale: 1.05 }}>
                                     <Button
-                                        variant="contained"
-                                        startIcon={<ThumbUp />}
-                                        sx={{
-                                            borderRadius: 2,
-                                            px: 4,
-                                            py: 1,
-                                            bgcolor: 'primary.main'
-                                        }}
-                                    >
-                                        {/*좋아요 {post.likes}*/}
-                                    </Button>
-                                </motion.div>
-                                <motion.div whileHover={{ scale: 1.05 }}>
-                                    <Button
                                         variant="outlined"
                                         startIcon={<Share />}
                                         sx={{

@@ -51,16 +51,6 @@ const StyledPaper = styled(Paper)`
   }
 `;
 
-interface NewsItem {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-interface EmailFormData {
-  email: string;
-}
-
 export default function Main() {
   const [formData, setFormData] = useState<FormData>({
     email: '',

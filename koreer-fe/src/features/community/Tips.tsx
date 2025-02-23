@@ -31,8 +31,7 @@ export function Tips() {
 
                 <div className={style.contents}>
                     {/*  정렬, 카테고리  */}
-                    <CommunityCategory type={CommunityType.TIPS}
-                                       categoryType={category} setCategoryType={setCategory}/>
+                    <CommunityCategory categoryType={category} setCategoryType={setCategory}/>
 
                     {/*  검색, 페이징  */}
                     <div className={style.searchAreaWrapper}>

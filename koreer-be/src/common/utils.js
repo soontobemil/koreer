@@ -43,12 +43,27 @@ function readTextFile(filePath) {
   }
 }
 
+function stripCodeBlocks(text) {
+  return text
+      .replace(/^```html\s*/i, '')   // ✅ "```html" 제거 (문장 맨 앞)
+      .replace(/^```/i, '')          // ✅ "```" 만 있는 경우 제거
+      .replace(/<\/?code>/gi, '')    // ✅ <code> 또는 </code> 태그 제거
+      .trim();                        // ✅ 양쪽 공백 제거
+}
+
+function extractTitle(htmlString) {
+  const match = htmlString.match(/<title>(.*?)<\/title>/i); // ✅ 정규식으로 <title> 내용 추출
+  return match ? match[1].trim() : null; // ✅ 내용이 있으면 반환, 없으면 null
+}
+
 
 module.exports = {
     formatDate,
     getSubQuery,
     replaceUrl,
     replaceTitle,
-    readTextFile
+    readTextFile,
+    stripCodeBlocks,
+    extractTitle
 };
   

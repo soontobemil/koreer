@@ -65,7 +65,7 @@ cron.schedule('*/5 * * * *', () => {
 });
 
 // 뉴스레터 전송
-cron.schedule('50 16 * * *', () => {
+cron.schedule('00 07 * * *', () => {
     try{
         console.log('Start Running to send NewsLetters..');
         AdminSubscriberService.sendNewsLetter();

@@ -111,29 +111,34 @@ class AdminNewsLetterService {
     }
 
     async createNewsLetter(req) {
-        const filePath = path.join(__dirname, '../../src/data/input_prompt.txt'); 
-        const query = utils.readTextFile(filePath);
-        if (!query) return;
+        try {
+            await newsletterService.init(); // ✅ 반드시 먼저 초기화 실행
+            console.log('🚀 뉴스레터 생성 중...');
+            const newsletter = await newsletterService.createNewsletter();
+            if (newsletter) console.log('✅ 뉴스레터 생성 완료!', newsletter);
 
-        console.log('🚀 뉴스레터 생성 중...');
-        const newsletter = await newsletterService.createNewsletter(query);
-        if (newsletter) console.log('✅ 뉴스레터 생성 완료!', newsletter);
+             // ✅ 한국 시간(KST) 기준으로 +1일 추가
+            const today = new Date();
+            today.setDate(today.getDate() + 1);
+            today.setHours(0, 0, 0, 0);  // 자정으로 시간을 맞춰줍니다.
+            const localDate = today.toLocaleDateString('en-CA');  // 'en-CA' 형식은 YYYY-MM-DD 형식
 
-        const today = new Date();
-        // 한국 시간(KST) 기준으로 자정 시간을 설정
-        today.setHours(0, 0, 0, 0);  // 자정으로 시간을 맞춰줍니다.
-        // 한국 시간(KST)으로 날짜만 추출 (ISO 8601 형식)
-        const localDate = today.toLocaleDateString('en-CA');  // 'en-CA' 형식은 YYYY-MM-DD 형식
-
-        const letter = await AdminNewsLetterRepository.create({
-            title:`${localDate} 일자 뉴스레터 D-1`,
-            content:newsletter.formattedContent,
-            research_prompt:query,
-            category:'NEWSLETTER',
-            post_category:'NEWSLETTER'
-        });
-        console.log(`${localDate} 일자 뉴스레터 D-1 생성완료`);
-        return letter;
+            const title = utils.extractTitle(newsletter.formattedContent) ? utils.extractTitle(newsletter.formattedContent) : `${localDate} 일자 뉴스레터 D-1`;
+            const content = utils.stripCodeBlocks(newsletter.formattedContent);
+            const letter = await AdminNewsLetterRepository.create({
+                title:title,
+                content:content,
+                research_prompt:newsletterService.perplexityAPI.prompt,
+                format_prompt:newsletterService.openAIAPI.prompt,
+                category:'NEWSLETTER',
+                post_category:'NEWSLETTER'
+            });
+            console.log(`${localDate} 일자 뉴스레터 D-1 생성완료`);
+            return letter;
+        } catch (error) {
+            console.error('❌ 뉴스레터 저장 실패:', error);
+            throw new Error(`Database Insert Error: ${error.message}`);
+        }
     }
 }
 

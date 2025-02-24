@@ -6,6 +6,7 @@ const { AdminSubscriberDTO } = require('../../dtos/admin/AdminSubscriberDTO');
 const nodemailer = require('nodemailer');
 const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
+const { replaceUrl } = require('@common/utils');
 
 class AdminSubscriberService {
     async getSubscriberById(id) {
@@ -129,18 +130,19 @@ class AdminSubscriberService {
                     user_email:'admin',
                     title:newsletter.title,
                     content:newsletter.content,
-                    category:newsletter.category
+                    category:newsletter.category,
+                    post_category:newsletter.post_category,
                 });
                 console.log(`뉴스레터 ${newsletter.category} 전송 완료 게시글 저장`);
                 // 내용에 게시글 링크 추가
-                newsletter.content = await this.replaceUrl(newsletter.content,'POST_LINK',`/community/post/${post.id}`);
+                newsletter.content = replaceUrl(newsletter.content,'POST_LINK',`/community/post/${post.id}`);
                 // 구독자들에게 이메일을 병렬로 발송
                 const emailPromises = subscribers.map(subscriber => {
                     // 구독해지 링크 추가
-                    //newsletter.content = this.replaceUrl(newsletter.content,'SUBSCRIPTION_CANCEL',`/community/post/${post.id}`);
+                    newsletter.content = replaceUrl(newsletter.content,'SUBSCRIPTION_CANCEL',`/subscriber/${subscriber.id}/delete`);
                     const mailOptions = {
                         //from: process.env.EMAIL_USER,
-                        from: `"KOReer" <${process.env.EMAIL_USER}>`,
+                        from: `"KOREER" <${process.env.EMAIL_USER}>`,
                         to: subscriber.user_email,
                         subject: newsletter.title,
                         html: newsletter.content
@@ -169,15 +171,7 @@ class AdminSubscriberService {
             throw new Error(error);
         }
     }
-
-    async replaceUrl(htmlString, code, newUrl) {
-        const parsedUrl = new URL(process.env.API_URL);
-        const baseUrl = `${parsedUrl.protocol}//${parsedUrl.hostname}`; // 포트 제외한 URL
-        // 동적으로 코드에 맞는 값으로 교체하기 위한 정규식
-        const regex = new RegExp(`href=\\\\?"${code}\\\\?"`, 'g');  // code를 이용해 동적 교체
-
-        return htmlString.replace(regex, `href="${baseUrl}:3001${newUrl}"`);
-    }    
+   
 }
 
 module.exports = new AdminSubscriberService();

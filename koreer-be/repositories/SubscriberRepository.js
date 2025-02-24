@@ -18,6 +18,10 @@ class SubscriberRepository {
         }
     }
 
+    async delete(id) {
+        return await db.Subscriber.destroy({where: {id}});
+    }
+
 }
 
 module.exports = new SubscriberRepository();

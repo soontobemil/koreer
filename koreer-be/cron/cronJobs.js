@@ -2,6 +2,7 @@ const cron = require('node-cron');
 const { fetchAdzunaJobInfos,fetchRapidJobInfos,deleteJobInfos } = require('../services/jobInfoService');
 const postService = require('../services/postService');
 const AdminSubscriberService = require('../services/admin/AdminSubscriberService');
+const AdminNewsLetterService = require('../services/admin/AdminNewsLetterService');
 
 // Refine Promise.all process
 const adzunaInfoJob = async () => {
@@ -64,12 +65,22 @@ cron.schedule('*/5 * * * *', () => {
 });
 
 // 뉴스레터 전송
-cron.schedule('00 07 * * *', () => {
+cron.schedule('50 16 * * *', () => {
     try{
         console.log('Start Running to send NewsLetters..');
         AdminSubscriberService.sendNewsLetter();
     } catch (error) {
         console.log('Error Occured Running Sending NewsLetters Cron Job:',error);
+    }
+});
+
+// 뉴스레터 생성
+cron.schedule('30 20 * * *', () => {
+    try{
+        console.log('Start Running to create NewsLetters..');
+        AdminNewsLetterService.createNewsLetter();
+    } catch (error) {
+        console.log('Error Occured Running Creating NewsLetters Cron Job:',error);
     }
 });
 

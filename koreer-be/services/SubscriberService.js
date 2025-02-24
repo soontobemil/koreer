@@ -24,6 +24,14 @@ class SubscriberService {
       throw new Error('Error Duplicate Email');
     }
   }
+
+  async deleteSubscriber(id) {
+    const deleted = await SubscriberRepository.delete(id);
+    if (!deleted) {
+        throw new Error('Subscriber not found or delete failed');
+    }
+    return { message: 'Subscriber deleted successfully' };
+  }
   
 }
 

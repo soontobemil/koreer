@@ -26,8 +26,20 @@ async function subDuplCheck(req, res) {
   }
 }
 
+async function deleteSubscriber(req, res) {
+  try {
+    // start data processing logic
+    const id = req.params.id;
+    const sub = await SubscriberService.deleteSubscriber(id);
+    res.status(201).json(sub);
+  } catch (error) {
+    console.error('Error deleting sub:', error); // error log
+    res.status(400).json({ message: '구독자 삭제 중 에러가 발생하였습니다. ' + error.message });
+  }
+}
 
 module.exports = {
   createSubscriber,
-  subDuplCheck
+  subDuplCheck,
+  deleteSubscriber
 };

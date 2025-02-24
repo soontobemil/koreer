@@ -2,23 +2,34 @@
 const AdminNewsLetterRepository = require('../../repositories/admin/AdminNewsLetterRepository');
 const { AdminNewsLetterDTO } = require('../../dtos/admin/AdminNewsLetterDTO');
 
+const PerplexityAPI = require('../../src/infrastructure/PerplexityAPI');
+const OpenAIAPI = require('../../src/infrastructure/OpenAIAPI');
+const NewsletterService = require('../../src/application/NewsletterService');
+
+const perplexityAPI = new PerplexityAPI(process.env.PERPLEXITY_API_KEY);
+const openAIAPI = new OpenAIAPI(process.env.OPENAI_API_KEY);
+const newsletterService = new NewsletterService(perplexityAPI, openAIAPI);
+
+const utils = require('@common/utils');
+const path = require('path');
+
 class AdminNewsLetterService {
-    async createNewsLetter(data) {
-        try {
-            if(!data.created_by) data.created_by = 71;
-            if(data.content) {
-                if (typeof data.content !== "string") {
-                    data.content = JSON.stringify(data.content);
-                }
-                data.content = await this.replaceTitle(data.content, data.title);
-            } 
-            const letter = await AdminNewsLetterRepository.create(data);
-            return letter;
-        } catch (error) {
-            console.log(error);
-            throw new Error('Error creating newsletter');
-        }
-    }
+    // async createNewsLetter(data) {
+    //     try {
+    //         if(!data.created_by) data.created_by = 71;
+    //         if(data.content) {
+    //             if (typeof data.content !== "string") {
+    //                 data.content = JSON.stringify(data.content);
+    //             }
+    //             data.content = utils.replaceTitle(data.content, data.title);
+    //         } 
+    //         const letter = await AdminNewsLetterRepository.create(data);
+    //         return letter;
+    //     } catch (error) {
+    //         console.log(error);
+    //         throw new Error('Error creating newsletter');
+    //     }
+    // }
       
     async getNewsLetters(page = 1, limit = 10, req) {
         try {
@@ -75,7 +86,7 @@ class AdminNewsLetterService {
             if (typeof updateData.content !== "string") {
                 updateData.content = JSON.stringify(updateData.content);
             }
-            updateData.content = await this.replaceTitle(updateData.content, updateData.title);
+            updateData.content = utils.replaceTitle(updateData.content, updateData.title);
         } 
         const updated = await AdminNewsLetterRepository.update(numericId, updateData);
         if (!updated) {
@@ -99,8 +110,30 @@ class AdminNewsLetterService {
         return { message: 'News Letter deleted successfully' };
     }
 
-    async replaceTitle(htmlString, newTitle) {
-        return htmlString.replace(/<title>.*?<\/title>/, `<title>${newTitle}</title>`);
+    async createNewsLetter(req) {
+        const filePath = path.join(__dirname, '../../src/data/input_prompt.txt'); 
+        const query = utils.readTextFile(filePath);
+        if (!query) return;
+
+        console.log('🚀 뉴스레터 생성 중...');
+        const newsletter = await newsletterService.createNewsletter(query);
+        if (newsletter) console.log('✅ 뉴스레터 생성 완료!', newsletter);
+
+        const today = new Date();
+        // 한국 시간(KST) 기준으로 자정 시간을 설정
+        today.setHours(0, 0, 0, 0);  // 자정으로 시간을 맞춰줍니다.
+        // 한국 시간(KST)으로 날짜만 추출 (ISO 8601 형식)
+        const localDate = today.toLocaleDateString('en-CA');  // 'en-CA' 형식은 YYYY-MM-DD 형식
+
+        const letter = await AdminNewsLetterRepository.create({
+            title:`${localDate} 일자 뉴스레터 D-1`,
+            content:newsletter.formattedContent,
+            research_prompt:query,
+            category:'NEWSLETTER',
+            post_category:'NEWSLETTER'
+        });
+        console.log(`${localDate} 일자 뉴스레터 D-1 생성완료`);
+        return letter;
     }
 }
 

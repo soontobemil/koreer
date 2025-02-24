@@ -7,6 +7,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255),
             allowNull: false
         },
+        research_prompt: {
+            type: DataTypes.TEXT,
+        },
+        format_prompt: {
+            type: DataTypes.TEXT,
+        },
         content: {
             type: DataTypes.TEXT,
             allowNull: false
@@ -14,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         category:{
             type:DataTypes.STRING(255),
             allowNull: false
+        },
+        post_category:{
+            type:DataTypes.STRING(255),
         },
         send_date: {
             type: DataTypes.DATEONLY, // YYYY-MM-DD 형식으로 저장됨

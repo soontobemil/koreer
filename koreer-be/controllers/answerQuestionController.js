@@ -47,9 +47,9 @@ async function postAnswer(req, res) {
 }
 
 /**
- * 게시물 ID로 모든 답변 조회
+ * 게시물 ID, 유저 ID로 상세 내역 조회
  */
-async function getAnswersByPostId(req, res) {
+async function getAnswersByPostIdAndUserId(req, res) {
     try {
         const postId = req.params.id;
         const userInfo = getUserInfoInToken(req);
@@ -86,8 +86,51 @@ async function getAnswersByPostId(req, res) {
     }
 }
 
+/**
+ * 유저 ID로 모든 답변 조회
+ */
+async function getAnswersByUserId(req, res) {
+    try {
+        const userInfo = getUserInfoInToken(req);
+
+        if (!userInfo) {
+            return res.status(400).json({
+                success: false,
+                message: 'User has to be Login'
+            });
+        }
+        const { page = 1, limit = 10 } = req.query;
+
+        // 서비스 호출
+        const result = await answerQuestionService.getAnswersByUserId(
+            userInfo.id,
+            Number(page),
+            Number(limit)
+        );
+
+        // 응답 반환
+        res.status(200).json(result);
+
+        // const result = await answerQuestionService.getAnswersByUserId(userInfo.id);
+        //
+        // return res.status(result.statusCode).json({
+        //     success: result.success,
+        //     message: result.message,
+        //     data: result.data,
+        //     error: result.error
+        // });
+    } catch (error) {
+        console.error('Error in getAnswersByPostId controller:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     postAnswer,
-    getAnswersByPostId
-    // 다른 컨트롤러 함수들을 추가할 수 있습니다
+    getAnswersByPostIdAndUserId,
+    getAnswersByUserId
 };

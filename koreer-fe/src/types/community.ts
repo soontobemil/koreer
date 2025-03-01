@@ -6,6 +6,9 @@ export enum CommunityCategories{
     INFO = "INFO",
     NEWS = "NEWS",
     OVERSEAS_INFORMATION = "OVERSEAS_INFORMATION",
+
+    COMMUNITY_POSTS = "COMMUNITY_POSTS",
+    INTERVIEW_POSTS = "INTERVIEW_POSTS"
 }
 
 export interface CommunityDTO{

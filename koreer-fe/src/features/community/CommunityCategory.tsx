@@ -51,9 +51,11 @@ export function CommunityCategory({ categoryType, setCategoryType }: CategoryPro
 
     const categories: CategoryOption[] = [
         { label: "전체", value: CommunityCategories.ALL },
-        { label: "사는이야기", value: CommunityCategories.DAILY },
         { label: "기술, 취업, 이직", value: CommunityCategories.TECH },
-        { label: "모임, 스터디", value: CommunityCategories.STUDY }
+        { label: "사는이야기", value: CommunityCategories.DAILY },
+        { label: "모임, 스터디", value: CommunityCategories.STUDY },
+        { label: "커뮤니티 공간", value: CommunityCategories.COMMUNITY_POSTS },
+        { label: "인터뷰 공간", value: CommunityCategories.INTERVIEW_POSTS },
     ];
 
     const handlePosting = (): void => {

@@ -84,6 +84,36 @@ function getUserInfoInToken(req) {
     }
 }
 
+// 액세스토큰 만료 시 재활성화
+function generateTokenByRefreshToken(req) {
+    try {
+
+        const token = req.cookies?.refreshToken;
+
+        if (token) {
+            return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+        }
+
+        // 헤더에서 Authorization 가져오기
+        const authHeader = req.headers.authorization;
+
+        if (authHeader) {
+            const token = authHeader.split(" ")[1]; // Bearer 토큰 형태
+            if (token) {
+                return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+            }
+        }
+
+        // 쿠키와 헤더 모두 없으면 로그인되지 않은 상태
+        console.log("No access token found");
+        return "1111"; // 혹은 null 반환
+
+    } catch (error) {
+        console.error("Error verifying token:", error.message);
+        return "222"; // 토큰 검증 실패시 빈 문자열 반환
+    }
+}
+
 // 로그인 라우트
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -154,6 +184,6 @@ app.post('/logout', (req, res) => {
 
 module .exports = {
     generateAccessToken,
-    generateRefreshToken,
+    generateRefreshToken, generateTokenByRefreshToken,
     getUserEmail, getUserInfoInToken
 }

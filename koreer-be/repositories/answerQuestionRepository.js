@@ -48,6 +48,16 @@ class AnswerQuestionRepository {
         });
     }
 
+    async findAndCountAnswersByUserId(userId, offset, limit) {
+        return await AnswerQuestion.findAndCountAll({
+            where: { user_id: userId },
+            order: [['created_at', 'DESC']],
+            offset,
+            limit,
+            distinct: true // 정확한 count를 위해 distinct 사용
+        });
+    }
+
     /**
      * 게시물 ID로 게시물을 조회
      */

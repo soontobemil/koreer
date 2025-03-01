@@ -146,9 +146,8 @@ export function CommunityForm(): JSX.Element {
                                 onChange={handleCategoryChange}
                             >
                                 <MenuItem value="">카테고리를 선택해주세요</MenuItem>
-                                <MenuItem value="DAILY">사는 이야기</MenuItem>
-                                <MenuItem value="TECH">기술, 취업, 이직</MenuItem>
-                                <MenuItem value="STUDY">모임, 스터디</MenuItem>
+                                <MenuItem value="COMMUNITY_POSTS">커뮤니티 공간 </MenuItem>
+                                <MenuItem value="INTERVIEW_POSTS">인터뷰 공간</MenuItem>
                             </Select>
                         </FormControl>
 

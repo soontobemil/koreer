@@ -20,7 +20,7 @@ export function Success() {
             const refreshToken = params.get('refreshToken');
 
             if (accessToken) {
-                document.cookie = `accessToken=${accessToken}; path=/; max-age=${60 * 60 * 24};`;
+                document.cookie = `accessToken=${accessToken}; path=/; max-age=${60 * 60};`;
             }
             if (refreshToken) {
                 document.cookie = `refreshToken=${refreshToken}; path=/; max-age=${60 * 60 * 24 * 7};`;

@@ -77,6 +77,59 @@ class AnswerQuestionService {
     }
 
     /**
+     * 유저 ID로 모든 답변 조회
+     */
+    async getAnswersByUserId(userId, page = 1, limit = 10) {
+        try {
+            // 페이지네이션 계산
+            const offset = (page - 1) * limit;
+
+            // 총 답변 수 및 답변 목록 조회
+            const { count: total, rows: answers } = await answerQuestionRepository.findAndCountAnswersByUserId(
+                userId,
+                offset,
+                limit
+            );
+
+            if (!answers.length) {
+                return {
+                    data: [],
+                    meta: {
+                        total,
+                        currentPage: page,
+                        totalPages: Math.ceil(total / limit),
+                    },
+                };
+            }
+
+            // 게시물 정보 조회 및 결합
+            const answersWithPostInfo = await Promise.all(
+                answers.map(async (answer) => {
+                    const post = await answerQuestionRepository.findPostById(answer.post_id);
+                    return {
+                        ...answer.toJSON(),
+                        post_title: post ? post.title : null,
+                        category: post ? post.category : null
+                    };
+                })
+            );
+
+            // 응답 형식에 맞게 데이터 반환
+            return {
+                data: answersWithPostInfo,
+                meta: {
+                    total,
+                    currentPage: page,
+                    totalPages: Math.ceil(total / limit),
+                },
+            };
+        } catch (error) {
+            console.error('Error in getAnswersByUserId service:', error);
+            throw new Error('Error fetching answers');
+        }
+    }
+
+    /**
      * 게시물 ID로 모든 답변 조회
      */
     async getAnswersByPostId(postId) {

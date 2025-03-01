@@ -26,11 +26,13 @@ import {useEffect, useState} from 'react';
 import {useCommentFunctions} from "../../features/community/hooks/useCommentFunctions";
 import {CommentPostDTO} from "../../types/post";
 import {useCommunityGetter} from "../../features/community/hooks/useCommunityGetter";
+import {useCookies} from "react-cookie";
 
 export function CommunityDetail() {
     const [comment, setComment] = useState('');
     const pathParts = window.location.pathname.split('/');
     const id = Number(pathParts[pathParts.length - 1]);
+    const [cookie] = useCookies(['accessToken', 'refreshToken']);
 
     const { getCommunityById, post } = useCommunityGetter();
     const { createComment } = useCommentFunctions();
@@ -45,6 +47,11 @@ export function CommunityDetail() {
 
     // @ts-ignore
     const handleSubmitComment = () =>{
+        if (!cookie.accessToken) {
+            alert('로그인 후 시도해주세요');
+            return false;
+        }
+
         if (comment === "") {
             alert('댓글을 작성해주세요.')
             return false;

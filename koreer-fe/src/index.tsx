@@ -36,6 +36,7 @@ import {AdminCover} from "./features/admin/AdminCover";
 import ProtectedRoute from "./config/ProtectedRoute";
 import {AdminCommunityManagement} from "./features/admin/AdminCommunityManagement";
 import {AdminCodesManagement} from "./features/admin/AdminCodesManagement";
+import {AdminNewsletterManagement} from "./features/admin/AdminNewsletterManagement";
 
 const router = createBrowserRouter([
   {
@@ -185,6 +186,10 @@ const router = createBrowserRouter([
           {
             path: "posts",
             element: <AdminCommunityManagement />
+          },
+          {
+            path: "newsletter",
+            element: <AdminNewsletterManagement />
           },
           {
             path: "mails",

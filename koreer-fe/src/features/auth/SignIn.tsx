@@ -232,16 +232,16 @@ export function SignIn() {
                 {isLoading ? <CircularProgress size={24} /> : '로그인'}
               </Button>
 
-              <Box sx={{ mt: 2, textAlign: 'center' }}>
-                <Link
-                  component={RouterLink}
-                  to="/signup"
-                  variant="body2"
-                  sx={{ textDecoration: 'none' }}
-                >
-                  계정이 없으신가요? 회원가입
-                </Link>
-              </Box>
+              {/*<Box sx={{ mt: 2, textAlign: 'center' }}>*/}
+              {/*  <Link*/}
+              {/*    component={RouterLink}*/}
+              {/*    to="/signup"*/}
+              {/*    variant="body2"*/}
+              {/*    sx={{ textDecoration: 'none' }}*/}
+              {/*  >*/}
+              {/*    계정이 없으신가요? 회원가입*/}
+              {/*  </Link>*/}
+              {/*</Box>*/}
 
               <Divider sx={{ my: 2 }}>또는</Divider>
 
@@ -254,14 +254,14 @@ export function SignIn() {
                 >
                   Google로 로그인
                 </Button>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startIcon={<GitHub />}
-                  onClick={() => {/* TODO: Implement GitHub login */}}
-                >
-                  GitHub로 로그인
-                </Button>
+                {/*<Button*/}
+                {/*  fullWidth*/}
+                {/*  variant="outlined"*/}
+                {/*  startIcon={<GitHub />}*/}
+                {/*  onClick={() => /!* TODO: Implement GitHub login *!/}*/}
+                {/*>*/}
+                {/*  GitHub로 로그인*/}
+                {/*</Button>*/}
               </Stack>
             </Stack>
           </Paper>

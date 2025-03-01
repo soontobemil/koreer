@@ -37,6 +37,7 @@ import ProtectedRoute from "./config/ProtectedRoute";
 import {AdminCommunityManagement} from "./features/admin/AdminCommunityManagement";
 import {AdminCodesManagement} from "./features/admin/AdminCodesManagement";
 import {AdminNewsletterManagement} from "./features/admin/AdminNewsletterManagement";
+import {CommunityAnswer} from "./features/community/CommunityAnswer";
 
 const router = createBrowserRouter([
   {
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
       {
         path: "community/detail/:id",
         element: <CommunityDetail />
+      },
+      {
+        path: "community/answer/:id",
+        element: <CommunityAnswer />
       },
       // {
       //   path: "tips",

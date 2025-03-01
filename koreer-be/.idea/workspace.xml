@@ -8,12 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminNavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminNavBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/auth/SignIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/auth/SignIn.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityAnswer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityAnswer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/community.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/community.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +81,9 @@
       <recent name="$PROJECT_DIR$/repositories" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/controllers" />
+    </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -138,7 +139,8 @@
       <workItem from="1740577313886" duration="3056000" />
       <workItem from="1740642659460" duration="4572000" />
       <workItem from="1740651783720" duration="6926000" />
-      <workItem from="1740796459080" duration="3501000" />
+      <workItem from="1740796459080" duration="8770000" />
+      <workItem from="1740805649993" duration="24000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />

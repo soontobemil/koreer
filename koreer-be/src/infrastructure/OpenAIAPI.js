@@ -6,35 +6,31 @@ class OpenAIAPI {
   constructor(apiKey) {
     this.apiKey = apiKey;
     this.baseUrl = 'https://api.openai.com/v1/chat/completions';
-    this.prompt = ''; // ✅ 기본값 설정
   }
 
    // ✅ 파일을 읽어 this.content에 저장하는 초기화 함수
-   async init() {
-    const filePath = path.resolve(__dirname, '../data/format_prompt.txt');
+   async getPrompt(filePath) {
+    //const filePath = path.resolve(__dirname, '../data/research_prompt.txt');
+    const resolvedFilePath = path.resolve(__dirname, filePath);
     try {
-        console.log('📌 파일에서 콘텐츠 읽는 중:', filePath);
-        this.prompt = fs.readFileSync(filePath, 'utf-8');
+        console.log('📌 파일에서 콘텐츠 읽는 중:', resolvedFilePath);
+        const prompt = fs.readFileSync(resolvedFilePath, 'utf-8');
         console.log('📌 읽은 콘텐츠 저장 완료!');
+        return prompt;
     } catch (error) {
         console.error('❌ 파일 읽기 실패:', error.message);
-        this.prompt = ''; // 실패 시 빈 값으로 설정
     }
   }
-
-  async formatNewsletter(content) {
+ 
+  async fetchData(prompt) {
     try {
-      if (!this.prompt) {
-        throw new Error('❌ 파일에서 읽은 프롬프트가 없습니다.');
-      }
-
       const response = await axios.post(
         this.baseUrl,
         {
           model: 'gpt-4-turbo',
           messages: [
             { role: 'system', content: 'You are an AI assistant that refines and structures content for a professional newsletter.' },
-            { role: 'user', content: `${this.prompt}${content}` },
+            { role: 'user', content: `${prompt}\n\n` },
           ],
           max_tokens: 4096,
           temperature: 0.7,
@@ -53,6 +49,7 @@ class OpenAIAPI {
       return null;
     }
   }
+
 }
 
 module.exports = OpenAIAPI;

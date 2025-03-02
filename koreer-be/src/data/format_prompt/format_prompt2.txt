@@ -1,0 +1,127 @@
+🔍 Prompt for Mapping Research Data to HTML Layout
+Objective:
+Take the extracted research data and insert it into a provided HTML layout, ensuring each dataset is mapped to the correct HTML id attribute. If any dataset is missing, the corresponding tag must be removed entirely from the final output.
+
+📌 Instructions for Data Insertion
+Insert the Summary Section data inside <p id="summary-content">.
+Insert the Salary Analysis data inside <p id="content1">.
+Insert the Visa Sponsorship data inside <p id="content2">.
+Insert the Cost of Living data inside <p id="content3">.
+Insert the Real-Life Vlogs data inside <ul id="content4">.
+Each vlog entry must include:
+English title inside <p id="content4" style="color: #666666; font-size: 14px; margin: 0;">
+Korean translation inside <p id="content4-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">
+🚨 If any section has no available data, remove the entire corresponding HTML tag.
+📌 Expected Data Placement in HTML
+The final HTML structure should reflect the following format:
+
+<p id="summary-content"> <!-- Summary Section Data Goes Here --> </p>
+<p id="summary-content-korean"><!-- Korean Translation --></p>
+<p id="content1"> <!-- Salary Analysis Data Goes Here --> </p>
+<p id="content1-korean"><!-- Korean Translation --></p>
+<p id="content2"> <!-- Visa Sponsorship Data Goes Here --> </p>
+<p id="content2-korean"><!-- Korean Translation --></p>
+<p id="content3"> <!-- Cost of Living Data Goes Here --> </p>
+<p id="content3-korean"><!-- Korean Translation --></p>
+<p id="content4"> <!-- English Vlog Title --> </p>
+<p id="content4-korean" > <!-- Korean Translation --> </p>
+📌 Formatting Guidelines
+Each dataset must be placed inside its designated <p> or <ul> tag using its respective id.
+If a dataset is missing, remove the entire <p> or <ul> block instead of leaving it empty.
+For Real-Life Vlogs:
+English title should be placed inside <p id="content4">
+Korean translation should be placed inside <p id="content4-korean">
+Ensure that all data is cleanly formatted and does not include unnecessary tags or empty elements.
+
+📌 Edge Cases & Handling Missing Data
+If Summary, Salary Analysis, Visa Sponsorship, or Cost of Living data is missing, remove its <p> tag entirely.
+If Real-Life Vlogs data is missing, remove the entire <ul id="content4"> block.
+If only some vlog entries are missing, remove only the missing <li> elements but keep the rest.
+💡 Use this prompt to dynamically map research data into an HTML structure while ensuring that missing sections are removed and vlog entries are properly formatted with Korean translations.
+
+This is the HTML layout:
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koreer News! Today's Company: AWS</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: AppleSDGothic, 'Apple SD Gothic Neo', sans-serif; background-color: #F8F9FA;">
+    <table cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #F8F9FA;">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-02-26%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%206.32.08-j3QSsq6mj4YZNInNiO8JdCm1cbxvF5.png" alt="Koreer Newsletter" style="width: 100%; max-width: 600px; height: auto;">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <h2 id="summary" style="color: #1E40AF; margin-top: 0; font-size: 16px; font-family: AppleSDGothic, 'Apple SD Gothic Neo', sans-serif;">Today's Career Insider <b class="company" style="color: #333333">- AWS</b></h2>
+                            <p id="summary-content" style="color: #333333; font-size: 14px; line-height: 1.6;">실리콘밸리 현지 개발자들의 생생한 이야기부터 실전 면접 준비까지, 여러분의 커리어를 함께 만들어갑니다.</p>
+                            <p id="summary-content-korean" style="color: #b3b0b0; font-size: 12px; line-height: 1.6;">실리콘밸리 현지 개발자들의 생생한 이야기부터 실전 면접 준비까지, 여러분의 커리어를 함께 만들어갑니다.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <h2 style="color: #1E40AF; margin-top: 0; font-size: 16px; font-family: AppleSDGothic, 'Apple SD Gothic Neo', sans-serif;">📌 Landing a Job at AWS: What You Need to Know <b style="color: #b3b0b0;font-size: 12px;">AWS 취업 가이드</b></h2>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">💰 AWS Salary Insights: How Much Can You Earn? <b style="color: #b3b0b0;font-size: 12px;">연봉 분석</b></h3>
+                                <p id="content1" style="color: #666666; font-size: 14px; margin: 0;">$120,000 - $180,000 USD</p>
+                                <p id="content1-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">$120,000 - $180,000 USD</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">✈️ AWS & Work Visas: Your Pathway to Global Careers <b style="color: #b3b0b0;font-size: 12px;">비자 가이드</b></h3>
+                                <p id="content2" style="color: #666666; font-size: 14px; margin: 0;">지원 가능 (신입/경력)</p>
+                                <p id="content2-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">(신입/경력)</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">🏡 Cost of Living Near AWS Offices: What to Expect <b style="color: #b3b0b0;font-size: 12px;">생활비 리포트</b></h3>
+                                <p id="content3" style="color: #666666; font-size: 14px; margin: 0;">시애틀 - 중상</p>
+                                <p id="content3-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">시애틀 - 중상</p>
+                            </div>
+                            
+                            <div>
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">📺 AWS Life Around the World: Vlogs & Local Stories <b style="color: #b3b0b0;font-size: 12px;">라이프 영상</b></h3>
+                                <p id="content4" style="color: #666666; font-size: 14px; margin: 0;">Seattle Life</p>
+                                <p id="content4-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">시애틀 라이프</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;">
+                            <a href="SUBSCRIPTION_CANCEL" style="display: inline-block; color: #4A90E2; text-decoration: none; font-size: 14px; margin: 0 15px;">구독 해지하기</a>
+                            <span style="color: #666666;">|</span>
+                            <a href="POST_LINK" style="display: inline-block; color: #4A90E2; text-decoration: none; font-size: 14px; margin: 0 15px;">더 알아보기</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px; text-align: center; color: #666666;">
+                <p style="font-size: 14px;">&copy; 2025 Koreer. All rights reserved.</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+\n\n
+and this is data:

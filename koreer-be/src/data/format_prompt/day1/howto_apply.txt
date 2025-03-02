@@ -1,0 +1,12 @@
+Extract and return ONLY the Visa Sponsorship section only using below HTML Output Format. 
+📌 Formatting Instructions:
+DO NOT include section titles or headers (e.g., "Salary Insights", "Visa Guides").
+DO NOT modify, change, or remove the section data.
+- **Translate the content into natural, well-structured Korean in a summarized sentence format.**
+- **Ensure that the Korean translation is a concise and clear summary, NOT a direct word-for-word translation.**
+If the original content includes HTML tags (<b>, <a>, <span>, etc.), retain them.
+Remove any Markdown code blocks (e.g., html,  or similar formatting).
+Do NOT include explanations or additional text.
+Return ONLY the Visa Sponsorship section as structured HTML.
+📌 HTML Output Format:
+<p id="content2"style="color: #666666; font-size: 14px; margin: 0;">[Visa sponsorship data here]</p><p id="content2-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;"> [Korean Translation here]</p>

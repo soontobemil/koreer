@@ -1,0 +1,68 @@
+🔍 Prompt for Researching "AWS" Career & Living Information
+Objective:
+Conduct a structured, real-time research on "AWS" and gather ONLY the following four categories of data :
+
+1.Salary Analysis
+2.Visa Sponsorship
+3.Cost of Living
+4.Real-Life Vlogs
+⚠️ DO NOT include any information that does not fall under these categories.
+⚠️ Ensure all data is fact-checked and sourced from the latest available information.
+⚠️ If data is unavailable, state “No reliable data found” instead of guessing.
+⚠️ Return ONLY plain HTML without Markdown formatting (e.g., ```html).
+
+📌 Summary Section (Key Takeaways)
+Provide a concise summary of the four required categories only.
+Each key insight should be brief yet informative, highlighting notable trends, salary changes, visa sponsorship updates, cost of living insights, and vlog trends.
+The format like the following :
+<ul><li>Salary Insights:</li><li>Visa Guides:</li><li>Cost Of Living:</li><li>Vlogs:</li></ul>
+📌 Salary Analysis ("AWS" Compensation & Workforce Data)
+Latest average salary for employees at "AWS", categorized by role and region.
+Total number of employees worldwide and their distribution across key locations.
+Number of "AWS" offices (by country and city) and their major locations.
+⚠️ IMPORTANT: Only provide salary-related information. Do not include general company history, mission statements, or irrelevant statistics.
+The format like the following :
+
+AWS developer salaries average $121,000 per year, with a range from $70,000 to $190,0001. The highest average salary for AWS developers is in San Diego at $165,000 per year, followed by the San Francisco Bay Area and New York at $150,0001.
+
+Specific AWS-related roles at Amazon include:
+<ul><li>Principal Solutions Architect, Amazon Business: $164,000 - $284,000<l/i>
+<li>Software Dev Engineer II, AWS Distributed SQL: $115,000 - $223,000</li>
+<li>Senior Security Engineer, AWS Offensive Security: $136,000 - $247,0001<a href="">[DATA RESOURE LINK(if possible)]</>
+</ul>
+Amazon Web Services has over 2,500 employees in Singapore, working across cloud, corporate, retail, technology, and operations functions <a href="">[DATA-RESOURELINK(if possible)]</>
+
+📌 Visa Sponsorship ("AWS" Work Visa Policies)
+Detailed breakdown of "AWS"’s visa sponsorship policies (e.g., H-1B, L-1, O-1, etc.).
+Conduct in-depth research on the company’s history of H1B visa sponsorship, using credible sources like the USCIS database or MyVisaJobs. Include specific details where possible (e.g., number of H1B visas sponsored in recent years).
+⚠️ IMPORTANT: Only provide visa sponsorship data. Do not include general immigration policies unrelated to "AWS".
+
+📌 Cost of Living ("AWS" Office Locations)
+Provide a snapshot of living costs in that area, including:
+Average monthly rent for a one-bedroom apartment.
+Average annual salary for tech professionals.
+One additional relevant cost-of-living detail (e.g., transportation costs, groceries, or general affordability).
+⚠️ IMPORTANT: Only provide cost of living data for locations where "AWS" has offices.
+The format like the following :
+
+In downtown Seattle, where Amazon has a significant presence, the median asking rent for apartments rose 2.5% year-over-year to $2,000 in December 20245. This increase coincided with Amazon's announcement of a full-time return-to-office policy.
+
+Among Seattle's inner neighborhoods:
+<ul><li>Capitol Hill saw the highest rent increase, rising 7.2% year-over-year to $1,825</li>
+<li>Central District rents increased by 1.2%</li>
+<li>Westlake rents rose by 1%<a href="">[DATA RESOURE LINK(if possible)]</></li>
+</ul>
+📌 Real-Life Vlogs ("AWS" Employees & Local Lifestyle)
+Find 2-3 trending YouTube vlogs about life near "AWS" office locations.
+Include a link to a relevant "day in the life" YouTube video showcasing a professional in a similar role or location. Ensure the video is recent, credible, and provides a visual representation of the work environment or lifestyle.
+Prioritize Korean vloggers, but include top-ranked English vlogs if necessary.
+Ensure the vlogs are recent and have high engagement (views, likes, comments).
+⚠️ IMPORTANT: Only include vlogs about "AWS" office locations. Do not include unrelated travel or general city vlogs.
+
+📌 Data Accuracy & Real-Time Updates
+STRICTLY collect data ONLY for the four required categories.
+Double-check all information across multiple reputable sources.
+Ensure all information is accurate, up-to-date, and sourced from credible websites or databases (e.g., USCIS, company career pages, Glassdoor, Indeed, Numbeo, YouTube).
+Structure the final output in clear, well-organized sections.
+💡 Use this prompt to conduct a deep, real-time analysis for "AWS"-related career & lifestyle insights. The information must be strictly limited to the four required categories, be fact-checked, and be structured properly. 
+

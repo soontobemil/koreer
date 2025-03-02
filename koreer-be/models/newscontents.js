@@ -2,27 +2,18 @@ const { formatDate } = require('@common/utils');
 
 // Variables name should be equal with sequelize define name.
 module.exports = (sequelize, DataTypes) => {
-    const NewsLetter = sequelize.define('NewsLetter', {
-        title: {
-            type: DataTypes.STRING(255),
-            allowNull: false
-        },
-        content_id: {
-            type: DataTypes.INTEGER,
-        },
-        content: {
+    const NewsContents = sequelize.define('NewsContents', {
+        interview_question: {
             type: DataTypes.TEXT,
-            allowNull: false
+        },
+        interview_answer: {
+            type: DataTypes.TEXT,
+        },
+        hotissue_question: {
+            type: DataTypes.TEXT,
         },
         category:{
             type:DataTypes.STRING(255),
-            allowNull: false
-        },
-        send_date: {
-            type: DataTypes.DATEONLY, // YYYY-MM-DD 형식으로 저장됨
-        },
-        created_by: {
-            type: DataTypes.INTEGER, // 양수만 허용
         },
         created_at: {
             type: DataTypes.DATE,
@@ -46,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
     }, {
-        tableName: 'newsletters', // naming the table name
+        tableName: 'newscontents', // naming the table name
         timestamps: true, // automatically set up `createdAt` and `updatedAt` fields as timestamp
         updatedAt: 'updated_at', // set up the `updatedAt` field as 'updated_at'
         createdAt: 'created_at', // set up the `createdAt` field as 'updated_at'
@@ -54,6 +45,6 @@ module.exports = (sequelize, DataTypes) => {
         deletedAt: 'deleted_at', // 삭제 시간 필드 이름
     });
 
-    return NewsLetter;
+    return NewsContents;
 };
   

@@ -1,5 +1,5 @@
 class Newsletter {
-    constructor(rawContent, formattedContent) {
+    constructor(rawContent = null, formattedContent) {
       this.rawContent = rawContent;
       this.formattedContent = formattedContent;
     }

@@ -1,0 +1,5 @@
+I want to create a hot issue question that would spark controversy among developers. Only return the question data.
+
+the following example:
+
+3 Reasons Why You Shouldn't Use Java

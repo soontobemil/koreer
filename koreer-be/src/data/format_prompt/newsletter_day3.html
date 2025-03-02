@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koreer News! Today's Company: ${company_name}</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: AppleSDGothic, 'Apple SD Gothic Neo', sans-serif; background-color: #F8F9FA;">
+    <table cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #F8F9FA;">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-02-26%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%206.32.08-j3QSsq6mj4YZNInNiO8JdCm1cbxvF5.png" alt="Koreer Newsletter" style="width: 100%; max-width: 600px; height: auto;">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <h2 id="summary" style="color: #1E40AF; margin-top: 0; font-size: 16px; font-family: AppleSDGothic, 'Apple SD Gothic Neo', sans-serif;">Today's Career Insider <b class="company" style="color: #333333">- ${company_name}</b></h2>
+                            ${summary}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <h2 style="color: #1E40AF; margin-top: 0; font-size: 16px; font-family: AppleSDGothic, 'Apple SD Gothic Neo', sans-serif;">📌 Landing a Job at ${company_name}: What You Need to Know <b style="color: #b3b0b0;font-size: 12px;">${company_name} 취업 가이드</b></h2>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">💰 ${company_name} Salary Insights: How Much Can You Earn? <b style="color: #b3b0b0;font-size: 12px;">연봉 분석</b></h3>
+                                ${salary}
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">✈️ ${company_name} & Work Visas: Your Pathway to Global Careers <b style="color: #b3b0b0;font-size: 12px;">비자 가이드</b></h3>
+                                ${visa}
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">🏡 Cost of Living Near AWS Offices: What to Expect <b style="color: #b3b0b0;font-size: 12px;">생활비 리포트</b></h3>
+                                ${cost_of_living}
+                            </div>
+                            
+                            <div>
+                                <h3 style="color: #333333; font-size: 14px; margin-bottom: 8px;">📺 ${company_name} Life Around the World: Vlogs & Local Stories <b style="color: #b3b0b0;font-size: 12px;">라이프 영상</b></h3>
+                                ${vlogs}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;">
+                            <a href="SUBSCRIPTION_CANCEL" style="display: inline-block; color: #4A90E2; text-decoration: none; font-size: 14px; margin: 0 15px;">구독 해지하기</a>
+                            <span style="color: #666666;">|</span>
+                            <a href="POST_LINK" style="display: inline-block; color: #4A90E2; text-decoration: none; font-size: 14px; margin: 0 15px;">더 알아보기</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px; text-align: center; color: #666666;">
+                <p style="font-size: 14px;">&copy; 2025 Koreer. All rights reserved.</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

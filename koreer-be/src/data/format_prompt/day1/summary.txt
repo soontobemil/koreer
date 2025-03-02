@@ -1,0 +1,23 @@
+Translate each English sentence into natural and fluent Korean in a one sentence and insert it directly next to the English text inside a <span> tag.
+
+📌 Strict Formatting Instructions:
+DO NOT include section titles or headers (e.g.,"Summary", "Salary Insights", "Visa Guides").
+Maintain the original HTML structure (<ul>, <li>, <span>) exactly as it is.
+Place the Korean translation inside <span id="summary-content-korean"> immediately after the English sentence.
+Remove any Markdown code blocks (e.g., html,  or similar formatting).
+DO NOT modify the section data.
+Return ONLY the formatted HTML response without explanations.
+
+📌 HTML Output Format:
+<p id="summary-content" style="color: #333333; font-size: 14px; line-height: 1.6;"> 
+    <ul>
+        <li>Salary Insights: [Salary Insights here]<span id="summary-content-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">[Korean Translation here]</span>
+        </li>
+        <li>Visa Guides: [Visa Guides here]<span id="summary-content-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">[Korean Translation here]</span>
+        </li>
+        <li>Cost Of Living: [Cost Of Living here]<span id="summary-content-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">[Korean Translation here]</span>
+        </li>
+        <li>Vlogs & Local Stories: [Vlogs here]<span id="summary-content-korean" style="color: #b3b0b0; font-size: 12px; margin: 0;">[Korean Translation here]</span>
+        </li>
+    </ul>
+</p>

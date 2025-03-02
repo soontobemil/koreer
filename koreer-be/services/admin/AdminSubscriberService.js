@@ -1,12 +1,15 @@
 // services/post.service.js
 const AdminSubscriberRepository = require('../../repositories/admin/AdminSubscriberRepository');
 const AdminNewsLetterRepository = require('../../repositories/admin/AdminNewsLetterRepository');
+const AdminNewsContentsRepository = require('../../repositories/admin/AdminNewsContentsRepository');
 const PostRepository = require('../../repositories/PostRepository');
 const { AdminSubscriberDTO } = require('../../dtos/admin/AdminSubscriberDTO');
 const nodemailer = require('nodemailer');
 const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
 const { replaceUrl } = require('@common/utils');
+
+const NewsletterService = require('../../src/application/NewsletterService');
 
 class AdminSubscriberService {
     async getSubscriberById(id) {
@@ -125,17 +128,40 @@ class AdminSubscriberService {
                     console.log("📭 구독자가 없음.");
                     continue;
                 }
-                // 전송할 내용 게시글에 저장
+                console.log(newsletter.content_id);
+                // 📧 인터뷰 내용 가져오기
+                const newscontent = await AdminNewsContentsRepository.findById(newsletter.content_id);
+                if (!newscontent) {
+                    console.log("📭 인터뷰가 없음.");
+                    continue;
+                }
+
+                console.log(`${newscontent.interview_question}\n\n${newscontent.interview_answer}`);
+
+                const newsletterService = new NewsletterService();
+                //{interview_question:interview_question,hotissue_question:hotissue_post}
+                const postNewsletter = await newsletterService.createNewsletter({interview_question:`${newscontent.interview_question}\n\n${newscontent.interview_answer}`,hotissue_question:newscontent.hotissue_question});
+
+                // 전송할 인터뷰 게시글에 저장
                 const post = await PostRepository.create({
                     user_email:'admin',
                     title:newsletter.title,
-                    content:newsletter.content,
-                    category:newsletter.category,
-                    post_category:newsletter.post_category,
+                    content:postNewsletter.formattedContent,
+                    category:'INTERVIEW_POSTS',
                 });
-                console.log(`뉴스레터 ${newsletter.category} 전송 완료 게시글 저장`);
+                console.log(`뉴스레터 ${newsletter.category} 게시글 저장 완료`);
+
+                // 전송할 핫이슈 게시글에 저장
+                const hotissue_post = await PostRepository.create({
+                    user_email:'admin',
+                    title:`Today's hot issue!`,
+                    content:newscontent.hotissue_question,
+                    category:'COMMUNITY_POSTS',
+                });
+                console.log(`핫이슈 ${newsletter.category} 게시글 저장 완료`);
                 // 내용에 게시글 링크 추가
                 newsletter.content = replaceUrl(newsletter.content,'POST_LINK',`/community/post/${post.id}`);
+                newsletter.content = replaceUrl(newsletter.content,'HOTISSUE_LINK',`/community/post/${hotissue_post.id}`);
                 // 구독자들에게 이메일을 병렬로 발송
                 const emailPromises = subscribers.map(subscriber => {
                     // 구독해지 링크 추가

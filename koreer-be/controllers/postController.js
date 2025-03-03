@@ -16,7 +16,7 @@ async function createPost(req, res) {
 
 async function getPostById(req, res) {
   try {
-    const post = await postService.getPostById(req.params.id,req.user.id);
+    const post = await postService.getPostById(req.params.id,req.user?.id);
     if (post) {
       res.status(200).json(post);
     } else {

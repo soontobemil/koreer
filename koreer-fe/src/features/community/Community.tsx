@@ -1,12 +1,58 @@
-import style from "../../assets/scss/sub/community.module.scss"
+import React, {useEffect, useState} from 'react';
+import {Box, CircularProgress, Container, IconButton, styled, TextField, Typography} from '@mui/material';
+import {motion} from 'framer-motion';
+import {NavigateBefore, NavigateNext, Refresh, Search} from '@mui/icons-material';
+import {Outlet} from "react-router-dom";
 import {CommunityContents} from "./CommunityContents";
 import {CommunityCategory} from "./CommunityCategory";
 import {CommunityEmpty} from "./CommunityEmpty";
-import {Outlet} from "react-router-dom";
-import {CommunityCategories, CommunityType} from "../../types/community";
-import {useEffect, useState} from "react";
+import {CommunityCategories} from "../../types/community";
 import {useCommunityGetter} from "../../features/community/hooks/useCommunityGetter";
 import {ComponentHelmet} from "../../features/common/ComponentHelmet";
+
+const StyledHeader = styled(Box)(({ theme }) => ({
+    textAlign: 'center',
+    marginBottom: theme.spacing(4)
+}));
+const SearchContainer = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(2),
+    justifyContent: 'center',  // 전체 중앙 정렬
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+}));
+
+// SearchArea 컴포넌트 추가
+const SearchArea = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1),
+    padding: '6px 10px',
+    background: 'white',
+    borderRadius: '50px',
+    width: '400px',  // 검색 영역 너비 고정
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.08)',
+}));
+
+// 로딩 스피너 컴포넌트 추가
+const LoadingSpinner = styled(Box)(({ theme }) => ({
+    width: '100%',
+    height: '200px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: '20px',
+    marginTop: theme.spacing(3)
+}));
+
+const PaginationContainer = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1)
+}));
 
 export function Community() {
 
@@ -52,81 +98,111 @@ export function Community() {
     return (
         <>
             <Outlet/>
-            <div className={style.communityUpperWrapper}>
-                {/* Community Header */}
-                <div className={style.communityTitleWrapper}>
-                    <span className={style.title}>커뮤니티</span>
-                    <span className={style.subTitle}>
-                        다른 사람들과 아이디어와 의견을 공유해보세요!
-                    </span>
-                </div>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {/* Header */}
+                    <StyledHeader>
+                        <Typography variant="h3" fontWeight="bold" gutterBottom>
+                            커뮤니티
+                        </Typography>
+                        <Typography variant="h6" color="text.secondary">
+                            다른 사람들과 아이디어와 의견을 공유해보세요!
+                        </Typography>
+                    </StyledHeader>
 
-                <div className={style.contents}>
-                    {/* Sort and Categories */}
-                    <CommunityCategory type={CommunityType.COMMUNITY}
-                                       categoryType={category}
-                                       setCategoryType={setCategory}/>
-
-                    {/* Search and Pagination */}
-                    <div className={style.searchAreaWrapper}>
-                        <div
-                            className={style.refreshImg}
-                            onClick={() => {
-                                window.location.reload()
-                            }}
+                    <Box sx={{ my: 4 }}>
+                        {/* Category Component */}
+                        <CommunityCategory
+                            categoryType={category}
+                            setCategoryType={setCategory}
                         />
-                        <div className={style.searchWrapper}>
-                            <div className={style.searchArea}>
-                                <input
-                                    className={style.searchInput}
-                                    placeholder="검색어를 입력하세요."
-                                    type="text"
-                                    onChange={(e) => setSearchWord(e.target.value)}
-                                />
-                            </div>
-                            <button className={style.searchButton} onClick={handleSearchWord}>
-                                검색
-                            </button>
-                        </div>
-                        <div className={style.paginationWrapper}>
-                            {isLoading ? (
-                                <div className={style.spinnerWrapper}>
-                                    <div className={style.spinner}></div>
-                                </div>
-                            ) : (
-                                <>
-                                    <button
-                                        className={`${style.pageButton} ${currentPage <= 1 ? style.disabled : ''}`}
-                                        onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
-                                        disabled={currentPage <= 1}
-                                        title="이전 페이지"
-                                    >
-                                        &lt;
-                                    </button>
-                                    <div className={style.pageArea}>
-                                        {`${totalPage === 0 ? 0 : currentPage} / ${totalPage}`}
-                                    </div>
-                                    <button
-                                        className={`${style.pageButton} ${currentPage >= totalPage ? style.disabled : ''}`}
-                                        onClick={() => currentPage < totalPage && handlePageChange(currentPage + 1)}
-                                        disabled={currentPage >= totalPage}
-                                        title="다음 페이지"
-                                    >
-                                        &gt;
-                                    </button>
-                                </>
-                            )}
-                        </div>
-                    </div>
 
-                    {posts && totalPage >= 1 ? (
-                        <CommunityContents posts={posts.data}/>
-                    ) : (
-                        <CommunityEmpty />
-                    )}
-                </div>
-                <ComponentHelmet title={"Koreer - 커뮤니티"} />
-            </div>
+                        {/* Search and Pagination */}
+                        <SearchContainer>
+                            <IconButton
+                                onClick={() => window.location.reload()}
+                                sx={{ color: '#2196F3' }}
+                            >
+                                <Refresh />
+                            </IconButton>
+
+                            <SearchArea>
+                                <TextField
+                                    size="small"
+                                    placeholder="검색어를 입력하세요"
+                                    onChange={(e) => setSearchWord(e.target.value)}
+                                    sx={{
+                                        flex: 1,
+                                        '& .MuiOutlinedInput-root': {
+                                            border: 'none',
+                                            '& fieldset': { border: 'none' },
+                                        },
+                                        '& .MuiInputBase-input': {
+                                            padding: '8px 0',
+                                        }
+                                    }}
+                                />
+                                <IconButton
+                                    onClick={handleSearchWord}
+                                    sx={{
+                                        color: 'white',
+                                        background: '#2196F3',
+                                        '&:hover': {
+                                            background: '#1976D2'
+                                        }
+                                    }}
+                                >
+                                    <Search />
+                                </IconButton>
+                            </SearchArea>
+
+                            <PaginationContainer>
+                                <IconButton
+                                    disabled={currentPage <= 1}
+                                    onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                                >
+                                    <NavigateBefore />
+                                </IconButton>
+                                <Typography>
+                                    {`${totalPage === 0 ? 0 : currentPage} / ${totalPage}`}
+                                </Typography>
+                                <IconButton
+                                    disabled={currentPage >= totalPage}
+                                    onClick={() => currentPage < totalPage && handlePageChange(currentPage + 1)}
+                                >
+                                    <NavigateNext />
+                                </IconButton>
+                            </PaginationContainer>
+                        </SearchContainer>
+
+                        {/* Contents */}
+                        {isLoading ? (
+                            <LoadingSpinner>
+                                <CircularProgress
+                                    size={50}
+                                    sx={{
+                                        color: '#2196F3',
+                                        '& .MuiCircularProgress-circle': {
+                                            strokeLinecap: 'round',
+                                        }
+                                    }}
+                                />
+                            </LoadingSpinner>
+                        ) : (
+                            posts && totalPage >= 1 ? (
+                                <CommunityContents posts={posts.data} />
+                            ) : (
+                                <CommunityEmpty />
+                            )
+                        )}
+                    </Box>
+                </motion.div>
+                <ComponentHelmet title="Koreer - 커뮤니티" />
+            </Container>
         </>
-    )
+    );
 }

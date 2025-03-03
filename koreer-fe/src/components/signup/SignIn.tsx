@@ -1,38 +1,31 @@
-import {useNavigate, Link as RouterLink} from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../slice/signInSlice";
-import { LoginDTO } from "../../types/signIn";
-import { ValidateStatus } from "../../types/signup";
+import {Link as RouterLink, useNavigate} from "react-router-dom";
+import {useCallback, useState} from "react";
+import {useDispatch} from "react-redux";
+import {login} from "../../slice/signInSlice";
+import {LoginDTO} from "../../types/signIn";
+import {ValidateStatus} from "../../types/signup";
 import {
-  Box,
-  Container,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  Link,
-  Divider,
-  CircularProgress,
-  Alert,
-  IconButton,
-  InputAdornment,
-  Stack,
+    Alert,
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    Divider,
+    IconButton,
+    InputAdornment,
+    Link,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
 } from '@mui/material';
-import {
-  Email,
-  Lock,
-  Visibility,
-  VisibilityOff,
-  Google,
-  GitHub,
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import {Email, GitHub, Google, Lock, Visibility, VisibilityOff,} from '@mui/icons-material';
+import {motion} from 'framer-motion';
 import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
-import {AuthProvider} from "../../components/common/AuthProvider";
 import {LoginResponseDTO} from "../../slice/common";
 import {useSignInValidator} from "../../components/signup/hooks/useSignInValidator";
 import {ComponentHelmet} from "../../components/common/ComponentHelmet";
+import {useCookieFunctions} from "../../components/common/hooks/useCookieFunctions";
 
 interface ErrorResponse{
     message: string;
@@ -46,7 +39,8 @@ export function SignIn() {
     const [errorMessage, setErrorMessage] = useState('');
     const {validate, emailValidate, setEmailValidate, passwordValidate, setPasswordValidate} =
         useSignInValidator({email,password} );
-    const {setAccessToken} = AuthProvider();
+    // const {setAccessToken} = AuthProvider();
+    const { setCookie} = useCookieFunctions();
     const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch<any>();
@@ -59,7 +53,7 @@ export function SignIn() {
         const loginDTO:LoginDTO = {user_email: email, password: password}
         try {
             const result: LoginResponseDTO = await dispatch(login(loginDTO)).unwrap();
-            setAccessToken(result.accessToken)
+            setCookie('accessToken', result.accessToken)
             navigate('/')
 
             return result;

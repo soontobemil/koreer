@@ -1,119 +1,157 @@
-import style from "../../assets/scss/sub/community.module.scss"
-import {useCommunityGetter} from "./hooks/useCommunityGetter";
-import {useEffect, useRef, useState} from "react";
-import {CommunityFormProps} from "../../types/community";
-import {useNavigate} from "react-router-dom";
+import React, {useState} from 'react';
+import {
+    Avatar,
+    Box,
+    Button,
+    Chip,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    Grid,
+    IconButton,
+    Paper,
+    Typography
+} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {motion} from 'framer-motion';
+import {AccessTime, Delete, Edit} from '@mui/icons-material';
 import {PostsDTO} from "../../types/post";
+import {useNavigate} from "react-router-dom";
+import {useCommunityGetter} from "./hooks/useCommunityGetter";
 
-interface Args {
-    posts:PostsDTO[]
+interface Props {
+    posts: PostsDTO[]
 }
 
-export function CommunityContents(
-    {posts}: Args) {
+// Styled Components
+const StyledPostCard = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(3),
+    transition: 'all 0.3s ease-in-out',
+    cursor: 'pointer',
+    '&:hover': {
+        transform: 'translateY(-4px)',
+        boxShadow: theme.shadows[4]
+    }
+}));
 
-    /**
-     todo
-     dto 필요한 값 추가 ex) category, nation등등
-     배포 다시 체크
-     유효성 검증 로직 추가
-     */
+const CountryAvatar = styled(Avatar)<{ nation: string }>(({ nation }) => ({
+    width: 30,
+    height: 30,
+    backgroundImage: `url(/images/${nation}.png)`,
+    backgroundSize: 'cover'
+}));
 
-    const { deletePost, getCommunityById, post} = useCommunityGetter();
-    const [visibleModalIndex, setVisibleModalIndex] = useState(null);
-    const modalRef = useRef<HTMLDivElement>(null);
-    const navigate = useNavigate()
+export function CommunityContents({ posts }: Props) {
+    const [selectedPost, setSelectedPost] = useState<number | null>(null);
+    const [openDialog, setOpenDialog] = useState(false);
+    const navigate = useNavigate();
+    const { deletePost, getCommunityById } = useCommunityGetter();
 
-    const handleModifyClick = (index: any) => {
-        setVisibleModalIndex((prev) => (prev === index ? null : index)); // 모달 토글
-    };
-
-    const handleEdit = (idx: number) => {
-        setVisibleModalIndex(null);
-
-        getCommunityById(idx).then((result) =>{
-            const props:CommunityFormProps =
-                {mode:'edit', postId: idx, initialData: result}
-            navigate('post', { state: { ...props } });
-
+    const handleEdit = async (idx: number, e: React.MouseEvent) => {
+        e.stopPropagation();
+        const result = await getCommunityById(idx);
+        navigate('post', {
+            state: {
+                mode: 'edit',
+                postId: idx,
+                initialData: result
+            }
         });
     };
 
-    const handleDetail = (data:PostsDTO) => {
-        navigate(`detail/${data.id}`,{ state: { ...(data) } })
-    }
-
-    const handleDelete = (idx: number) => {
-        if (window.confirm("작성하신 게시글을 삭제하시겠습니까?")) {
-            deletePost(idx).then(() =>{
-                alert('삭제가 완료되었습니다.');
-                window.location.reload();
-            });
-        }
-        setVisibleModalIndex(null);
+    const handleDelete = async (idx: number, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSelectedPost(idx);
+        setOpenDialog(true);
     };
 
-    // 모달 외부 클릭 감지 로직
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-                setVisibleModalIndex(null); // 모달 닫기
-            }
-        };
+    const confirmDelete = async () => {
+        if (selectedPost) {
+            await deletePost(selectedPost);
+            setOpenDialog(false);
+            window.location.reload();
+        }
+    };
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    const handleDetail = (data: PostsDTO) => {
+        navigate(`detail/${data.id}`, { state: { ...data } });
+    };
 
     return (
-        <>
-            <div ref={modalRef} className={style.communityContentWrapper}>
-                {/*  커뮤니티 게시글  */}
-                {posts.map((data: PostsDTO, index: number) => (
-                    <div className={style.communityContent} key={index} onClick={() => handleDetail(data)}>
-                        <div style={{position: "relative"}}>
-                            {/*  커뮤니티 헤더 영역  */}
-                            <div className={style.contentHeaderWrapper}>
-                                <div className={`${style.countryImg} ${style[`${data.nation}`]}`}></div>
-                                <span>{data.username}</span>|
-                                <span>{data.created_at}</span>
-                                {data.is_owner && (
-                                    <div className={style.modifyImg}
-                                         onClick={() => handleModifyClick(index)}/>
-                                )}
-                            </div>
-                            {(visibleModalIndex === index) && (
-                                <div className={style.modalWrapper}>
-                                    <div onClick={() => handleEdit(data.id)}>수정하기</div>
-                                    <div onClick={() =>handleDelete(data.id)}>삭제하기</div>
-                                </div>
-                            )}
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Grid container spacing={3}>
+                {posts.map((post, index) => (
+                    <Grid item xs={12} key={post.id}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.1 }}
+                        >
+                            <StyledPostCard onClick={() => handleDetail(post)}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                        <CountryAvatar nation={post.nation} />
+                                        <Typography variant="subtitle1" fontWeight="bold">
+                                            {post.username}
+                                        </Typography>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary' }}>
+                                            <AccessTime sx={{ fontSize: 16, mr: 0.5 }} />
+                                            <Typography variant="body2">
+                                                {post.created_at}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                    {post.is_owner && (
+                                        <Box>
+                                            <IconButton
+                                                size="small"
+                                                onClick={(e) => handleEdit(post.id, e)}
+                                            >
+                                                <Edit />
+                                            </IconButton>
+                                            <IconButton
+                                                size="small"
+                                                color="error"
+                                                onClick={(e) => handleDelete(post.id, e)}
+                                            >
+                                                <Delete />
+                                            </IconButton>
+                                        </Box>
+                                    )}
+                                </Box>
 
-                            {/*  커뮤니티 내용 영역  */}
-                            <div className={style.descriptionWrapper}>
-                                <span className={style.description}>
-                                    {data.title}
-                                </span>
-                            </div>
+                                <Typography variant="h6" gutterBottom>
+                                    {post.title}
+                                </Typography>
 
-                            {/*  커뮤니티 푸터 영역  */}
-                            <div className={style.contentFooterWrapper}>
-                                <div className={style.contentCategoryWrapper}>
-                                    <span className={style.categoryText}>
-                                        {data.category}
-                                    </span>
-                                </div>
-                                <span className={style.text}>
-                                    {/*{data.hashTag}*/}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                                <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <Chip
+                                        label={post.category}
+                                        color="primary"
+                                        size="small"
+                                        sx={{ borderRadius: 1 }}
+                                    />
+                                </Box>
+                            </StyledPostCard>
+                        </motion.div>
+                    </Grid>
                 ))}
-            </div>
+            </Grid>
 
-        </>
-    )
+            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                <DialogContent>
+                    <Typography>
+                        작성하신 게시글을 삭제하시겠습니까?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenDialog(false)}>취소</Button>
+                    <Button onClick={confirmDelete} color="error" variant="contained">
+                        삭제
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Container>
+    );
 }

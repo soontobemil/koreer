@@ -1,42 +1,44 @@
-import { motion } from 'framer-motion';
+import {motion} from 'framer-motion';
+import DOMPurify from 'dompurify';
+
 import {
-    Container,
-    Paper,
-    Typography,
     Avatar,
     Box,
-    Divider,
-    TextField,
     Button,
-    IconButton,
     Card,
     CardContent,
     Chip,
+    Container,
+    Divider,
+    IconButton,
+    Paper,
+    TextField,
+    Typography,
 } from '@mui/material';
-import {
-    ThumbUp,
-    Comment,
-    Share,
-    ArrowBack,
-    Bookmark,
-    AccessTime,
-    Person,
-} from '@mui/icons-material';
+import {AccessTime, ArrowBack, Bookmark, Comment, Person, Share,} from '@mui/icons-material';
 import {useEffect, useState} from 'react';
 import {useCommentFunctions} from "../../features/community/hooks/useCommentFunctions";
 import {CommentPostDTO} from "../../types/post";
 import {useCommunityGetter} from "../../features/community/hooks/useCommunityGetter";
+import {useCookies} from "react-cookie";
+import {CommunityCategories} from "../../types/community";
 
 export function CommunityDetail() {
     const [comment, setComment] = useState('');
     const pathParts = window.location.pathname.split('/');
     const id = Number(pathParts[pathParts.length - 1]);
+    const [cookie] = useCookies(['accessToken', 'refreshToken']);
 
     const { getCommunityById, post } = useCommunityGetter();
     const { createComment } = useCommentFunctions();
+    const [isNormalPost, setIsNormalPost] = useState(false)
 
     useEffect(() => {
-        getCommunityById(id).then()
+        getCommunityById(id).then((result) => {
+            if (result) {
+                setIsNormalPost(result.category !== CommunityCategories.INTERVIEW_POSTS)
+            }
+        })
     }, [id]);
 
     const refreshComments = () => {
@@ -45,6 +47,11 @@ export function CommunityDetail() {
 
     // @ts-ignore
     const handleSubmitComment = () =>{
+        if (!cookie.accessToken) {
+            alert('로그인 후 시도해주세요');
+            return false;
+        }
+
         if (comment === "") {
             alert('댓글을 작성해주세요.')
             return false;
@@ -159,17 +166,42 @@ export function CommunityDetail() {
 
                         {/* 본문 내용 */}
                         <Box sx={{ p: 4 }}>
+                            {/*<Typography*/}
+                            {/*    variant="body1"*/}
+                            {/*    sx={{*/}
+                            {/*        lineHeight: 1.8,*/}
+                            {/*        color: 'text.primary',*/}
+                            {/*        mb: 4,*/}
+                            {/*        minHeight: '200px'*/}
+                            {/*    }}*/}
+                            {/*>*/}
+                            {/*    {post.content}*/}
+                            {/*</Typography>*/}
                             <Typography
                                 variant="body1"
                                 sx={{
                                     lineHeight: 1.8,
                                     color: 'text.primary',
                                     mb: 4,
-                                    minHeight: '200px'
+                                    minHeight: '200px',
+                                    '& img': {
+                                        maxWidth: '100%',
+                                        height: 'auto'
+                                    },
+                                    '& table': {
+                                        width: '100%',
+                                        borderCollapse: 'collapse',
+                                        marginBottom: '1rem'
+                                    },
+                                    '& th, & td': {
+                                        border: '1px solid #ddd',
+                                        padding: '8px'
+                                    }
                                 }}
-                            >
-                                {post.content}
-                            </Typography>
+                                dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(post.content)
+                                }}
+                            />
 
                             {/* 액션 버튼 */}
                             <Box
@@ -180,20 +212,6 @@ export function CommunityDetail() {
                                     justifyContent: 'center'
                                 }}
                             >
-                                <motion.div whileHover={{ scale: 1.05 }}>
-                                    <Button
-                                        variant="contained"
-                                        startIcon={<ThumbUp />}
-                                        sx={{
-                                            borderRadius: 2,
-                                            px: 4,
-                                            py: 1,
-                                            bgcolor: 'primary.main'
-                                        }}
-                                    >
-                                        {/*좋아요 {post.likes}*/}
-                                    </Button>
-                                </motion.div>
                                 <motion.div whileHover={{ scale: 1.05 }}>
                                     <Button
                                         variant="outlined"
@@ -212,6 +230,7 @@ export function CommunityDetail() {
                             <Divider sx={{ my: 4 }} />
 
                             {/* 댓글 섹션 */}
+                            {isNormalPost && (
                             <Box sx={{ mb: 4 }}>
                                 <Typography
                                     variant="h6"
@@ -329,6 +348,7 @@ export function CommunityDetail() {
                                     ))}
                                 </Box>
                             </Box>
+                        )}
                         </Box>
                     </Paper>
                 </motion.div>

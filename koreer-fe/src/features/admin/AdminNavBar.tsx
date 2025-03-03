@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, Typography, Box } from '@mui/material';
-import { Person, Article, Email, Dashboard, Code } from '@mui/icons-material';
+import { Person, Article, Email, Dashboard, Code, Newspaper } from '@mui/icons-material';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -12,6 +12,7 @@ export function AdminNavbar() {
         { icon: Person, text: '사용자 관리', path: '/admin/users' },
         { icon: Article, text: '게시글 관리', path: '/admin/posts' },
         { icon: Email, text: '메일 관리', path: '/admin/mails' },
+        { icon: Newspaper, text: '뉴스레터', path: '/admin/newsletter' },
         { icon: Code, text: '공통 코드', path: '/admin/codes' },
     ];
 

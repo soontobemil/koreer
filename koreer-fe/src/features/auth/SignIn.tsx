@@ -1,37 +1,29 @@
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../../store/auth/authSlice';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
+import React, {useCallback, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {login} from '../../store/auth/authSlice';
 import {AuthResponse, LoginCredentials} from '../../store/auth/types';
-import { ValidateStatus } from '../../types/signup';
+import {ValidateStatus} from '../../types/signup';
 import {
-  Box,
-  Container,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  Link,
-  Divider,
-  CircularProgress,
-  Alert,
-  IconButton,
-  InputAdornment,
-  Stack,
+    Alert,
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    Divider,
+    IconButton,
+    InputAdornment,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
 } from '@mui/material';
-import {
-  Email,
-  Lock,
-  Visibility,
-  VisibilityOff,
-  Google,
-  GitHub,
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import {Email, Google, Lock, Visibility, VisibilityOff,} from '@mui/icons-material';
+import {motion} from 'framer-motion';
 import koreerLogo from '../../assets/img/koreer_logo_cropped.png';
-import { AuthProvider } from '../../components/common/AuthProvider';
-import { useAuthValidator } from '../../hooks/form/useAuthValidator';
-import { AppDispatch } from '../../store/store';
+import {useAuthValidator} from '../../hooks/form/useAuthValidator';
+import {AppDispatch} from '../../store/store';
+import {useCookieFunctions} from "../../components/common/hooks/useCookieFunctions";
 
 interface ErrorResponse {
   message: string;
@@ -45,7 +37,9 @@ export function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const {setAccessToken} = AuthProvider();
+  // const {setAccessToken} = AuthProvider();
+    const { setCookie} = useCookieFunctions();
+
 
   const {
     emailValidate,
@@ -73,7 +67,8 @@ export function SignIn() {
         };
 
         const result:AuthResponse = await dispatch(login(credentials)).unwrap();
-          setAccessToken(result.accessToken)
+          // setAccessToken(result.accessToken)
+          setCookie('accessToken', result.accessToken)
 
         navigate('/');
       } catch (error: any) {
@@ -232,16 +227,16 @@ export function SignIn() {
                 {isLoading ? <CircularProgress size={24} /> : '로그인'}
               </Button>
 
-              <Box sx={{ mt: 2, textAlign: 'center' }}>
-                <Link
-                  component={RouterLink}
-                  to="/signup"
-                  variant="body2"
-                  sx={{ textDecoration: 'none' }}
-                >
-                  계정이 없으신가요? 회원가입
-                </Link>
-              </Box>
+              {/*<Box sx={{ mt: 2, textAlign: 'center' }}>*/}
+              {/*  <Link*/}
+              {/*    component={RouterLink}*/}
+              {/*    to="/signup"*/}
+              {/*    variant="body2"*/}
+              {/*    sx={{ textDecoration: 'none' }}*/}
+              {/*  >*/}
+              {/*    계정이 없으신가요? 회원가입*/}
+              {/*  </Link>*/}
+              {/*</Box>*/}
 
               <Divider sx={{ my: 2 }}>또는</Divider>
 
@@ -254,14 +249,14 @@ export function SignIn() {
                 >
                   Google로 로그인
                 </Button>
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startIcon={<GitHub />}
-                  onClick={() => {/* TODO: Implement GitHub login */}}
-                >
-                  GitHub로 로그인
-                </Button>
+                {/*<Button*/}
+                {/*  fullWidth*/}
+                {/*  variant="outlined"*/}
+                {/*  startIcon={<GitHub />}*/}
+                {/*  onClick={() => /!* TODO: Implement GitHub login *!/}*/}
+                {/*>*/}
+                {/*  GitHub로 로그인*/}
+                {/*</Button>*/}
               </Stack>
             </Stack>
           </Paper>

@@ -2,7 +2,7 @@ const authService = require('../services/authService');
 const {post, get} = require("axios");
 const {UserInfoResponseDTO} = require("../dto/UserInfoResponseDTO");
 const jwt = require("jsonwebtoken");
-const {generateRefreshToken, generateAccessToken} = require("../src/Auth");
+const {generateRefreshToken, generateAccessToken, generateTokenByRefreshToken} = require("../src/Auth");
 
 /**
  * These are login and sign up for user infos
@@ -54,12 +54,13 @@ async function login(req, res) {
 async function refreshAccessToken(req,res) {
     const { refreshToken } = req.cookies;
 
+    const userInfo = generateTokenByRefreshToken(req);
     if (!refreshToken) {
         return res.sendStatus(401).send('No exists refreshToken');
     }
 
     try {
-        const accessToken = generateAccessToken({id:req.id,username:req.username, user_email:req.user_email});
+        const accessToken = generateAccessToken({id:userInfo.id,username:userInfo.username, user_email:userInfo.user_email, role:userInfo.role});
         res.json({ accessToken });
 
     } catch (error) {

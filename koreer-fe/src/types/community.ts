@@ -6,6 +6,9 @@ export enum CommunityCategories{
     INFO = "INFO",
     NEWS = "NEWS",
     OVERSEAS_INFORMATION = "OVERSEAS_INFORMATION",
+
+    COMMUNITY_POSTS = "COMMUNITY_POSTS",
+    INTERVIEW_POSTS = "INTERVIEW_POSTS"
 }
 
 export interface CommunityDTO{
@@ -42,4 +45,15 @@ export interface CommunityFormProps {
         category: CommunityCategories;
     };
     postId?: number;
+}
+
+export interface CommunityAnswerDetailDTO {
+    "created_at": string,
+    "updated_at": string,
+    "deleted_at": string | null,
+    "id": number,
+    "user_id": number,
+    "user_email": string;
+    "post_id": number,
+    "answer_content": string;
 }

@@ -5,28 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9dc9518-1748-4507-adab-a7dd0738ab51" name="Changes" comment="fix signup &amp; login, convert sing up language from English to Korean for Korean user">
-      <change afterPath="$PROJECT_DIR$/controllers/admin/adminCommonController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dtos/admin/AdminCurrentCountDTO.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/admin/AdminCommonService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/api/AdminApi.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminCodesManagement.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminCommunityManagement.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/hooks/useAdminCommonGetter.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koreer-fe/src/slice/AdminSlice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/admin/adminCommunityController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/admin/adminCommunityController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repositories/userRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/userRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/userInfoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/userInfoService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/MyPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/Success.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminDashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminNavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/AdminNavBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/admin/hooks/useAdminModifyFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/hooks/useAdminModifyFunctions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/admin/hooks/useAdminUserColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/admin/hooks/useAdminUserColumns.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/adminUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/adminUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/types/community.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/types/community.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/components/common/AuthProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/components/common/AuthProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityCategory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityCategory.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/src/features/community/CommunityDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koreer-fe/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../koreer-fe/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,11 +57,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;KOR-9&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;21.7.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.6&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be/repositories&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hongchanghyeong/Desktop/study/github/koreer/koreer-be/views&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -91,8 +75,13 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="$PROJECT_DIR$/controllers" />
       <recent name="$PROJECT_DIR$/repositories" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/controllers" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -143,6 +132,16 @@
       <workItem from="1737023952853" duration="57000" />
       <workItem from="1737111174102" duration="4826000" />
       <workItem from="1737162342077" duration="1140000" />
+      <workItem from="1740289078586" duration="5222000" />
+      <workItem from="1740381697974" duration="13889000" />
+      <workItem from="1740477353677" duration="5691000" />
+      <workItem from="1740577313886" duration="3056000" />
+      <workItem from="1740642659460" duration="4572000" />
+      <workItem from="1740651783720" duration="6926000" />
+      <workItem from="1740796459080" duration="8770000" />
+      <workItem from="1740805649993" duration="5229000" />
+      <workItem from="1740925161633" duration="207000" />
+      <workItem from="1740963746417" duration="2338000" />
     </task>
     <task id="LOCAL-00001" summary="add model &amp; api for career tips">
       <option name="closed" value="true" />
@@ -169,7 +168,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="origin/admin" />
                       </list>
                     </value>
                   </entry>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Grid, Typography, Link, Box, IconButton } from '@mui/material';
-import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
-import { Link as RouterLink } from 'react-router-dom';
+import {Box, Container, Grid, IconButton, Typography} from '@mui/material';
+import {Facebook, Instagram, LinkedIn, Twitter} from '@mui/icons-material';
+import {Link as RouterLink} from 'react-router-dom';
 import styles from '../../assets/scss/common/footer.module.scss';
 
 export const Footer: React.FC = () => {
@@ -24,12 +24,12 @@ export const Footer: React.FC = () => {
               Quick Links
             </Typography>
             <ul className={styles.linkList}>
-              <li>
-                <RouterLink to="/about-us" className={styles.link}>회사 소개</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/membership" className={styles.link}>멤버십</RouterLink>
-              </li>
+              {/*<li>*/}
+              {/*  <RouterLink to="/about-us" className={styles.link}>회사 소개</RouterLink>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*  <RouterLink to="/membership" className={styles.link}>멤버십</RouterLink>*/}
+              {/*</li>*/}
               <li>
                 <RouterLink to="/contact" className={styles.link}>문의하기</RouterLink>
               </li>

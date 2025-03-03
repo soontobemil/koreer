@@ -1,21 +1,73 @@
-import style from "../../assets/scss/sub/community.module.scss"
+import React, {useCallback, useState} from 'react';
+import {
+    Box,
+    Button,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Paper,
+    Select,
+    SelectChangeEvent,
+    styled,
+    TextField,
+    Typography
+} from '@mui/material';
+import {motion} from 'framer-motion';
 import {useLocation, useNavigate} from "react-router-dom";
-import {useCallback, useState} from "react";
+import {useDispatch} from "react-redux";
 import {CommunityCategories} from "../../types/community";
 import {useCommunityValidator} from "./hooks/useCommunityValidator";
-import {useDispatch} from "react-redux";
 import {createPostAsync, updatePostAsync} from "../../slice/postSlice";
 
-export function CommunityForm() {
+interface ModeText {
+    title: string;
+    button: string;
+    confirmMessage: string;
+    successMessage: string;
+}
+
+interface LocationState {
+    mode: 'create' | 'edit';
+    initialData?: {
+        title: string;
+        content: string;
+        category: CommunityCategories;
+    };
+    postId?: number;
+}
+
+type DialogType = 'cancel' | 'submit';
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(4),
+    background: 'rgba(255, 255, 255, 0.9)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '20px',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    transition: 'all 0.3s ease-in-out',
+    '&:hover': {
+        boxShadow: '0 15px 40px rgba(0, 0, 0, 0.1)'
+    }
+}));
+
+export function CommunityForm(): JSX.Element {
     const location = useLocation();
-    const { mode, initialData, postId } = location.state || {};
+    const { mode, initialData, postId } = (location.state as LocationState) || {};
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
-    const [title, setTitle] = useState(initialData?.title || '');
-    const [content, setContent] = useState(initialData?.content || '');
-    const [category, setCategory] = useState<CommunityCategories | "">(initialData?.category || "");
 
-    const modeText = {
+    const [title, setTitle] = useState<string>(initialData?.title || '');
+    const [content, setContent] = useState<string>(initialData?.content || '');
+    const [category, setCategory] = useState<CommunityCategories | "">(initialData?.category || "");
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [dialogType, setDialogType] = useState<DialogType>('cancel');
+
+    const modeText: Record<'create' | 'edit', ModeText> = {
         create: {
             title: '커뮤니티 작성하기',
             button: '등록하기',
@@ -30,12 +82,20 @@ export function CommunityForm() {
         }
     };
 
-    const onClickCancelHandler = () => {
-        if (!window.confirm('취소하시면 작성중인 내용이 모두 사라집니다.\n정말 취소하시겠습니까?')) return ;
-        navigate('/community')
-    }
+    const { validate } = useCommunityValidator({title, content, category});
 
-    const {validate} = useCommunityValidator({title, content, category})
+    const handleCancel = (): void => {
+        setDialogType('cancel');
+        setOpenDialog(true);
+    };
+
+    const handleConfirmCancel = (): void => {
+        navigate('/community');
+    };
+
+    const handleCategoryChange = (event: SelectChangeEvent<string>): void => {
+        setCategory(event.target.value as CommunityCategories);
+    };
 
     const handlePosting = useCallback(async () => {
         const isValidate = validate();
@@ -66,53 +126,94 @@ export function CommunityForm() {
     }, [title, content, category, mode, postId]);
 
     return (
-        <>
-            <div className={style.communityUpperWrapper}>
-                <div className={style.communityTitleWrapper}>
-                    <span className={style.subTitle}>커뮤니티 작성하기</span>
-                </div>
-                <form className={style.formWrapper}>
-                    <label className={style.label}>
-                        카테고리
-                        <select
-                            className={style.select}
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value as CommunityCategories)}
-                        >
-                            <option value="">카테고리를 선택해주세요.</option>
-                            <option value="DAILY">사는 이야기</option>
-                            <option value="TECH">기술, 취업, 이직</option>
-                            <option value="STUDY">모임, 스터디</option>
-                        </select>
-                    </label>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <StyledPaper elevation={3}>
+                    <Typography variant="h4" gutterBottom fontWeight="bold" sx={{ mb: 4 }}>
+                        {modeText[mode || 'create'].title}
+                    </Typography>
 
-                    <label className={style.label}>
-                        제목
-                        <input
-                            type="text"
-                            placeholder="제목을 입력해주세요."
-                            className={style.input}
+                    <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                        <FormControl fullWidth>
+                            <InputLabel>카테고리</InputLabel>
+                            <Select
+                                value={category}
+                                label="카테고리"
+                                onChange={handleCategoryChange}
+                            >
+                                <MenuItem value="">카테고리를 선택해주세요</MenuItem>
+                                <MenuItem value="COMMUNITY_POSTS">커뮤니티 공간 </MenuItem>
+                                <MenuItem value="INTERVIEW_POSTS">인터뷰 공간</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <TextField
+                            fullWidth
+                            label="제목"
+                            placeholder="제목을 입력해주세요"
                             value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                         />
-                    </label>
 
-                    <label className={style.label}>
-                        본문
-                        <textarea
-                            placeholder="내용을 입력해주세요."
-                            className={style.textarea}
+                        <TextField
+                            fullWidth
+                            multiline
+                            rows={8}
+                            label="본문"
+                            placeholder="내용을 입력해주세요"
                             value={content}
-                            onChange={(e) => setContent(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setContent(e.target.value)}
                         />
-                    </label>
-                </form>
 
-                <div className={style.registrationButtonWrapper}>
-                    <button className={`${style.buttons} ${style.cancel}`} onClick={onClickCancelHandler}>취소하기</button>
-                    <button className={`${style.buttons} ${style.registration}`} onClick={handlePosting}>등록하기</button>
-                </div>
-            </div>
-        </>
-    )
+                        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
+                            <Button
+                                variant="outlined"
+                                color="error"
+                                size="large"
+                                onClick={handleCancel}
+                            >
+                                취소하기
+                            </Button>
+                            <Button
+                                variant="contained"
+                                size="large"
+                                onClick={handlePosting}
+                                sx={{
+                                    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    color: 'white'
+                                }}
+                            >
+                                {modeText[mode || 'create'].button}
+                            </Button>
+                        </Box>
+                    </Box>
+                </StyledPaper>
+            </motion.div>
+
+            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                <DialogTitle>확인</DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        {dialogType === 'cancel'
+                            ? '취소하시면 작성중인 내용이 모두 사라집니다.\n정말 취소하시겠습니까?'
+                            : modeText[mode || 'create'].confirmMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenDialog(false)}>취소</Button>
+                    <Button
+                        onClick={dialogType === 'cancel' ? handleConfirmCancel : handlePosting}
+                        color={dialogType === 'cancel' ? 'error' : 'primary'}
+                        variant="contained"
+                    >
+                        확인
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Container>
+    );
 }

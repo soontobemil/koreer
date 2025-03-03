@@ -39,6 +39,7 @@ var userInfoRouter = require('./routes/userinfo');
 var inquiryRouter = require('./routes/inquiry');
 var chatbotRouter = require('./routes/chatbot');
 var subscriberRouter = require('./routes/subscriber');
+var answerQuestionRouter = require('./routes/answerquestion');
 
 
 var userService = require('./services/userService');
@@ -77,6 +78,7 @@ app.use('/community', communityRouter);
 app.use('/user-info', userInfoRouter);
 app.use('/inquiry', inquiryRouter);
 app.use('/chatbot', chatbotRouter);
+app.use('/answer-question', answerQuestionRouter);
 
 passport.use(new GoogleStrategy({
     clientID: process.env.OAUTH2_CID_SOCIAL_LOGIN,  // Google에서 받은 Client ID

@@ -12,11 +12,11 @@ import {
     TextField,
     Typography,
     Chip,
+    InputAdornment,
 } from '@mui/material';
+import { Search } from '@mui/icons-material';
 import { GridValueGetter } from '@mui/x-data-grid';
-
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
-
 import { motion } from 'framer-motion';
 import { useCookieFunctions } from "../../components/common/hooks/useCookieFunctions";
 
@@ -39,22 +39,19 @@ export function AdminCommunityManagement() {
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const { getCookie } = useCookieFunctions();
 
-    // 선택된 게시글 ID들을 관리할 state 추가
     const [selectedPostIds, setSelectedPostIds] = useState<number[]>([]);
-
-    // 삭제 확인 dialog state 추가
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
     const [loading, setLoading] = useState<boolean>(false);
     const [posts, setPosts] = useState<CommunityPost[]>([]);
     const [totalPosts, setTotalPosts] = useState<number>(0);
+    const [searchWord, setSearchWord] = useState<string>('');
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
         pageSize: 10,
     });
 
     const columns: GridColDef[] = [
-        // { field: 'id', headerName: 'ID', width: 70 },
         { field: 'title', headerName: '제목', width: 130 },
         { field: 'username', headerName: '작성자', width: 130 },
         { field: 'user_email', headerName: '이메일', width: 200 },
@@ -100,20 +97,27 @@ export function AdminCommunityManagement() {
         },
     ];
 
-    const fetchPosts = async (page: number, limit: number): Promise<void> => {
+    const fetchPosts = async (page: number, limit: number, search?: string): Promise<void> => {
         setLoading(true);
         try {
             const accessToken = getCookie('accessToken');
 
-            const response = await fetch(
-                `${process.env.REACT_APP_BASE_URL}/admin/posts?page=${page + 1}&limit=${limit}`,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json'
-                    }
+            // URL 생성 및 파라미터 추가
+            const url = new URL(`${process.env.REACT_APP_BASE_URL}/admin/posts`);
+            url.searchParams.append('page', String(page + 1));
+            url.searchParams.append('limit', String(limit));
+
+            // 검색어가 있는 경우에만 추가
+            if (search && search.trim() !== '') {
+                url.searchParams.append('searchWord', search.trim());
+            }
+
+            const response = await fetch(url.toString(), {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
                 }
-            );
+            });
 
             if (!response.ok) {
                 if (response.status === 401) {
@@ -130,6 +134,19 @@ export function AdminCommunityManagement() {
             console.error('Error fetching posts:', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSearch = () => {
+        // 검색 시 첫 페이지로 초기화
+        setPaginationModel(prev => ({ ...prev, page: 0 }));
+        fetchPosts(0, paginationModel.pageSize, searchWord);
+    };
+
+    // 엔터키로 검색 지원
+    const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch();
         }
     };
 
@@ -156,7 +173,7 @@ export function AdminCommunityManagement() {
             }
 
             // 모든 삭제가 완료된 후 목록 새로고침
-            await fetchPosts(paginationModel.page, paginationModel.pageSize);
+            await fetchPosts(paginationModel.page, paginationModel.pageSize, searchWord);
             setSelectedPostIds([]);
             setDeleteDialogOpen(false);
         } catch (error) {
@@ -183,7 +200,7 @@ export function AdminCommunityManagement() {
     };
 
     useEffect(() => {
-        fetchPosts(paginationModel.page, paginationModel.pageSize);
+        fetchPosts(paginationModel.page, paginationModel.pageSize, searchWord);
     }, [paginationModel]);
 
     return (
@@ -204,6 +221,33 @@ export function AdminCommunityManagement() {
                             선택한 게시글 삭제 ({selectedPostIds.length})
                         </Button>
                     )}
+                </Box>
+
+                {/* 검색 입력란 추가 */}
+                <Box sx={{ display: 'flex', mb: 2 }}>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        placeholder="제목, 작성자, 이메일 등으로 검색"
+                        value={searchWord}
+                        onChange={(e) => setSearchWord(e.target.value)}
+                        onKeyDown={handleSearchKeyDown}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleSearch}
+                                        startIcon={<Search />}
+                                    >
+                                        검색
+                                    </Button>
+                                </InputAdornment>
+                            )
+                        }}
+                        sx={{ mr: 1 }}
+                    />
                 </Box>
 
                 <Card>
@@ -232,6 +276,7 @@ export function AdminCommunityManagement() {
                     </CardContent>
                 </Card>
 
+                {/* 기존의 대화상자들 유지 */}
                 <Dialog
                     open={openDialog}
                     onClose={handleCloseDialog}
@@ -293,6 +338,7 @@ export function AdminCommunityManagement() {
                         <Button onClick={handleCloseDialog}>닫기</Button>
                     </DialogActions>
                 </Dialog>
+
                 <Dialog
                     open={deleteDialogOpen}
                     onClose={() => setDeleteDialogOpen(false)}
@@ -310,7 +356,6 @@ export function AdminCommunityManagement() {
                         </Button>
                     </DialogActions>
                 </Dialog>
-
             </motion.div>
         </Container>
     );

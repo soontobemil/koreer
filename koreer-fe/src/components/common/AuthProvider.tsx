@@ -37,7 +37,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const checkAuth = () => {
             const accessToken = getCookie('accessToken');
             const refreshToken = getCookie('refreshToken');
-            console.log('check!!! >>>>>')
 
             if (accessToken) {
                 setIsAuthenticated(true);
